@@ -1,0 +1,9 @@
+{
+  "success": "عملية ناجحه",
+  "error": "خطأ",
+  "info": "معلومة",
+  "warning": "تنبيه",
+  "deleteMessage": "هل انت متأكد من الحذف",
+  "cancel": "إلغاء",
+  "yesOnly": "نعم"
+}

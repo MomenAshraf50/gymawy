@@ -1,0 +1,9 @@
+{
+  "success": "Success",
+  "error": "Error",
+  "info": "Info",
+  "warning": "Warning",
+  "deleteMessage": "Are you sure to delete?",
+  "cancel": "Cancel",
+  "yesOnly": "Yes"
+}
