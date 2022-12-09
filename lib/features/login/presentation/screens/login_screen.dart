@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/cubit/cubit.dart';
+import 'package:gymawy/core/util/cubit/state.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
@@ -11,7 +12,6 @@ import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
 import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
-import 'package:gymawy/features/login/presentation/controller/login_states.dart';
 import 'package:gymawy/features/login/presentation/screens/forget_password_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -23,10 +23,12 @@ class LoginScreen extends StatelessWidget {
     ScreenSizes.screenHeight = MediaQuery.of(context).size.height;
     ScreenSizes.screenWidth = MediaQuery.of(context).size.width;
 
-    return BlocConsumer<LoginCubit, LoginStates>(
+    return BlocConsumer<AppBloc, AppState>(
       listener: (context, state) {},
       builder: (context, state) {
         LoginCubit loginCubit = LoginCubit.get(context);
+
+        AppBloc appBloc = AppBloc.get(context);
         return Scaffold(
           body: Form(
             key: formKey,
@@ -85,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                             }
                             return null;
                           },
-                          controller: loginCubit.emailController,
+                          controller: appBloc.emailController,
                           hint: AppString.email,
                           svgImg: Assets.images.svg.email,
                         ),
@@ -96,19 +98,10 @@ class LoginScreen extends StatelessWidget {
                             }
                             return null;
                           },
-                          controller: loginCubit.passwordController,
+                          controller: appBloc.passwordController,
                           hint: AppString.password,
-                          isPassword: loginCubit.showPassword,
+                          showSuffix: true,
                           svgImg: Assets.images.svg.lock,
-                          suffixIcon: IconButton(icon: Icon(
-                              loginCubit.visibilityShowPassword,
-                              color: ColorsManager.iconColor
-                          ),
-                            onPressed: () {
-                              loginCubit.changePasswordVisibility();
-                            },
-                          ),
-
                         ),
                         Align(
                           alignment: Alignment.centerRight,

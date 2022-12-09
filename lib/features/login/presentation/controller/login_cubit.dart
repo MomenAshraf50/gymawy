@@ -7,23 +7,5 @@ class LoginCubit extends Cubit<LoginStates>{
 
   static LoginCubit get(context) => BlocProvider.of(context);
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
 
-  IconData visibilityShowPassword = Icons.visibility_outlined;
-  bool showPassword = true;
-
-  void changePasswordVisibility(){
-    showPassword = !showPassword;
-    visibilityShowPassword = showPassword? Icons.visibility_outlined : Icons.visibility_off_outlined;
-    emit(LoginChangePasswordVisibilityState());
-  }
-
-  IconData visibilityShowConfirmPassword = Icons.visibility_outlined;
-  bool showConfirmPassword = true;
-  void changeConfirmPasswordVisibility(){
-    showConfirmPassword = !showConfirmPassword;
-    visibilityShowConfirmPassword = showConfirmPassword? Icons.visibility_outlined : Icons.visibility_off_outlined;
-    emit(LoginChangePasswordVisibilityState());
-  }
 }

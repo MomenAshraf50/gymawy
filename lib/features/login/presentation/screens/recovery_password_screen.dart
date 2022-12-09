@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gymawy/core/util/cubit/cubit.dart';
+import 'package:gymawy/core/util/cubit/state.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myElevatedButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
-import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
-import 'package:gymawy/features/login/presentation/controller/login_states.dart';
+
 
 import '../../../../core/util/resources/colors_manager.dart';
 import '../../../../core/util/widgets/myButton.dart';
@@ -24,10 +24,9 @@ class RecoveryPasswordScreen extends StatelessWidget {
     var confirmPasswordController = TextEditingController();
 
 
-    return BlocConsumer<LoginCubit, LoginStates>(
+    return BlocConsumer<AppBloc, AppState>(
       listener: (context, state) {},
       builder: (context, state) {
-        LoginCubit loginCubit = LoginCubit.get(context);
         return Scaffold(
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -69,35 +68,18 @@ class RecoveryPasswordScreen extends StatelessWidget {
                     ),
                     verticalSpace(10.h),
                     myTextFill(
-                      isPassword: loginCubit.showPassword,
+                      showSuffix: true,
                       svgImg: Assets.images.svg.lock,
                       controller: passwordController,
                       hint: AppString.password,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                            loginCubit.visibilityShowPassword,
-                            color: ColorsManager.iconColor,
-                        ),
-                        onPressed: (){
-                          loginCubit.changePasswordVisibility();
-                        },
-                      ),
+
                     ),
                     myTextFill(
-                      isPassword: loginCubit.showConfirmPassword,
+                      showSuffix: true,
                       svgImg: Assets.images.svg.lock,
                       controller: confirmPasswordController,
                       hint: AppString.confirm_password,
                       onChanged: (val) {},
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                            loginCubit.visibilityShowConfirmPassword
-                        ),
-                          color: ColorsManager.iconColor,
-                          onPressed: (){
-                          loginCubit.changeConfirmPasswordVisibility();
-                        },
-                      ),
                     ),
                     verticalSpace(20.h),
                     myButton(
