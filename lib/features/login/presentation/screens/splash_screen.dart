@@ -15,7 +15,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 2),() {
-      navigateAndFinish(context, const LoginScreen());
+      navigateAndFinish(context, LoginScreen());
     });
 
     ScreenSizes.screenHeight = MediaQuery.of(context).size.height;

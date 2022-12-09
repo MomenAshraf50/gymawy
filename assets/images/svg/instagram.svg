@@ -1,0 +1,15 @@
+<svg id="instagram_2_" data-name="instagram (2)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20.684" height="20.684" viewBox="0 0 20.684 20.684">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" y1="0.008" x2="0.5" y2="0.998" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#e09b3d"/>
+      <stop offset="0.3" stop-color="#c74c4d"/>
+      <stop offset="0.6" stop-color="#c21975"/>
+      <stop offset="1" stop-color="#7024c4"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" y1="-0.451" y2="1.462" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" y1="-1.396" y2="6.586" xlink:href="#linear-gradient"/>
+  </defs>
+  <path id="Path_310" d="M14.522,0H6.162A6.169,6.169,0,0,0,0,6.162v8.36a6.169,6.169,0,0,0,6.162,6.162h8.36a6.169,6.169,0,0,0,6.162-6.162V6.162A6.169,6.169,0,0,0,14.522,0ZM18.6,14.522A4.081,4.081,0,0,1,14.522,18.6H6.162a4.081,4.081,0,0,1-4.081-4.081V6.162A4.081,4.081,0,0,1,6.162,2.081h8.36A4.081,4.081,0,0,1,18.6,6.162v8.36Z" fill="url(#linear-gradient)"/>
+  <path id="Path_311" d="M138.35,133a5.35,5.35,0,1,0,5.35,5.35A5.356,5.356,0,0,0,138.35,133Zm0,8.619a3.269,3.269,0,1,1,3.269-3.269A3.269,3.269,0,0,1,138.35,141.619Z" transform="translate(-128.008 -128.008)" fill="url(#linear-gradient-2)"/>
+  <circle id="Ellipse_355" cx="1.282" cy="1.282" r="1.282" transform="translate(14.42 3.751)" fill="url(#linear-gradient-3)"/>
+</svg>
