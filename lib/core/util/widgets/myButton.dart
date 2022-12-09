@@ -14,6 +14,7 @@ class myButton extends StatelessWidget {
     this.iconWidget,
     this.textOnly = true,
     this.onPressed,
+    this.textStyle
   }) : super(key: key);
 
   final Function()? onPressed;
@@ -25,6 +26,7 @@ class myButton extends StatelessWidget {
   Color? color;
   Widget? iconWidget;
   final bool textOnly;
+  TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -39,21 +41,28 @@ class myButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(radius),
         ),
         child: textOnly
-            ? Text(text,
-                style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      color: Colors.white,
-                    ))
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  iconWidget!,
-                  horizontalSpace(10.w),
-                  Text(text,
-                      style:
-                          Theme.of(context).textTheme.displayMedium!.copyWith(
-                                color: Colors.white,
-                              )),
-                ],
-              ));
+            ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(text,
+                  style: textStyle ?? Theme.of(context).textTheme.displayMedium!.copyWith(
+                    color: Colors.white,
+                  )
+        ),
+            )
+            : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    iconWidget!,
+                    horizontalSpace(5.w),
+                    Text(text,
+                        style: textStyle ?? Theme.of(context).textTheme.displayMedium!.copyWith(
+                          color: Colors.white,
+                        )
+                            ),
+                  ],
+                ),
+            ));
   }
 }

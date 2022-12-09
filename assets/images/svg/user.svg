@@ -1,0 +1,23 @@
+<svg id="Iconly_Light-Outline_Profile" data-name="Iconly/Light-Outline/Profile" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 18 18">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Clip_2" data-name="Clip 2" d="M0,0H11.88V5.53H0Z" transform="translate(3 10.872)" clip-rule="evenodd"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <path id="Clip_5" data-name="Clip 5" d="M0,0H7.965V7.964H0Z" transform="translate(4.957 1.5)" clip-rule="evenodd"/>
+    </clipPath>
+  </defs>
+  <rect id="Iconly_Light-Outline_Profile-2" data-name="Iconly/Light-Outline/Profile" width="18" height="18" fill="none"/>
+  <g id="Profile">
+    <g id="Group_3" data-name="Group 3">
+      <g id="Clip_2-2" data-name="Clip 2" clip-path="url(#clip-path)">
+        <path id="Fill_1" data-name="Fill 1" d="M8.941,16.4C7.471,16.4,3,16.4,3,13.63c0-2.472,3.391-2.758,5.941-2.758,1.469,0,5.939,0,5.939,2.773C14.88,16.117,11.49,16.4,8.941,16.4Zm0-4.405c-3.2,0-4.816.549-4.816,1.633s1.62,1.648,4.816,1.648,4.814-.549,4.814-1.633S12.135,12,8.941,12Z" fill="#7b6f72"/>
+      </g>
+    </g>
+    <g id="Group_6" data-name="Group 6">
+      <g id="Clip_5-2" data-name="Clip 5" clip-path="url(#clip-path-2)">
+        <path id="Fill_4" data-name="Fill 4" d="M8.941,9.464H8.916A3.975,3.975,0,0,1,4.957,5.48,3.983,3.983,0,1,1,8.941,9.464Zm0-6.894a2.912,2.912,0,0,0-.022,5.823l.022.535V8.393a2.912,2.912,0,0,0,0-5.823Z" fill="#7b6f72"/>
+      </g>
+    </g>
+  </g>
+</svg>

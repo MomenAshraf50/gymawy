@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <g id="Back-Navs" transform="translate(-30 -40)">
+    <rect id="Rectangle_5256" data-name="Rectangle 5256" width="32" height="32" rx="8" transform="translate(30 40)" fill="#f7f8f8"/>
+    <g id="Group_9845" data-name="Group 9845">
+      <g id="Iconly_Light_Arrow_-_Left_3" data-name="Iconly/Light/Arrow - Left 3" transform="translate(38 48)">
+        <rect id="Iconly_Light_Arrow_-_Left_3-2" data-name="Iconly/Light/Arrow - Left 3" width="16" height="16" fill="none"/>
+        <g id="Iconly_Light_Arrow_-_Left_2" data-name="Iconly/Light/Arrow - Left 2">
+          <rect id="Iconly_Light_Arrow_-_Left_2-2" data-name="Iconly/Light/Arrow - Left 2" width="16" height="16" fill="none"/>
+          <g id="Arrow_-_Left_2" data-name="Arrow - Left 2">
+            <path id="Stroke_1" data-name="Stroke 1" d="M9.333,0,4.667,4.667,0,0" transform="translate(10.333 3.333) rotate(90)" fill="none" stroke="#1d1617" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" fill-rule="evenodd"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

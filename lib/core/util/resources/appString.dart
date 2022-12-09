@@ -5,6 +5,7 @@ class AppString {
   static const email = 'Email';
   static const password = 'Password';
   static const forget_password = 'Forget Password ?';
+  static const forget_password_title = 'Forget Password';
   static const login = 'login';
   static const oR = 'OR';
   static const dont_have_account = 'don\'t have account ?';

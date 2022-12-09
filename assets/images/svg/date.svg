@@ -1,0 +1,15 @@
+<svg id="Iconly_Light_Calendar" data-name="Iconly/Light/Calendar" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+  <rect id="Iconly_Light_Calendar-2" data-name="Iconly/Light/Calendar" width="18" height="18" fill="none"/>
+  <g id="Calendar">
+    <path id="Line_200" d="M0,.355H13.368" transform="translate(2.319 6.699)" fill="none" stroke="#7b6f72" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" fill-rule="evenodd"/>
+    <path id="Line_201" d="M.344.355H.351" transform="translate(11.988 9.628)" fill="none" stroke="#7b6f72" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" fill-rule="evenodd"/>
+    <path id="Line_202" d="M.344.355H.351" transform="translate(8.66 9.628)" fill="none" stroke="#7b6f72" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" fill-rule="evenodd"/>
+    <path id="Line_203" d="M.344.355H.351" transform="translate(5.324 9.628)" fill="none" stroke="#7b6f72" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" fill-rule="evenodd"/>
+    <path id="Line_204" d="M.344.355H.351" transform="translate(11.988 12.543)" fill="none" stroke="#7b6f72" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" fill-rule="evenodd"/>
+    <path id="Line_205" d="M.344.355H.351" transform="translate(8.66 12.543)" fill="none" stroke="#7b6f72" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" fill-rule="evenodd"/>
+    <path id="Line_206" d="M.344.355H.351" transform="translate(5.324 12.543)" fill="none" stroke="#7b6f72" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" fill-rule="evenodd"/>
+    <path id="Line_207" d="M.347,0V2.468" transform="translate(11.685 1.5)" fill="none" stroke="#7b6f72" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" fill-rule="evenodd"/>
+    <path id="Line_208" d="M.347,0V2.468" transform="translate(5.627 1.5)" fill="none" stroke="#7b6f72" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" fill-rule="evenodd"/>
+    <path id="Path" d="M13.5,3.482v6.844a3.229,3.229,0,0,1-3.578,3.489H3.578A3.258,3.258,0,0,1,0,10.269V3.482A3.227,3.227,0,0,1,3.578,0h6.35c2.209,0,3.578,1.227,3.571,3.482Z" transform="translate(2.25 2.684)" fill="none" stroke="#7b6f72" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" fill-rule="evenodd"/>
+  </g>
+</svg>

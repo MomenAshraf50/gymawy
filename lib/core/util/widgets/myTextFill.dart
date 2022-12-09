@@ -64,6 +64,8 @@ class myTextFill extends StatelessWidget {
           onChanged: onChanged,
           validator: validate,
           controller: controller,
+          autocorrect: true,
+          cursorColor: ColorsManager.mainColor,
           decoration: InputDecoration(
             suffixIcon: suffixIcon,
             prefixIcon: svgImg != null
@@ -80,6 +82,7 @@ class myTextFill extends StatelessWidget {
                     color: colorPrefixIcon ?? ColorsManager.iconColor),
             floatingLabelBehavior: FloatingLabelBehavior.always,
             border: InputBorder.none,
+
             hintText: hint,
             hintStyle: hintStyle,
           ),

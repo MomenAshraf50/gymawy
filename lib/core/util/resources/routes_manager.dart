@@ -1,15 +1,18 @@
-import 'package:flutter/material.dart';
-
-
-
-class Routes {
-  static const String home = '/home';
-  static const String currencyHistory = '/currency/history';
-
-  static Map<String, WidgetBuilder> get routes {
-    return {
-      // home: (context) => const HomePage(),
-      // currencyHistory: (context) => const CurrencyHistoryPage(),
-    };
-  }
-}
+// import 'package:flutter/material.dart';
+// import 'package:gymawy/features/login/presentation/screens/login_screen.dart';
+// import 'package:gymawy/features/login/presentation/screens/splash_screen.dart';
+//
+//
+//
+// class Routes {
+//   static const String login = '/login';
+//   static const String splash = '/splash';
+//
+//   static Map<String, WidgetBuilder> get routes {
+//     return {
+//       login: (context) => const LoginScreen(),
+//       splash: (context) => const SplashScreen(),
+//       //home: (context) => const CurrencyHistoryPage(),
+//     };
+//   }
+// }

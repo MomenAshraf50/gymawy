@@ -33,6 +33,7 @@ class ColorsManager {
 
 
   ///Main Colors
+  //static const Color mainColor =   Color.fromARGB(255, 248, 96, 13);
   static const Color white = Color(0xffffffff);
   static const Color black = Color(0xff000000);
 }

@@ -19,7 +19,7 @@ class AppBloc extends Cubit<AppState> {
 
   static AppBloc get(context) => BlocProvider.of(context);
 
-  bool isArabic = true;
+  bool isArabic = false;
 
   bool isDark = false;
 
