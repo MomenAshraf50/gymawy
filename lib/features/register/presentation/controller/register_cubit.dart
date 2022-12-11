@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/address_screen.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/complete_profile_screen.dart';
@@ -7,6 +10,7 @@ import 'package:gymawy/features/register/presentation/screens/register_screens/c
 import 'package:gymawy/features/register/presentation/screens/register_screens/goal_screen.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/select_fat_screen.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/social_media_screen.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 
@@ -38,7 +42,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
     CompleteProfileScreen(),
     AddressScreen(),
     const SelectFatScreen(),
-    const GoalScreen(),
+     GoalScreen(),
   ];
 
   List<Widget> pagesCoach = [
@@ -142,4 +146,35 @@ class RegisterCubit extends Cubit<RegisterStates>{
     selectedPage = index;
     emit(RegisterChangeSelectedPageCreateAccountScreen());
   }
+
+  File? imageFile;
+
+  Future<File?> pickImageFromGallery(BuildContext context) async {
+    File? image;
+    try {
+      final pickedImage =
+      await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      if (pickedImage != null) {
+        image = File(pickedImage.path);
+        emit(RegisterImagePickedSuccessState());
+      }
+    } catch (e) {
+      designToastDialog(context: context, toast: TOAST.error);
+      emit(RegisterImagePickedErrorState());
+    }
+    return image;
+  }
+
+  void selectImage(context) async {
+    imageFile = await pickImageFromGallery(context);
+    emit(RegisterImageSelectedState());
+  }
+
+  bool isAccept = false;
+
+  void changeRadioButton(){
+    isAccept = !isAccept;
+    emit(RegisterChangeRadioButtonState());
+}
 }

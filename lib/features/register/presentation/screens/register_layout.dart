@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
+import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
@@ -39,19 +40,19 @@ class RegisterLayout extends StatelessWidget {
                 ),
               )),
               SizedBox(
-                height: 10.h,
+                height: 3.h,
                 child: Padding(
-                  padding: designApp,
+                  padding:  EdgeInsets.only(bottom: 10.h),
                   child: SmoothPageIndicator(
                     controller: registerCubit.pageController,
                     count: registerCubit.isCoach ? registerCubit.pagesCoach.length : registerCubit.pagesClint.length,
-                    effect: ExpandingDotsEffect(
+                    effect:const ExpandingDotsEffect(
                       dotColor: Colors.grey,
                       dotWidth: 10,
                       spacing: 5,
                       expansionFactor: 5,
                       dotHeight: 10,
-                      activeDotColor:Theme.of(context).primaryColor,
+                      activeDotColor:ColorsManager.mainColor,
                     ),
                   ),
                 ),
