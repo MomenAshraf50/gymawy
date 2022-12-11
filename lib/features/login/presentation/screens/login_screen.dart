@@ -13,6 +13,8 @@ import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
 import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
 import 'package:gymawy/features/login/presentation/screens/forget_password_screen.dart';
+import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
+import 'package:gymawy/features/register/presentation/screens/register_screens/choose_your_type_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -22,6 +24,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenSizes.screenHeight = MediaQuery.of(context).size.height;
     ScreenSizes.screenWidth = MediaQuery.of(context).size.width;
+    RegisterCubit registerCubit = RegisterCubit.get(context);
 
     return BlocConsumer<AppBloc, AppState>(
       listener: (context, state) {},
@@ -207,8 +210,8 @@ class LoginScreen extends StatelessWidget {
                             // space10Horizontal,
                             TextButton(
                                 onPressed: () {
-                                  // cubit.changePage(0,context);
-                                  //navigateTo(context, const SelectTypePage());
+                                  registerCubit.changePage(0,context);
+                                  navigateTo(context,  const ChooseYourTypeScreen());
                                 },
                                 child: Text(AppString.signUp,
                                     style: Theme

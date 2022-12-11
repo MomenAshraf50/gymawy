@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/bloc_observer_manager.dart';
 import 'package:gymawy/features/login/presentation/screens/splash_screen.dart';
+import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import '/core/di/injection.dart' as di;
 import 'core/di/injection.dart';
 import 'core/network/local/cache_helper.dart';
@@ -67,6 +68,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<LoginCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<RegisterCubit>(),
         ),
       ],
       child: BlocBuilder<AppBloc, AppState>(
