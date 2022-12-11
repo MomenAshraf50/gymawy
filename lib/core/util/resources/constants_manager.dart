@@ -286,3 +286,4 @@ String displayTranslatedText({
   required String en,
 }) =>
     AppBloc.get(context).isArabic ? ar : en;
+
