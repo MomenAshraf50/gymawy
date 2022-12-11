@@ -7,7 +7,7 @@ import 'package:gymawy/core/util/widgets/myText.dart';
 Widget buildCard({required String title, required String image,required BuildContext context}) {
   return SizedBox(
     width: 5.w,
-    height: 10.h,
+    height: 25.h,
     child: Card(
       elevation: 7.0,
       shadowColor: Theme.of(context).primaryColor,

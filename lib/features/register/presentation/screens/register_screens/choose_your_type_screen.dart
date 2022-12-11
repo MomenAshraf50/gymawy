@@ -48,7 +48,7 @@ class ChooseYourTypeScreen extends StatelessWidget {
                                   image: Assets.images.svg.coach,
                                   title: AppString.coach,
                                   context: context))),
-                      horizontalSpace(20.w),
+                      horizontalSpace(10.w),
                       Expanded(
                           child: GestureDetector(
                               onTap: () => registerCubit

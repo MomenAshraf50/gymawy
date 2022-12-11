@@ -10,3 +10,7 @@ class RegisterPasswordChangedState extends RegisterStates{}
 class RegisterChangeMoneyState extends RegisterStates{}
 class RegisterChangeDateFormatState extends RegisterStates{}
 class RegisterChangeSelectedPageCreateAccountScreen extends RegisterStates{}
+class RegisterImageSelectedState extends RegisterStates{}
+class RegisterImagePickedSuccessState extends RegisterStates{}
+class RegisterImagePickedErrorState extends RegisterStates{}
+class RegisterChangeRadioButtonState extends RegisterStates{}
