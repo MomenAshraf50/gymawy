@@ -14,3 +14,6 @@ class RegisterImageSelectedState extends RegisterStates{}
 class RegisterImagePickedSuccessState extends RegisterStates{}
 class RegisterImagePickedErrorState extends RegisterStates{}
 class RegisterChangeRadioButtonState extends RegisterStates{}
+class RegisterGetCountryState extends RegisterStates{}
+class RegisterGetCitiesState extends RegisterStates{}
+

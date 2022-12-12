@@ -21,6 +21,7 @@ class RegisterLayout extends StatelessWidget {
           appBar: defaultAppBar(
               prevPage: registerCubit.currentIndex <= 0 ? false : true,
               title: AppString.create_account,
+              cubit: registerCubit,
               context: context),
           body: Column(
             children: [

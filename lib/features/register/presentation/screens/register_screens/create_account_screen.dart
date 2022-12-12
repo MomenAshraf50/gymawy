@@ -193,6 +193,7 @@ class CreateAccountScreen extends StatelessWidget {
                     onChanged: (value) {
                       registerCubit.changeRadioButton();
                     },
+                    activeColor: ColorsManager.mainColor,
                     title: Text(
                       AppString.dont_have_account,
                       style: Theme
@@ -217,22 +218,6 @@ class CreateAccountScreen extends StatelessWidget {
                         registerCubit.isAccept?  registerCubit.nextPage(true,context):null;
                          } ),
 
-                  // myButton(
-                  //   elevation: 0.0,
-                  //   textOnly: true,
-                  //   color: ColorsManager.mainColor,
-                  //   height: 3.h,
-                  //   text: AppString.next,
-                  //   textStyle: TextStyle(
-                  //       fontFamily: 'poppins',
-                  //       fontWeight: FontWeight.w300,
-                  //       fontSize: 30.rSp,
-                  //       color: ColorsManager.white
-                  //   ),
-                  //   onPressed: isAccept ? (){
-                  //     registerCubit.nextPage(true,context);
-                  //   } : null,
-                  // ),
                 ],
               ),
             ),
