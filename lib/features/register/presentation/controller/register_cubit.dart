@@ -14,6 +14,11 @@ import 'package:gymawy/features/register/presentation/screens/register_screens/s
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/util/resources/appString.dart';
+import '../../../../core/util/resources/assets.gen.dart';
+import '../../../../core/util/resources/goal_data_static.dart';
+import '../../../../core/util/widgets/myText.dart';
+
 
 class RegisterCubit extends Cubit<RegisterStates>{
   RegisterCubit() : super(RegisterInitialState());
@@ -41,7 +46,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
   List<Widget> pagesClint = [
     CreateAccountScreen(),
     CompleteProfileScreen(),
-    AddressPage(),
+    const AddressScreen(),
     const SelectFatScreen(),
      GoalScreen(),
   ];
@@ -49,7 +54,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
   List<Widget> pagesCoach = [
     CreateAccountScreen(),
     CompleteProfileScreen(),
-    AddressPage(),
+    const AddressScreen(),
     const SocialMediaScreen(),
   ];
 
@@ -179,5 +184,99 @@ class RegisterCubit extends Cubit<RegisterStates>{
     emit(RegisterChangeRadioButtonState());
 }
 
+  TextEditingController countryController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  List<String> listCountry = [];
+  List<String> listCity = [];
+  dynamic myData;
+  bool changeCity = false;
+
+
+  Future<void> readJson(context) async {
+    var snapshot = await DefaultAssetBundle.of(context)
+        .loadString('assets/json/new_json.json');
+    myData = await json.decode(snapshot);
+    myData.keys.forEach((key) {
+      listCountry.add(key);
+    });
+    emit(RegisterGetCountryState());
+  }
+
+  Future<void> getCities(String txt) async {
+    listCity.clear();
+    await myData[txt].forEach((element) {
+      listCity.add(element);
+    });
+    cityController.text = '';
+    emit(RegisterGetCitiesState());
+  }
+
+  double fatValue = 0;
+
+  List<String> listFat = [
+    Assets.images.fat.fat1,
+    Assets.images.fat.fat2,
+    Assets.images.fat.fat3,
+    Assets.images.fat.fat4,
+    Assets.images.fat.fat5,
+  ];
+
+  PageController pageFatController = PageController(viewportFraction: 1/2,);
+  Future<void> changeFatPage(index) async {
+    await pageFatController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease);
+    emit(RegisterPageFatControllerState());
+  }
+
+  myText getText(int val) {
+    switch (val) {
+      case 0:
+        emit(RegisterGetFatTextState());
+        return const myText(title:'3 - 7 ', style: Style.medium);
+      case 1:
+        emit(RegisterGetFatTextState());
+        return const myText(title:'8 - 16', style: Style.medium);
+      case 2:
+        emit(RegisterGetFatTextState());
+        return const myText(title:'17 - 24', style: Style.medium);
+      case 3:
+        emit(RegisterGetFatTextState());
+        return const myText(title:'24 - 32', style: Style.medium);
+      case 4:
+        emit(RegisterGetFatTextState());
+        return const myText(title:'32+', style: Style.medium);
+      default:
+        emit(RegisterGetFatTextState());
+        return const myText(title:'', style: Style.medium);
+    }
+  }
+
+  int selected = 0;
+
+  List<GoalDataStatic> listGoal = [
+    GoalDataStatic(
+      body: AppString.lean_tone_title,
+      title: AppString.lean_tone,
+      img: Assets.images.svg.lean,
+    ),
+    GoalDataStatic(
+      body: AppString.lose_title,
+      title: AppString.lose,
+      img: Assets.images.svg.lose,
+    ),
+    GoalDataStatic(
+      body: AppString.improve_title,
+      title: AppString.improve,
+      img: Assets.images.svg.shape,
+    ),
+  ];
+
+
+
+  TextEditingController facebookController = TextEditingController();
+  TextEditingController instagramController  = TextEditingController();
+  TextEditingController youtubeController  = TextEditingController();
 
 }
