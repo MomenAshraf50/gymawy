@@ -54,20 +54,20 @@ class CompleteProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       svgImage(path: Assets.images.svg.couch),
-                      verticalSpace(10.h),
+                      verticalSpace(2.h),
                       const myText(
                           title: AppString.lets_complate, style: Style.large),
-                      verticalSpace(10.h),
+                      verticalSpace(2.h),
                       const myText(
                           title: AppString.will_help, style: Style.small),
-                      verticalSpace(30.h),
+                      verticalSpace(2.h),
                       myListTitle(
                         onClick: () {
                           showCupertinoModalPopup(
                               context: context,
                               builder: (BuildContext builder) {
                                 return Container(
-                                  height: 10.h,
+                                  height: 5.h,
                                   color:
                                       Theme.of(context).scaffoldBackgroundColor,
                                   child: CupertinoDatePicker(
@@ -87,10 +87,11 @@ class CompleteProfileScreen extends StatelessWidget {
                             : dataOfBirth.text,
                         svgImg: Assets.images.svg.date,
                       ),
-                      verticalSpace(10.h),
+                      verticalSpace(2.h),
                       Row(
                         children: [
                           Expanded(
+                            flex: 2,
                             child: myTextFill(
                               svgImg: Assets.images.svg.dollarSignSvgrepoCom,
                               controller: pricePerMonth,
@@ -112,18 +113,24 @@ class CompleteProfileScreen extends StatelessWidget {
                               },
                             ),
                           ),
-                          horizontalSpace(10.w),
-                          Container(
-                            width: 10.w,
-                            height: 10.h,
-                            margin: const EdgeInsets.only(bottom: 16),
-                            child: CustomDropdown(
-                              hintText: 'EGP',
-                              fillColor: ColorsManager.textFieldColor,
-                              items: currency,
-                              selectedStyle:
-                                  Theme.of(context).textTheme.displaySmall,
-                              controller: currencyController,
+                          horizontalSpace(3.w),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              width: 5.w,
+                              height: 5.h,
+                              margin: const EdgeInsets.only(bottom: 16),
+                              child: CustomDropdown(
+                                hintText: 'EGP',
+                                listItemStyle: TextStyle(
+                                  color: Colors.black
+                                ),
+                                fillColor: ColorsManager.textFieldColor,
+                                items: currency,
+                                selectedStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                controller: currencyController,
+                              ),
                             ),
                           ),
                         ],
@@ -136,17 +143,16 @@ class CompleteProfileScreen extends StatelessWidget {
                         controller: genderController,
                         excludeSelected: false,
                       ),
-                      verticalSpace(20.h),
+                      verticalSpace(2.h),
                       myButton(
                           elevation: 0.0,
-                          textOnly: false,
                           iconWidget: svgImage(
                             path: Assets.images.svg.login,
                             color: ColorsManager.white,
                           ),
                           color: ColorsManager.mainColor,
                           height: 3.h,
-                          text: AppString.login,
+                          text: AppString.next,
                           textStyle: TextStyle(
                               fontFamily: 'poppins',
                               fontWeight: FontWeight.w300,

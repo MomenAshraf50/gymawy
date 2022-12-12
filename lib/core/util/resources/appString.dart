@@ -13,8 +13,8 @@ class AppString {
   static const register = 'Register';
   static const userName = 'User Name';
   static const fullName = 'Full Name';
-  static const phone = 'phone';
-  static const confirm_password = 'confirm password';
+  static const phone = 'Phone';
+  static const confirm_password = 'Confirm Password';
   static const hey_coach = 'Hey Coach ❤️';
   static const welcome = 'Welcome to gymway';
   static const create_your_account = 'Create Your Account';

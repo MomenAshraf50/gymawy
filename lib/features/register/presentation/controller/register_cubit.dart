@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
   List<Widget> pagesClint = [
     CreateAccountScreen(),
     CompleteProfileScreen(),
-    AddressScreen(),
+    AddressPage(),
     const SelectFatScreen(),
      GoalScreen(),
   ];
@@ -48,7 +49,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
   List<Widget> pagesCoach = [
     CreateAccountScreen(),
     CompleteProfileScreen(),
-    AddressScreen(),
+    AddressPage(),
     const SocialMediaScreen(),
   ];
 
@@ -177,4 +178,6 @@ class RegisterCubit extends Cubit<RegisterStates>{
     isAccept = !isAccept;
     emit(RegisterChangeRadioButtonState());
 }
+
+
 }
