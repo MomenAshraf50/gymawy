@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/resources/goal_data_static.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 
@@ -16,8 +16,8 @@ Widget buildDesign({
       decoration: BoxDecoration(
           boxShadow: [
             selected == index
-                ? BoxShadow(
-              color: Theme.of(context).primaryColor,
+                ? const BoxShadow(
+              color: ColorsManager.mainColor,
               spreadRadius: 0,
               blurRadius: 25,
             ) : const BoxShadow(),
@@ -39,23 +39,27 @@ Widget buildDesign({
               flex: 3,
               child: svgImage(path: model.img),
             ),
-            verticalSpace(10.h),
             Expanded(
-              flex: 1,
-              child: myText(
-                title: model.title,
-                style: Style.large,
-                color: Colors.white,
+              child: Column(
+                children: [
+                  myText(
+                    title: model.title,
+                    style: Style.large,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'poppins',
+                  ),
+                  verticalSpace(1.h),
+                  myText(
+                      title: model.body,
+                      style: Style.extraSmall,
+                      align: TextAlign.center,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300,
+                      fontFamily: 'poppins',
+                  ),
+                ],
               ),
-            ),
-            verticalSpace(10.h),
-            Expanded(
-              flex: 1,
-              child: myText(
-                  title: model.body,
-                  style: Style.small,
-                  align: TextAlign.center,
-                  color: Colors.white),
             ),
           ],
         ),

@@ -114,7 +114,8 @@ flutter:
     - assets/images/lotti/
     - assets/images/png/
     - assets/images/fat/
-    - assets/icons/
+    - assets/json/
+    - assets/fonts/
     - assets/translations/
 
 

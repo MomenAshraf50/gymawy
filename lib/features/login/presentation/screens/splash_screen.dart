@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
@@ -7,6 +6,7 @@ import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:gymawy/features/login/presentation/screens/login_screen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -14,9 +14,13 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 2),() {
-      navigateAndFinish(context, LoginScreen());
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Timer(const Duration(seconds: 2),() {
+        navigateAndFinish(context, LoginScreen());
+      });
     });
+
 
     ScreenSizes.screenHeight = MediaQuery.of(context).size.height;
     ScreenSizes.screenWidth = MediaQuery.of(context).size.width;

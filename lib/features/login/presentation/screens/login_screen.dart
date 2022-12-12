@@ -15,6 +15,7 @@ import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
 import 'package:gymawy/features/login/presentation/screens/forget_password_screen.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/choose_your_type_screen.dart';
+import 'package:flutter/scheduler.dart';
 
 class LoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -22,8 +23,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenSizes.screenHeight = MediaQuery.of(context).size.height;
-    ScreenSizes.screenWidth = MediaQuery.of(context).size.width;
     RegisterCubit registerCubit = RegisterCubit.get(context);
 
     return BlocConsumer<AppBloc, AppState>(

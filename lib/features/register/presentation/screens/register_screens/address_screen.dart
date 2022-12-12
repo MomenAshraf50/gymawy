@@ -1,127 +1,97 @@
-import 'dart:convert';
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymawy/core/util/resources/appString.dart';
-import 'package:gymawy/core/util/resources/assets.gen.dart';
-import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/loadingPage.dart';
-import 'package:gymawy/core/util/widgets/myElevatedButton.dart';
-import 'package:gymawy/core/util/widgets/my_icon_button.dart';
-import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/set_your_location.dart';
+import '../../../../../core/util/resources/appString.dart';
+import '../../../../../core/util/resources/assets.gen.dart';
+import '../../../../../core/util/resources/colors_manager.dart';
+import '../../../../../core/util/resources/constants_manager.dart';
+import '../../../../../core/util/widgets/loadingPage.dart';
+import '../../../../../core/util/widgets/myButton.dart';
+import '../../../../../core/util/widgets/myElevatedButton.dart';
+import '../../../../../core/util/widgets/my_icon_button.dart';
+import '../../controller/register_cubit.dart';
+import '../../controller/register_states.dart';
 
-
-class AddressPage extends StatefulWidget {
-  const AddressPage({Key? key}) : super(key: key);
-
-  @override
-  State<AddressPage> createState() => _AddressPageState();
-}
-
-class _AddressPageState extends State<AddressPage> {
-  TextEditingController countryController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  List<String> listCountry = [];
-  List<String> listCity = [];
-  var myData;
-  late RegisterCubit cubit;
-  bool changeCity = false;
-
-  @override
-  void initState() {
-    cubit = context.read<RegisterCubit>();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+class AddressScreen extends StatelessWidget {
+  const AddressScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    RegisterCubit registerCubit = RegisterCubit.get(context);
     return FutureBuilder(
-      future: readJson(),
+      future: registerCubit.readJson(context),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: const LoadingPage(),
+            child: LoadingPage(),
           );
         } else {
-          return StatefulBuilder(
-            builder: (context, setState) => Padding(
-              // Padding(
-              padding: designApp,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    svgImage(path: Assets.images.svg.location),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: DefaultIconButton(
-                          icon: const Icon(Icons.add_location_alt_outlined),
-                          onPressed: ()
-                          {
-                            navigateTo(context,  SetYourLocation());
-                          }
+          return BlocBuilder<RegisterCubit,RegisterStates>(
+            builder: (context, state) {
+              return Padding(
+                // Padding(
+                padding: designApp,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      svgImage(path: Assets.images.svg.location),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: DefaultIconButton(
+                            icon: const Icon(Icons.add_location_alt_outlined),
+                            onPressed: ()
+                            {
+                              navigateTo(context,  SetYourLocation());
+                            }
+                        ),
                       ),
-                    ),
-                    verticalSpace(5.h),
-                    CustomDropdown.search(
-                      hintText: AppString.select_country,
-                      items: listCountry,
-                      controller: countryController,
-                      onChanged: (value) {
-                        setState(() {
-                          changeCity = false;
-                          getCities(value);
-                        });
-                      },
-                    ),
-                    verticalSpace(5.h),
-                    if (listCity.isNotEmpty)
+                      verticalSpace(5.h),
                       CustomDropdown.search(
-                        hintText: AppString.select_city,
-                        items: listCity,
-                        controller: cityController,
+                        hintText: AppString.select_country,
+                        items: registerCubit.listCountry,
+                        controller: registerCubit.countryController,
                         onChanged: (value) {
-                          setState(() {
-                            changeCity = true;
-                          });
-
-
+                          registerCubit.changeCity = false;
+                          registerCubit.getCities(value);
                         },
                       ),
-                    verticalSpace(5.h),
-                    myElevatedButton(
-                        text: AppString.next,
-                        onPressed: changeCity ? () => cubit.nextPage(true, context) : null),
-                  ],
+                      verticalSpace(5.h),
+                      if (registerCubit.listCity.isNotEmpty)
+                        CustomDropdown.search(
+                          hintText: AppString.select_city,
+                          items: registerCubit.listCity,
+                          controller: registerCubit.cityController,
+                          onChanged: (value) {
+                            registerCubit.changeCity = true;
+                          },
+                        ),
+                      verticalSpace(5.h),
+
+                      myButton(
+                          elevation: 0.0,
+                          color: ColorsManager.mainColor,
+                          height: 3.h,
+                          text: AppString.next,
+                          textStyle: TextStyle(
+                              fontFamily: 'poppins',
+                              fontWeight: FontWeight.w300,
+                              fontSize: 30.rSp,
+                              color: ColorsManager.white
+                          ),
+                          onPressed: () {
+                            registerCubit.changeCity ? registerCubit.nextPage(true, context) : null;
+                          }),
+                    ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           );
         }
       },
     );
-  }
-
-  Future<void> readJson() async {
-    var snapshot = await DefaultAssetBundle.of(context)
-        .loadString('assets/json/new_json.json');
-    myData = await json.decode(snapshot);
-    myData.keys.forEach((key) {
-      listCountry.add(key);
-    });
-  }
-
-  Future<void> getCities(String txt) async {
-    listCity.clear();
-    await myData[txt].forEach((element) {
-      listCity.add(element);
-    });
-    cityController.text = '';
   }
 }
