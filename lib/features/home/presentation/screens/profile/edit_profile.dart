@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/myButton.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
@@ -28,7 +29,7 @@ class EditProfileScreen extends StatelessWidget {
                   DefaultBackButton(function: (){
                     Navigator.pop(context);
                   },),
-                  horizontalSpace(10),
+                  horizontalSpace(1.h),
                   const myText(
                     title: AppString.editYourProfile,
                     style: Style.medium,
@@ -85,7 +86,7 @@ class EditProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              myElevatedButton(text: AppString.finish, onPressed: (){})
+              myButton(text: AppString.finish, onPressed: (){})
             ],
           ),
         ),

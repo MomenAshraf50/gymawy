@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
-import 'package:gymawy/features/login/presentation/controller/login_states.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,6 +8,8 @@ import '/core/network/local/cache_helper.dart';
 import '/core/network/remote/dio_helper.dart';
 import '/core/network/repository.dart';
 import '/core/util/cubit/cubit.dart';
+
+
 
 
 final sl = GetIt.instance;
@@ -20,6 +22,7 @@ Future<void> init() async {
 
   sl.registerLazySingleton<LoginCubit>(() => LoginCubit());
   sl.registerLazySingleton<RegisterCubit>(() => RegisterCubit());
+  sl.registerLazySingleton<HomeCubit>(() => HomeCubit() );
   //
   // sl.registerLazySingleton(
   //   () => CurrencyHistoryBloc(

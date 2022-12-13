@@ -2,14 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/myButton.dart';
 
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../core/util/widgets/myElevatedButton.dart';
 import '../../../../../core/util/widgets/myText.dart';
 import '../../../../../core/util/widgets/my_icon_button.dart';
-import '../../controller/home_cubit.dart';
 import 'edit_links_screen.dart';
 import 'edit_profile.dart';
 
@@ -18,63 +17,88 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeCubit homeCubit = HomeCubit.get(context);
+    //HomeCubit homeCubit = HomeCubit.get(context);
     return SafeArea(
       child: Scaffold(
         body: Column(
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.only(top: 30.h,start: 20.w,end: 20.w),
+              padding:
+                  EdgeInsetsDirectional.only(top: 2.h, start: 1.w, end: 1.w),
               child: Row(
                 children: [
                   SizedBox(
-                    height: 110.h,
+                    height: 17.h,
                     child: Stack(
                       alignment: Alignment.bottomCenter,
                       children: [
                         Align(
                           alignment: Alignment.topCenter,
                           child: CircleAvatar(
-                            radius: 55.rSp,
-                            backgroundImage: const NetworkImage('https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc='),
+                            radius: 60.rSp,
+                            backgroundImage: const NetworkImage(
+                                'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc='),
                           ),
                         ),
-                        IconButton(onPressed: (){}, icon: SvgPicture.asset(Assets.images.svg.camera,height: 30.h,width: 30.w,),)
+                        IconButton(
+                          onPressed: () {},
+                          icon: SvgPicture.asset(
+                            Assets.images.svg.camera,
+                            height: 4.h,
+                            width: 4.w,
+                          ),
+                        )
                       ],
                     ),
                   ),
                   Expanded(
                     child: Padding(
-                      padding:  EdgeInsets.symmetric(horizontal: 20.0.rSp),
+                      padding: EdgeInsets.symmetric(horizontal: 20.0.rSp),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const myText(title: AppString.userNameProfile,style: Style.medium,),
-                          const myText(title: AppString.accountType,style: Style.small,),
-                          verticalSpace(10.h),
+                          const myText(
+                            title: AppString.userNameProfile,
+                            style: Style.small,
+                          ),
+                          const myText(
+                            title: AppString.accountType,
+                            style: Style.small,
+                          ),
+                          verticalSpace(1.h),
                           Row(
                             children: [
-                              myElevatedButton(
-                                  text: AppString.editLinksButton,
-                                  fontSize: 10.rSp,
-                                  height: 30.h,
-                                  width: 80.w,
-                                  onPressed: (){
-                                navigateTo(context, const EditLinksScreen()
-                                );
-                              }),
-                              horizontalSpace(20.w),
-                              myElevatedButton(
-                                  text: AppString.editProfileButton,
-                                  fontSize: 10.rSp,
-                                  height: 30.h,
-                                  width: 80.w,
-                                  onPressed: (){
-                                navigateTo(context, const EditProfileScreen());
-                              })
+                              Expanded(
+                                child: myButton(
+                                    text: AppString.editLinksButton,
+                                    height: 4.h,
+                                    width: 20.w,
+                                    textStyle: TextStyle(
+                                        fontSize: 10.rSp,
+                                        color: Colors.white
+                                    ),
+                                    onPressed: () {
+                                      navigateTo(
+                                          context, const EditLinksScreen());
+                                    }),
+                              ),
+                              horizontalSpace(1.w),
+                              Expanded(
+                                child: myButton(
+                                    text: AppString.editProfileButton,
+                                    height: 4.h,
+                                    width: 20.w,
+                                    textStyle: TextStyle(
+                                      fontSize: 10.rSp,
+                                      color: Colors.white
+                                    ),
+                                    onPressed: () {
+                                      navigateTo(
+                                          context, const EditProfileScreen());
+                                    }),
+                              )
                             ],
                           ),
-
                         ],
                       ),
                     ),
@@ -82,12 +106,11 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const[
-                Icon(Icons.location_on_outlined),
-                myText(title: AppString.location, style: Style.small),
+              children:  [
+                const Icon(Icons.location_on_outlined),
+                myText(title: AppString.location, style: Style.small,fontSize: 16.rSp,),
               ],
             ),
             Padding(
@@ -96,53 +119,64 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Column(
-                      children: [
-                        Text(
-                          AppString.rating,
-                          style: Theme.of(context).textTheme.displaySmall,
+                      children:  [
+                        myText(
+                          title: AppString.rating,
+                          style: Style.extraSmall,
+                          fontSize: 16.rSp,
                         ),
-                        Text(
-                          AppString.ratingLabel,
-                          style: Theme.of(context).textTheme.displaySmall!.copyWith(fontWeight: FontWeight.normal),
-                        )
+                        myText(
+                          title: AppString.ratingLabel,
+                          style: Style.extraSmall,
+                          fontSize: 16.rSp,
+
+                        ),
                       ],
                     ),
                   ),
                   Container(
-                    height: 40.h,
-                    width: 1.w,
+                    height: 4.h,
+                    width: 0.5.w,
                     color: Colors.grey,
                   ),
                   Expanded(
                     child: Column(
-                      children: [
-                        Text(
-                          AppString.followingNumber,
-                          style: Theme.of(context).textTheme.displaySmall,
+                      children:  [
+                        myText(
+                          title: AppString.followingNumber,
+                          style: Style.extraSmall,
+                          fontSize: 16.rSp,
+
                         ),
-                        Text(
-                          AppString.following,
-                          style: Theme.of(context).textTheme.displaySmall!.copyWith(fontWeight: FontWeight.normal),
-                        )
+                        myText(
+                          title: AppString.following,
+                          style: Style.extraSmall,
+                          fontSize: 16.rSp,
+
+                        ),
                       ],
                     ),
                   ),
                   Container(
-                    height: 40.h,
-                    width: 1.w,
+                    height: 4.h,
+                    width: 0.5.w,
                     color: Colors.grey,
                   ),
                   Expanded(
                     child: Column(
-                      children: [
-                        Text(
-                          AppString.followersNumber,
-                          style: Theme.of(context).textTheme.displaySmall,
+                      children:  [
+                        myText(
+                          title: AppString.followersNumber,
+                          style: Style.extraSmall,
+                          fontSize: 16.rSp,
+
                         ),
-                        Text(
-                          AppString.followers,
-                          style: Theme.of(context).textTheme.displaySmall!.copyWith(fontWeight: FontWeight.normal),
-                        )
+                        myText(
+                          title: AppString.followers,
+                          style: Style.extraSmall,
+                          fontSize: 16.rSp,
+
+                        ),
                       ],
                     ),
                   ),
@@ -150,13 +184,27 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50.h),
+              padding: EdgeInsets.symmetric(horizontal: 5.h),
               child: Row(
                 children: [
-                  Expanded(child: DefaultIconButton(icon: SvgPicture.asset(Assets.images.svg.facebook_icon,), onPressed: (){})),
-                  Expanded(child: DefaultIconButton(icon: SvgPicture.asset(Assets.images.svg.tiktok), onPressed: (){})),
-                  Expanded(child: DefaultIconButton(icon: SvgPicture.asset(Assets.images.svg.instagram), onPressed: (){})),
-                  Expanded(child: DefaultIconButton(icon: SvgPicture.asset(Assets.images.svg.youtube), onPressed: (){})),
+                  Expanded(
+                      child: DefaultIconButton(
+                          icon: SvgPicture.asset(
+                            Assets.images.svg.facebook_icon,
+                          ),
+                          onPressed: () {})),
+                  Expanded(
+                      child: DefaultIconButton(
+                          icon: SvgPicture.asset(Assets.images.svg.tiktok),
+                          onPressed: () {})),
+                  Expanded(
+                      child: DefaultIconButton(
+                          icon: SvgPicture.asset(Assets.images.svg.instagram),
+                          onPressed: () {})),
+                  Expanded(
+                      child: DefaultIconButton(
+                          icon: SvgPicture.asset(Assets.images.svg.youtube),
+                          onPressed: () {})),
                 ],
               ),
             ),
@@ -166,10 +214,11 @@ class ProfileScreen extends StatelessWidget {
                 padding: EdgeInsets.all(20.0.rSp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children:  [
-                    const myText(title: AppString.certifications, style: Style.medium),
-                    Text(AppString.getCertifications,
-                      style: Theme.of(context).textTheme.displaySmall!.copyWith(fontWeight: FontWeight.normal),),
+                  children: const [
+                    myText(
+                        title: AppString.certifications, style: Style.medium,fontWeight: FontWeight.w600,),
+                    myText(
+                        title: AppString.getCertifications, style: Style.medium),
                   ],
                 ),
               ),

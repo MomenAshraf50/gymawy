@@ -21,7 +21,7 @@ bool isArabic = true;
 const String serverFailureMessage = 'Server Failure';
 const String cacheFailureMessage = 'Cache Failure';
 
-EdgeInsetsGeometry designApp = const EdgeInsets.all(25);
+EdgeInsetsGeometry designApp =  EdgeInsets.all(25.rSp);
 
 Widget svgImage({required String path,Color? color}){
   return color != null ?

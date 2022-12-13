@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gymawy/core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
-import '../../widgets/widgets.dart';
+import '../../widgets/build_settings_item.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -20,12 +21,12 @@ class SettingsScreen extends StatelessWidget {
       body: Column(
         children: [
           buildSettingsItem(
-              'Notifications', Assets.images.svg.notifications_icon, context),
+              AppString.notifications, Assets.images.svg.notifications_icon, context),
           buildSettingsItem(
-              'Location', Assets.images.svg.location_icon, context),
-          buildSettingsItem('Support', Assets.images.svg.support_icon, context),
-          buildSettingsItem('Share', Assets.images.svg.share_icon, context),
-          buildSettingsItem('Log Out', Assets.images.svg.logout_icon, context),
+              AppString.settingsLocation, Assets.images.svg.location_icon, context),
+          buildSettingsItem(AppString.support, Assets.images.svg.support_icon, context),
+          buildSettingsItem(AppString.share, Assets.images.svg.share_icon, context),
+          buildSettingsItem(AppString.logOut, Assets.images.svg.logout_icon, context),
         ],
       ),
     );

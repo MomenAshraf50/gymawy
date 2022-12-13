@@ -107,13 +107,18 @@ class AppString {
   static const followersNumber = '5634';
   static const followers = 'Followers';
   static const certifications = 'Certifications';
-  static const getCertifications = 'Add Your Certifications Now To Earn Budge';
+  static const getCertifications = 'Add Your Certifications Now To Earn Badge';
   static const editYourProfile = 'Edit Your Profile';
   static const finish = 'Finish';
   static const tiktokLink = 'Tiktok Link';
   static const facebookLink = 'Facebook Link';
   static const instagramLink = 'Instagram Link';
   static const youtubeLink = 'Youtube Link';
+  static const logOut = 'Log Out';
+  static const support = 'Support';
+  static const share = 'Share';
+  static const notifications = 'Notifications';
+  static const settingsLocation = 'Location';
 
 
 

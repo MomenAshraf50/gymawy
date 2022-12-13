@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
@@ -30,105 +31,115 @@ class SearchScreen extends StatelessWidget {
                     child: myTextFill(
                       controller: homeCubit.searchController,
                       hint: AppString.search,
-                      hintStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
-                          fontFamily: 'poppins',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 10.rSp,
-                          color: Colors.grey.shade400
-                      ),
-                      suffixIcon: Icon(
-                        Icons.search,
-                        size: 15.rSp,
-                        color: Colors.grey.shade400,
-                      ),
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .displayLarge!
+                          .copyWith(
+                              fontFamily: 'poppins',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.rSp,
+                              color: Colors.grey.shade400),
+                      iconPrefix: Icons.search,
                     ),
                   ),
-                  horizontalSpace(10.w),
+                  horizontalSpace(2.w),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 14.h),
+                    padding: EdgeInsets.only(bottom: 2.h),
                     child: InkWell(
                       child: SvgPicture.asset(
                         Assets.images.svg.filterSearch,
-                        height: 28.rSp,
-                        width: 28.rSp,
+                        height: 4.h,
+                        width: 4.w,
                       ),
-                      onTap: ()
-                      {
+                      onTap: () {
                         showDialog(
                           context: context,
                           builder: (context) {
-                            return BlocBuilder<HomeCubit,HomeStates>(
+                            return BlocBuilder<HomeCubit, HomeStates>(
                               builder: (context, state) {
                                 return AlertDialog(
                                   shape: BeveledRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)
-                                  ),
+                                      borderRadius: BorderRadius.circular(10)),
                                   title: Column(
                                     children: [
                                       InkWell(
-                                        onTap: ()
-                                        {
+                                        onTap: () {
                                           homeCubit.changeToCoachRadioButton();
                                         },
                                         child: SizedBox(
-                                          height: 30.h,
+                                          height: 3.h,
                                           child: Row(
                                             children: [
                                               Text(
                                                 AppString.coaches,
-                                                style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                                                    fontFamily: 'poppins',
-                                                    fontWeight: FontWeight.w400
-                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .displaySmall!
+                                                    .copyWith(
+                                                        fontFamily: 'poppins',
+                                                        fontWeight:
+                                                            FontWeight.w400),
                                               ),
                                               const Spacer(),
                                               Container(
-                                                height: 10.h,
-                                                width: 10.w,
+                                                height: 1.h,
+                                                width: 1.w,
                                                 decoration: BoxDecoration(
-                                                    color: homeCubit.coachRadioButton? const Color.fromARGB(255, 248, 96, 13) :
-                                                    Colors.transparent,
-                                                    borderRadius: BorderRadius.circular(5),
-                                                    border: Border.all(color: Colors.grey)
-                                                ),
+                                                    color: homeCubit
+                                                            .coachRadioButton
+                                                        ? const Color.fromARGB(
+                                                            255, 248, 96, 13)
+                                                        : Colors.transparent,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    border: Border.all(
+                                                        color: Colors.grey)),
                                               )
                                             ],
                                           ),
                                         ),
                                       ),
-                                      verticalSpace(10.h),
+                                      verticalSpace(1.h),
                                       Container(
                                         width: double.infinity,
                                         height: 1.h,
                                         color: Colors.grey.shade300,
                                       ),
-                                      verticalSpace(10.h),
+                                      verticalSpace(1.h),
                                       InkWell(
-                                        onTap: ()
-                                        {
+                                        onTap: () {
                                           homeCubit.changeToClientRadioButton();
                                         },
                                         child: SizedBox(
-                                          height: 30.h,
+                                          height: 3.h,
                                           child: Row(
                                             children: [
                                               Text(
                                                 AppString.clients,
-                                                style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                                                    fontFamily: 'poppins',
-                                                    fontWeight: FontWeight.w400
-                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .displaySmall!
+                                                    .copyWith(
+                                                        fontFamily: 'poppins',
+                                                        fontWeight:
+                                                            FontWeight.w400),
                                               ),
                                               const Spacer(),
                                               Container(
-                                                height: 10.h,
-                                                width: 10.w,
+                                                height: 1.h,
+                                                width: 1.w,
                                                 decoration: BoxDecoration(
-                                                    color: homeCubit.clientRadioButton? const Color.fromARGB(255, 248, 96, 13) :
-                                                    Colors.transparent,
-                                                    borderRadius: BorderRadius.circular(5),
-                                                    border: Border.all(color: Colors.grey)
-                                                ),
+                                                    color: homeCubit
+                                                            .clientRadioButton
+                                                        ? const Color.fromARGB(
+                                                            255, 248, 96, 13)
+                                                        : Colors.transparent,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    border: Border.all(
+                                                        color: Colors.grey)),
                                               )
                                             ],
                                           ),
@@ -146,12 +157,12 @@ class SearchScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              verticalSpace(10.h),
+              verticalSpace(1.h),
               Expanded(
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.h),
+                      padding: EdgeInsets.symmetric(vertical: 1.h),
                       child: Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -161,37 +172,34 @@ class SearchScreen extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(10.0.rSp),
                           child: Row(
-                            children:  [
+                            children: [
                               CircleAvatar(
                                 radius: 33.rSp,
                                 backgroundImage: const NetworkImage(
-                                  'https://scontent-hbe1-1.xx.fbcdn.net/v/t39.30808-6/238882960_1176013169492391_5072941271790244082_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=jbg7MdAH1BYAX9hvBtG&tn=Gfqn9JTXHm2lEL0j&_nc_ht=scontent-hbe1-1.xx&oh=00_AfAyStoSibMMjqEycQ6BwFJdCs_JNM8pgFlhOKqTO2KJqw&oe=63941FBE',
-
-                                ),
+                                    'https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=740&t=st=1670936429~exp=1670937029~hmac=16901a75e36e3d716106b5589e760ec2c010ad9cd585cf47cf9e83d7790e939e'),
                               ),
-                              horizontalSpace(20.w),
+                              horizontalSpace(2.w),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    AppString.resultSearchName,
-                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: 'poppins',
-                                    ),
+                                  myText(
+                                    title: AppString.resultSearchName,
+                                    style: Style.extraSmall,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.rSp,
                                   ),
-                                  verticalSpace(10.h),
-                                  Text(
-                                    AppString.resultSearchType,
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: 'poppins',
-                                    ),
+                                  verticalSpace(0.5.h),
+                                  myText(
+                                    title: AppString.resultSearchType,
+                                    style: Style.extraSmall,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.rSp,
                                   ),
-                                  verticalSpace(10.h),
+                                  verticalSpace(0.5.h),
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Icon(
@@ -214,22 +222,19 @@ class SearchScreen extends StatelessWidget {
                                         color: Colors.yellow,
                                         size: 20.rSp,
                                       ),
-                                      horizontalSpace(20.w),
+                                      horizontalSpace(4.w),
                                       Icon(
                                         Icons.location_on,
                                         size: 15.rSp,
                                       ),
-                                      Text(
-                                        AppString.resultSearchLocation,
-                                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: 'poppins',
-                                        ),
+                                      myText(
+                                        title: AppString.resultSearchLocation,
+                                        style: Style.extraSmall,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.rSp,
                                       ),
-
                                     ],
                                   ),
-
                                 ],
                               ),
                             ],

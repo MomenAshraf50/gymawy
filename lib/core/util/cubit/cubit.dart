@@ -234,5 +234,14 @@ class AppBloc extends Cubit<AppState> {
     emit(ChangePasswordVisibilityState());
   }
 
+  IconData visibilityShowConfirmPassword = Icons.visibility_outlined;
+  bool showConfirmPassword = true;
+
+  void changeConfirmPasswordVisibility(){
+    showConfirmPassword = !showConfirmPassword;
+    visibilityShowConfirmPassword = showConfirmPassword? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    emit(ChangePasswordVisibilityState());
+  }
+
 
 }
