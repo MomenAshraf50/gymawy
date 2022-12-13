@@ -16,6 +16,7 @@ import 'core/util/cubit/cubit.dart';
 import 'core/util/cubit/state.dart';
 import 'core/util/resources/constants_manager.dart';
 import 'core/util/resources/routes_manager.dart';
+import 'features/home/presentation/controller/home_cubit.dart';
 import 'features/login/presentation/controller/login_cubit.dart';
 
 void main() async
@@ -85,6 +86,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<RegisterCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<HomeCubit>(),
         ),
       ],
       child: BlocBuilder<AppBloc, AppState>(

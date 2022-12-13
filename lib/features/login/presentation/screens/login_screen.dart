@@ -15,7 +15,8 @@ import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
 import 'package:gymawy/features/login/presentation/screens/forget_password_screen.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/choose_your_type_screen.dart';
-import 'package:flutter/scheduler.dart';
+
+import '../../../home/presentation/screens/home_layout.dart';
 
 class LoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -83,6 +84,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         verticalSpace(5.h),
                         myTextFill(
+                          isPassword: false,
                           validate: (String? value) {
                             if (value!.isEmpty) {
                               return 'isEmpty';
@@ -151,7 +153,7 @@ class LoginScreen extends StatelessWidget {
                                     toast: TOAST.warning,
                                     text: 'please fill ur data');
                               }
-                              // navigateAndFinish(context, const MainScreen());
+                              navigateAndFinish(context, const MainScreen());
                               // navigateTo(context, PinPage());
                             }),
                         verticalSpace(5.h),
