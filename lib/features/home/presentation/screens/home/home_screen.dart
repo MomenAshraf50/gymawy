@@ -329,23 +329,162 @@ class HomeClientScreen extends StatelessWidget {
                     style: Style.extraSmall,
                     fontSize: 12.rSp,
                   ),
+                  // verticalSpace(0.5.h),
+                  // Stack(
+                  //   alignment: Alignment.bottomCenter,
+                  //   children: [
+                  //     Container(
+                  //       width: double.infinity,
+                  //       height: 24.h,
+                  //       decoration: const BoxDecoration(
+                  //         color: Color.fromARGB(255, 248, 96, 13),
+                  //         borderRadius: BorderRadius.all(
+                  //           Radius.circular(10),
+                  //         ),
+                  //       ),
+                  //       child: Padding(
+                  //         padding: EdgeInsets.fromLTRB(5.w, 4.h, 0, 3.h),
+                  //         child: Column(
+                  //           mainAxisAlignment: MainAxisAlignment.start,
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           children: [
+                  //             Container(
+                  //               height: 3.h,
+                  //               width: 15.w,
+                  //               decoration: BoxDecoration(
+                  //                   color: const Color.fromARGB(
+                  //                       255, 252, 183, 146),
+                  //                   borderRadius: BorderRadius.circular(15)),
+                  //               child: Center(
+                  //                 child: Text(
+                  //                   AppString.daysNum,
+                  //                   style: Theme.of(context)
+                  //                       .textTheme
+                  //                       .displayLarge!
+                  //                       .copyWith(
+                  //                         fontFamily: 'poppins',
+                  //                         fontWeight: FontWeight.w700,
+                  //                         fontSize: 9.rSp,
+                  //                       ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             verticalSpace(0.5.h),
+                  //             myText(
+                  //               title: AppString.fullBodyExercise,
+                  //               style: Style.extraSmall,
+                  //               fontSize: 12.rSp,
+                  //             ),
+                  //             verticalSpace(0.5.h),
+                  //             myText(
+                  //               title: AppString.level,
+                  //               style: Style.extraSmall,
+                  //               fontSize: 12.rSp,
+                  //             ),
+                  //             verticalSpace(0.5.h),
+                  //             Row(
+                  //               children: [
+                  //                 Container(
+                  //                   height: 3.h,
+                  //                   width: 20.w,
+                  //                   decoration: BoxDecoration(
+                  //                       color: const Color.fromARGB(
+                  //                           255, 252, 183, 146),
+                  //                       borderRadius:
+                  //                           BorderRadius.circular(15)),
+                  //                   child: Center(
+                  //                     child: Row(
+                  //                       crossAxisAlignment:
+                  //                           CrossAxisAlignment.center,
+                  //                       mainAxisAlignment:
+                  //                           MainAxisAlignment.center,
+                  //                       children: [
+                  //                         SvgPicture.asset(
+                  //                             Assets.images.svg.clock),
+                  //                         horizontalSpace(1.w),
+                  //                         myText(
+                  //                           title: AppString.clock,
+                  //                           style: Style.extraSmall,
+                  //                           fontSize: 12.rSp,
+                  //                           letterSpacing: 0.5,
+                  //                         ),
+                  //                       ],
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //                 horizontalSpace(0.5.w),
+                  //                 Container(
+                  //                   height: 3.h,
+                  //                   width: 20.w,
+                  //                   decoration: BoxDecoration(
+                  //                       color: const Color.fromARGB(
+                  //                           255, 252, 183, 146),
+                  //                       borderRadius:
+                  //                           BorderRadius.circular(15)),
+                  //                   child: Center(
+                  //                     child: Row(
+                  //                       crossAxisAlignment:
+                  //                           CrossAxisAlignment.center,
+                  //                       mainAxisAlignment:
+                  //                           MainAxisAlignment.center,
+                  //                       children: [
+                  //                         SvgPicture.asset(
+                  //                             Assets.images.svg.fire),
+                  //                         horizontalSpace(1.w),
+                  //                         myText(
+                  //                           title: AppString.cal,
+                  //                           style: Style.extraSmall,
+                  //                           fontSize: 12.rSp,
+                  //                         ),
+                  //                       ],
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //             verticalSpace(1.h),
+                  //             InkWell(
+                  //               child: Container(
+                  //                 height: 3.h,
+                  //                 width: 41.w,
+                  //                 decoration: BoxDecoration(
+                  //                     color: const Color.fromARGB(
+                  //                         255, 0, 173, 199),
+                  //                     borderRadius: BorderRadius.circular(15)),
+                  //                 child: Center(
+                  //                   child: myText(
+                  //                     title: AppString.startNow,
+                  //                     style: Style.extraSmall,
+                  //                     fontSize: 12.rSp,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //               onTap: () {},
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     Align(
+                  //       alignment: AlignmentDirectional.topCenter,
+                  //       child: Padding(
+                  //         padding: EdgeInsets.fromLTRB(50.w, 0, 0, 5.h),
+                  //         child: SvgPicture.asset(
+                  //           Assets.images.svg.client,
+                  //           height: 20.h,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   verticalSpace(0.5.h),
                   Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 24.h,
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 248, 96, 13),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(5.w, 4.h, 0, 3.h),
+                      children: [
+                        Image.asset(Assets.images.svg.cardWithGirl),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(5.w, 9.h, 0, 3.h),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
@@ -362,10 +501,10 @@ class HomeClientScreen extends StatelessWidget {
                                         .textTheme
                                         .displayLarge!
                                         .copyWith(
-                                          fontFamily: 'poppins',
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 9.rSp,
-                                        ),
+                                      fontFamily: 'poppins',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 9.rSp,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -373,6 +512,7 @@ class HomeClientScreen extends StatelessWidget {
                               myText(
                                 title: AppString.fullBodyExercise,
                                 style: Style.extraSmall,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 12.rSp,
                               ),
                               verticalSpace(0.5.h),
@@ -391,13 +531,13 @@ class HomeClientScreen extends StatelessWidget {
                                         color: const Color.fromARGB(
                                             255, 252, 183, 146),
                                         borderRadius:
-                                            BorderRadius.circular(15)),
+                                        BorderRadius.circular(15)),
                                     child: Center(
                                       child: Row(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.center,
                                         children: [
                                           SvgPicture.asset(
                                               Assets.images.svg.clock),
@@ -420,13 +560,13 @@ class HomeClientScreen extends StatelessWidget {
                                         color: const Color.fromARGB(
                                             255, 252, 183, 146),
                                         borderRadius:
-                                            BorderRadius.circular(15)),
+                                        BorderRadius.circular(15)),
                                     child: Center(
                                       child: Row(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.center,
                                         children: [
                                           SvgPicture.asset(
                                               Assets.images.svg.fire),
@@ -464,18 +604,7 @@ class HomeClientScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional.topCenter,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(50.w, 0, 0, 5.h),
-                          child: SvgPicture.asset(
-                            Assets.images.svg.client,
-                            height: 20.h,
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
                   ),
                 ],
               )),
