@@ -101,6 +101,9 @@ class $AssetsImagesSvgGen {
   /// File path: assets/images/svg/Facebook.svg
   String get facebook => 'assets/images/svg/Facebook.svg';
 
+  /// File path: assets/images/svg/cardWithGirl.svg
+  String get cardWithGirl => 'assets/images/png/cardWithGirl.png';
+
   /// File path: assets/images/svg/Google.svg
   String get google => 'assets/images/svg/Google.svg';
 
