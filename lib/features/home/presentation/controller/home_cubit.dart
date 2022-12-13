@@ -15,7 +15,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   static HomeCubit get(context) => BlocProvider.of(context);
 
-  Object sl=GetIt.instance();
+  //Object sl=GetIt.instance();
 
   List<Widget> widgets =
   [
@@ -53,6 +53,12 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   int currentNavIndex = 0;
+
+  void changeNavBottomScreens(int index){
+    currentNavIndex = index;
+    emit(HomeChangeNavBottomScreensState());
+
+  }
 
   bool coachRadioButton = false;
   bool clientRadioButton = false;

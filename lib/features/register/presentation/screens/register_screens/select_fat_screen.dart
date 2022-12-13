@@ -56,8 +56,6 @@ class SelectFatScreen extends StatelessWidget {
                     Slider(
                       value: registerCubit.fatValue,
                       activeColor: ColorsManager.mainColor,
-                      thumbColor: ColorsManager.mainColor,
-                      secondaryActiveColor: ColorsManager.mainColor,
                       min: 0.0,
                       max: 4.0,
                       divisions: 4,
@@ -78,12 +76,6 @@ class SelectFatScreen extends StatelessWidget {
                           color: ColorsManager.mainColor,
                           height: 3.h,
                           text: AppString.next,
-                          textStyle: TextStyle(
-                              fontFamily: 'poppins',
-                              fontWeight: FontWeight.w300,
-                              fontSize: 30.rSp,
-                              color: ColorsManager.white
-                          ),
                           onPressed: () {
                             int fat = (registerCubit.fatValue.round()) * 10 + 10;
                             registerCubit.nextPage(true,context);

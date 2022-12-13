@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/myText.dart';
 
 import '../../../../core/util/resources/colors_manager.dart';
 
@@ -22,13 +24,19 @@ Widget buildSettingsItem(String text, String iconPath, BuildContext context) {
           SvgPicture.asset(iconPath),
           horizontalSpace(10.w),
           text == 'Log Out'
-              ? Text(text,
-              style: Theme.of(context)
-                  .textTheme
-                  .displayMedium!
-                  .copyWith(color: Colors.red))
-              : Text(text,
-              style: Theme.of(context).textTheme.displayMedium!),
+              ?  myText(
+            title: AppString.logOut ,
+            style: Style.small,
+            fontWeight: FontWeight.w400,
+            color: Colors.red,
+            fontSize: 20.rSp,
+          )
+              :  myText(
+            title: text ,
+            style: Style.small,
+            fontWeight: FontWeight.w400,
+            fontSize: 20.rSp,
+          ),
           const Spacer(),
           const Icon(
             Icons.arrow_forward_ios,

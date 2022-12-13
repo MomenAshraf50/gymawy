@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/myButton.dart';
 
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
@@ -32,7 +34,7 @@ class EditLinksScreen extends StatelessWidget {
                         Navigator.pop(context);
                       }),
                     ),
-                    horizontalSpace(20),
+                    horizontalSpace(2.h),
                     Align(
                       alignment: AlignmentDirectional.topStart,
                       child: SvgPicture.asset(
@@ -70,7 +72,7 @@ class EditLinksScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              myElevatedButton(text: AppString.finish, onPressed: (){})
+              myButton(text: AppString.finish, onPressed: (){})
             ],
           ),
         ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/cubit/cubit.dart';
 import 'package:gymawy/core/util/cubit/state.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/back_button.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
 
@@ -27,6 +27,7 @@ class RecoveryPasswordScreen extends StatelessWidget {
     return BlocConsumer<AppBloc, AppState>(
       listener: (context, state) {},
       builder: (context, state) {
+        AppBloc appBloc = AppBloc.get(context);
         return Scaffold(
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -38,15 +39,9 @@ class RecoveryPasswordScreen extends StatelessWidget {
                     verticalSpace(5.h),
                     Row(
                       children: [
-                        InkWell(
-                          child: SvgPicture.asset(
-                            Assets.images.svg.arrow_back,
-                          ),
-                          onTap: ()
-                          {
-                            Navigator.pop(context);
-                          },
-                        ),
+                        DefaultBackButton(function: (){
+                          Navigator.pop(context);
+                        }),
                         horizontalSpace(5.h),
                         const Expanded(
                           child: myText(
@@ -72,13 +67,24 @@ class RecoveryPasswordScreen extends StatelessWidget {
                       svgImg: Assets.images.svg.lock,
                       controller: passwordController,
                       hint: AppString.password,
+                      suffixIcon: IconButton(
+                        icon: Icon(appBloc.visibilityShowPassword),
+                        onPressed: (){
+                          appBloc.changePasswordVisibility();
+                        },
+                      ),
 
                     ),
                     myTextFill(
-                      showSuffix: true,
                       svgImg: Assets.images.svg.lock,
                       controller: confirmPasswordController,
                       hint: AppString.confirm_password,
+                      suffixIcon: IconButton(
+                        icon: Icon(appBloc.visibilityShowConfirmPassword),
+                        onPressed: (){
+                          appBloc.changeConfirmPasswordVisibility();
+                        },
+                      ),
                       onChanged: (val) {},
                     ),
                     verticalSpace(20.h),
@@ -88,12 +94,6 @@ class RecoveryPasswordScreen extends StatelessWidget {
                         color: ColorsManager.mainColor,
                         height: 3.h,
                         text: AppString.save,
-                        textStyle: TextStyle(
-                            fontFamily: 'poppins',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 30.rSp,
-                            color: ColorsManager.white
-                        ),
                         onPressed: passwordController.text.isNotEmpty &&  confirmPasswordController.text.isNotEmpty? null : ()
                         {
 

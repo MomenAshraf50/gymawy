@@ -75,13 +75,7 @@ class myTextFill extends StatelessWidget {
                 autocorrect: true,
                 cursorColor: ColorsManager.mainColor,
                 decoration: InputDecoration(
-                  suffixIcon: showSuffix
-                      ? IconButton(
-                          onPressed: () {
-                            appBloc.changePasswordVisibility();
-                          },
-                          icon: Icon(appBloc.visibilityShowPassword))
-                      : null,
+                  suffixIcon: suffixIcon,
                   prefixIcon: svgImg != null
                       ? Padding(
                           padding: const EdgeInsets.all(10.0),

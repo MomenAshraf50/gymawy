@@ -75,12 +75,6 @@ class AddressScreen extends StatelessWidget {
                           color: ColorsManager.mainColor,
                           height: 3.h,
                           text: AppString.next,
-                          textStyle: TextStyle(
-                              fontFamily: 'poppins',
-                              fontWeight: FontWeight.w300,
-                              fontSize: 30.rSp,
-                              color: ColorsManager.white
-                          ),
                           onPressed: () {
                             registerCubit.changeCity ? registerCubit.nextPage(true, context) : null;
                           }),

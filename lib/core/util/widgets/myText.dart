@@ -7,9 +7,10 @@ class myText extends StatelessWidget {
     required this.style,
     this.align,
     this.color,
-    this.letterSpacing = 1.0,
+    this.letterSpacing,
     this.fontFamily = 'english',
     this.fontWeight,
+    this.fontSize,
 
   }) : super(key: key);
   final String title;
@@ -19,6 +20,7 @@ class myText extends StatelessWidget {
   final String? fontFamily;
   final double? letterSpacing;
   final FontWeight? fontWeight;
+  final double? fontSize;
 
 
   @override
@@ -30,6 +32,7 @@ class myText extends StatelessWidget {
         fontFamily: fontFamily,
         letterSpacing: letterSpacing,
         fontWeight: fontWeight ?? Theme.of(context).textTheme.displayMedium!.fontWeight,
+        fontSize: fontSize
       ),);
   }
 

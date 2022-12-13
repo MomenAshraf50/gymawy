@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 
@@ -10,7 +11,7 @@ class myButton extends StatelessWidget {
     this.radius = 20.0,
     this.elevation = 0.0,
     required this.text,
-    this.color,
+    this.color = ColorsManager.mainColor,
     this.iconWidget,
     this.textOnly = true,
     this.onPressed,
@@ -44,7 +45,10 @@ class myButton extends StatelessWidget {
             ? Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(text,
-                  style: textStyle ?? Theme.of(context).textTheme.displayMedium!.copyWith(
+                  style: textStyle ?? Theme
+                      .of(context)
+                      .textTheme
+                      .displaySmall!.copyWith(
                     color: Colors.white,
                   )
         ),
@@ -57,7 +61,7 @@ class myButton extends StatelessWidget {
                     iconWidget!,
                     horizontalSpace(5.w),
                     Text(text,
-                        style: textStyle ?? Theme.of(context).textTheme.displayMedium!.copyWith(
+                        style: textStyle ?? Theme.of(context).textTheme.displaySmall!.copyWith(
                           color: Colors.white,
                         )
                             ),
