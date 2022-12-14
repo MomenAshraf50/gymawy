@@ -11,6 +11,8 @@ import '../../../../../core/util/widgets/myText.dart';
 import '../../../../../core/util/widgets/myTextFill.dart';
 import '../../controller/home_cubit.dart';
 import '../../controller/home_states.dart';
+import '../exercises/exercises_screen.dart';
+import '../plans/plans_screen.dart';
 
 class HomeClientScreen extends StatelessWidget {
   const HomeClientScreen({Key? key}) : super(key: key);
@@ -306,11 +308,11 @@ class HomeClientScreen extends StatelessWidget {
                             ),
                           ),
                           onTap: () {
-                            // if(index == 0){
-                            //   navigateTo(context, const PlansScreen());
-                            // }else if (index == 1){
-                            //   navigateTo(context, const ExercisesScreen());
-                            // }else{}
+                            if(index == 0){
+                              navigateTo(context, const PlansScreen());
+                            }else if (index == 1){
+                              navigateTo(context, const ExercisesScreen());
+                            }else{}
                           },
                         );
                       },
@@ -482,7 +484,7 @@ class HomeClientScreen extends StatelessWidget {
                       children: [
                         Image.asset(Assets.images.svg.cardWithGirl),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(5.w, 9.h, 0, 3.h),
+                          padding: EdgeInsets.fromLTRB(5.w, 8.5.h, 0, 0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -515,13 +517,11 @@ class HomeClientScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12.rSp,
                               ),
-                              verticalSpace(0.5.h),
                               myText(
                                 title: AppString.level,
                                 style: Style.extraSmall,
                                 fontSize: 12.rSp,
                               ),
-                              verticalSpace(0.5.h),
                               Row(
                                 children: [
                                   Container(

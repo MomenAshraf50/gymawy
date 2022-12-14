@@ -97,6 +97,10 @@ class HomeCubit extends Cubit<HomeStates> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+
+  TextEditingController nameOfPlanController = TextEditingController();
+
+
 }
 
 class Suggestions extends Equatable {
@@ -109,3 +113,5 @@ class Suggestions extends Equatable {
   @override
   List<Object?> get props => [img, title];
 }
+
+

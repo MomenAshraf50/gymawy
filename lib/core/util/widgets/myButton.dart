@@ -7,7 +7,7 @@ class myButton extends StatelessWidget {
   myButton({
     Key? key,
     this.width = double.infinity,
-    this.height = 0.0,
+    this.height,
     this.radius = 20.0,
     this.elevation = 0.0,
     required this.text,
@@ -21,7 +21,7 @@ class myButton extends StatelessWidget {
   final Function()? onPressed;
   final String text;
   final double width;
-  final double height;
+  final double? height;
   final double radius;
   final double elevation;
   Color? color;
@@ -31,11 +31,10 @@ class myButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return MaterialButton(
         color: color ?? Theme.of(context).backgroundColor,
         minWidth: width,
-        height: height == 0 ? size.height * 0.05 : height,
+        height: height ?? 6.h,
         elevation: elevation,
         onPressed: onPressed,
         shape: RoundedRectangleBorder(
