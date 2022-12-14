@@ -2,16 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gymawy/core/util/resources/appString.dart';
+import 'package:gymawy/core/util/resources/assets.gen.dart';
+import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/back_button.dart';
+import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/myTextFill.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
-import '../../../../../core/util/resources/appString.dart';
-import '../../../../../core/util/resources/assets.gen.dart';
-import '../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../core/util/widgets/back_button.dart';
-import '../../../../../core/util/widgets/myButton.dart';
-import '../../../../../core/util/widgets/myText.dart';
-import '../../../../../core/util/widgets/myTextFill.dart';
+
 
 class AddPlan extends StatelessWidget {
   const AddPlan({Key? key}) : super(key: key);

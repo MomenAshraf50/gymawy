@@ -86,6 +86,7 @@ dependencies:
   geocoding: ^2.0.5
   flutter_polyline_points: ^1.0.0
   google_nav_bar: ^5.0.6
+  liquid_progress_indicator: ^0.4.0
 
 dev_dependencies:
   flutter_test:

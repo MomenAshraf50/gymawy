@@ -30,9 +30,9 @@ class LoginScreen extends StatelessWidget {
       builder: (context, state) {
         //LoginCubit loginCubit = LoginCubit.get(context);
         AppBloc appBloc = AppBloc.get(context);
-        return SafeArea(
-          child: Scaffold(
-            body: Form(
+        return Scaffold(
+          body: SafeArea(
+            child: Form(
               key: formKey,
               child: HideKeyboardPage(
                 child: SingleChildScrollView(

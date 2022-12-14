@@ -168,6 +168,9 @@ class $AssetsImagesSvgGen {
   /// File path: assets/images/svg/clients.svg
   String get clients => 'assets/images/svg/clients.svg';
 
+  /// File path: assets/images/svg/client_progress.svg
+  String get clientProgress => 'assets/images/svg/client_progress.svg';
+
   /// File path: assets/images/svg/exercise.svg
   String get exercise => 'assets/images/svg/exersice.svg';
 
@@ -201,6 +204,12 @@ class $AssetsImagesSvgGen {
   /// File path: assets/images/svg/facebook_icon.svg
   String get facebook_icon => 'assets/images/svg/facebook_icon.svg';
 
+  /// File path: assets/images/svg/icon_notification.svg
+  String get icon_notification => 'assets/images/svg/icon_notification.svg';
+
+  /// File path: assets/images/svg/icon_notification2.svg
+  String get icon_notification2 => 'assets/images/svg/icon_notification2.svg';
+
   /// File path: assets/images/svg/instagram.svg
   String get instagram => 'assets/images/svg/instagram.svg';
 
@@ -233,6 +242,8 @@ class $AssetsImagesSvgGen {
 
   /// File path: assets/images/svg/client_section.svg
   String get client_section => 'assets/images/svg/client_section.svg';
+
+
 
   /// File path: assets/images/svg/clock.svg
   String get clock => 'assets/images/svg/clock.svg';

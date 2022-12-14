@@ -11,6 +11,7 @@ class myText extends StatelessWidget {
     this.fontFamily = 'english',
     this.fontWeight,
     this.fontSize,
+    this.maxLines
 
   }) : super(key: key);
   final String title;
@@ -21,12 +22,15 @@ class myText extends StatelessWidget {
   final double? letterSpacing;
   final FontWeight? fontWeight;
   final double? fontSize;
+  final int? maxLines;
 
 
   @override
   Widget build(BuildContext context) {
     return Text(title,
       textAlign: align ?? TextAlign.start,
+      maxLines: maxLines,
+      overflow: TextOverflow.ellipsis,
       style: getStyle(context).copyWith(
         color: color ?? getStyle(context).color,
         fontFamily: fontFamily,

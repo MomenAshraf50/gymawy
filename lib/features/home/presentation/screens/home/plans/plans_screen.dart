@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gymawy/core/util/resources/appString.dart';
+import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/features/home/presentation/screens/plans/plan_type.dart';
-
-import '../../../../../core/util/resources/appString.dart';
-import '../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../core/util/widgets/back_button.dart';
-import '../../../../../core/util/widgets/myText.dart';
-import '../../widgets/build_plan_items.dart';
+import 'package:gymawy/core/util/widgets/back_button.dart';
+import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/features/home/presentation/screens/home/plans/plan_type.dart';
+import 'package:gymawy/features/home/presentation/widgets/build_plan_items.dart';
 import 'add_plan.dart';
 
 class PlansScreen extends StatelessWidget {

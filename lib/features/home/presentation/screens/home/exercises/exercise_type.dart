@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gymawy/core/util/resources/appString.dart';
+import 'package:gymawy/core/util/resources/assets.gen.dart';
+import 'package:gymawy/core/util/resources/colors_manager.dart';
+import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import '../../../../../core/util/resources/appString.dart';
-import '../../../../../core/util/resources/assets.gen.dart';
-import '../../../../../core/util/resources/colors_manager.dart';
-import '../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../core/util/resources/trainig_image.dart';
-import '../../../../../core/util/widgets/back_button.dart';
-import '../../../../../core/util/widgets/myButton.dart';
-import '../../../../../core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/resources/trainig_image.dart';
+import 'package:gymawy/core/util/widgets/back_button.dart';
+import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/myText.dart';
 
 class ExerciseType extends StatelessWidget {
   const ExerciseType({Key? key}) : super(key: key);

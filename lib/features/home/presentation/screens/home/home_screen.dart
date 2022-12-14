@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/features/home/presentation/screens/home/client_progress/client_progress_screen.dart';
+import 'package:gymawy/features/home/presentation/screens/home/exercises/exercises_screen.dart';
+import 'package:gymawy/features/home/presentation/screens/home/plans/plans_screen.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
@@ -11,8 +14,6 @@ import '../../../../../core/util/widgets/myText.dart';
 import '../../../../../core/util/widgets/myTextFill.dart';
 import '../../controller/home_cubit.dart';
 import '../../controller/home_states.dart';
-import '../exercises/exercises_screen.dart';
-import '../plans/plans_screen.dart';
 
 class HomeClientScreen extends StatelessWidget {
   const HomeClientScreen({Key? key}) : super(key: key);
@@ -247,7 +248,7 @@ class HomeClientScreen extends StatelessWidget {
                   ),
                   verticalSpace(1.h),
                   SizedBox(
-                    height: 25.h,
+                    height: 21.h,
                     child: PageView.builder(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
@@ -292,13 +293,12 @@ class HomeClientScreen extends StatelessWidget {
                                   children: [
                                     SvgPicture.asset(
                                       homeCubit.listSuggestions[index].img,
-                                      height: 15.h,
                                     ),
                                     verticalSpace(1.h),
                                     myText(
                                       title: homeCubit
                                           .listSuggestions[index].title,
-                                      style: Style.small,
+                                      style:index == 3? Style.extraSmall: Style.small,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -312,7 +312,10 @@ class HomeClientScreen extends StatelessWidget {
                               navigateTo(context, const PlansScreen());
                             }else if (index == 1){
                               navigateTo(context, const ExercisesScreen());
-                            }else{}
+                            }else if(index == 2){}
+                            else{
+                              navigateTo(context, const ProgressScreen());
+                            }
                           },
                         );
                       },
