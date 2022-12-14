@@ -11,6 +11,7 @@ import '../../../../../core/util/widgets/myText.dart';
 import '../../../../../core/util/widgets/myTextFill.dart';
 import '../../controller/home_cubit.dart';
 import '../../controller/home_states.dart';
+import '../exercises/exercises_screen.dart';
 import '../plans/plans_screen.dart';
 
 class HomeClientScreen extends StatelessWidget {
@@ -310,7 +311,7 @@ class HomeClientScreen extends StatelessWidget {
                             if(index == 0){
                               navigateTo(context, const PlansScreen());
                             }else if (index == 1){
-                             // navigateTo(context, const ExercisesScreen());
+                              navigateTo(context, const ExercisesScreen());
                             }else{}
                           },
                         );
