@@ -5,12 +5,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
+import 'package:gymawy/features/home/presentation/screens/home/exercises/exercise_type.dart';
 
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../../core/util/resources/constants_manager.dart';
 import '../../../../core/util/widgets/myText.dart';
-import '../screens/exercises/exercise_type.dart';
 
 Widget buildExercisesItems() => BlocBuilder<HomeCubit, HomeStates>(
   builder: (context, state) {

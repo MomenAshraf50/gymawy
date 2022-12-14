@@ -22,6 +22,7 @@ class ConnectivityChanged extends AppState {}
 class ConnectivityChangedError extends AppState {}
 
 class ChangePasswordVisibilityState extends AppState{}
+class ChangeConfirmPasswordVisibilityState extends AppState{}
 
 
 

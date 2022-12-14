@@ -61,6 +61,7 @@ class AppString {
   static const plans = 'Plans';
   static const exercise = 'Exercise';
   static const clients = 'Clients';
+  static const clientProgress = 'Client Progress';
   static const todaySession = 'Today Session';
   static const doNotMiss = 'Do not miss the fitness';
   static const daysNum = 'Day 7';
@@ -119,6 +120,13 @@ class AppString {
   static const share = 'Share';
   static const notifications = 'Notifications';
   static const settingsLocation = 'Location';
+  static const notificationTitle = 'Hey, It\'s time for lunch';
+  static const notificationTime = 'About 1 minute ago';
+  static const clientsProgress = 'Clients Progress';
+  static const progressAmount = '50%';
+  static const progressDetails = 'Progress Details';
+  static const networkImage = 'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc=';
+
 
 
 

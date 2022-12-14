@@ -40,6 +40,10 @@ class HomeCubit extends Cubit<HomeStates> {
       title: AppString.clients,
       img: Assets.images.svg.clients,
     ),
+    Suggestions(
+      title: AppString.clientProgress,
+      img: Assets.images.svg.clients,
+    )
   ];
 
 

@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Gymawy',
             debugShowCheckedModeBanner: false,
-            themeMode: ThemeMode.light,
+            themeMode:ThemeMode.light,
             theme: AppBloc.get(context).lightTheme,
             // initialRoute: Routes.splash,
             // routes: Routes.routes,

@@ -52,6 +52,10 @@ class AppBloc extends Cubit<AppState> {
         backgroundColor: ColorsManager.white,
         elevation: 0.0,
         titleSpacing: 0.0,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.white,
+          statusBarIconBrightness: Brightness.dark
+        ),
         iconTheme: const IconThemeData(
           color: Colors.black,
           size: 20.0,
@@ -240,7 +244,7 @@ class AppBloc extends Cubit<AppState> {
   void changeConfirmPasswordVisibility(){
     showConfirmPassword = !showConfirmPassword;
     visibilityShowConfirmPassword = showConfirmPassword? Icons.visibility_outlined : Icons.visibility_off_outlined;
-    emit(ChangePasswordVisibilityState());
+    emit(ChangeConfirmPasswordVisibilityState());
   }
 
 
