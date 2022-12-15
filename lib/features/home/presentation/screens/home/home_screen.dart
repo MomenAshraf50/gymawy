@@ -14,6 +14,7 @@ import '../../../../../core/util/widgets/myText.dart';
 import '../../../../../core/util/widgets/myTextFill.dart';
 import '../../controller/home_cubit.dart';
 import '../../controller/home_states.dart';
+import '../settings/notifications_screen.dart';
 
 class HomeClientScreen extends StatelessWidget {
   const HomeClientScreen({Key? key}) : super(key: key);
@@ -40,33 +41,39 @@ class HomeClientScreen extends StatelessWidget {
                         height: 10.h,
                       ),
                       const Spacer(),
-                      Stack(
-                        alignment: Alignment.topLeft,
-                        children: [
-                          SvgPicture.asset(
-                            Assets.images.svg.notifications,
-                            width: 3.w,
-                            height: 4.h,
-                          ),
-                          Container(
-                            height: 2.h,
-                            width: 4.w,
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(7.rSp)),
-                            child: Center(
-                              child: Text(AppString.notificationsNum,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displayLarge!
-                                      .copyWith(
-                                          fontFamily: 'poppins',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 11.rSp,
-                                          color: Colors.white)),
+                      InkWell(
+                        onTap: ()
+                        {
+                          navigateTo(context, const NotificationsScreen());
+                        },
+                        child: Stack(
+                          alignment: Alignment.topLeft,
+                          children: [
+                            SvgPicture.asset(
+                              Assets.images.svg.notifications,
+                              width: 3.w,
+                              height: 4.h,
                             ),
-                          ),
-                        ],
+                            Container(
+                              height: 2.h,
+                              width: 4.w,
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(7.rSp)),
+                              child: Center(
+                                child: Text(AppString.notificationsNum,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayLarge!
+                                        .copyWith(
+                                            fontFamily: 'poppins',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 11.rSp,
+                                            color: Colors.white)),
+                              ),
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   ),
