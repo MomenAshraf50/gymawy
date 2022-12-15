@@ -80,8 +80,11 @@ class $AssetsImagesLottiGen {
   /// File path: assets/images/lotti/social.json
   String get social => 'assets/images/lotti/social.json';
 
+  /// File path: assets/images/lotti/dumbble.json
+  String get dumbble => 'assets/images/lotti/dumbble.json';
+
   /// List of all assets
-  List<String> get values => [loading, social];
+  List<String> get values => [loading, social,dumbble];
 }
 
 class $AssetsImagesPngGen {

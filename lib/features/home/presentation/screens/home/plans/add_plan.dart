@@ -29,24 +29,7 @@ class AddPlan extends StatelessWidget {
             builder: (context, state) {
               return Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      DefaultBackButton(function: () {
-                        Navigator.pop(context);
-                      },
-                      ),
-                      const Expanded(
-                          child: Center(
-                              child: myText(
-                                title: AppString.addPlan,
-                                style: Style.large,
-                                fontFamily: 'poppins',
-                              )
-                          )
-                      ),
-                    ],
-                  ),
+                  defaultAppBar(title: AppString.addPlan, context: context),
                   verticalSpace(20.h),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -59,10 +42,9 @@ class AddPlan extends StatelessWidget {
                             .textTheme
                             .bodyMedium!
                             .copyWith(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 12.rSp,
-                            color: Colors.grey,
-                            fontFamily: 'poppins'
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12.rSp,
+                          color: Colors.grey,
                         ),
                         validate: (String? value) {
                           if (value!.isEmpty) {
@@ -79,18 +61,11 @@ class AddPlan extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              AppString.visibility,
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12.rSp,
-                                  color: Colors.grey,
-                                  fontFamily: 'poppins'
-                              ),
+                            myText(
+                              title: AppString.visibility,
+                              style: Style.extraSmall,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.rSp,
                             ),
                             const Spacer(),
                             InkWell(

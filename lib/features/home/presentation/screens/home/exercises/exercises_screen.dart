@@ -20,22 +20,7 @@ class ExercisesScreen extends StatelessWidget {
           padding: designApp,
           child: Column(
             children: [
-              Row(
-                children: [
-                  DefaultBackButton(
-                    function: () {
-                      navigateAndFinish(context, const MainScreen());
-                    },
-                  ),
-                  const Expanded(
-                      child: Center(
-                          child: myText(
-                            title: AppString.exercises,
-                            style: Style.large,
-                            fontFamily: 'poppins',
-                          ))),
-                ],
-              ),
+              defaultAppBar(title: AppString.exercises, context: context),
               Expanded(
                 child: ListView.builder(
                   itemBuilder: (context, index) => InkWell(

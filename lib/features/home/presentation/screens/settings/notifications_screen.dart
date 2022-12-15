@@ -19,20 +19,8 @@ class NotificationsScreen extends StatelessWidget {
           padding: EdgeInsets.all(20.rSp),
           child: Column(
             children: [
-              Row(
-                children: [
-                  DefaultBackButton(function: () {
-                    Navigator.pop(context);
-                  }),
-                   horizontalSpace(3.w),
-                   myText(
-                    title: AppString.notifications,
-                    style: Style.headMedium,
-                    fontSize: 24.rSp,
-                  ),
-                ],
-              ),
-              verticalSpace(5.h),
+              defaultAppBar(title: AppString.notifications, context: context),
+              verticalSpace(2.h),
               Expanded(
                 child: ListView.builder(itemBuilder: (context,index) => buildNotificationsItem(
                   index: '$index',

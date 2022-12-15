@@ -8,9 +8,9 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 Widget buildClientProgressItem(){
   return Card(
-    elevation: 10,
+    elevation: 5,
     child: Padding(
-      padding:  EdgeInsets.all(10.rSp),
+      padding:  EdgeInsets.all(15.rSp),
       child: Row(
         children: [
           CircleAvatar(

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
+import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 
 import 'extensions_manager.dart';
@@ -69,13 +70,11 @@ AppBar defaultAppBar({
   RegisterCubit? cubit,
 }) {
   return AppBar(
-    title: Text(title),
     centerTitle: true,
+    title: myText(title:title,style: Style.small,fontWeight: FontWeight.bold,),
     actions: actions,
-    elevation: 1.0,
     leading: IconButton(
-      icon: svgImage(path: Assets.images.svg.arrowLeftSquare,
-          color: ColorsManager.iconColor),
+      icon: svgImage(path: Assets.images.svg.arrow_back,),
       onPressed: (){
         prevPage ? cubit!.nextPage(false,context) : Navigator.pop(context);
       },

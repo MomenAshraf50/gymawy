@@ -20,24 +20,7 @@ class PlanType extends StatelessWidget {
           padding: designApp,
           child: Column(
             children: [
-              Row(
-                children: [
-                  DefaultBackButton(
-                    function: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  const Expanded(
-                      child: Center(
-                          child: myText(
-                            title: AppString.planType,
-                            style: Style.large,
-                            fontFamily: 'poppins',
-                          )
-                      )
-                  ),
-                ],
-              ),
+              defaultAppBar(title: AppString.planType, context: context),
               verticalSpace(2.h),
               Expanded(
                 child: ListView.builder(

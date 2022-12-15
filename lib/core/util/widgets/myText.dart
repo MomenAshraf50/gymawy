@@ -8,10 +8,10 @@ class myText extends StatelessWidget {
     this.align,
     this.color,
     this.letterSpacing,
-    this.fontFamily = 'poppins',
-    this.fontWeight = FontWeight.w400,
+    this.fontFamily = 'english',
+    this.fontWeight,
     this.fontSize,
-    this.maxLines
+    this.maxLines,
 
   }) : super(key: key);
   final String title;
