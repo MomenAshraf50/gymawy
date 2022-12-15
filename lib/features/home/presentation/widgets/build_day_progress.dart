@@ -10,9 +10,10 @@ Widget buildDayProgressItems(){
   return Padding(
     padding:  EdgeInsets.all(12.rSp),
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
-          height: 10.h,
+          height: 1.h,
           width: 6.w,
           decoration: BoxDecoration(
             gradient: const LinearGradient(

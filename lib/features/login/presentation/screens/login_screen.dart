@@ -10,6 +10,7 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
 import 'package:gymawy/features/login/presentation/screens/forget_password_screen.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
@@ -117,16 +118,7 @@ class LoginScreen extends StatelessWidget {
                                 onPressed: () {
                                   navigateTo(context, const ForgetPasswordScreen());
                                 },
-                                child: Text(AppString.forget_password,
-                                    style: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .displaySmall!
-                                        .copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'poppins',
-                                      fontSize: 15.rSp
-                                    ))),
+                                child: myText(title: AppString.forget_password, style: Style.extraSmall,fontSize: 15.rSp,)),
                           ),
                           verticalSpace(2.h),
                           myButton(
@@ -170,7 +162,7 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                    child: const Text(AppString.oR)),
+                                    child: const myText(title:AppString.oR,style: Style.extraSmall,)),
                                 Expanded(
                                   child: Container(
                                     height: 0.1.h,
@@ -197,33 +189,14 @@ class LoginScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(AppString.dont_have_account,
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .displaySmall!.copyWith(
-                                    fontSize: 15.rSp,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'poppins'
-                                  )
-                              ),
+                              const myText(title: AppString.dont_have_account, style: Style.extraSmall),
                               // space10Horizontal,
                               TextButton(
                                   onPressed: () {
                                     registerCubit.changePage(0,context);
                                     navigateTo(context,  const ChooseYourTypeScreen());
                                   },
-                                  child: Text(AppString.signUp,
-                                      style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .displaySmall!.copyWith(
-                                      fontSize: 15.rSp,
-                                      fontWeight: FontWeight.w700,
-                                      color: ColorsManager.mainColor,
-                                      fontFamily: 'poppins'
-                                  )
-                                  )
+                                  child: const myText(title: AppString.signUp, style: Style.extraSmall,color: ColorsManager.mainColor,fontWeight: FontWeight.w600,),
                               ),
                             ],
                           ),

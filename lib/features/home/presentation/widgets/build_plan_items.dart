@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/myText.dart';
 import '../../../../core/util/resources/appString.dart';
 
 Widget buildPlansItems(context) {
@@ -19,27 +20,14 @@ Widget buildPlansItems(context) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  AppString.planType,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(
-                      fontFamily: 'poppins',
-                      fontWeight: FontWeight.w400),
+                const myText(title: AppString.planType,
+                    style: Style.small,
+                  fontWeight: FontWeight.w600,
                 ),
-                verticalSpace(2.h),
+                verticalSpace(1.h),
                 Row(
                   children: [
-                    Text(
-                      AppString.visibility,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall!
-                          .copyWith(
-                          fontFamily: 'poppins',
-                          fontWeight: FontWeight.w300),
-                    ),
+                    const myText(title: AppString.visibility, style: Style.extraSmall),
                     horizontalSpace(2.w),
                     Icon(
                       Icons.visibility_off_outlined,

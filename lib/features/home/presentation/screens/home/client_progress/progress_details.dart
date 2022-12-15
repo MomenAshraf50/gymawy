@@ -24,22 +24,8 @@ class ProgressDetailsScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    DefaultBackButton(
-                      function: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    horizontalSpace(4.w),
-                    myText(
-                      title: AppString.clientsProgress,
-                      style: Style.headMedium,
-                      fontSize: 18.rSp,
-                    )
-                  ],
-                ),
-                verticalSpace(4.h),
+                defaultAppBar(title: AppString.clientProgress, context: context),
+                verticalSpace(2.h),
                 CircleAvatar(
                   radius: 50.rSp,
                   backgroundImage: const NetworkImage(AppString.networkImage),

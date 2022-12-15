@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
@@ -8,20 +6,20 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
 import 'package:gymawy/features/register/presentation/widgets/creat_account_widgets.dart';
-import 'package:image_picker/image_picker.dart';
 
 class CreateAccountScreen extends StatelessWidget {
-   CreateAccountScreen({Key? key}) : super(key: key);
+  CreateAccountScreen({Key? key}) : super(key: key);
 
   var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    RegisterCubit registerCubit =RegisterCubit.get(context);
+    RegisterCubit registerCubit = RegisterCubit.get(context);
     return Padding(
       padding: designApp,
       child: BlocBuilder<RegisterCubit, RegisterStates>(
@@ -33,24 +31,29 @@ class CreateAccountScreen extends StatelessWidget {
               child: Column(
                 children: [
                   if (registerCubit.isCoach)
-                    buildRichText(AppString.hey_coach,context),
-                  Text(
-                    AppString.create_your_account,
-                    style: Theme.of(context).textTheme.displayLarge!.copyWith(),
+                    const myText(
+                      title: AppString.hey_coach,
+                      style: Style.small,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  const myText(
+                    title: AppString.create_your_account,
+                    style: Style.small,
+                    fontWeight: FontWeight.bold,
                   ),
                   verticalSpace(3.h),
                   GestureDetector(
-                      onTap:(){
+                      onTap: () {
                         print('object');
                         registerCubit.selectImage(context);
                       },
-                      child: registerCubit.imageFile == null ?
-                      svgImage(path: Assets.images.svg.group2584) :
-                      CircleAvatar(
-                        radius: 100.rSp,
-                        backgroundImage: FileImage(registerCubit.imageFile!),
-                      )),
-
+                      child: registerCubit.imageFile == null
+                          ? svgImage(path: Assets.images.svg.group2584)
+                          : CircleAvatar(
+                              radius: 100.rSp,
+                              backgroundImage:
+                                  FileImage(registerCubit.imageFile!),
+                            )),
                   verticalSpace(5.h),
                   myTextFill(
                       svgImg: Assets.images.svg.user,
@@ -73,7 +76,9 @@ class CreateAccountScreen extends StatelessWidget {
                   myTextFill(
                     svgImg: Assets.images.svg.email,
                     validate: (String? value) {
-                      bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
+                      bool emailValid = RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(value!);
                       if (value.isEmpty) {
                         return 'email is required';
                       } else if (!emailValid) {
@@ -96,7 +101,7 @@ class CreateAccountScreen extends StatelessWidget {
                       isPassword: true,
                       svgImg: Assets.images.svg.lock,
                       onChanged: (val) {
-                          registerCubit.onPasswordChanged(val!);
+                        registerCubit.onPasswordChanged(val!);
                       },
                       validate: (String? value) {
                         if (value!.isEmpty) {
@@ -114,12 +119,13 @@ class CreateAccountScreen extends StatelessWidget {
                         }
                       },
                       onChanged: (val) {
-                          registerCubit.matchPassword();
+                        registerCubit.matchPassword();
                       },
                       controller: registerCubit.confirmPasswordController,
                       hint: AppString.confirm_password),
                   Visibility(
-                    visible: registerCubit.passwordController.text.isNotEmpty && !registerCubit.isPasswordValid(),
+                    visible: registerCubit.passwordController.text.isNotEmpty &&
+                        !registerCubit.isPasswordValid(),
                     child: Container(
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
@@ -131,25 +137,29 @@ class CreateAccountScreen extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: const BorderRadius.all(
-                                Radius.circular(10.0) //                 <--- border radius here
-                            ),
+                                Radius.circular(
+                                    10.0) //                 <--- border radius here
+                                ),
                             color: Colors.blue[50],
                           ),
                           child: Column(
                             children: [
                               Container(
                                 child: validationRow(
-                                    condition: registerCubit.isPasswordHasUpperAndLower,
+                                    condition: registerCubit
+                                        .isPasswordHasUpperAndLower,
                                     message: "Contains upper and lower case"),
                               ),
                               Container(
                                 child: validationRow(
-                                    condition: registerCubit.isPasswordHasSpecialCharacter,
+                                    condition: registerCubit
+                                        .isPasswordHasSpecialCharacter,
                                     message: "Contains one special character"),
                               ),
                               Container(
                                 child: validationRow(
-                                    condition: registerCubit.isPasswordEightCharacters,
+                                    condition:
+                                        registerCubit.isPasswordEightCharacters,
                                     message: "Contains at least 8 characters"),
                               ),
                             ],
@@ -171,8 +181,9 @@ class CreateAccountScreen extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: const BorderRadius.all(
-                                Radius.circular(10.0) //                 <--- border radius here
-                            ),
+                                Radius.circular(
+                                    10.0) //                 <--- border radius here
+                                ),
                             color: Colors.blue[50],
                           ),
                           child: Column(
@@ -194,12 +205,12 @@ class CreateAccountScreen extends StatelessWidget {
                       registerCubit.changeRadioButton();
                     },
                     activeColor: ColorsManager.mainColor,
-                    title: Text(
-                      AppString.dont_have_account,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .displaySmall,),
+                    title: myText(
+                      title: AppString.dont_have_account,
+                      style: Style.small,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.rSp,
+                    ),
                     value: registerCubit.isAccept,
                   ),
                   verticalSpace(2.h),
@@ -208,10 +219,11 @@ class CreateAccountScreen extends StatelessWidget {
                       color: ColorsManager.mainColor,
                       height: 3.h,
                       text: AppString.next,
-                    onPressed: (){
-                        registerCubit.isAccept?  registerCubit.nextPage(true,context):null;
-                         } ),
-
+                      onPressed: () {
+                        registerCubit.isAccept
+                            ? registerCubit.nextPage(true, context)
+                            : null;
+                      }),
                 ],
               ),
             ),

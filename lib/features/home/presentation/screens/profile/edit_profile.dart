@@ -24,19 +24,7 @@ class EditProfileScreen extends StatelessWidget {
           padding: EdgeInsets.all(20.0.rSp),
           child: Column(
             children: [
-              Row(
-                children: [
-                  DefaultBackButton(function: (){
-                    Navigator.pop(context);
-                  },),
-                  horizontalSpace(1.h),
-                  const myText(
-                    title: AppString.editYourProfile,
-                    style: Style.medium,
-                    fontWeight: FontWeight.bold,
-                  )
-                ],
-              ),
+              defaultAppBar(title: AppString.editYourProfile, context: context),
               Expanded(
                 child: Center(
                   child: SingleChildScrollView(

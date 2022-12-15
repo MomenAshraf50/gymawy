@@ -18,20 +18,8 @@ class ProgressScreen extends StatelessWidget {
           padding: designApp,
           child: Column(
             children: [
-              Row(
-                children: [
-                  DefaultBackButton(function: () {
-                    Navigator.pop(context);
-                  }),
-                  horizontalSpace(4.w),
-                  myText(
-                    title: AppString.clientsProgress,
-                    style: Style.headMedium,
-                    fontSize: 18.rSp,
-                  )
-                ],
-              ),
-              verticalSpace(4.h),
+              defaultAppBar(title: AppString.clientsProgress, context: context),
+              verticalSpace(2.h),
               Expanded(
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),

@@ -23,8 +23,7 @@ class ProfileScreen extends StatelessWidget {
         body: Column(
           children: [
             Padding(
-              padding:
-                  EdgeInsetsDirectional.only(top: 2.h, start: 1.w, end: 1.w),
+              padding:designApp,
               child: Row(
                 children: [
                   SizedBox(
@@ -53,18 +52,27 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0.rSp),
+                      padding: EdgeInsetsDirectional.only(start: 5.0.rSp),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const myText(
-                            title: AppString.userNameProfile,
-                            style: Style.small,
+                          Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: 10.rSp),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                myText(
+                                  title: AppString.userNameProfile,
+                                  style: Style.small,
+                                ),
+                                myText(
+                                  title: AppString.accountType,
+                                  style: Style.small,
+                                ),
+                              ],
+                            ),
                           ),
-                          const myText(
-                            title: AppString.accountType,
-                            style: Style.small,
-                          ),
+
                           verticalSpace(1.h),
                           Row(
                             children: [

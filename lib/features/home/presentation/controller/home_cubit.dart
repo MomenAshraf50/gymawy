@@ -21,7 +21,7 @@ class HomeCubit extends Cubit<HomeStates> {
   [
     const HomeClientScreen(),
     const SearchScreen(),
-    const SettingsScreen(),
+    SettingsScreen(),
     const ProfileScreen(),
   ];
 

@@ -44,19 +44,18 @@ Widget buildDesign({
                 children: [
                   myText(
                     title: model.title,
-                    style: Style.large,
+                    style: Style.medium,
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
-                    fontFamily: 'poppins',
                   ),
                   verticalSpace(1.h),
                   myText(
                       title: model.body,
                       style: Style.extraSmall,
+                      maxLines: 4,
                       align: TextAlign.center,
                       color: Colors.white,
                       fontWeight: FontWeight.w300,
-                      fontFamily: 'poppins',
                   ),
                 ],
               ),

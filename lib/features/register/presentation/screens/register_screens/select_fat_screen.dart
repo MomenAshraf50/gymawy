@@ -16,15 +16,26 @@ class SelectFatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RegisterCubit registerCubit = RegisterCubit.get(context);
-    return BlocBuilder<RegisterCubit,RegisterStates>(
+    return BlocBuilder<RegisterCubit, RegisterStates>(
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             verticalSpace(5.h),
-            const myText(title:AppString.select_fat, style: Style.large),
-            const myText(title:AppString.it_will_help, style: Style.small, align: TextAlign.center,),
+            Expanded(
+              child: Column(
+                children: const [
+                  myText(title: AppString.select_fat, style: Style.large),
+                  myText(
+                    title: AppString.it_will_help,
+                    style: Style.small,
+                    align: TextAlign.center,
+                    maxLines: 2,
+                  ),
+                ],
+              ),
+            ),
             verticalSpace(5.h),
             Expanded(
               flex: 3,
@@ -34,12 +45,13 @@ class SelectFatScreen extends StatelessWidget {
                   controller: registerCubit.pageFatController,
                   allowImplicitScrolling: true,
                   pageSnapping: true,
-
                   itemBuilder: (context, index) {
-                    return  SizedBox(
+                    return SizedBox(
                       width: 50,
                       height: 200,
-                      child: svgImage(path: registerCubit.listFat[index],),
+                      child: svgImage(
+                        path: registerCubit.listFat[index],
+                      ),
                     );
                   },
                   itemCount: registerCubit.listFat.length,
@@ -50,8 +62,9 @@ class SelectFatScreen extends StatelessWidget {
               ),
             ),
             verticalSpace(5.h),
-            Expanded(flex: 2,
-                child:Column(
+            Expanded(
+                flex: 2,
+                child: Column(
                   children: [
                     Slider(
                       value: registerCubit.fatValue,
@@ -68,7 +81,9 @@ class SelectFatScreen extends StatelessWidget {
                             curve: Curves.ease);
                       },
                     ),
-                    Center(child: registerCubit.getText(registerCubit.fatValue.round())),
+                    Center(
+                        child: registerCubit
+                            .getText(registerCubit.fatValue.round())),
                     Padding(
                       padding: designApp,
                       child: myButton(
@@ -77,13 +92,13 @@ class SelectFatScreen extends StatelessWidget {
                           height: 3.h,
                           text: AppString.next,
                           onPressed: () {
-                            int fat = (registerCubit.fatValue.round()) * 10 + 10;
-                            registerCubit.nextPage(true,context);
+                            int fat =
+                                (registerCubit.fatValue.round()) * 10 + 10;
+                            registerCubit.nextPage(true, context);
                           }),
                     ),
                   ],
-                )
-            ),
+                )),
           ],
         );
       },

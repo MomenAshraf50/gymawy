@@ -9,7 +9,7 @@ import 'package:gymawy/features/home/presentation/screens/settings/notifications
 
 import '../../../../core/util/resources/colors_manager.dart';
 
-Widget buildSettingsItem(String text, String iconPath, BuildContext context) {
+Widget buildSettingsItem({required String text,required String iconPath,required BuildContext context}) {
   return InkWell(
     onTap: () {
       if (text == 'Notifications') {

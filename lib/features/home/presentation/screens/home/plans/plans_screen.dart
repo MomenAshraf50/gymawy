@@ -20,29 +20,12 @@ class PlansScreen extends StatelessWidget {
           padding: designApp,
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DefaultBackButton(
-                    function: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  const Expanded(
-                      child: Center(
-                          child: myText(
-                            title: AppString.plans,
-                            style: Style.large,
-                            fontFamily: 'poppins',
-                          ))),
-                  const Spacer(),
-                  Container(
-                    height: 5.h,
-                    width: 10.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25.rSp),
-                      color: Colors.green,
-                    ),
+              defaultAppBar(
+                title: AppString.plans,
+                context: context,
+                actions: [
+                  CircleAvatar(
+                    backgroundColor: Colors.green,
                     child: IconButton(
                         onPressed: () {
                           navigateTo(context, const AddPlan());
@@ -52,7 +35,7 @@ class PlansScreen extends StatelessWidget {
                           color: Colors.white,
                         )),
                   )
-                ],
+                ]
               ),
               Expanded(
                 child: ListView.builder(

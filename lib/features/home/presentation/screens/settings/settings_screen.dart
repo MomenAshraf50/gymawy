@@ -1,35 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
+import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/core/util/resources/setting_items.dart';
+import 'package:gymawy/core/util/widgets/myText.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../widgets/build_settings_item.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  SettingsScreen({Key? key}) : super(key: key);
+
+  List<SettingsItem> settingsItems = [
+    SettingsItem(AppString.notifications, Assets.images.svg.notifications_icon),
+    SettingsItem(AppString.settingsLocation, Assets.images.svg.location_icon),
+    SettingsItem(AppString.support, Assets.images.svg.support_icon),
+    SettingsItem(AppString.share, Assets.images.svg.share_icon),
+    SettingsItem(AppString.logOut, Assets.images.svg.logout_icon),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Center(
-            child: Text('Settings',
-                style: Theme.of(context)
-                    .textTheme
-                    .displayMedium!
-                    .copyWith(fontWeight: FontWeight.bold))),
-      ),
-      body: Column(
-        children: [
-          buildSettingsItem(
-              AppString.notifications, Assets.images.svg.notifications_icon, context),
-          buildSettingsItem(
-              AppString.settingsLocation, Assets.images.svg.location_icon, context),
-          buildSettingsItem(AppString.support, Assets.images.svg.support_icon, context),
-          buildSettingsItem(AppString.share, Assets.images.svg.share_icon, context),
-          buildSettingsItem(AppString.logOut, Assets.images.svg.logout_icon, context),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            const myText(title: AppString.settings, style: Style.small),
+            Expanded(
+              child: ListView.builder(itemBuilder:(context,index) => buildSettingsItem(
+                text: settingsItems[index].title,
+                iconPath: settingsItems[index].icon,
+                context: context
+              ),
+                itemCount: settingsItems.length,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
-
 }
