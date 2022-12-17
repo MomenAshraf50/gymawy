@@ -6,7 +6,11 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
-Widget buildClientProgressItem(){
+Widget buildClientProgressItem(
+{
+  required bool isProgress,
+}
+    ){
   return Card(
     elevation: 5,
     child: Padding(
@@ -24,7 +28,7 @@ Widget buildClientProgressItem(){
             fontSize: 16.rSp,
           ),
           const Spacer(),
-          SizedBox(
+          isProgress? SizedBox(
             width: 13.w,
             height: 6.h,
             child: LiquidCircularProgressIndicator(
@@ -45,7 +49,12 @@ Widget buildClientProgressItem(){
                 fontSize: 12.rSp,
               ),
             ),
-          ),
+          ) :
+          const Icon(
+              Icons.arrow_forward_ios_outlined,
+              color: Color.fromARGB(255, 208, 208, 208),
+          )
+
         ],
       ),
     ),

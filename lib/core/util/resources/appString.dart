@@ -126,6 +126,15 @@ class AppString {
   static const progressAmount = '50%';
   static const progressDetails = 'Progress Details';
   static const networkImage = 'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc=';
+  static const address = '10th of Ramadan';
+  static const age = '50 Years old';
+  static const mail = 'mohammed.gallya39@gmail.com';
+  static const completedDay = 'Completed Day';
+  static const goals = 'Goals';
+  static const currentTall = 'Current Tall';
+  static const currentWeight = 'Current Weight';
+  static const bodyFat = 'Body Fat';
+
 
 
 

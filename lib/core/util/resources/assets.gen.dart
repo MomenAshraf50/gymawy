@@ -303,6 +303,30 @@ class $AssetsImagesSvgGen {
   /// File path: assets/images/svg/user.svg
   String get user => 'assets/images/svg/user.svg';
 
+  /// File path: assets/images/svg/body_fat.svg
+  String get body_fat => 'assets/images/svg/body_fat.svg';
+
+  /// File path: assets/images/svg/current_tall.svg
+  String get current_tall => 'assets/images/svg/current_tall.svg';
+
+  /// File path: assets/images/svg/share.svg
+  String get share => 'assets/images/svg/share.svg';
+
+  /// File path: assets/images/svg/goal.svg
+  String get goal => 'assets/images/svg/goal.svg';
+
+  /// File path: assets/images/svg/completed_tasks.svg
+  String get completed_tasks => 'assets/images/svg/completed_tasks.svg';
+
+  /// File path: assets/images/svg/calendar.svg
+  String get calendar => 'assets/images/svg/calendar.svg';
+
+  /// File path: assets/images/svg/battery.svg
+  String get battery => 'assets/images/svg/battery.svg';
+
+  /// File path: assets/images/svg/smartwatch.svg
+  String get smartwatch => 'assets/images/svg/smartwatch.svg';
+
   /// File path: assets/images/svg/youtube-svgrepo-com.svg
   String get youtubeSvgrepoCom => 'assets/images/svg/youtube-svgrepo-com.svg';
 
