@@ -16,6 +16,7 @@ import '../../../../../core/util/widgets/myTextFill.dart';
 import '../../controller/home_cubit.dart';
 import '../../controller/home_states.dart';
 import '../settings/notifications_screen.dart';
+import 'clients/clients_screen.dart';
 
 class HomeClientScreen extends StatelessWidget {
   const HomeClientScreen({Key? key}) : super(key: key);
@@ -326,6 +327,7 @@ class HomeClientScreen extends StatelessWidget {
                             } else if (index == 1) {
                               navigateTo(context, const ExercisesScreen());
                             } else if (index == 2) {
+                              navigateTo(context, const ClientsScreen());
                             } else {
                               navigateTo(context, const ProgressScreen());
                             }
