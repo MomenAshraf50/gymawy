@@ -4,6 +4,7 @@ import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/back_button.dart';
+import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/plan_type.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_items.dart';
@@ -24,16 +25,12 @@ class PlansScreen extends StatelessWidget {
                 title: AppString.plans,
                 context: context,
                 actions: [
-                  CircleAvatar(
+                  defaultActionButton(
+                    onPressed: (){
+                      navigateTo(context, const AddPlan());
+                    },
                     backgroundColor: Colors.green,
-                    child: IconButton(
-                        onPressed: () {
-                          navigateTo(context, const AddPlan());
-                        },
-                        icon: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        )),
+                    icon: Icons.add
                   )
                 ]
               ),

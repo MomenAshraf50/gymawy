@@ -7,6 +7,7 @@ import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/list_title_container.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
@@ -43,120 +44,133 @@ class CompleteProfileScreen extends StatelessWidget {
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        return SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Form(
-            key: formKey,
-            child: Center(
-              child: Padding(
-                padding: designApp,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      svgImage(path: Assets.images.svg.couch),
-                      verticalSpace(2.h),
-                      const myText(
-                          title: AppString.lets_complate, style: Style.large),
-                      verticalSpace(2.h),
-                      const myText(
-                          title: AppString.will_help, style: Style.small),
-                      verticalSpace(2.h),
-                      myListTitle(
-                        onClick: () {
-                          showCupertinoModalPopup(
-                              context: context,
-                              builder: (BuildContext builder) {
-                                return Container(
-                                  height: 5.h,
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  child: CupertinoDatePicker(
-                                    mode: CupertinoDatePickerMode.date,
-                                    onDateTimeChanged: (value) {
-                                      dataOfBirth.text = registerCubit.changeDateFormat( value);
-                                    },
-                                    initialDateTime: DateTime.now(),
-                                    minimumYear: 2000,
-                                    maximumYear: 3000,
-                                  ),
-                                );
-                              });
-                        },
-                        title: dataOfBirth.text.isEmpty
-                            ? AppString.date_of_brith
-                            : dataOfBirth.text,
-                        svgImg: Assets.images.svg.date,
-                      ),
-                      verticalSpace(2.h),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: myTextFill(
-                              svgImg: Assets.images.svg.dollarSignSvgrepoCom,
-                              controller: pricePerMonth,
-                              hint: AppString.price_of_month,
-                              type: TextInputType.number,
-                              onChanged: (value) {
-                                if (value!.isEmpty) {
-                                  isMoneyEmpty = registerCubit.changeMoney(true);
-                                } else {
-                                  isMoneyEmpty =registerCubit.changeMoney(false);
-                                }
-                              },
-                              validate: (value) {
-                                if (value!.isEmpty) {
-                                  return 'isEmpty';
-                                } else if (isInteger(int.parse(value))) {
-                                  return 'isInteger';
-                                }
-                              },
-                            ),
-                          ),
-                          horizontalSpace(3.w),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              width: 5.w,
-                              height: 5.h,
-                              margin: const EdgeInsets.only(bottom: 16),
-                              child: CustomDropdown(
-                                hintText: 'EGP',
-                                listItemStyle: TextStyle(
-                                  color: Colors.black
-                                ),
-                                fillColor: ColorsManager.textFieldColor,
-                                items: currency,
-                                selectedStyle:
-                                    Theme.of(context).textTheme.displaySmall,
-                                controller: currencyController,
+        return HideKeyboardPage(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Form(
+              key: formKey,
+              child: Center(
+                child: Padding(
+                  padding: designApp,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        svgImage(path: Assets.images.svg.couch),
+                        verticalSpace(2.h),
+                        const myText(
+                            title: AppString.lets_complate, style: Style.large),
+                        verticalSpace(2.h),
+                        const myText(
+                            title: AppString.will_help, style: Style.small),
+                        verticalSpace(2.h),
+                        myListTitle(
+                          onClick: () {
+                            showCupertinoModalPopup(
+                                context: context,
+                                builder: (BuildContext builder) {
+                                  return Container(
+                                    height: 5.h,
+                                    color:
+                                        Theme.of(context).scaffoldBackgroundColor,
+                                    child: CupertinoDatePicker(
+                                      mode: CupertinoDatePickerMode.date,
+                                      onDateTimeChanged: (value) {
+                                        dataOfBirth.text = registerCubit.changeDateFormat( value);
+                                      },
+                                      initialDateTime: DateTime.now(),
+                                      minimumYear: 2000,
+                                      maximumYear: 3000,
+                                    ),
+                                  );
+                                });
+                          },
+                          title: dataOfBirth.text.isEmpty
+                              ? AppString.date_of_brith
+                              : dataOfBirth.text,
+                          svgImg: Assets.images.svg.date,
+                        ),
+                        verticalSpace(2.h),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: myTextFill(
+                                svgImg: Assets.images.svg.dollarSignSvgrepoCom,
+                                controller: pricePerMonth,
+                                hint: AppString.price_of_month,
+                                type: TextInputType.number,
+                                onChanged: (value) {
+                                  if (value!.isEmpty) {
+                                    isMoneyEmpty = registerCubit.changeMoney(true);
+                                  } else {
+                                    isMoneyEmpty =registerCubit.changeMoney(false);
+                                  }
+                                },
+                                validate: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'isEmpty';
+                                  } else if (isInteger(int.parse(value))) {
+                                    return 'isInteger';
+                                  }
+                                },
                               ),
                             ),
+                            horizontalSpace(3.w),
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                width: 5.w,
+                                height: 5.h,
+                                margin: const EdgeInsets.only(bottom: 16),
+                                child: CustomDropdown(
+                                  hintText: 'EGP',
+                                  hintStyle: const TextStyle(
+                                      fontFamily: 'english',
+                                      color: Colors.black
+                                  ),
+                                  listItemStyle: const TextStyle(
+                                    fontFamily: 'english',
+                                    color: Colors.black
+                                  ),
+                                  fillColor: ColorsManager.textFieldColor,
+                                  items: currency,
+                                  controller: currencyController,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        CustomDropdown(
+                          fillColor: ColorsManager.textFieldColor,
+                          hintText: AppString.choose_gender,
+                          hintStyle: const TextStyle(
+                              fontFamily: 'english',
+                              color: Colors.black
                           ),
-                        ],
-                      ),
-                      CustomDropdown(
-                        fillColor: ColorsManager.textFieldColor,
-                        hintText: AppString.choose_gender,
-                        selectedStyle: Theme.of(context).textTheme.displaySmall,
-                        items: gender,
-                        controller: genderController,
-                        excludeSelected: false,
-                      ),
-                      verticalSpace(2.h),
-                      myButton(
-                          elevation: 0.0,
-                          iconWidget: svgImage(
-                            path: Assets.images.svg.login,
-                            color: ColorsManager.white,
+                          selectedStyle: Theme.of(context).textTheme.displaySmall,
+                          listItemStyle: const TextStyle(
+                              fontFamily: 'english',
+                              color: Colors.black
                           ),
-                          color: ColorsManager.mainColor,
-                          height: 3.h,
-                          text: AppString.next,
-                          onPressed: () {
-                            registerCubit.nextPage(true, context);
-                          }),
-                    ]),
+                          items: gender,
+                          controller: genderController,
+                          excludeSelected: false,
+                        ),
+                        verticalSpace(2.h),
+                        myButton(
+                            elevation: 0.0,
+                            iconWidget: svgImage(
+                              path: Assets.images.svg.login,
+                              color: ColorsManager.white,
+                            ),
+                            color: ColorsManager.mainColor,
+                            height: 3.h,
+                            text: AppString.next,
+                            onPressed: () {
+                              registerCubit.nextPage(true, context);
+                            }),
+                      ]),
+                ),
               ),
             ),
           ),

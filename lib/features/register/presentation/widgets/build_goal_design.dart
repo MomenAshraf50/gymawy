@@ -4,6 +4,7 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/resources/goal_data_static.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:lottie/lottie.dart';
 
 Widget buildDesign({
   required GoalDataStatic model,
@@ -37,7 +38,7 @@ Widget buildDesign({
           children: [
             Expanded(
               flex: 3,
-              child: svgImage(path: model.img),
+              child: Lottie.asset(model.img),
             ),
             Expanded(
               child: Column(

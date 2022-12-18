@@ -70,6 +70,7 @@ AppBar defaultAppBar({
   RegisterCubit? cubit,
 }) {
   return AppBar(
+
     centerTitle: true,
     title: myText(title:title,style: Style.small,fontWeight: FontWeight.bold,),
     actions: actions,

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/cubit/cubit.dart';
 import 'package:gymawy/core/util/cubit/state.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
+import 'package:gymawy/core/util/resources/extensions_manager.dart';
 
 class myTextFill extends StatelessWidget {
   final TextEditingController controller;
@@ -66,8 +67,11 @@ class myTextFill extends StatelessWidget {
                 keyboardType: type,
                 textInputAction: textInputAction,
                 readOnly: disabled,
-                obscureText: appBloc.showPassword,
-                style: Theme.of(context).textTheme.displaySmall,
+                obscureText:isPassword,
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                  fontFamily: 'english',
+                  fontSize: 14.rSp
+                ),
                 maxLines: 1,
                 onChanged: onChanged,
                 validator: validate,

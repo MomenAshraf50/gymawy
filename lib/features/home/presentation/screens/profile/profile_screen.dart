@@ -23,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
         body: Column(
           children: [
             Padding(
-              padding:designApp,
+              padding:EdgeInsets.symmetric(horizontal: 10.rSp,vertical: 20.rSp),
               child: Row(
                 children: [
                   SizedBox(
@@ -80,11 +80,7 @@ class ProfileScreen extends StatelessWidget {
                                 child: myButton(
                                     text: AppString.editLinksButton,
                                     height: 4.h,
-                                    width: 20.w,
-                                    textStyle: TextStyle(
-                                        fontSize: 10.rSp,
-                                        color: Colors.white
-                                    ),
+                                    fontSize: 10.rSp,
                                     onPressed: () {
                                       navigateTo(
                                           context, const EditLinksScreen());
@@ -95,11 +91,7 @@ class ProfileScreen extends StatelessWidget {
                                 child: myButton(
                                     text: AppString.editProfileButton,
                                     height: 4.h,
-                                    width: 20.w,
-                                    textStyle: TextStyle(
-                                      fontSize: 10.rSp,
-                                      color: Colors.white
-                                    ),
+                                    fontSize: 10.rSp,
                                     onPressed: () {
                                       navigateTo(
                                           context, const EditProfileScreen());

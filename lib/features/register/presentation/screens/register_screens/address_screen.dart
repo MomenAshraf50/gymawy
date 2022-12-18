@@ -52,6 +52,18 @@ class AddressScreen extends StatelessWidget {
                       CustomDropdown.search(
                         hintText: AppString.select_country,
                         items: registerCubit.listCountry,
+                        hintStyle: const TextStyle(
+                            fontFamily: 'english',
+                            color: Colors.black
+                        ),
+                        listItemStyle: const TextStyle(
+                            fontFamily: 'english',
+                            color: Colors.black
+                        ),
+                        selectedStyle: const TextStyle(
+                          fontFamily: 'english',
+                          color: Colors.black
+                      ),
                         controller: registerCubit.countryController,
                         onChanged: (value) {
                           registerCubit.changeCity = false;
@@ -62,6 +74,18 @@ class AddressScreen extends StatelessWidget {
                       if (registerCubit.listCity.isNotEmpty)
                         CustomDropdown.search(
                           hintText: AppString.select_city,
+                          hintStyle: const TextStyle(
+                              fontFamily: 'english',
+                              color: Colors.black
+                          ),
+                          selectedStyle: const TextStyle(
+                              fontFamily: 'english',
+                              color: Colors.black
+                          ),
+                          listItemStyle: const TextStyle(
+                              fontFamily: 'english',
+                              color: Colors.black
+                          ),
                           items: registerCubit.listCity,
                           controller: registerCubit.cityController,
                           onChanged: (value) {
