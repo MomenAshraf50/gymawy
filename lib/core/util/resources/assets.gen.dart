@@ -83,8 +83,20 @@ class $AssetsImagesLottiGen {
   /// File path: assets/images/lotti/dumbble.json
   String get dumbble => 'assets/images/lotti/dumbble.json';
 
+  /// File path: assets/images/lotti/coch-cencept-animation.json
+  String get coach => 'assets/images/lotti/coch-cencept-animation.json';
+
+  /// File path: assets/images/lotti/gympass-jump-rope-girl.json
+  String get jumpRope => 'assets/images/lotti/gympass-jump-rope-girl.json';
+
+  /// File path: assets/images/lotti/running-on-treadmill.json
+  String get running => 'assets/images/lotti/running-on-treadmill.json';
+
+  /// File path: assets/images/lotti/Exercise.json
+  String get exercise => 'assets/images/lotti/Exercise.json';
+
   /// List of all assets
-  List<String> get values => [loading, social,dumbble];
+  List<String> get values => [loading, social,dumbble,coach,jumpRope,running,exercise];
 }
 
 class $AssetsImagesPngGen {

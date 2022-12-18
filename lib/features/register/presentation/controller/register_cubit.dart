@@ -259,17 +259,17 @@ class RegisterCubit extends Cubit<RegisterStates>{
     GoalDataStatic(
       body: AppString.lean_tone_title,
       title: AppString.lean_tone,
-      img: Assets.images.svg.lean,
+      img: Assets.images.lotti.coach,
     ),
     GoalDataStatic(
       body: AppString.lose_title,
       title: AppString.lose,
-      img: Assets.images.svg.lose,
+      img: Assets.images.lotti.running,
     ),
     GoalDataStatic(
       body: AppString.improve_title,
       title: AppString.improve,
-      img: Assets.images.svg.shape,
+      img: Assets.images.lotti.jumpRope,
     ),
   ];
 

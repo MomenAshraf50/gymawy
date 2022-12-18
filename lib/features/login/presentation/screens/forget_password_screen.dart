@@ -29,38 +29,13 @@ class ForgetPasswordScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  verticalSpace(5.h),
-                  Row(
-                    children: [
-                    InkWell(
-                      child: SvgPicture.asset(
-                        Assets.images.svg.arrow_back,
-                      ),
-                      onTap: ()
-                      {
-                        Navigator.pop(context);
-                      },
-                    ),
-                      horizontalSpace(5.h),
-                      const Expanded(
-                        child: myText(
-                          title: AppString.forget_password_title,
-                          style: Style.large,
-                          fontFamily: 'poppins',
-                          fontWeight: FontWeight.w700,
-                          align: TextAlign.center,
-                        ),
-                      ),
-
-                    ],
-                  ),
+                  defaultAppBar(title: AppString.forget_password_title, context: context),
                   verticalSpace(5.h),
                   svgImage(path: Assets.images.svg.forgetPass),
                   verticalSpace(5.h),
                   const myText(
                     title: AppString.enter_register,
                     style: Style.large,
-                    fontFamily: 'poppins',
                     fontWeight: FontWeight.w700,
                     align: TextAlign.center,
                   ),
@@ -72,7 +47,6 @@ class ForgetPasswordScreen extends StatelessWidget {
                     hint: AppString.phone,
                     hintStyle: const TextStyle(
                       fontWeight: FontWeight.w300,
-                      fontFamily: 'poppins',
                     ),
                     onChanged: (val) {},
                   ),

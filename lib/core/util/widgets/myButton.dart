@@ -4,19 +4,21 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 
 class myButton extends StatelessWidget {
-  myButton({
-    Key? key,
-    this.width = double.infinity,
-    this.height,
-    this.radius = 20.0,
-    this.elevation = 0.0,
-    required this.text,
-    this.color = ColorsManager.mainColor,
-    this.iconWidget,
-    this.textOnly = true,
-    this.onPressed,
-    this.textStyle
-  }) : super(key: key);
+  myButton(
+      {Key? key,
+      this.width = double.infinity,
+      this.height,
+      this.radius = 20.0,
+      this.elevation = 0.0,
+      required this.text,
+      this.color = ColorsManager.mainColor,
+      this.iconWidget,
+      this.textOnly = true,
+      this.onPressed,
+      this.textStyle,
+      this.fontSize,
+      this.fontWeight})
+      : super(key: key);
 
   final Function()? onPressed;
   final String text;
@@ -28,6 +30,8 @@ class myButton extends StatelessWidget {
   Widget? iconWidget;
   final bool textOnly;
   TextStyle? textStyle;
+  double? fontSize;
+  FontWeight? fontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -42,30 +46,31 @@ class myButton extends StatelessWidget {
         ),
         child: textOnly
             ? Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(text,
-                  style: textStyle ?? Theme
-                      .of(context)
-                      .textTheme
-                      .displaySmall!.copyWith(
-                    color: Colors.white,
-                  )
-        ),
-            )
+                padding: const EdgeInsets.all(8.0),
+                child: Text(text,
+                    style: textStyle ??
+                        Theme.of(context).textTheme.displaySmall!.copyWith(
+                            color: Colors.white,
+                            fontFamily: 'english',
+                            fontWeight: FontWeight.w600,
+                            fontSize: fontSize)),
+              )
             : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     iconWidget!,
                     horizontalSpace(5.w),
                     Text(text,
-                        style: textStyle ?? Theme.of(context).textTheme.displaySmall!.copyWith(
-                          color: Colors.white,
-                        )
-                            ),
+                        style: textStyle ??
+                            Theme.of(context).textTheme.displaySmall!.copyWith(
+                                color: Colors.white,
+                                fontFamily: 'english',
+                                fontWeight: FontWeight.w600,
+                                fontSize: fontSize)),
                   ],
                 ),
-            ));
+              ));
   }
 }

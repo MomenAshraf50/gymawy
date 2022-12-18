@@ -6,7 +6,7 @@ class AppString {
   static const password = 'Password';
   static const forget_password = 'Forget Password ?';
   static const forget_password_title = 'Forget Password';
-  static const login = 'login';
+  static const login = 'Login';
   static const oR = 'OR';
   static const dont_have_account = 'Don\'t have account ?';
   static const signUp = 'SignUp';
@@ -134,6 +134,12 @@ class AppString {
   static const currentTall = 'Current Tall';
   static const currentWeight = 'Current Weight';
   static const bodyFat = 'Body Fat';
+  static const nameOfExercise = 'Name Of Exercise';
+  static const equipmentRequired = 'Equipment Required';
+  static const targetMuscle = 'Target Muscle';
+  static const minutes = 'Minutes';
+  static const calories = 'Calories';
+  static const done = 'Done';
 
 
 

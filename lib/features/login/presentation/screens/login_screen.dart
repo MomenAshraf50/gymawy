@@ -32,175 +32,178 @@ class LoginScreen extends StatelessWidget {
         //LoginCubit loginCubit = LoginCubit.get(context);
         AppBloc appBloc = AppBloc.get(context);
         return Scaffold(
-          body: SafeArea(
-            child: Form(
-              key: formKey,
-              child: HideKeyboardPage(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Center(
-                    child: Padding(
-                      padding: designApp,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // Align(
-                          //   alignment: Alignment.centerRight,
-                          //   child: IconButton(
-                          //     onPressed: ()
-                          //     {
-                          //       // if(AppBloc.get(context).isArabic == false)
-                          //       // {
-                          //       //   AppBloc.get(context).changeLanguage(code: 'en');
-                          //       // }
-                          //       // if(AppBloc.get(context).isArabic == true)
-                          //       // {
-                          //       //   AppBloc.get(context).changeLanguage(code: 'ar');
-                          //       // }
-                          //     },
-                          //     icon: const Icon(
-                          //       Icons.language_outlined,
-                          //       color: ColorsManager.mainColor,
-                          //     ),
-                          //   ),
-                          // ),
-                          SvgPicture.asset(
-                              Assets.images.svg.icon
-                          ),
-                          verticalSpace(5.h),
-                          Text(
-                             // 'appTranslation().gymawy',
-                            AppString.welcome_gymawy,
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .displayLarge!
-                                .copyWith(
-                              fontFamily: 'splash',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 30.rSp,
+          body: HideKeyboardPage(
+            child: SafeArea(
+              child: Form(
+                key: formKey,
+                child: HideKeyboardPage(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Center(
+                      child: Padding(
+                        padding: designApp,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // Align(
+                            //   alignment: Alignment.centerRight,
+                            //   child: IconButton(
+                            //     onPressed: ()
+                            //     {
+                            //       // if(AppBloc.get(context).isArabic == false)
+                            //       // {
+                            //       //   AppBloc.get(context).changeLanguage(code: 'en');
+                            //       // }
+                            //       // if(AppBloc.get(context).isArabic == true)
+                            //       // {
+                            //       //   AppBloc.get(context).changeLanguage(code: 'ar');
+                            //       // }
+                            //     },
+                            //     icon: const Icon(
+                            //       Icons.language_outlined,
+                            //       color: ColorsManager.mainColor,
+                            //     ),
+                            //   ),
+                            // ),
+                            SvgPicture.asset(
+                                Assets.images.svg.icon
                             ),
-                          ),
-                          verticalSpace(5.h),
-                          myTextFill(
-                            isPassword: false,
-                            validate: (String? value) {
-                              if (value!.isEmpty) {
-                                return 'isEmpty';
-                              }
-                              return null;
-                            },
-                            controller: appBloc.emailController,
-                            hint: AppString.email,
-                            svgImg: Assets.images.svg.email,
-                          ),
-                          myTextFill(
-                            validate: (String? value) {
-                              if (value!.isEmpty) {
-                                return 'isEmpty';
-                              }
-                              return null;
-                            },
-                            controller: appBloc.passwordController,
-                            hint: AppString.password,
-                            svgImg: Assets.images.svg.lock,
-                            suffixIcon: IconButton(
-                              icon: Icon(appBloc.visibilityShowPassword),
-                              onPressed: (){
-                                appBloc.changePasswordVisibility();
-                              },
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                                onPressed: () {
-                                  navigateTo(context, const ForgetPasswordScreen());
-                                },
-                                child: myText(title: AppString.forget_password, style: Style.extraSmall,fontSize: 15.rSp,)),
-                          ),
-                          verticalSpace(2.h),
-                          myButton(
-                              elevation: 0.0,
-                              textOnly: false,
-                              iconWidget: svgImage(
-                                path: Assets.images.svg.login,
-                                color: ColorsManager.white,
+                            verticalSpace(5.h),
+                            Text(
+                               // 'appTranslation().gymawy',
+                              AppString.welcome_gymawy,
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .copyWith(
+                                fontFamily: 'splash',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 30.rSp,
                               ),
-                              color: ColorsManager.mainColor,
-                              height: 3.h,
-                              text: AppString.login,
-
-                              onPressed: () {
-                                if(formKey.currentState!.validate())
-                                {
-                                  debugPrintFullText('validate success');
+                            ),
+                            verticalSpace(5.h),
+                            myTextFill(
+                              isPassword: false,
+                              validate: (String? value) {
+                                if (value!.isEmpty) {
+                                  return 'isEmpty';
                                 }
-                                else
-                                {
-                                  designToastDialog(
-                                      context: context,
-                                      toast: TOAST.warning,
-                                      text: 'please fill ur data');
+                                return null;
+                              },
+                              controller: appBloc.emailController,
+                              hint: AppString.email,
+                              svgImg: Assets.images.svg.email,
+                            ),
+                            myTextFill(
+                              validate: (String? value) {
+                                if (value!.isEmpty) {
+                                  return 'isEmpty';
                                 }
-                                navigateAndFinish(context, const MainScreen());
-                                // navigateTo(context, PinPage());
-                              }),
-                          verticalSpace(5.h),
-                          SizedBox(
-                            width: double.infinity,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    height: 0.1.h,
-                                    color: ColorsManager.darkGrey,
-                                  ),
+                                return null;
+                              },
+                              controller: appBloc.passwordController,
+                              hint: AppString.password,
+                              isPassword: true,
+                              svgImg: Assets.images.svg.lock,
+                              suffixIcon: IconButton(
+                                icon: Icon(appBloc.visibilityShowPassword),
+                                onPressed: (){
+                                  appBloc.changePasswordVisibility();
+                                },
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                  onPressed: () {
+                                    navigateTo(context, const ForgetPasswordScreen());
+                                  },
+                                  child: myText(title: AppString.forget_password, style: Style.extraSmall,fontSize: 15.rSp,)),
+                            ),
+                            verticalSpace(2.h),
+                            myButton(
+                                elevation: 0.0,
+                                textOnly: false,
+                                iconWidget: svgImage(
+                                  path: Assets.images.svg.login,
+                                  color: ColorsManager.white,
                                 ),
-                                Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                    child: const myText(title:AppString.oR,style: Style.extraSmall,)),
-                                Expanded(
-                                  child: Container(
-                                    height: 0.1.h,
-                                    color: ColorsManager.darkGrey,
+                                color: ColorsManager.mainColor,
+                                height: 3.h,
+                                text: AppString.login,
+
+                                onPressed: () {
+                                  if(formKey.currentState!.validate())
+                                  {
+                                    debugPrintFullText('validate success');
+                                  }
+                                  else
+                                  {
+                                    designToastDialog(
+                                        context: context,
+                                        toast: TOAST.warning,
+                                        text: 'please fill ur data');
+                                  }
+                                  navigateAndFinish(context, const MainScreen());
+                                  // navigateTo(context, PinPage());
+                                }),
+                            verticalSpace(5.h),
+                            SizedBox(
+                              width: double.infinity,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      height: 0.1.h,
+                                      color: ColorsManager.darkGrey,
+                                    ),
                                   ),
+                                  Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                      child: const myText(title:AppString.oR,style: Style.extraSmall,)),
+                                  Expanded(
+                                    child: Container(
+                                      height: 0.1.h,
+                                      color: ColorsManager.darkGrey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            verticalSpace(5.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                svgImage(
+                                  path: Assets.images.svg.facebbokBorder,
+                                ),
+                                horizontalSpace(20.w),
+                                svgImage(
+                                  path: Assets.images.svg.google,
                                 ),
                               ],
                             ),
-                          ),
-                          verticalSpace(5.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              svgImage(
-                                path: Assets.images.svg.facebbokBorder,
-                              ),
-                              horizontalSpace(20.w),
-                              svgImage(
-                                path: Assets.images.svg.google,
-                              ),
-                            ],
-                          ),
-                          verticalSpace(5.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const myText(title: AppString.dont_have_account, style: Style.extraSmall),
-                              // space10Horizontal,
-                              TextButton(
-                                  onPressed: () {
-                                    registerCubit.changePage(0,context);
-                                    navigateTo(context,  const ChooseYourTypeScreen());
-                                  },
-                                  child: const myText(title: AppString.signUp, style: Style.extraSmall,color: ColorsManager.mainColor,fontWeight: FontWeight.w600,),
-                              ),
-                            ],
-                          ),
-                        ],
+                            verticalSpace(5.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const myText(title: AppString.dont_have_account, style: Style.extraSmall),
+                                // space10Horizontal,
+                                TextButton(
+                                    onPressed: () {
+                                      registerCubit.changePage(0,context);
+                                      navigateTo(context,  const ChooseYourTypeScreen());
+                                    },
+                                    child: const myText(title: AppString.signUp, style: Style.extraSmall,color: ColorsManager.mainColor,fontWeight: FontWeight.w600,),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

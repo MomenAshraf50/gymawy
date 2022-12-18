@@ -72,7 +72,6 @@ class SelectFatScreen extends StatelessWidget {
                       min: 0.0,
                       max: 4.0,
                       divisions: 4,
-                      label: registerCubit.fatValue.round().toString(),
                       onChanged: (double value) async {
                         registerCubit.fatValue = value;
                         await registerCubit.pageFatController.animateToPage(

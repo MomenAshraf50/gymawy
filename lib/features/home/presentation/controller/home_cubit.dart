@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../screens/home/home_screen.dart';
@@ -103,6 +107,30 @@ class HomeCubit extends Cubit<HomeStates> {
 
 
   TextEditingController nameOfPlanController = TextEditingController();
+
+  File? imageFile;
+
+  Future<File?> pickImageFromGallery(BuildContext context) async {
+    File? image;
+    try {
+      final pickedImage =
+      await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      if (pickedImage != null) {
+        image = File(pickedImage.path);
+        emit(HomeExerciseImagePickedSuccessState());
+      }
+    } catch (e) {
+      designToastDialog(context: context, toast: TOAST.error);
+      emit(HomeExerciseImagePickedErrorState());
+    }
+    return image;
+  }
+
+  void selectImage(context) async {
+    imageFile = await pickImageFromGallery(context);
+    emit(HomePlansImageSelectedState());
+  }
 
 
 }

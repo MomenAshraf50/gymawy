@@ -12,6 +12,7 @@ import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
+import 'package:gymawy/features/home/presentation/screens/home/exercises/add_exercise.dart';
 
 
 class AddPlan extends StatelessWidget {
@@ -37,15 +38,6 @@ class AddPlan extends StatelessWidget {
                       myTextFill(
                         controller: homeCubit.nameOfPlanController,
                         hint: AppString.nameOfPlan,
-                        hintStyle: Theme
-                            .of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 12.rSp,
-                          color: Colors.grey,
-                        ),
                         validate: (String? value) {
                           if (value!.isEmpty) {
                             return 'isEmpty';
@@ -91,7 +83,7 @@ class AddPlan extends StatelessWidget {
                       text: AppString.next,
                       textOnly: true,
                       onPressed: () {
-
+                        navigateTo(context, const AddExerciseScreen());
                       },
 
                     ),
