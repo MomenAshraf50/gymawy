@@ -1,5 +1,4 @@
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -60,7 +59,7 @@ class AddCertifications extends StatelessWidget {
                                       width: 5.w,
                                       onPressed: ()
                                       {
-                                        homeCubit.selectImage(context);
+                                        homeCubit.selectCertificationImage(context);
                                       }
                                   ),
                                   verticalSpace(1.h),
@@ -69,7 +68,7 @@ class AddCertifications extends StatelessWidget {
                             )
                         ),
                         verticalSpace(1.h),
-                        if(homeCubit.imageFile != null)
+                        if(homeCubit.certificationImageFile != null)
                         Row(
                           children: [
                             SvgPicture.asset(
@@ -112,7 +111,7 @@ class AddCertifications extends StatelessWidget {
                     fontSize: 14.rSp,
                     onPressed: ()
                     {
-
+                      Navigator.pop(context);
                     }
                 ),
               ],

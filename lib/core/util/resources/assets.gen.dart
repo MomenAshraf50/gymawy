@@ -351,6 +351,31 @@ class $AssetsImagesSvgGen {
   /// File path: assets/images/svg/youtube-svgrepo-com.svg
   String get youtubeSvgrepoCom => 'assets/images/svg/youtube-svgrepo-com.svg';
 
+  /// File path: assets/images/svg/breakfast1.svg
+  String get breakfast1 => 'assets/images/svg/breakfast1.svg';
+
+  /// File path: assets/images/svg/breakfast2.svg
+  String get breakfast2 => 'assets/images/svg/breakfast2.svg';
+
+  /// File path: assets/images/svg/lunch1.svg
+  String get lunch1 => 'assets/images/svg/lunch1.svg';
+
+  /// File path: assets/images/svg/lunch2.svg
+  String get lunch2 => 'assets/images/svg/lunch2.svg';
+
+  /// File path: assets/images/svg/snacks1.svg
+  String get snacks1 => 'assets/images/svg/snacks1.svg';
+
+  /// File path: assets/images/svg/snacks2.svg
+  String get snacks2 => 'assets/images/svg/snacks2.svg';
+
+  /// File path: assets/images/svg/dinner1.svg
+  String get dinner1 => 'assets/images/svg/dinner1.svg';
+
+  /// File path: assets/images/svg/dinner2.svg
+  String get dinner2 => 'assets/images/svg/dinner2.svg';
+
+
   /// List of all assets
   List<String> get values => [
         facebook,
