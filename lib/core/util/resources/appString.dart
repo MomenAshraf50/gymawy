@@ -147,6 +147,19 @@ class AppString {
   static const minutes = 'Minutes';
   static const calories = 'Calories';
   static const done = 'Done';
+  static const mealSchedule = 'Meal Schedule';
+  static const breakfast = 'Breakfast';
+  static const lunch = 'Lunch';
+  static const snacks = 'Snacks';
+  static const dinner = 'Dinner';
+  static const honey = 'Honey Pancake';
+  static const coffee = 'Coffee';
+  static const chickenSteak = 'Chicken Steak';
+  static const milk = 'Milk';
+  static const orange = 'Orange';
+  static const applePie = 'Apple Pie';
+  static const salad = 'Salad';
+  static const oatmeal = 'Oatmeal';
 
 
 

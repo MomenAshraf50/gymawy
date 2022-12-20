@@ -60,17 +60,17 @@ class AddExerciseScreen extends StatelessWidget {
                               children: [
                                 Align(
                                   alignment: AlignmentDirectional.centerStart,
-                                  child: homeCubit.imageFile == null
+                                  child: homeCubit.exerciseImageFile == null
                                       ? Lottie.asset(Assets.images.lotti.exercise)
                                       : CircleAvatar(
                                     backgroundImage:
-                                    FileImage(homeCubit.imageFile!),
+                                    FileImage(homeCubit.exerciseImageFile!),
                                   ),
                                 ),
 
                                 defaultActionButton(
                                   onPressed: (){
-                                    homeCubit.selectImage(context);
+                                    homeCubit.selectExerciseImage(context);
                                   },
                                   icon: Icons.add,
                                   backgroundColor: ColorsManager.mainColor,

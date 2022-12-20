@@ -20,7 +20,6 @@ class HomeCubit extends Cubit<HomeStates> {
 
   static HomeCubit get(context) => BlocProvider.of(context);
 
-  //Object sl=GetIt.instance();
 
   List<Widget> widgets =
   [
@@ -28,7 +27,7 @@ class HomeCubit extends Cubit<HomeStates> {
     const SearchScreen(),
     const QRCodescreen(),
     SettingsScreen(),
-    const ProfileScreen(),
+    ProfileScreen(),
   ];
 
   TextEditingController searchController = TextEditingController();
@@ -110,7 +109,9 @@ class HomeCubit extends Cubit<HomeStates> {
 
   TextEditingController nameOfPlanController = TextEditingController();
 
-  File? imageFile;
+  File? exerciseImageFile;
+  File? profileImageFile;
+  File? certificationImageFile;
 
   Future<File?> pickImageFromGallery(BuildContext context) async {
     File? image;
@@ -129,9 +130,18 @@ class HomeCubit extends Cubit<HomeStates> {
     return image;
   }
 
-  void selectImage(context) async {
-    imageFile = null;
-    imageFile = await pickImageFromGallery(context);
+  void selectExerciseImage(context) async {
+    profileImageFile = await pickImageFromGallery(context);
+    emit(HomePlansImageSelectedState());
+  }
+
+  void selectProfileImage(context) async {
+    profileImageFile = await pickImageFromGallery(context);
+    emit(HomePlansImageSelectedState());
+  }
+
+  void selectCertificationImage(context) async {
+    certificationImageFile = await pickImageFromGallery(context);
     emit(HomePlansImageSelectedState());
   }
 
