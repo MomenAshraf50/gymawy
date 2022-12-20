@@ -155,6 +155,12 @@ class $AssetsImagesSvgGen {
   /// File path: assets/images/svg/couch.svg
   String get couch => 'assets/images/svg/couch.svg';
 
+  /// File path: assets/images/svg/add_certification.svg
+  String get add_certification => 'assets/images/svg/add_certification.svg';
+
+  /// File path: assets/images/svg/upload.svg
+  String get upload => 'assets/images/svg/upload.svg';
+
   /// File path: assets/images/svg/date.svg
   String get date => 'assets/images/svg/date.svg';
 
@@ -314,6 +320,9 @@ class $AssetsImagesSvgGen {
 
   /// File path: assets/images/svg/user.svg
   String get user => 'assets/images/svg/user.svg';
+
+  /// File path: assets/images/svg/certificate.svg
+  String get certificate => 'assets/images/svg/certificate.svg';
 
   /// File path: assets/images/svg/body_fat.svg
   String get body_fat => 'assets/images/svg/body_fat.svg';

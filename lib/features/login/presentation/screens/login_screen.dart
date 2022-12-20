@@ -146,7 +146,7 @@ class LoginScreen extends StatelessWidget {
                                         toast: TOAST.warning,
                                         text: 'please fill ur data');
                                   }
-                                  navigateAndFinish(context, const MainScreen());
+                                  navigateAndFinish(context, MainScreen());
                                   // navigateTo(context, PinPage());
                                 }),
                             verticalSpace(5.h),

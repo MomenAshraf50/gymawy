@@ -3,18 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/features/home/presentation/screens/profile/add_certifications.dart';
-
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
+import '../../../../../core/util/widgets/default_action_button.dart';
 import '../../../../../core/util/widgets/myText.dart';
 import '../../../../../core/util/widgets/my_icon_button.dart';
-import 'edit_links_screen.dart';
-import 'edit_profile.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class SearchResultScreen extends StatelessWidget {
+  const SearchResultScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +22,10 @@ class ProfileScreen extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
+              defaultAppBar(
+                  title: '',
+                  context: context,
+              ),
               Padding(
                 padding:EdgeInsets.symmetric(horizontal: 10.rSp,vertical: 20.rSp),
                 child: Row(
@@ -81,24 +82,26 @@ class ProfileScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: myButton(
-                                      text: AppString.editLinksButton,
+                                      text: AppString.follow,
                                       height: 4.h,
                                       fontSize: 10.rSp,
-                                      onPressed: () {
-                                        navigateTo(
-                                            context, const EditLinksScreen());
-                                      }),
+                                      onPressed: ()
+                                      {
+
+                                      }
+                                  ),
                                 ),
                                 horizontalSpace(1.w),
                                 Expanded(
                                   child: myButton(
-                                      text: AppString.editProfileButton,
+                                      text: AppString.contact,
                                       height: 4.h,
                                       fontSize: 10.rSp,
-                                      onPressed: () {
-                                        navigateTo(
-                                            context, const EditProfileScreen());
-                                      }),
+                                      onPressed: ()
+                                      {
+
+                                      }
+                                  ),
                                 )
                               ],
                             ),
@@ -211,26 +214,19 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  navigateTo(context, const AddCertifications());
-                },
-                child: Card(
-                  margin: EdgeInsets.all(25.rSp),
-                  elevation: 5,
-                  child: Padding(
-                    padding: EdgeInsets.all(20.0.rSp),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
-                          myText(
-                              title: AppString.certifications, style: Style.medium,fontWeight: FontWeight.w600,),
-                          myText(
-                              title: AppString.getCertifications, style: Style.medium),
-                        ],
-                      ),
+              Card(
+                margin: EdgeInsets.all(25.rSp),
+                elevation: 5,
+                child: Padding(
+                  padding: EdgeInsets.all(20.0.rSp),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        myText(
+                          title: AppString.certifications, style: Style.medium,fontWeight: FontWeight.w600,),
+                      ],
                     ),
                   ),
                 ),

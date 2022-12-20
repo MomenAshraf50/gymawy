@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/features/home/presentation/screens/qr_code/qr_code_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
@@ -25,6 +26,7 @@ class HomeCubit extends Cubit<HomeStates> {
   [
     const HomeClientScreen(),
     const SearchScreen(),
+    const QRCodescreen(),
     SettingsScreen(),
     const ProfileScreen(),
   ];
@@ -128,6 +130,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   void selectImage(context) async {
+    imageFile = null;
     imageFile = await pickImageFromGallery(context);
     emit(HomePlansImageSelectedState());
   }
