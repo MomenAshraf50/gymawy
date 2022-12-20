@@ -108,6 +108,11 @@ class AppString {
   static const followersNumber = '5634';
   static const followers = 'Followers';
   static const certifications = 'Certifications';
+  static const cv = 'CV';
+  static const follow = 'Follow';
+  static const contact = 'Contact';
+  static const strict = 'Strict and calm in nature';
+  static const personalTraining = 'Personal training client and feedback';
   static const getCertifications = 'Add Your Certifications Now To Earn Badge';
   static const editYourProfile = 'Edit Your Profile';
   static const finish = 'Finish';
@@ -116,6 +121,8 @@ class AppString {
   static const instagramLink = 'Instagram Link';
   static const youtubeLink = 'Youtube Link';
   static const logOut = 'Log Out';
+  static const browseFile = 'Browse File';
+  static const certificationSize = '428 KB';
   static const support = 'Support';
   static const share = 'Share';
   static const notifications = 'Notifications';
