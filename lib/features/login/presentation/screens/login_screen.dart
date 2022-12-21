@@ -12,12 +12,13 @@ import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/features/home/presentation/screens/not_defiend/exercise_example.dart';
+import 'package:gymawy/features/home/presentation/screens/not_defiend/meal_schedule.dart';
 import 'package:gymawy/features/login/presentation/screens/forget_password_screen.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/choose_your_type_screen.dart';
 
 import '../../../home/presentation/screens/home_layout.dart';
-import '../../../home/presentation/screens/not_defiend/workout_tracker.dart';
 
 class LoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -147,10 +148,12 @@ class LoginScreen extends StatelessWidget {
                                         toast: TOAST.warning,
                                         text: 'please fill ur data');
                                   }
-                                  //navigateAndFinish(context, MainScreen());
-                                  navigateAndFinish(context, WorkoutTrackerScreen());
+                                  navigateAndFinish(context, MainScreen());
+                                  //navigateAndFinish(context, WorkoutTrackerScreen());
                                   //navigateAndFinish(context, const MealScheduleScreen());
-                                  // navigateTo(context, PinPage());
+                                   //navigateTo(context, PinPage());
+                                   navigateTo(context, const ExerciseExampleScreen());
+
                                 }),
                             verticalSpace(5.h),
                             SizedBox(
