@@ -146,6 +146,9 @@ class $AssetsImagesSvgGen {
   /// File path: assets/images/svg/checked_icon.svg
   String get checked_icon => 'assets/images/svg/checked_icon.svg';
 
+  /// File path: assets/images/svg/two_points.svg
+  String get two_points => 'assets/images/svg/two_points.svg';
+
   /// File path: assets/images/svg/girls-bench-chest.svg
   String get girlsBenchChest => 'assets/images/svg/girls-bench-chest.svg';
 
