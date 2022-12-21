@@ -109,6 +109,7 @@ class AppString {
   static const followers = 'Followers';
   static const certifications = 'Certifications';
   static const cv = 'CV';
+  static const workoutTracker = 'Workout Tracker';
   static const follow = 'Follow';
   static const contact = 'Contact';
   static const strict = 'Strict and calm in nature';
@@ -160,6 +161,11 @@ class AppString {
   static const applePie = 'Apple Pie';
   static const salad = 'Salad';
   static const oatmeal = 'Oatmeal';
+  static const dailyWorkoutSchedule = 'Daily workout schedule';
+  static const check = 'check';
+  static const dayOfToday = 'Fri,28 May';
+  static const percent = '90%';
+  static const statuesBody = 'Upper body Workout';
 
 
 

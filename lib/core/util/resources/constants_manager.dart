@@ -18,6 +18,11 @@ class ConstantsManger {
 
 bool isArabic = true;
 
+List<Color> gradientColors = [
+  ColorsManager.white,
+  ColorsManager.whiteColor,
+];
+
 /// Translate error message
 const String serverFailureMessage = 'Server Failure';
 const String cacheFailureMessage = 'Cache Failure';
@@ -68,11 +73,18 @@ AppBar defaultAppBar({
   List<Widget>? actions,
   bool prevPage = false,
   RegisterCubit? cubit,
+  Color? color = ColorsManager.white,
+  Color? fontColor = ColorsManager.black,
 }) {
   return AppBar(
-
+    backgroundColor: color!,
     centerTitle: true,
-    title: myText(title:title,style: Style.small,fontWeight: FontWeight.bold,),
+    title: myText(
+      title:title,
+      style: Style.small,
+      fontWeight: FontWeight.bold,
+      color: fontColor,
+      ),
     actions: actions,
     leading: IconButton(
       icon: svgImage(path: Assets.images.svg.arrow_back,),
