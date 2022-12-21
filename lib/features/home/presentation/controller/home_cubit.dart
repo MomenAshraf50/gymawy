@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/features/home/presentation/screens/qr_code/qr_code_screen.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../screens/home/home_screen.dart';
@@ -145,6 +146,21 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(HomePlansImageSelectedState());
   }
 
+  late VideoPlayerController videoPlayerController;
+
+  void initializeVideoPlayerController(){
+    videoPlayerController = VideoPlayerController.network('https://www.youtube.com/watch?v=iSSAk4XCsRA')
+        ..initialize().then((value){
+          emit(HomeExerciseExampleVideoPlayerInitialized());
+        });
+  }
+
+  void pauseAndPlayVideo(){
+    videoPlayerController.value.isPlaying
+        ? videoPlayerController.pause()
+        : videoPlayerController.play();
+    emit(ExerciseExamplePauseAndPlayVideoState());
+  }
 
 }
 
