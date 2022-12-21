@@ -12,7 +12,6 @@ import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
-import 'package:gymawy/features/home/presentation/screens/not_defiend/meal_schedule.dart';
 import 'package:gymawy/features/login/presentation/screens/forget_password_screen.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/choose_your_type_screen.dart';
@@ -147,7 +146,8 @@ class LoginScreen extends StatelessWidget {
                                         toast: TOAST.warning,
                                         text: 'please fill ur data');
                                   }
-                                  navigateAndFinish(context, const MealScheduleScreen());
+                                  navigateAndFinish(context, MainScreen());
+                                  //navigateAndFinish(context, const MealScheduleScreen());
                                   // navigateTo(context, PinPage());
                                 }),
                             verticalSpace(5.h),

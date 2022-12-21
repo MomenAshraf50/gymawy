@@ -86,6 +86,9 @@ class MealScheduleScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()
+                ),
                 itemBuilder: (context, index) => buildMealsItem(meals[index]),
                 itemCount: meals.length,
               ),
@@ -153,6 +156,7 @@ Widget buildMealsItem(Meals meals) => Card(
               itemBuilder: (context, index) => buildMealsDetailsItem(
                 meals.mealDetails[index],
               ),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: meals.mealDetails.length,
             )
