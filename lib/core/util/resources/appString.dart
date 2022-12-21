@@ -164,6 +164,12 @@ class AppString {
   static const exerciseLevel = 'Easy';
   static const caloriesBurn = 'Calories Burn';
   static const descriptions = 'Descriptions';
+  static const workoutTracker = 'Workout Tracker';
+  static const dayOfToday = 'Fri,28 May';
+  static const percent = '90%';
+  static const statuesBody = 'Upper body workout';
+  static const dailyWorkoutSchedule = 'Daily workout schedule';
+  static const check = 'Check';
 
 
 
