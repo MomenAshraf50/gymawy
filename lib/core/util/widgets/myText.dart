@@ -30,7 +30,7 @@ class myText extends StatelessWidget {
     return Text(title,
       textAlign: align ?? TextAlign.start,
       maxLines: maxLines,
-      overflow: TextOverflow.ellipsis,
+      overflow: maxLines != null? TextOverflow.ellipsis:null,
       style: getStyle(context).copyWith(
         color: color ?? getStyle(context).color,
         fontFamily: fontFamily,

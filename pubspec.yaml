@@ -91,6 +91,7 @@ dependencies:
   calendar_timeline: ^1.1.0
   fl_chart: ^0.55.2
   video_player: ^2.4.10
+  another_stepper: ^1.1.6
 
 dev_dependencies:
   flutter_test:

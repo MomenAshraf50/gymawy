@@ -149,17 +149,25 @@ class HomeCubit extends Cubit<HomeStates> {
   late VideoPlayerController videoPlayerController;
 
   void initializeVideoPlayerController(){
-    videoPlayerController = VideoPlayerController.network('https://www.youtube.com/watch?v=iSSAk4XCsRA')
-        ..initialize().then((value){
-          emit(HomeExerciseExampleVideoPlayerInitialized());
-        });
+    videoPlayerController = VideoPlayerController.network('https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4');
+    videoPlayerController.initialize().then((value) {
+      emit(HomeExerciseExampleVideoPlayerInitialized());
+    });
   }
+
 
   void pauseAndPlayVideo(){
     videoPlayerController.value.isPlaying
         ? videoPlayerController.pause()
         : videoPlayerController.play();
     emit(ExerciseExamplePauseAndPlayVideoState());
+  }
+
+  int currentStep = 0;
+
+  void changeStep(int index){
+    currentStep = index;
+    emit(ChangeCurrentStepState());
   }
 
 }

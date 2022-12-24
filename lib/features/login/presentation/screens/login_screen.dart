@@ -148,11 +148,11 @@ class LoginScreen extends StatelessWidget {
                                         toast: TOAST.warning,
                                         text: 'please fill ur data');
                                   }
-                                  navigateAndFinish(context, MainScreen());
+                                  //navigateAndFinish(context, MainScreen());
                                   //navigateAndFinish(context, WorkoutTrackerScreen());
                                   //navigateAndFinish(context, const MealScheduleScreen());
                                   //navigateTo(context, PinPage());
-                                  //navigateTo(context, const ExerciseExampleScreen());
+                                  navigateTo(context, const ExerciseExampleScreen());
 
                                 }),
                             verticalSpace(5.h),
