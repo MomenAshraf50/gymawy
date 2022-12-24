@@ -11,3 +11,5 @@ class HomePlansImageSelectedState extends HomeStates{}
 class HomeExerciseImagePickedErrorState extends HomeStates{}
 class HomeExerciseExampleVideoPlayerInitialized extends HomeStates{}
 class ExerciseExamplePauseAndPlayVideoState extends HomeStates{}
+class GetTextHeightState extends HomeStates{}
+class ChangeCurrentStepState extends HomeStates{}

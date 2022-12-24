@@ -381,6 +381,9 @@ class $AssetsImagesSvgGen {
   /// File path: assets/images/svg/jumping_jacks.svg
   String get jumpingJacks => 'assets/images/svg/jumping_jacks.svg';
 
+  /// File path: assets/images/svg/circle_step.svg
+  String get circleStep => 'assets/images/svg/circle_step.svg';
+
 
   /// List of all assets
   List<String> get values => [

@@ -170,6 +170,7 @@ class AppString {
   static const statuesBody = 'Upper body workout';
   static const dailyWorkoutSchedule = 'Daily workout schedule';
   static const check = 'Check';
+  static const howToDoIt = 'How To Do It';
 
 
 
