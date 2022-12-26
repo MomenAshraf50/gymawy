@@ -4,10 +4,11 @@ import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/back_button.dart';
+import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/features/home/presentation/screens/home/exercises/add_exercise.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_type.dart';
-
 
 class PlanType extends StatelessWidget {
   const PlanType({Key? key}) : super(key: key);
@@ -20,7 +21,19 @@ class PlanType extends StatelessWidget {
           padding: designApp,
           child: Column(
             children: [
-              defaultAppBar(title: AppString.planType, context: context),
+              defaultAppBar(
+                title: AppString.planType,
+                context: context,
+                actions: [
+                  defaultActionButton(
+                    icon: Icons.add,
+                    onPressed: (){
+                      navigateTo(context, const AddExerciseScreen());
+                    },
+                    backgroundColor: Colors.green
+                  )
+                ],
+              ),
               verticalSpace(2.h),
               Expanded(
                 child: ListView.builder(

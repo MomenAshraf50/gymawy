@@ -178,6 +178,7 @@ class AppString {
   static const protein = 'Protein';
   static const carbohydrate = 'Carbohydrate';
   static const description = 'Description';
+  static const diet = 'Description';
 
 
 

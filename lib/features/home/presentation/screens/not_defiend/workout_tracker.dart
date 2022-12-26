@@ -6,6 +6,7 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/features/home/presentation/screens/not_defiend/exercise_example.dart';
 import 'package:gymawy/features/home/presentation/screens/not_defiend/widgets/main_data.dart';
 import '../../../../../core/util/resources/appString.dart';
 
@@ -41,7 +42,7 @@ class WorkoutTrackerScreen extends StatelessWidget {
                     InkWell(
                       onTap: ()
                       {
-                        // navigateTo(context, LineChartSample2());
+                        Navigator.pop(context);
                       },
                         child: SvgPicture.asset(
                             Assets.images.svg.two_points
@@ -153,22 +154,27 @@ class WorkoutTrackerScreen extends StatelessWidget {
                            fontWeight: FontWeight.w600,
                       ),
                       const Spacer(),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.rSp),
-                          color: ColorsManager.white.withOpacity(0.3),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 5.w,
-                            vertical: 1.h
+                      InkWell(
+                        onTap: (){
+                          navigateTo(context, const ExerciseExampleScreen());
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.rSp),
+                            color: ColorsManager.white.withOpacity(0.3),
                           ),
-                          child: myText(
-                            title: AppString.check,
-                            style: Style.small,
-                            color: ColorsManager.white,
-                            fontSize: 14.rSp,
-                            fontWeight: FontWeight.w600,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5.w,
+                              vertical: 1.h
+                            ),
+                            child: myText(
+                              title: AppString.check,
+                              style: Style.small,
+                              color: ColorsManager.white,
+                              fontSize: 14.rSp,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       )

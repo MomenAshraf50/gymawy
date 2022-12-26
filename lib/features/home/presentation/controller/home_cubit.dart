@@ -49,6 +49,10 @@ class HomeCubit extends Cubit<HomeStates> {
     Suggestions(
       title: AppString.clientProgress,
       img: Assets.images.svg.clients,
+    ),
+    Suggestions(
+      title: AppString.workoutTracker,
+      img: Assets.images.svg.clients,
     )
   ];
 
@@ -72,18 +76,18 @@ class HomeCubit extends Cubit<HomeStates> {
 
   bool coachRadioButton = false;
   bool clientRadioButton = false;
-  void changeToCoachRadioButton()
+  void changeToFirstChoiceRadioButton()
   {
     coachRadioButton = !coachRadioButton;
     clientRadioButton = false;
-    emit(ChangeCoachRadioButtonState());
+    emit(ChangeFirstChoiceRadioButtonState());
   }
 
-  void changeToClientRadioButton()
+  void changeToSecondChoiceRadioButton()
   {
     coachRadioButton = false;
     clientRadioButton = !clientRadioButton;
-    emit(ChangeClientRadioButtonState());
+    emit(ChangeSecondChoiceRadioButtonState());
   }
 
   bool? isVisibilityPlanIcon = false;

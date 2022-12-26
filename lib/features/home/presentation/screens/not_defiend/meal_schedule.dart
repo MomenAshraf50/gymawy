@@ -9,6 +9,7 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/resources/meals.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/screens/not_defiend/add_meal.dart';
+import 'package:gymawy/features/home/presentation/screens/not_defiend/meal_details.dart';
 
 class MealScheduleScreen extends StatelessWidget {
   const MealScheduleScreen({Key? key}) : super(key: key);
@@ -165,8 +166,13 @@ Widget buildMealsItem(Meals meals) => Card(
               ],
             ),
             ListView.builder(
-              itemBuilder: (context, index) => buildMealsDetailsItem(
-                meals.mealDetails[index],
+              itemBuilder: (context, index) => InkWell(
+                onTap: (){
+                  navigateTo(context, const MealsDetailsScreen());
+                },
+                child: buildMealsDetailsItem(
+                  meals.mealDetails[index],
+                ),
               ),
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
