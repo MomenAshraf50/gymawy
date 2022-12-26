@@ -111,6 +111,7 @@ class HomeCubit extends Cubit<HomeStates> {
   TextEditingController nameOfPlanController = TextEditingController();
 
   File? exerciseImageFile;
+  File? mealImageFile;
   File? profileImageFile;
   File? certificationImageFile;
 
@@ -133,6 +134,11 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void selectExerciseImage(context) async {
     profileImageFile = await pickImageFromGallery(context);
+    emit(HomePlansImageSelectedState());
+  }
+
+  void selectMealImage(context) async {
+    mealImageFile = await pickImageFromGallery(context);
     emit(HomePlansImageSelectedState());
   }
 

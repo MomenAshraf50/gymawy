@@ -293,6 +293,9 @@ class $AssetsImagesSvgGen {
   /// File path: assets/images/svg/icon.svg
   String get icon => 'assets/images/svg/icon.svg';
 
+  /// File path: assets/images/svg/meal.svg
+  String get meal => 'assets/images/svg/meal.svg';
+
   /// File path: assets/images/svg/instagram-svgrepo-com.svg
   String get instagramSvgrepoCom =>
       'assets/images/svg/instagram-svgrepo-com.svg';
@@ -338,6 +341,9 @@ class $AssetsImagesSvgGen {
 
   /// File path: assets/images/svg/goal.svg
   String get goal => 'assets/images/svg/goal.svg';
+
+  /// File path: assets/images/svg/addMeal.svg
+  String get addMeal => 'assets/images/svg/addMeal.svg';
 
   /// File path: assets/images/svg/completed_tasks.svg
   String get completed_tasks => 'assets/images/svg/completed_tasks.svg';

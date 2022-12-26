@@ -171,6 +171,13 @@ class AppString {
   static const dailyWorkoutSchedule = 'Daily workout schedule';
   static const check = 'Check';
   static const howToDoIt = 'How To Do It';
+  static const addMeal = 'Add Meal';
+  static const nameOfMeal = 'Name';
+  static const dayAndTime = 'Day & Time';
+  static const fat = 'Fat';
+  static const protein = 'Protein';
+  static const carbohydrate = 'Carbohydrate';
+  static const description = 'Description';
 
 
 

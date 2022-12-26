@@ -150,10 +150,9 @@ class LoginScreen extends StatelessWidget {
                                   }
                                   //navigateAndFinish(context, MainScreen());
                                   //navigateAndFinish(context, WorkoutTrackerScreen());
-                                  //navigateAndFinish(context, const MealScheduleScreen());
+                                  navigateAndFinish(context, const MealScheduleScreen());
                                   //navigateTo(context, PinPage());
-                                  navigateTo(context, const ExerciseExampleScreen());
-
+                                  //navigateTo(context, const ExerciseExampleScreen());
                                 }),
                             verticalSpace(5.h),
                             SizedBox(

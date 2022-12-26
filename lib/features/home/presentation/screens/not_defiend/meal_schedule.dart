@@ -8,6 +8,7 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/resources/meals.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/features/home/presentation/screens/not_defiend/add_meal.dart';
 
 class MealScheduleScreen extends StatelessWidget {
   const MealScheduleScreen({Key? key}) : super(key: key);
@@ -65,15 +66,26 @@ class MealScheduleScreen extends StatelessWidget {
       ]),
     ];
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          onPressed: ()
+          {
+            navigateTo(context, const AddMeal());
+          },
+           backgroundColor: ColorsManager.mainColor,
+            child: const Icon(
+              Icons.add,
+              color: ColorsManager.white,
+            ),
+      ),
       body: Padding(
         padding: designApp,
         child: Column(
           children: [
             defaultAppBar(title: AppString.mealSchedule, context: context),
             CalendarTimeline(
-              initialDate: DateTime(2020, 4, 20),
-              firstDate: DateTime(2019, 1, 15),
-              lastDate: DateTime(2020, 11, 20),
+              initialDate: DateTime(2022, 12, 26),
+              firstDate: DateTime(2022, 1, 1),
+              lastDate: DateTime(2025, 12, 31),
               onDateSelected: (date) => print(date),
               leftMargin: 20,
               shrink: true,
