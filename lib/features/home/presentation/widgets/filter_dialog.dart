@@ -6,30 +6,35 @@ import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 
 class FilterDialog extends StatelessWidget {
-  FilterDialog({Key? key,required this.homeCubit}) : super(key: key);
+  FilterDialog({
+    Key? key,
+    required this.firstFilterTitle,
+    required this.secondFilterTitle,
+    required this.onTapFirstChoice,
+    required this.onTapSecondChoice
+  }) : super(key: key);
 
-  HomeCubit homeCubit;
+  String firstFilterTitle;
+  String secondFilterTitle;
+
+  VoidCallback onTapFirstChoice;
+  VoidCallback onTapSecondChoice;
 
   @override
   Widget build(BuildContext context) {
-
+    HomeCubit homeCubit = HomeCubit.get(context);
     return AlertDialog(
-      shape: BeveledRectangleBorder(
-          borderRadius:
-          BorderRadius.circular(10)),
+      shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(10)),
       title: Column(
         children: [
           InkWell(
-            onTap: () {
-              homeCubit
-                  .changeToCoachRadioButton();
-            },
+            onTap: onTapFirstChoice,
             child: SizedBox(
               height: 5.h,
               child: Row(
                 children: [
-                  const myText(
-                    title: AppString.coaches,
+                  myText(
+                    title: firstFilterTitle,
                     style: Style.extraSmall,
                     fontWeight: FontWeight.w600,
                   ),
@@ -38,22 +43,11 @@ class FilterDialog extends StatelessWidget {
                     height: 3.h,
                     width: 6.w,
                     decoration: BoxDecoration(
-                        color: homeCubit
-                            .coachRadioButton
-                            ? const Color
-                            .fromARGB(
-                            255,
-                            248,
-                            96,
-                            13)
-                            : Colors
-                            .transparent,
-                        borderRadius:
-                        BorderRadius
-                            .circular(5),
-                        border: Border.all(
-                            color:
-                            Colors.grey)),
+                        color: homeCubit.coachRadioButton
+                            ? const Color.fromARGB(255, 248, 96, 13)
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: Colors.grey)),
                   )
                 ],
               ),
@@ -67,16 +61,13 @@ class FilterDialog extends StatelessWidget {
           ),
           verticalSpace(1.h),
           InkWell(
-            onTap: () {
-              homeCubit
-                  .changeToClientRadioButton();
-            },
+            onTap: onTapSecondChoice,
             child: SizedBox(
               height: 5.h,
               child: Row(
                 children: [
-                  const myText(
-                    title: AppString.clients,
+                  myText(
+                    title: secondFilterTitle,
                     style: Style.extraSmall,
                     fontWeight: FontWeight.w600,
                   ),
@@ -85,22 +76,11 @@ class FilterDialog extends StatelessWidget {
                     height: 3.h,
                     width: 6.w,
                     decoration: BoxDecoration(
-                        color: homeCubit
-                            .clientRadioButton
-                            ? const Color
-                            .fromARGB(
-                            255,
-                            248,
-                            96,
-                            13)
-                            : Colors
-                            .transparent,
-                        borderRadius:
-                        BorderRadius
-                            .circular(5),
-                        border: Border.all(
-                            color:
-                            Colors.grey)),
+                        color: homeCubit.clientRadioButton
+                            ? const Color.fromARGB(255, 248, 96, 13)
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: Colors.grey)),
                   )
                 ],
               ),
@@ -109,6 +89,5 @@ class FilterDialog extends StatelessWidget {
         ],
       ),
     );
-
   }
 }

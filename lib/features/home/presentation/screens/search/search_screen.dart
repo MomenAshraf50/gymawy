@@ -53,7 +53,16 @@ class SearchScreen extends StatelessWidget {
                             builder: (context) {
                               return BlocBuilder<HomeCubit, HomeStates>(
                                 builder: (context, state) {
-                                  return FilterDialog(homeCubit: homeCubit,);
+                                  return FilterDialog(
+                                    firstFilterTitle: AppString.coaches,
+                                    secondFilterTitle: AppString.clients,
+                                    onTapFirstChoice: (){
+                                      homeCubit.changeToFirstChoiceRadioButton();
+                                    },
+                                    onTapSecondChoice: (){
+                                      homeCubit.changeToSecondChoiceRadioButton();
+                                    },
+                                  );
                                 },
                               );
                             },
@@ -68,8 +77,7 @@ class SearchScreen extends StatelessWidget {
                   child: ListView.builder(
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: ()
-                        {
+                        onTap: () {
                           navigateTo(context, const SearchResultScreen());
                         },
                         child: Padding(
@@ -92,7 +100,8 @@ class SearchScreen extends StatelessWidget {
                                   horizontalSpace(2.w),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       myText(
                                         title: AppString.resultSearchName,
@@ -110,8 +119,9 @@ class SearchScreen extends StatelessWidget {
                                       verticalSpace(0.5.h),
                                       Row(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
                                           Icon(
                                             Icons.star,
@@ -139,7 +149,8 @@ class SearchScreen extends StatelessWidget {
                                             size: 15.rSp,
                                           ),
                                           myText(
-                                            title: AppString.resultSearchLocation,
+                                            title:
+                                                AppString.resultSearchLocation,
                                             style: Style.extraSmall,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 14.rSp,

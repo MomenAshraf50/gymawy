@@ -31,7 +31,7 @@ class ExerciseExampleScreen extends StatelessWidget {
                 children: [
                   DefaultBackButton(
                     function: () {
-                      // Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                   ),
                   Expanded(

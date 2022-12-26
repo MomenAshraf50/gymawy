@@ -6,6 +6,7 @@ import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/features/home/presentation/screens/home/client_progress/client_progress_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/home/exercises/exercises_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/plans_screen.dart';
+import 'package:gymawy/features/home/presentation/screens/not_defiend/workout_tracker.dart';
 import 'package:gymawy/features/home/presentation/widgets/filter_dialog.dart';
 import 'package:lottie/lottie.dart';
 import '../../../../../core/util/resources/appString.dart';
@@ -65,15 +66,14 @@ class HomeClientScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(7.rSp)),
                                 child: Center(
                                   child: Text(AppString.notificationsNum,
-                                      style: Theme
-                                          .of(context)
+                                      style: Theme.of(context)
                                           .textTheme
                                           .displayLarge!
                                           .copyWith(
-                                          fontFamily: 'poppins',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 11.rSp,
-                                          color: Colors.white)),
+                                              fontFamily: 'poppins',
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 11.rSp,
+                                              color: Colors.white)),
                                 ),
                               ),
                             ],
@@ -124,7 +124,16 @@ class HomeClientScreen extends StatelessWidget {
                                 builder: (context) {
                                   return BlocBuilder<HomeCubit, HomeStates>(
                                     builder: (context, state) {
-                                      return FilterDialog(homeCubit: homeCubit,);
+                                      return FilterDialog(
+                                        firstFilterTitle: AppString.coaches,
+                                        secondFilterTitle: AppString.clients,
+                                        onTapFirstChoice: (){
+                                          homeCubit.changeToFirstChoiceRadioButton();
+                                        },
+                                        onTapSecondChoice: (){
+                                          homeCubit.changeToSecondChoiceRadioButton();
+                                        },
+                                      );
                                     },
                                   );
                                 },
@@ -185,14 +194,14 @@ class HomeClientScreen extends StatelessWidget {
                                   padding: EdgeInsets.all(10.rSp),
                                   child: Column(
                                     children: [
-                                      index == 3
+                                      index == 3 && index == 4
                                           ? Lottie.asset(
-                                          Assets.images.lotti.dumbble,
-                                          height: 11.h)
+                                              Assets.images.lotti.dumbble,
+                                              height: 11.h)
                                           : SvgPicture.asset(
-                                        homeCubit
-                                            .listSuggestions[index].img,
-                                      ),
+                                              homeCubit
+                                                  .listSuggestions[index].img,
+                                            ),
                                       verticalSpace(2.h),
                                       myText(
                                         title: homeCubit
@@ -200,6 +209,7 @@ class HomeClientScreen extends StatelessWidget {
                                         style: Style.extraSmall,
                                         color: Colors.black,
                                         fontSize: 12.rSp,
+                                        maxLines: 1,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ],
@@ -214,8 +224,10 @@ class HomeClientScreen extends StatelessWidget {
                                 navigateTo(context, const ExercisesScreen());
                               } else if (index == 2) {
                                 navigateTo(context, const ClientsScreen());
-                              } else {
+                              } else if (index == 3){
                                 navigateTo(context, const ProgressScreen());
+                              }else{
+                                navigateTo(context, const WorkoutTrackerScreen());
                               }
                             },
                           );
@@ -255,16 +267,16 @@ class HomeClientScreen extends StatelessWidget {
                                 height: 3.h,
                                 width: 15.w,
                                 decoration: BoxDecoration(
-                                    color:
-                                    const Color.fromARGB(255, 252, 183, 146),
+                                    color: const Color.fromARGB(
+                                        255, 252, 183, 146),
                                     borderRadius: BorderRadius.circular(15)),
                                 child: Center(
                                     child: myText(
-                                      title: AppString.daysNum,
-                                      style: Style.extraSmall,
-                                      fontSize: 9.rSp,
-                                      fontWeight: FontWeight.w600,
-                                    )),
+                                  title: AppString.daysNum,
+                                  style: Style.extraSmall,
+                                  fontSize: 9.rSp,
+                                  fontWeight: FontWeight.w600,
+                                )),
                               ),
                               verticalSpace(0.5.h),
                               myText(
@@ -286,13 +298,14 @@ class HomeClientScreen extends StatelessWidget {
                                     decoration: BoxDecoration(
                                         color: const Color.fromARGB(
                                             255, 252, 183, 146),
-                                        borderRadius: BorderRadius.circular(15)),
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
                                     child: Center(
                                       child: Row(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         children: [
                                           SvgPicture.asset(
                                               Assets.images.svg.clock),
@@ -314,13 +327,14 @@ class HomeClientScreen extends StatelessWidget {
                                     decoration: BoxDecoration(
                                         color: const Color.fromARGB(
                                             255, 252, 183, 146),
-                                        borderRadius: BorderRadius.circular(15)),
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
                                     child: Center(
                                       child: Row(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         children: [
                                           SvgPicture.asset(
                                               Assets.images.svg.fire),
@@ -342,8 +356,8 @@ class HomeClientScreen extends StatelessWidget {
                                   height: 3.h,
                                   width: 41.w,
                                   decoration: BoxDecoration(
-                                      color:
-                                      const Color.fromARGB(255, 0, 173, 199),
+                                      color: const Color.fromARGB(
+                                          255, 0, 173, 199),
                                       borderRadius: BorderRadius.circular(15)),
                                   child: Center(
                                     child: myText(

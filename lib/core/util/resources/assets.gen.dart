@@ -390,6 +390,21 @@ class $AssetsImagesSvgGen {
   /// File path: assets/images/svg/circle_step.svg
   String get circleStep => 'assets/images/svg/circle_step.svg';
 
+  /// File path: assets/images/svg/meal_icon.svg
+  String get meal_icon => 'assets/images/svg/meal_icon.svg';
+
+  /// File path: assets/images/svg/calories-icon.svg
+  String get calories => 'assets/images/svg/calories-icon.svg';
+
+  /// File path: assets/images/svg/fat-icon.svg
+  String get fat => 'assets/images/svg/fat-icon.svg';
+
+  /// File path: assets/images/svg/protein.svg
+  String get protein => 'assets/images/svg/protein.svg';
+
+  /// File path: assets/images/svg/rice.svg
+  String get rice => 'assets/images/svg/rice.svg';
+
 
   /// List of all assets
   List<String> get values => [
