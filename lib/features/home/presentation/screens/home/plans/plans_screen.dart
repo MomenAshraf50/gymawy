@@ -7,7 +7,7 @@ import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/plan_type.dart';
-import 'package:gymawy/features/home/presentation/screens/not_defiend/meal_schedule.dart';
+import 'package:gymawy/features/home/presentation/screens/home/plans/meal_schedule.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_items.dart';
 import 'package:gymawy/features/home/presentation/widgets/filter_dialog.dart';
 import 'add_plan.dart';

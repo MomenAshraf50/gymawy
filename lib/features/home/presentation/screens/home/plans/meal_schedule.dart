@@ -8,8 +8,8 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/resources/meals.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/features/home/presentation/screens/not_defiend/add_meal.dart';
-import 'package:gymawy/features/home/presentation/screens/not_defiend/meal_details.dart';
+import 'package:gymawy/features/home/presentation/screens/home/plans/add_meal.dart';
+import 'package:gymawy/features/home/presentation/screens/home/plans/meal_details.dart';
 
 class MealScheduleScreen extends StatelessWidget {
   const MealScheduleScreen({Key? key}) : super(key: key);
