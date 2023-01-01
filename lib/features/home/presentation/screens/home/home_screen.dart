@@ -6,7 +6,7 @@ import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/features/home/presentation/screens/home/client_progress/client_progress_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/home/exercises/exercises_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/plans_screen.dart';
-import 'package:gymawy/features/home/presentation/screens/not_defiend/workout_tracker.dart';
+import 'package:gymawy/features/home/presentation/screens/home/workout_tracker/workout_tracker.dart';
 import 'package:gymawy/features/home/presentation/widgets/filter_dialog.dart';
 import 'package:lottie/lottie.dart';
 import '../../../../../core/util/resources/appString.dart';
@@ -194,7 +194,7 @@ class HomeClientScreen extends StatelessWidget {
                                   padding: EdgeInsets.all(10.rSp),
                                   child: Column(
                                     children: [
-                                      index == 3 && index == 4
+                                      index == 3 || index == 4
                                           ? Lottie.asset(
                                               Assets.images.lotti.dumbble,
                                               height: 11.h)

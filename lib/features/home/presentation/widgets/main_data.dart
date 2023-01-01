@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
-import '../../../../../../core/util/resources/colors_manager.dart';
-import '../../../../../../core/util/resources/constants_manager.dart';
+import '../../../../core/util/resources/colors_manager.dart';
+import '../../../../core/util/resources/constants_manager.dart';
 import 'bottom_title_widgets.dart';
 import 'left_title_widgets.dart';
 

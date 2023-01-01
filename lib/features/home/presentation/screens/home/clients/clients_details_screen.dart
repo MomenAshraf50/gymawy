@@ -3,7 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/features/home/presentation/screens/home/clients/add_exercise_screen.dart';
+import 'package:gymawy/features/home/presentation/screens/home/clients/add_meal_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_latest_client_activity.dart';
 import '../../../../../../core/util/resources/assets.gen.dart';
 import '../../../widgets/build_client_details_screen_items.dart';
@@ -54,7 +57,7 @@ class ClientDetailsScreen extends StatelessWidget {
           padding: designApp,
           child: Column(
             children: [
-              defaultAppBar(title: AppString.clientProgress, context: context),
+              defaultAppBar(title: AppString.clientDetails, context: context),
               verticalSpace(2.h),
               Expanded(
                 child: SingleChildScrollView(
@@ -145,6 +148,30 @@ class ClientDetailsScreen extends StatelessWidget {
                             ],
                           ),
                         ),
+                      ),
+                      verticalSpace(2.h),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: myButton(
+                                  text: AppString.addMeal,
+                                fontSize: 15.rSp,
+                                  onPressed: () {
+                                    navigateTo(context, const AddClientMealScreen());
+                                  },
+                              ),
+                          ),
+                          horizontalSpace(2.w),
+                          Expanded(
+                            child: myButton(
+                              text: AppString.addExercise,
+                              fontSize: 15.rSp,
+                              onPressed: () {
+                                navigateTo(context, const AddClientExerciseScreen());
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

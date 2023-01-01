@@ -29,7 +29,15 @@ class AddPlan extends StatelessWidget {
             builder: (context, state) {
               return Column(
                 children: [
-                  defaultAppBar(title: AppString.addPlan, context: context),
+                  defaultAppBar(
+                      title: AppString.addPlan,
+                      context: context,
+                    onPressed: ()
+                    {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    }
+                  ),
                   verticalSpace(20.h),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -61,6 +61,7 @@ class AppString {
   static const plans = 'Plans';
   static const exercise = 'Exercise';
   static const clients = 'Clients';
+  static const clientDetails = 'Client Details';
   static const clientProgress = 'Client Progress';
   static const todaySession = 'Today Session';
   static const doNotMiss = 'Do not miss the fitness';
@@ -172,16 +173,15 @@ class AppString {
   static const check = 'Check';
   static const howToDoIt = 'How To Do It';
   static const addMeal = 'Add Meal';
+  static const addExercise = 'Add Exercise';
   static const nameOfMeal = 'Name';
   static const dayAndTime = 'Day & Time';
   static const fat = 'Fat';
   static const protein = 'Protein';
   static const carbohydrate = 'Carbohydrate';
   static const description = 'Description';
-  static const diet = 'Description';
-
-
-
+  static const diet = 'Diet';
+  static const mealName = 'Batates';
 
 
 

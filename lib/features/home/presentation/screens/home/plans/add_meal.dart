@@ -3,9 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/features/home/presentation/screens/not_defiend/add_meal_details.dart';
-import '../../../../../core/util/resources/appString.dart';
-import '../../../../../core/util/resources/constants_manager.dart';
+import 'package:gymawy/features/home/presentation/screens/home/plans/add_meal_details.dart';
+import '../../../../../../core/util/resources/appString.dart';
+import '../../../../../../core/util/resources/constants_manager.dart';
 
 class AddMeal extends StatelessWidget {
   const AddMeal({Key? key}) : super(key: key);

@@ -75,6 +75,7 @@ AppBar defaultAppBar({
   RegisterCubit? cubit,
   Color? color = ColorsManager.white,
   Color? fontColor = ColorsManager.black,
+  Function()? onPressed,
 }) {
   return AppBar(
     backgroundColor: color!,
@@ -88,7 +89,8 @@ AppBar defaultAppBar({
     actions: actions,
     leading: IconButton(
       icon: svgImage(path: Assets.images.svg.arrow_back,),
-      onPressed: (){
+      onPressed: onPressed ?? ()
+      {
         prevPage ? cubit!.nextPage(false,context) : Navigator.pop(context);
       },
     ),
