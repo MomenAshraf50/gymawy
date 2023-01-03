@@ -14,7 +14,7 @@ import 'package:gymawy/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget( const MyApp(isRtl: false, translation: '', widget: SplashScreen(),));
+    await tester.pumpWidget( MyApp(isRtl: false, translation: '', widget: const SplashScreen(), token: '',));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

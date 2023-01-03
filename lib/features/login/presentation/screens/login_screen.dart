@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gymawy/core/network/local/cache_helper.dart';
 import 'package:gymawy/core/util/cubit/cubit.dart';
 import 'package:gymawy/core/util/cubit/state.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
@@ -19,6 +20,8 @@ import 'package:gymawy/features/login/presentation/screens/forget_password_scree
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/choose_your_type_screen.dart';
 
+import '../../../../core/di/injection.dart';
+
 
 class LoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -33,7 +36,10 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginStates>(
       listener: (context, state) {
         if(state is LoginSuccessState){
+          sl<CacheHelper>().put('token', state.token);
+          token = state.token;
           navigateAndFinish(context, MainScreen());
+          debugPrintFullText(token!);
         }
       },
       builder: (context, state) {
