@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:lottie/lottie.dart';
-import '../../../../../core/util/resources/appString.dart';
-import '../../../../../core/util/resources/assets.gen.dart';
-import '../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../core/util/widgets/myButton.dart';
-import '../../../../../core/util/widgets/text_field.dart';
-import '../../controller/home_cubit.dart';
+import '../../../../../../core/util/resources/appString.dart';
+import '../../../../../../core/util/resources/assets.gen.dart';
+import '../../../../../../core/util/resources/constants_manager.dart';
+import '../../../../../../core/util/widgets/myButton.dart';
+import '../../../../../../core/util/widgets/text_field.dart';
+import '../../../controller/home_cubit.dart';
 
 class AddMealDetails extends StatelessWidget {
   AddMealDetails({

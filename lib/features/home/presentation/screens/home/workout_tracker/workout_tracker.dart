@@ -6,9 +6,10 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/features/home/presentation/screens/not_defiend/exercise_example.dart';
-import 'package:gymawy/features/home/presentation/screens/not_defiend/widgets/main_data.dart';
-import '../../../../../core/util/resources/appString.dart';
+import 'package:gymawy/features/home/presentation/screens/home/workout_tracker/exercise_example.dart';
+import 'package:gymawy/features/home/presentation/widgets/main_data.dart';
+
+import '../../../../../../core/util/resources/appString.dart';
 
 class WorkoutTrackerScreen extends StatelessWidget {
   const WorkoutTrackerScreen({Key? key}) : super(key: key);
