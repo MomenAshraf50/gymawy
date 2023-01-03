@@ -55,7 +55,7 @@ abstract class DioHelper {
 class DioImpl extends DioHelper {
   final Dio dio = Dio(
     BaseOptions(
-      baseUrl: '$baseUrl$apiVersion',
+      baseUrl: baseUrl,
       receiveDataWhenStatusError: true,
       connectTimeout: 9000,
     ),
@@ -80,7 +80,7 @@ class DioImpl extends DioHelper {
     if (base != null) {
       dio.options.baseUrl = base;
     } else {
-      dio.options.baseUrl = '$baseUrl$apiVersion';
+      dio.options.baseUrl = baseUrl;
     }
 
     dio.options.headers = {
@@ -134,7 +134,7 @@ class DioImpl extends DioHelper {
     if (base != null) {
       dio.options.baseUrl = base;
     } else {
-      dio.options.baseUrl = '$baseUrl$apiVersion';
+      dio.options.baseUrl = baseUrl;
     }
 
     dio.options.headers = {
@@ -182,7 +182,7 @@ class DioImpl extends DioHelper {
     if (base != null) {
       dio.options.baseUrl = base;
     } else {
-      dio.options.baseUrl = '$baseUrl$apiVersion';
+      dio.options.baseUrl = baseUrl;
     }
 
     dio.options.headers = {
@@ -231,7 +231,7 @@ class DioImpl extends DioHelper {
     if (base != null) {
       dio.options.baseUrl = base;
     } else {
-      dio.options.baseUrl = '$baseUrl$apiVersion';
+      dio.options.baseUrl = baseUrl;
     }
 
     dio.options.headers = {

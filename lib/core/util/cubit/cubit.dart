@@ -226,8 +226,7 @@ class AppBloc extends Cubit<AppState> {
     );
   }
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+
 
   IconData visibilityShowPassword = Icons.visibility_outlined;
   bool showPassword = true;
