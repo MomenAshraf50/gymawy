@@ -12,24 +12,32 @@ import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/features/home/presentation/screens/home_layout.dart';
+import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
+import 'package:gymawy/features/login/presentation/controller/login_states.dart';
 import 'package:gymawy/features/login/presentation/screens/forget_password_screen.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/choose_your_type_screen.dart';
 
-import '../../../home/presentation/screens/home_layout.dart';
 
 class LoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     RegisterCubit registerCubit = RegisterCubit.get(context);
 
-    return BlocConsumer<AppBloc, AppState>(
-      listener: (context, state) {},
+    return BlocConsumer<LoginCubit, LoginStates>(
+      listener: (context, state) {
+        if(state is LoginSuccessState){
+          navigateAndFinish(context, MainScreen());
+        }
+      },
       builder: (context, state) {
-        //LoginCubit loginCubit = LoginCubit.get(context);
+        LoginCubit loginCubit = LoginCubit.get(context);
         AppBloc appBloc = AppBloc.get(context);
         return Scaffold(
           body: HideKeyboardPage(
@@ -46,32 +54,11 @@ class LoginScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // Align(
-                            //   alignment: Alignment.centerRight,
-                            //   child: IconButton(
-                            //     onPressed: ()
-                            //     {
-                            //       // if(AppBloc.get(context).isArabic == false)
-                            //       // {
-                            //       //   AppBloc.get(context).changeLanguage(code: 'en');
-                            //       // }
-                            //       // if(AppBloc.get(context).isArabic == true)
-                            //       // {
-                            //       //   AppBloc.get(context).changeLanguage(code: 'ar');
-                            //       // }
-                            //     },
-                            //     icon: const Icon(
-                            //       Icons.language_outlined,
-                            //       color: ColorsManager.mainColor,
-                            //     ),
-                            //   ),
-                            // ),
                             SvgPicture.asset(
                                 Assets.images.svg.icon
                             ),
                             verticalSpace(5.h),
                             Text(
-                               // 'appTranslation().gymawy',
                               AppString.welcome_gymawy,
                               style: Theme
                                   .of(context)
@@ -92,7 +79,7 @@ class LoginScreen extends StatelessWidget {
                                 }
                                 return null;
                               },
-                              controller: appBloc.emailController,
+                              controller: emailController,
                               hint: AppString.email,
                               svgImg: Assets.images.svg.email,
                             ),
@@ -103,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                                 }
                                 return null;
                               },
-                              controller: appBloc.passwordController,
+                              controller: passwordController,
                               hint: AppString.password,
                               isPassword: true,
                               svgImg: Assets.images.svg.lock,
@@ -137,7 +124,8 @@ class LoginScreen extends StatelessWidget {
                                 onPressed: () {
                                   if(formKey.currentState!.validate())
                                   {
-                                    debugPrintFullText('validate success');
+                                    loginCubit.logIn(email: emailController.text, password: passwordController.text);
+                                    debugPrintFullText(loginCubit.logInModel.toString());
                                   }
                                   else
                                   {
@@ -146,11 +134,8 @@ class LoginScreen extends StatelessWidget {
                                         toast: TOAST.warning,
                                         text: 'please fill ur data');
                                   }
-                                  navigateAndFinish(context, MainScreen());
-                                  //navigateAndFinish(context, WorkoutTrackerScreen());
-                                  //navigateAndFinish(context, const MealScheduleScreen());
-                                  //navigateTo(context, PinPage());
-                                  //navigateTo(context, const ExerciseExampleScreen());
+
+
                                 }),
                             verticalSpace(5.h),
                             SizedBox(
