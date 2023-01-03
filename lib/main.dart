@@ -43,13 +43,19 @@ void main() async
   //
   //   isArabic = isRtl;
   // });
-   String translation = await rootBundle.loadString('assets/translations/${isRtl ? 'ar' : 'en'}.json');
+
+  token = await sl<CacheHelper>().get('token');
+  debugPrintFullText('My Current Token => $token');
+
+
+  String translation = await rootBundle.loadString('assets/translations/${isRtl ? 'ar' : 'en'}.json');
   Bloc.observer = MyBlocObserver();
 
   runApp(MyApp(
     isRtl: isRtl,
     translation: translation,
     widget: const SplashScreen(),
+    token: token,
   ));
 
 }
@@ -58,12 +64,14 @@ class MyApp extends StatelessWidget {
   final bool isRtl;
   final String translation;
   final Widget widget;
+  String? token;
 
-  const MyApp({
+   MyApp({
     Key? key,
     required this.isRtl,
     required this.translation,
     required this.widget,
+    required this.token,
 
   }) : super(key: key);
 

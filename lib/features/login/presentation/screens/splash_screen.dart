@@ -7,6 +7,7 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:gymawy/features/home/presentation/screens/home_layout.dart';
 import 'package:gymawy/features/login/presentation/screens/login_screen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -17,7 +18,7 @@ class SplashScreen extends StatelessWidget {
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Timer(const Duration(seconds: 2),() {
-        navigateAndFinish(context, LoginScreen());
+        navigateAndFinish(context, token != null ? MainScreen() : LoginScreen());
       });
     });
 

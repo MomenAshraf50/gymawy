@@ -26,7 +26,9 @@ class LoginCubit extends Cubit<LoginStates> {
       emit(LoginErrorState(failure.toString()));
     }, (data) {
       logInModel = data;
-      emit(LoginSuccessState());
+      emit(LoginSuccessState(
+        token: logInModel!.token
+      ));
     });
   }
 }
