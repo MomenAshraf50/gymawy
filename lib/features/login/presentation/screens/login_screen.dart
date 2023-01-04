@@ -32,6 +32,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RegisterCubit registerCubit = RegisterCubit.get(context);
+    LoginCubit loginCubit = LoginCubit.get(context);
 
     return BlocConsumer<LoginCubit, LoginStates>(
       listener: (context, state) {
@@ -41,6 +42,10 @@ class LoginScreen extends StatelessWidget {
           navigateAndFinish(context, MainScreen());
           debugPrintFullText(token!);
         }
+        /// Show Error Message مش بيخش الايرور ستيت اساسا
+        //  if(state is LoginErrorState){
+        //   designToastDialog(context: context, toast: TOAST.error,text: state.failure.toString());
+        // }
       },
       builder: (context, state) {
         LoginCubit loginCubit = LoginCubit.get(context);
