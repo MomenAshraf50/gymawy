@@ -11,7 +11,7 @@ class LoginSuccessState extends LoginStates{
 });
 }
 class LoginErrorState extends LoginStates{
-  final String failure;
-
-  LoginErrorState(this.failure);
+  // final String failure;
+  //
+  // LoginErrorState(this.failure);
 }
