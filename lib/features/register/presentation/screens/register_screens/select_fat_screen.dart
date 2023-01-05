@@ -13,38 +13,23 @@ import '../../../../../core/util/widgets/myText.dart';
 import '../../controller/register_cubit.dart';
 
 class SelectFatScreen extends StatelessWidget {
-   SelectFatScreen({Key? key,
-     this.userPic,
-     required this.country,
-     required this.government,
-     required this.gender,
-     required this.userName,
-     required this.firstName,
-     required this.lastName,
-     required this.fullName,
-     required this.age,
-     required this.email,
-     required this.phone,
-     required this.password,
-     required this.confirmPassword,
+   const SelectFatScreen({Key? key,
    }) : super(key: key);
-
-  String? gender;
-  String? country;
-  String? government;
-  File? userPic;
-  String? userName;
-  String? firstName;
-  String? lastName;
-  String? fullName;
-  String? age;
-  String? email;
-  String? phone;
-  String? password;
-  String? confirmPassword;
 
   @override
   Widget build(BuildContext context) {
+    debugPrintFullText(emailRegister!);
+    debugPrintFullText(passwordRegister!);
+    debugPrintFullText(confirmPasswordRegister!);
+    debugPrintFullText(ageRegister!);
+    debugPrintFullText(firstNameRegister!);
+    debugPrintFullText(fullNameRegister!);
+    debugPrintFullText(lastNameRegister!);
+    debugPrintFullText(phoneRegister!);
+    debugPrintFullText(userPicRegister!.toString());
+    debugPrintFullText(genderRegister!);
+    debugPrintFullText(countryRegister!);
+    debugPrintFullText(governmentRegister!);
     RegisterCubit registerCubit = RegisterCubit.get(context);
     return BlocBuilder<RegisterCubit, RegisterStates>(
       builder: (context, state) {
@@ -121,6 +106,7 @@ class SelectFatScreen extends StatelessWidget {
                           height: 3.h,
                           text: AppString.next,
                           onPressed: () {
+                            bodyFatRegister = '${registerCubit.fatValue}';
                             int fat =
                                 (registerCubit.fatValue.round()) * 10 + 10;
                             registerCubit.nextPage(true, context);

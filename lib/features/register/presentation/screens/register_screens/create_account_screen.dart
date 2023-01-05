@@ -243,6 +243,17 @@ class CreateAccountScreen extends StatelessWidget {
                         height: 3.h,
                         text: AppString.next,
                         onPressed: () {
+                          userPicRegister= registerCubit.imageFile;
+                          userNameRegister = registerCubit.phoneController.text;
+                          firstNameRegister = registerCubit.userFirstNameController.text;
+                          lastNameRegister = registerCubit.userLastNameController.text;
+                          fullNameRegister = registerCubit.fullNameController.text;
+                          ageRegister = registerCubit.userAgeController.text;
+                          emailRegister = registerCubit.emailController.text;
+                          phoneRegister = registerCubit.phoneController.text;
+                          passwordRegister = registerCubit.passwordController.text;
+                          confirmPasswordRegister = registerCubit.confirmPasswordController.text;
+
                           // registerCubit.isAccept
                           //     ? registerCubit.nextPage(true, context)
                           //     : null;

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
@@ -301,4 +302,19 @@ String displayTranslatedText({
   required String en,
 }) =>
     AppBloc.get(context).isArabic ? ar : en;
+
+File? userPicRegister;
+String? genderRegister = '';
+String? bodyFatRegister = '';
+String? countryRegister = '';
+String? governmentRegister = '';
+String? userNameRegister = '';
+String? firstNameRegister = '';
+String? lastNameRegister = '';
+String? fullNameRegister = '';
+String? ageRegister = '';
+String? emailRegister = '';
+String? phoneRegister = '';
+String? passwordRegister = '';
+String? confirmPasswordRegister = '';
 
