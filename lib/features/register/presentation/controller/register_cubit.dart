@@ -47,6 +47,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
   TextEditingController currencyController = TextEditingController();
   TextEditingController pricePerMonth = TextEditingController();
   TextEditingController dataOfBirth = TextEditingController();
+  TextEditingController currentWeightController = TextEditingController();
+  TextEditingController currentTallController = TextEditingController();
 
   bool isMoneyEmpty = true;
 
@@ -295,9 +297,9 @@ class RegisterCubit extends Cubit<RegisterStates>{
   void registerClient({
     required String email,
     required String password,
-    required String bodyFat,
-    required String currentWeight,
-    required String currentTall,
+    required int bodyFat,
+    required int currentWeight,
+    required int currentTall,
     required String age,
     required String bio,
     required String city,
@@ -310,7 +312,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String lastName,
     required String phoneNumber,
     required File profilePicture,
-    userName,
+    required String userName,
     context
   }) async {
     emit(RegisterLoadingState());

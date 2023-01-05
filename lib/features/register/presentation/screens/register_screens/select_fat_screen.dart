@@ -30,6 +30,8 @@ class SelectFatScreen extends StatelessWidget {
     debugPrintFullText(genderRegister!);
     debugPrintFullText(countryRegister!);
     debugPrintFullText(governmentRegister!);
+    debugPrintFullText(currentWeightRegister.toString());
+    debugPrintFullText(currentTallRegister!.toString());
     RegisterCubit registerCubit = RegisterCubit.get(context);
     return BlocBuilder<RegisterCubit, RegisterStates>(
       builder: (context, state) {

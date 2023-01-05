@@ -35,6 +35,8 @@ class AddressScreen extends StatelessWidget {
     debugPrintFullText(phoneRegister!);
     debugPrintFullText(userPicRegister!.toString());
     debugPrintFullText(genderRegister!);
+    debugPrintFullText(currentWeightRegister.toString());
+    debugPrintFullText(currentTallRegister!.toString());
     RegisterCubit registerCubit = RegisterCubit.get(context);
     return FutureBuilder(
       future: registerCubit.readJson(context),

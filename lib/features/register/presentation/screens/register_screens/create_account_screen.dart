@@ -111,6 +111,24 @@ class CreateAccountScreen extends StatelessWidget {
                         controller: registerCubit.userAgeController,
                         hint: AppString.userAge),
                     myTextFill(
+                        svgImg: Assets.images.svg.user,
+                        validate: (String? value) {
+                          if (value!.isEmpty) {
+                            return 'isEmpty';
+                          }
+                        },
+                        controller: registerCubit.currentWeightController,
+                        hint: AppString.currentWeight),
+                    myTextFill(
+                        svgImg: Assets.images.svg.user,
+                        validate: (String? value) {
+                          if (value!.isEmpty) {
+                            return 'isEmpty';
+                          }
+                        },
+                        controller: registerCubit.currentTallController,
+                        hint: AppString.currentTall),
+                    myTextFill(
                       svgImg: Assets.images.svg.email,
                       validate: (String? value) {
                         bool emailValid = RegExp(
@@ -253,6 +271,8 @@ class CreateAccountScreen extends StatelessWidget {
                           phoneRegister = registerCubit.phoneController.text;
                           passwordRegister = registerCubit.passwordController.text;
                           confirmPasswordRegister = registerCubit.confirmPasswordController.text;
+                          currentWeightRegister = int.parse(registerCubit.currentWeightController.text);
+                          currentTallRegister = int.parse(registerCubit.currentTallController.text);
 
                           // registerCubit.isAccept
                           //     ? registerCubit.nextPage(true, context)
