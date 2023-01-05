@@ -50,6 +50,9 @@ class CompleteProfileScreen extends StatelessWidget {
     debugPrintFullText(lastNameRegister!);
     debugPrintFullText(phoneRegister!);
     debugPrintFullText(userPicRegister!.toString());
+    debugPrintFullText(currentWeightRegister.toString());
+    debugPrintFullText(currentTallRegister!.toString());
+
     RegisterCubit registerCubit = RegisterCubit.get(context);
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {},
@@ -177,7 +180,7 @@ class CompleteProfileScreen extends StatelessWidget {
                             height: 3.h,
                             text: AppString.next,
                             onPressed: () {
-                              genderRegister = registerCubit.genderController.text;
+                              genderRegister = registerCubit.genderController.text[0];
                               registerCubit.nextPage(true, context);
                             }),
                       ]),

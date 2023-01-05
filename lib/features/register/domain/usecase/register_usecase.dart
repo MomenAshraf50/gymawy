@@ -33,9 +33,9 @@ class RegisterParameters extends Equatable {
   String password;
   String confirmPassword;
   String age;
-  String currentWeight;
-  String currentTall;
-  String bodyFat;
+  int currentWeight;
+  int currentTall;
+  int bodyFat;
 
   RegisterParameters(
     this.email,

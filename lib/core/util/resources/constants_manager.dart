@@ -317,4 +317,6 @@ String? emailRegister = '';
 String? phoneRegister = '';
 String? passwordRegister = '';
 String? confirmPasswordRegister = '';
+int? currentTallRegister = 0;
+int? currentWeightRegister = 0;
 

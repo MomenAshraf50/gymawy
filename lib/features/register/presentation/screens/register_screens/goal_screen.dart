@@ -35,6 +35,8 @@ class GoalScreen extends StatelessWidget {
     debugPrintFullText(countryRegister!);
     debugPrintFullText(governmentRegister!);
     debugPrintFullText(bodyFatRegister!);
+    debugPrintFullText(currentWeightRegister.toString());
+    debugPrintFullText(currentTallRegister!.toString());
     RegisterCubit registerCubit = RegisterCubit.get(context);
     return BlocConsumer<RegisterCubit,RegisterStates>(
       listener: (context, state) {
@@ -131,9 +133,10 @@ class GoalScreen extends StatelessWidget {
                     registerCubit.registerClient(
                         email: emailRegister!,
                         password: passwordRegister!,
-                        bodyFat: bodyFatRegister!,
-                        currentWeight: '',
-                        currentTall: '',
+                        /// bodyFat need Edit
+                        bodyFat: int.parse(bodyFatRegister![0]),
+                        currentWeight: currentWeightRegister!,
+                        currentTall: currentWeightRegister!,
                         age: ageRegister!,
                         bio: '',
                         city: '',
@@ -145,12 +148,14 @@ class GoalScreen extends StatelessWidget {
                         governorate: governmentRegister!,
                         lastName: lastNameRegister!,
                         phoneNumber: phoneRegister!,
-                        profilePicture: userPicRegister!
+                        profilePicture: userPicRegister!,
+                        userName: userNameRegister!,
                     );
                     debugPrintFullText(emailRegister!);
                     debugPrintFullText(passwordRegister!);
                     debugPrintFullText(confirmPasswordRegister!);
                     debugPrintFullText(ageRegister!);
+                    debugPrintFullText(userNameRegister!);
                     debugPrintFullText(firstNameRegister!);
                     debugPrintFullText(fullNameRegister!);
                     debugPrintFullText(lastNameRegister!);
@@ -160,6 +165,8 @@ class GoalScreen extends StatelessWidget {
                     debugPrintFullText(countryRegister!);
                     debugPrintFullText(governmentRegister!);
                     debugPrintFullText(bodyFatRegister!);
+                    debugPrintFullText(currentWeightRegister.toString());
+                    debugPrintFullText(currentTallRegister!.toString());
                   },
                 ),
               ),
