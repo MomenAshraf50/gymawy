@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,31 @@ import '../../controller/register_cubit.dart';
 import '../../controller/register_states.dart';
 
 class AddressScreen extends StatelessWidget {
-  const AddressScreen({Key? key}) : super(key: key);
+  AddressScreen({Key? key,
+    this.userPic,
+    required this.gender,
+    required this.userName,
+    required this.firstName,
+    required this.lastName,
+    required this.fullName,
+    required this.age,
+    required this.email,
+    required this.phone,
+    required this.password,
+    required this.confirmPassword,
+  }) : super(key: key);
+
+  String? gender;
+  File? userPic;
+  String? userName;
+  String? firstName;
+  String? lastName;
+  String? fullName;
+  String? age;
+  String? email;
+  String? phone;
+  String? password;
+  String? confirmPassword;
 
   @override
   Widget build(BuildContext context) {

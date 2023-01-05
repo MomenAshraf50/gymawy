@@ -18,10 +18,15 @@ import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../../core/util/resources/goal_data_static.dart';
 import '../../../../core/util/widgets/myText.dart';
+import '../../domain/entities/register_entity.dart';
+import '../../domain/usecase/register_usecase.dart';
 
 
 class RegisterCubit extends Cubit<RegisterStates>{
-  RegisterCubit() : super(RegisterInitialState());
+  final RegisterUseCase _registerUseCase;
+  RegisterCubit({required RegisterUseCase registerUseCase})
+      : _registerUseCase = registerUseCase,
+        super(RegisterInitialState());
 
   static RegisterCubit get(context) => BlocProvider.of(context);
 
@@ -31,10 +36,17 @@ class RegisterCubit extends Cubit<RegisterStates>{
 
   TextEditingController emailController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
+  TextEditingController userFirstNameController = TextEditingController();
+  TextEditingController userLastNameController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
+  TextEditingController userAgeController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
+  TextEditingController currencyController = TextEditingController();
+  TextEditingController pricePerMonth = TextEditingController();
+  TextEditingController dataOfBirth = TextEditingController();
 
   bool isMoneyEmpty = true;
 
@@ -42,19 +54,93 @@ class RegisterCubit extends Cubit<RegisterStates>{
     this.isCoach = isCoach;
     emit(RegisterChangeTypeState());
   }
-
-  List<Widget> pagesClint = [
+ late List<Widget> pagesClint = [
     CreateAccountScreen(),
-    CompleteProfileScreen(),
-    const AddressScreen(),
-    const SelectFatScreen(),
-     GoalScreen(),
+    CompleteProfileScreen(
+      userPic: imageFile,
+      userName: userNameController.text,
+      firstName: userFirstNameController.text,
+      lastName: userLastNameController.text,
+      fullName: fullNameController.text,
+      email: emailController.text,
+      age: userAgeController.text,
+      phone: phoneController.text,
+      password: passwordController.text,
+      confirmPassword: confirmPasswordController.text,
+    ),
+   AddressScreen(
+     userPic: imageFile,
+     userName: userNameController.text,
+     firstName: userFirstNameController.text,
+     lastName: userLastNameController.text,
+     fullName: fullNameController.text,
+     email: emailController.text,
+     age: userAgeController.text,
+     phone: phoneController.text,
+     password: passwordController.text,
+     confirmPassword: confirmPasswordController.text,
+     gender: genderController.text,
+   ),
+   SelectFatScreen(
+     userPic: imageFile,
+     userName: userNameController.text,
+     firstName: userFirstNameController.text,
+     lastName: userLastNameController.text,
+     fullName: fullNameController.text,
+     email: emailController.text,
+     age: userAgeController.text,
+     phone: phoneController.text,
+     password: passwordController.text,
+     confirmPassword: confirmPasswordController.text,
+     gender: genderController.text,
+     country: countryController.text,
+     government: cityController.text,
+   ),
+     GoalScreen(
+       userPic: imageFile,
+       userName: userNameController.text,
+       firstName: userFirstNameController.text,
+       lastName: userLastNameController.text,
+       fullName: fullNameController.text,
+       email: emailController.text,
+       age: userAgeController.text,
+       phone: phoneController.text,
+       password: passwordController.text,
+       confirmPassword: confirmPasswordController.text,
+       gender: genderController.text,
+       country: countryController.text,
+       government: cityController.text,
+       bodyFat: fatValue.toString(),
+     ),
   ];
 
-  List<Widget> pagesCoach = [
+  late List<Widget> pagesCoach = [
     CreateAccountScreen(),
-    CompleteProfileScreen(),
-    const AddressScreen(),
+    CompleteProfileScreen(
+      userPic: imageFile,
+      userName: userNameController.text,
+      firstName: userFirstNameController.text,
+      lastName: userLastNameController.text,
+      fullName: fullNameController.text,
+      email: emailController.text,
+      age: userAgeController.text,
+      phone: phoneController.text,
+      password: passwordController.text,
+      confirmPassword: confirmPasswordController.text,
+    ),
+    AddressScreen(
+      userPic: imageFile,
+      userName: userNameController.text,
+      firstName: userFirstNameController.text,
+      lastName: userLastNameController.text,
+      fullName: fullNameController.text,
+      email: emailController.text,
+      age: userAgeController.text,
+      phone: phoneController.text,
+      password: passwordController.text,
+      confirmPassword: confirmPasswordController.text,
+      gender: genderController.text,
+    ),
     const SocialMediaScreen(),
   ];
 
@@ -278,5 +364,65 @@ class RegisterCubit extends Cubit<RegisterStates>{
   TextEditingController facebookController = TextEditingController();
   TextEditingController instagramController  = TextEditingController();
   TextEditingController youtubeController  = TextEditingController();
+
+
+  Register? registerModel;
+  void registerClient({
+    required String email,
+    required String password,
+    required String bodyFat,
+    String? currentWeight,
+    String? currentTall,
+    required String age,
+    String? bio,
+    String? city,
+    required String confirmPassword,
+    required String country,
+    required String firstName,
+    required String fullName,
+    required String gander,
+    required String governorate,
+    required String lastName,
+    required String phoneNumber,
+    File? profilePicture,
+    userName,
+    context
+  }) async {
+    emit(RegisterLoadingState());
+
+    final result = await _registerUseCase(RegisterParameters(
+      email,
+      password,
+      bodyFat,
+      currentWeight!,
+      currentTall!,
+      age,
+      bio!,
+      city!,
+      confirmPassword,
+      country,
+      firstName,
+      fullName,
+      gander,
+      governorate,
+      lastName,
+      phoneNumber,
+      profilePicture!,
+      userName,
+    ));
+
+    result.fold((failure) {
+      emit(RegisterErrorState(
+          failure: failure.toString()
+      ));
+      debugPrintFullText('Error is ----------------------------- ${failure.toString()}');
+    }, (data) {
+      registerModel = data;
+      emit(RegisterSuccessState(
+          token: registerModel!.token
+      ));
+    });
+  }
+
 
 }

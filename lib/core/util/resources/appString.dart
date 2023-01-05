@@ -12,6 +12,8 @@ class AppString {
   static const signUp = 'SignUp';
   static const register = 'Register';
   static const userName = 'User Name';
+  static const firstName = 'First Name';
+  static const lastName = 'Last Name';
   static const fullName = 'Full Name';
   static const phone = 'Phone';
   static const confirm_password = 'Confirm Password';
@@ -136,6 +138,7 @@ class AppString {
   static const networkImage = 'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc=';
   static const address = '10th of Ramadan';
   static const age = '50 Years old';
+  static const userAge = 'Age';
   static const mail = 'mohammed.gallya39@gmail.com';
   static const completedDay = 'Completed Day';
   static const goals = 'Goals';

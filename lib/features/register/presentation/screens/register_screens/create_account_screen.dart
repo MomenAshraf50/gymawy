@@ -81,8 +81,35 @@ class CreateAccountScreen extends StatelessWidget {
                             return 'isEmpty';
                           }
                         },
+                        controller: registerCubit.userFirstNameController,
+                        hint: AppString.firstName),
+                    myTextFill(
+                        svgImg: Assets.images.svg.user,
+                        validate: (String? value) {
+                          if (value!.isEmpty) {
+                            return 'isEmpty';
+                          }
+                        },
+                        controller: registerCubit.userLastNameController,
+                        hint: AppString.lastName),
+                    myTextFill(
+                        svgImg: Assets.images.svg.user,
+                        validate: (String? value) {
+                          if (value!.isEmpty) {
+                            return 'isEmpty';
+                          }
+                        },
                         controller: registerCubit.fullNameController,
                         hint: AppString.fullName),
+                    myTextFill(
+                        svgImg: Assets.images.svg.user,
+                        validate: (String? value) {
+                          if (value!.isEmpty) {
+                            return 'isEmpty';
+                          }
+                        },
+                        controller: registerCubit.userAgeController,
+                        hint: AppString.userAge),
                     myTextFill(
                       svgImg: Assets.images.svg.email,
                       validate: (String? value) {

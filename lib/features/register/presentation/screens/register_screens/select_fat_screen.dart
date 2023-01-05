@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
@@ -11,7 +13,35 @@ import '../../../../../core/util/widgets/myText.dart';
 import '../../controller/register_cubit.dart';
 
 class SelectFatScreen extends StatelessWidget {
-  const SelectFatScreen({Key? key}) : super(key: key);
+   SelectFatScreen({Key? key,
+     this.userPic,
+     required this.country,
+     required this.government,
+     required this.gender,
+     required this.userName,
+     required this.firstName,
+     required this.lastName,
+     required this.fullName,
+     required this.age,
+     required this.email,
+     required this.phone,
+     required this.password,
+     required this.confirmPassword,
+   }) : super(key: key);
+
+  String? gender;
+  String? country;
+  String? government;
+  File? userPic;
+  String? userName;
+  String? firstName;
+  String? lastName;
+  String? fullName;
+  String? age;
+  String? email;
+  String? phone;
+  String? password;
+  String? confirmPassword;
 
   @override
   Widget build(BuildContext context) {
