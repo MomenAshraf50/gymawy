@@ -18,34 +18,23 @@ import '../../controller/register_cubit.dart';
 import '../../controller/register_states.dart';
 
 class AddressScreen extends StatelessWidget {
-  AddressScreen({Key? key,
-    this.userPic,
-    required this.gender,
-    required this.userName,
-    required this.firstName,
-    required this.lastName,
-    required this.fullName,
-    required this.age,
-    required this.email,
-    required this.phone,
-    required this.password,
-    required this.confirmPassword,
+  const AddressScreen({Key? key,
+
   }) : super(key: key);
 
-  String? gender;
-  File? userPic;
-  String? userName;
-  String? firstName;
-  String? lastName;
-  String? fullName;
-  String? age;
-  String? email;
-  String? phone;
-  String? password;
-  String? confirmPassword;
 
   @override
   Widget build(BuildContext context) {
+    debugPrintFullText(emailRegister!);
+    debugPrintFullText(passwordRegister!);
+    debugPrintFullText(confirmPasswordRegister!);
+    debugPrintFullText(ageRegister!);
+    debugPrintFullText(firstNameRegister!);
+    debugPrintFullText(fullNameRegister!);
+    debugPrintFullText(lastNameRegister!);
+    debugPrintFullText(phoneRegister!);
+    debugPrintFullText(userPicRegister!.toString());
+    debugPrintFullText(genderRegister!);
     RegisterCubit registerCubit = RegisterCubit.get(context);
     return FutureBuilder(
       future: registerCubit.readJson(context),
@@ -126,6 +115,8 @@ class AddressScreen extends StatelessWidget {
                           height: 3.h,
                           text: AppString.next,
                           onPressed: () {
+                            countryRegister = registerCubit.countryController.text;
+                            governmentRegister = registerCubit.cityController.text;
                             registerCubit.changeCity ? registerCubit.nextPage(true, context) : null;
                           }),
                     ],

@@ -20,31 +20,10 @@ import 'package:gymawy/features/register/presentation/controller/register_states
 class CompleteProfileScreen extends StatelessWidget {
   CompleteProfileScreen({
     Key? key,
-    this.userPic,
-    required this.userName,
-    required this.firstName,
-    required this.lastName,
-    required this.fullName,
-    required this.age,
-    required this.email,
-    required this.phone,
-    required this.password,
-    required this.confirmPassword,
   }) : super(key: key);
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-
-  File? userPic;
-  String? userName;
-  String? firstName;
-  String? lastName;
-  String? fullName;
-  String? age;
-  String? email;
-  String? phone;
-  String? password;
-  String? confirmPassword;
 
   bool isMoneyEmpty = false;
 
@@ -62,6 +41,15 @@ class CompleteProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrintFullText(emailRegister!);
+    debugPrintFullText(passwordRegister!);
+    debugPrintFullText(confirmPasswordRegister!);
+    debugPrintFullText(ageRegister!);
+    debugPrintFullText(firstNameRegister!);
+    debugPrintFullText(fullNameRegister!);
+    debugPrintFullText(lastNameRegister!);
+    debugPrintFullText(phoneRegister!);
+    debugPrintFullText(userPicRegister!.toString());
     RegisterCubit registerCubit = RegisterCubit.get(context);
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {},
@@ -189,6 +177,7 @@ class CompleteProfileScreen extends StatelessWidget {
                             height: 3.h,
                             text: AppString.next,
                             onPressed: () {
+                              genderRegister = registerCubit.genderController.text;
                               registerCubit.nextPage(true, context);
                             }),
                       ]),

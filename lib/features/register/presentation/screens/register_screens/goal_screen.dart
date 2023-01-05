@@ -17,40 +17,24 @@ import 'package:gymawy/features/register/presentation/controller/register_states
 import 'package:gymawy/features/register/presentation/widgets/build_goal_design.dart';
 
 class GoalScreen extends StatelessWidget {
-  GoalScreen({Key? key,
-    this.userPic,
-    required this.country,
-    required this.bodyFat,
-    required this.government,
-    required this.gender,
-    required this.userName,
-    required this.firstName,
-    required this.lastName,
-    required this.fullName,
-    required this.age,
-    required this.email,
-    required this.phone,
-    required this.password,
-    required this.confirmPassword,
+  const GoalScreen({Key? key,
   }) : super(key: key);
-
-  String? gender;
-  String? bodyFat;
-  String? country;
-  String? government;
-  File? userPic;
-  String? userName;
-  String? firstName;
-  String? lastName;
-  String? fullName;
-  String? age;
-  String? email;
-  String? phone;
-  String? password;
-  String? confirmPassword;
 
   @override
   Widget build(BuildContext context) {
+    debugPrintFullText(emailRegister!);
+    debugPrintFullText(passwordRegister!);
+    debugPrintFullText(confirmPasswordRegister!);
+    debugPrintFullText(ageRegister!);
+    debugPrintFullText(firstNameRegister!);
+    debugPrintFullText(fullNameRegister!);
+    debugPrintFullText(lastNameRegister!);
+    debugPrintFullText(phoneRegister!);
+    debugPrintFullText(userPicRegister!.toString());
+    debugPrintFullText(genderRegister!);
+    debugPrintFullText(countryRegister!);
+    debugPrintFullText(governmentRegister!);
+    debugPrintFullText(bodyFatRegister!);
     RegisterCubit registerCubit = RegisterCubit.get(context);
     return BlocConsumer<RegisterCubit,RegisterStates>(
       listener: (context, state) {
@@ -58,9 +42,24 @@ class GoalScreen extends StatelessWidget {
         {
           navigateAndFinish(context, LoginScreen());
           debugPrintFullText(state.token);
+          userPicRegister = null;
+          genderRegister = '';
+          bodyFatRegister = '';
+          countryRegister = '';
+          governmentRegister = '';
+          userNameRegister = '';
+          firstNameRegister = '';
+          lastNameRegister = '';
+          fullNameRegister = '';
+          ageRegister = '';
+          emailRegister = '';
+          phoneRegister = '';
+          passwordRegister = '';
+          confirmPasswordRegister = '';
         }
       },
       builder: (context, state) {
+
         return Padding(
           padding: EdgeInsets.only(
               bottom: 5.h
@@ -130,37 +129,37 @@ class GoalScreen extends StatelessWidget {
                   text: AppString.next,
                   onPressed: () {
                     registerCubit.registerClient(
-                        email: email!,
-                        password: password!,
-                        bodyFat: bodyFat!,
+                        email: emailRegister!,
+                        password: passwordRegister!,
+                        bodyFat: bodyFatRegister!,
                         currentWeight: '',
                         currentTall: '',
-                        age: age!,
+                        age: ageRegister!,
                         bio: '',
                         city: '',
-                        confirmPassword: confirmPassword!,
-                        country: country!,
-                        firstName: firstName!,
-                        fullName: fullName!,
-                        gander: gender!,
-                        governorate: government!,
-                        lastName: lastName!,
-                        phoneNumber: phone!,
-                        profilePicture: userPic!
+                        confirmPassword: confirmPasswordRegister!,
+                        country: countryRegister!,
+                        firstName: firstNameRegister!,
+                        fullName: fullNameRegister!,
+                        gander: genderRegister!,
+                        governorate: governmentRegister!,
+                        lastName: lastNameRegister!,
+                        phoneNumber: phoneRegister!,
+                        profilePicture: userPicRegister!
                     );
-                    debugPrintFullText(email!);
-                    debugPrintFullText(password!);
-                    debugPrintFullText(confirmPassword!);
-                    debugPrintFullText(bodyFat!);
-                    debugPrintFullText(age!);
-                    debugPrintFullText(country!);
-                    debugPrintFullText(firstName!);
-                    debugPrintFullText(fullName!);
-                    debugPrintFullText(gender!);
-                    debugPrintFullText(government!);
-                    debugPrintFullText(lastName!);
-                    debugPrintFullText(phone!);
-                    debugPrintFullText(userPic!.path);
+                    debugPrintFullText(emailRegister!);
+                    debugPrintFullText(passwordRegister!);
+                    debugPrintFullText(confirmPasswordRegister!);
+                    debugPrintFullText(ageRegister!);
+                    debugPrintFullText(firstNameRegister!);
+                    debugPrintFullText(fullNameRegister!);
+                    debugPrintFullText(lastNameRegister!);
+                    debugPrintFullText(phoneRegister!);
+                    debugPrintFullText(userPicRegister!.toString());
+                    debugPrintFullText(genderRegister!);
+                    debugPrintFullText(countryRegister!);
+                    debugPrintFullText(governmentRegister!);
+                    debugPrintFullText(bodyFatRegister!);
                   },
                 ),
               ),
