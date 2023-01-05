@@ -319,4 +319,10 @@ String? passwordRegister = '';
 String? confirmPasswordRegister = '';
 int? currentTallRegister = 0;
 int? currentWeightRegister = 0;
+int? fixedPriceRegister = 0;
+String? facebookLinkRegister = '';
+String? instagramLinkRegister = '';
+String? youtubeLinkRegister = '';
+String? tiktokLinkRegister = '';
+
 

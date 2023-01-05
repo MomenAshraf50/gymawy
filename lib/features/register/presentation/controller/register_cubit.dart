@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/features/register/domain/entities/register_coach_entity.dart';
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/address_screen.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/complete_profile_screen.dart';
@@ -19,13 +20,15 @@ import '../../../../core/util/resources/assets.gen.dart';
 import '../../../../core/util/resources/goal_data_static.dart';
 import '../../../../core/util/widgets/myText.dart';
 import '../../domain/entities/register_entity.dart';
+import '../../domain/usecase/register_coach_usecase.dart';
 import '../../domain/usecase/register_usecase.dart';
 
 
 class RegisterCubit extends Cubit<RegisterStates>{
   final RegisterUseCase _registerUseCase;
-  RegisterCubit({required RegisterUseCase registerUseCase})
-      : _registerUseCase = registerUseCase,
+  final RegisterCoachUseCase _registerCoachUseCase;
+  RegisterCubit({required RegisterUseCase registerUseCase,required RegisterCoachUseCase registerCoachUseCase })
+      : _registerUseCase = registerUseCase, _registerCoachUseCase = registerCoachUseCase,
         super(RegisterInitialState());
 
   static RegisterCubit get(context) => BlocProvider.of(context);
@@ -291,6 +294,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
   TextEditingController facebookController = TextEditingController();
   TextEditingController instagramController  = TextEditingController();
   TextEditingController youtubeController  = TextEditingController();
+  TextEditingController tiktokController  = TextEditingController();
 
 
   Register? registerModel;
@@ -350,6 +354,68 @@ class RegisterCubit extends Cubit<RegisterStates>{
       ));
     });
   }
+
+
+  RegisterCoach? registerCoachModel;
+  void registerCoach({
+    required String email,
+    required String password,
+    required String bio,
+    required String city,
+    required String confirmPassword,
+    required String country,
+    required String firstName,
+    required String fullName,
+    required String gander,
+    required String governorate,
+    required String lastName,
+    required String phoneNumber,
+    required File profilePicture,
+    required String userName,
+    required String facebookLink,
+    required String instagramLink,
+    required String youtubeLink,
+    required String tiktokLink,
+    required int fixedPrice,
+    context
+  }) async {
+    emit(RegisterLoadingState());
+
+    final result = await _registerCoachUseCase(RegisterCoachParameters(
+        email,
+        password,
+        bio,
+        city,
+        confirmPassword,
+        country,
+        firstName,
+        fullName,
+        gander,
+        governorate,
+        lastName,
+        phoneNumber,
+        profilePicture,
+        userName,
+        facebookLink,
+        fixedPrice,
+        instagramLink,
+        youtubeLink,
+        tiktokLink
+    ));
+
+    result.fold((failure) {
+      emit(RegisterCoachErrorState(
+          failure: failure.toString()
+      ));
+      debugPrintFullText('Error is ----------------------------- ${failure.toString()}');
+    }, (data) {
+      registerCoachModel = data;
+      emit(RegisterCoachSuccessState(
+          token: registerModel!.token
+      ));
+    });
+  }
+
 
 
 }

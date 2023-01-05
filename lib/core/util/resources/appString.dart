@@ -120,6 +120,7 @@ class AppString {
   static const editYourProfile = 'Edit Your Profile';
   static const finish = 'Finish';
   static const tiktokLink = 'Tiktok Link';
+  static const tiktok = 'Tiktok';
   static const facebookLink = 'Facebook Link';
   static const instagramLink = 'Instagram Link';
   static const youtubeLink = 'Youtube Link';
