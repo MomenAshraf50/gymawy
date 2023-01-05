@@ -31,4 +31,17 @@ class RegisterErrorState extends RegisterStates {
   RegisterErrorState({required this.failure});
 }
 
+class RegisterCoachLoadingState extends RegisterStates {}
+
+class RegisterCoachSuccessState extends RegisterStates {
+  final String token;
+  RegisterCoachSuccessState({required this.token});
+}
+
+class RegisterCoachErrorState extends RegisterStates {
+  final String failure;
+  RegisterCoachErrorState({required this.failure});
+}
+
+
 
