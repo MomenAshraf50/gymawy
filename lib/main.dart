@@ -43,8 +43,8 @@ void main() async
   //
   //   isArabic = isRtl;
   // });
-
-  token = await sl<CacheHelper>().get('token');
+  token = null;
+  //token = await sl<CacheHelper>().get('token');
   debugPrintFullText('My Current Token => $token');
 
 

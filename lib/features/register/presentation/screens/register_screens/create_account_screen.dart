@@ -277,7 +277,7 @@ class CreateAccountScreen extends StatelessWidget {
                           // registerCubit.isAccept
                           //     ? registerCubit.nextPage(true, context)
                           //     : null;
-                          registerCubit.nextPage(true, context);
+                          registerCubit.nextPage(true, context,);
                         }),
                   ],
                 ),

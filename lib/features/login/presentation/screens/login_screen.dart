@@ -41,9 +41,9 @@ class LoginScreen extends StatelessWidget {
           debugPrintFullText(token!);
         }
         /// Show Error Message مش بيخش الايرور ستيت اساسا
-        //  if(state is LoginErrorState){
-        //   designToastDialog(context: context, toast: TOAST.error,text: state.failure.toString());
-        // }
+         if(state is LoginErrorState){
+          designToastDialog(context: context, toast: TOAST.error,text: state.failure.toString());
+        }
       },
       builder: (context, state) {
         LoginCubit loginCubit = LoginCubit.get(context);

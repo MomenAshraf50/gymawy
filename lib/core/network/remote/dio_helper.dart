@@ -286,8 +286,7 @@ extension on DioHelper {
               "Error Response Data Message => ${e.response!.data['Response']}");
         }
 
-        throw ServerException(
-          error: e.response!.statusMessage!,
+        return ServerException(
           code: e.response!.statusCode!,
           message:
               e.response!.data is Map && e.response!.data.toString().isNotEmpty
@@ -295,8 +294,7 @@ extension on DioHelper {
                   : e.response!.data,
         );
       } else {
-        throw ServerException(
-          error: e.error.toString(),
+        return ServerException(
           code: 500,
           message: e.message,
         );

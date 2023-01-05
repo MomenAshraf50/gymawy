@@ -84,22 +84,20 @@ class SelectFatScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Slider(
-                      value: registerCubit.fatValue,
+                      value: registerCubit.fatValue.toDouble(),
                       activeColor: ColorsManager.mainColor,
                       min: 0.0,
                       max: 4.0,
                       divisions: 4,
                       onChanged: (double value) async {
-                        registerCubit.fatValue = value;
+                        registerCubit.changeFatValue(value);
                         await registerCubit.pageFatController.animateToPage(
                             value.round(),
                             duration: const Duration(milliseconds: 500),
                             curve: Curves.ease);
                       },
                     ),
-                    Center(
-                        child: registerCubit
-                            .getText(registerCubit.fatValue.round())),
+
                     Padding(
                       padding: designApp,
                       child: myButton(
