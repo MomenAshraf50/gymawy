@@ -28,8 +28,6 @@ class LoginCubit extends Cubit<LoginStates> {
       emit(LoginErrorState(
         failure: failure.toString()
       ));
-      debugPrintFullText('Error is ----------------------------- ${failure.toString()}');
-      loginErrorMessege = failure.toString();
     }, (data) {
       logInModel = data;
       emit(LoginSuccessState(

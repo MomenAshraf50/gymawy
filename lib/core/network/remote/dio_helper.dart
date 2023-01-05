@@ -281,9 +281,9 @@ extension on DioHelper {
 
         if (e.response!.data is Map &&
             e.response!.data.toString().isNotEmpty &&
-            e.response!.data['message'] != null) {
+            e.response!.data['Response'] != null) {
           debugPrint(
-              "Error Response Data Message => ${e.response!.data['message']}");
+              "Error Response Data Message => ${e.response!.data['Response']}");
         }
 
         throw ServerException(
@@ -291,7 +291,7 @@ extension on DioHelper {
           code: e.response!.statusCode!,
           message:
               e.response!.data is Map && e.response!.data.toString().isNotEmpty
-                  ? e.response!.data['message'] ?? e.response!.statusMessage
+                  ? e.response!.data['Response'] ?? e.response!.statusMessage
                   : e.response!.data,
         );
       } else {
