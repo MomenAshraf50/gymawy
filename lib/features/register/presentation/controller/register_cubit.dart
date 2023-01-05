@@ -55,6 +55,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
 
   bool isMoneyEmpty = true;
 
+
   Future selectType({required bool isCoach}) async {
     this.isCoach = isCoach;
     emit(RegisterChangeTypeState());
@@ -237,6 +238,11 @@ class RegisterCubit extends Cubit<RegisterStates>{
     Assets.images.fat.fat5,
   ];
 
+  void changeFatValue(double fat){
+    fatValue = fat;
+    emit(RegisterGetFatTextState());
+  }
+
   PageController pageFatController = PageController(viewportFraction: 1/2,);
   Future<void> changeFatPage(index) async {
     await pageFatController.animateToPage(
@@ -264,9 +270,9 @@ class RegisterCubit extends Cubit<RegisterStates>{
         emit(RegisterGetFatTextState());
         return const myText(title:'32+', style: Style.medium);
       default:
-        emit(RegisterGetFatTextState());
         return const myText(title:'', style: Style.medium);
     }
+
   }
 
   int selected = 0;
@@ -349,9 +355,26 @@ class RegisterCubit extends Cubit<RegisterStates>{
       debugPrintFullText('Error is ----------------------------- ${failure.toString()}');
     }, (data) {
       registerModel = data;
+
       emit(RegisterSuccessState(
           token: registerModel!.token
       ));
+      imageFile = null;
+      emailController.text = '';
+      currentTallController.text = '';
+      currentWeightController.text = '';
+      dataOfBirth.text = '';
+      pricePerMonth.text = '';
+      currencyController.text = '';
+      genderController.text = '';
+      confirmPasswordController.text = '';
+      passwordController.text = '';
+      phoneController.text = '';
+      userAgeController.text = '';
+      fullNameController.text = '';
+      userLastNameController.text = '';
+      userFirstNameController.text = '';
+      userNameController.text = '';
     });
   }
 
@@ -413,6 +436,22 @@ class RegisterCubit extends Cubit<RegisterStates>{
       emit(RegisterCoachSuccessState(
           token: registerModel!.token
       ));
+      imageFile = null;
+      emailController.text = '';
+      currentTallController.text = '';
+      currentWeightController.text = '';
+      dataOfBirth.text = '';
+      pricePerMonth.text = '';
+      currencyController.text = '';
+      genderController.text = '';
+      confirmPasswordController.text = '';
+      passwordController.text = '';
+      phoneController.text = '';
+      userAgeController.text = '';
+      fullNameController.text = '';
+      userLastNameController.text = '';
+      userFirstNameController.text = '';
+      userNameController.text = '';
     });
   }
 

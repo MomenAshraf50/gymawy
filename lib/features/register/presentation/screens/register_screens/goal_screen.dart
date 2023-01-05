@@ -58,6 +58,8 @@ class GoalScreen extends StatelessWidget {
           phoneRegister = '';
           passwordRegister = '';
           confirmPasswordRegister = '';
+        }else if (state is RegisterErrorState){
+          debugPrintFullText(state.failure);
         }
       },
       builder: (context, state) {

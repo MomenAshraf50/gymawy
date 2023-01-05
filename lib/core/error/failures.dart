@@ -10,12 +10,10 @@ abstract class Failure extends Equatable {
 
 // General failures
 class ServerFailure extends Failure {
-  final String error;
   final String message;
   final int code;
 
   ServerFailure({
-    required this.error,
     required this.code,
     required this.message,
   });
@@ -26,7 +24,7 @@ class CacheFailure extends Failure {}
 String mapFailureToError(Failure failure) {
   switch (failure.runtimeType) {
     case ServerFailure:
-      return (failure as ServerFailure).error.toString();
+      return (failure as ServerFailure).message.toString();
     case CacheFailure:
       return cacheFailureMessage;
     default:

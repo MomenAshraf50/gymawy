@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +101,8 @@ class CompleteProfileScreen extends StatelessWidget {
                           svgImg: Assets.images.svg.date,
                         ),
                         verticalSpace(2.h),
-                        Row(
+                        if(registerCubit.isCoach)
+                          Row(
                           children: [
                             Expanded(
                               flex: 2,
@@ -181,7 +180,9 @@ class CompleteProfileScreen extends StatelessWidget {
                             text: AppString.next,
                             onPressed: () {
                               genderRegister = registerCubit.genderController.text[0];
-                              fixedPriceRegister =  int.parse(registerCubit.pricePerMonth.text);
+                              if(registerCubit.isCoach){
+                                fixedPriceRegister =  int.parse(registerCubit.pricePerMonth.text);
+                              }
                               registerCubit.nextPage(true, context);
                             }),
                       ]),
