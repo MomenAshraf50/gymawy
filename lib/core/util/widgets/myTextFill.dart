@@ -60,7 +60,7 @@ class myTextFill extends StatelessWidget {
               margin: margin,
               decoration: BoxDecoration(
                 color: textFormFillColor,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 // border: Border.all(width: 1, color: ColorManager().darkColor),
               ),
               child: TextFormField(

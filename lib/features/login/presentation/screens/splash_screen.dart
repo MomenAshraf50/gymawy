@@ -45,11 +45,12 @@ class SplashScreen extends StatelessWidget {
                   Assets.images.svg.icon,
                   color: Colors.white,
                 ),
-                const myText(
+                myText(
                   title: AppString.gymAwy ,
                   style: Style.headLarge,
                   fontFamily: 'splash',
                   color: Colors.white,
+                  fontSize: 100.rSp,
                 ),
                 verticalSpace(5.h),
                 const myText(

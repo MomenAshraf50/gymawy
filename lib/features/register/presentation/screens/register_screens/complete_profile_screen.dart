@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,13 +18,33 @@ import 'package:gymawy/features/register/presentation/controller/register_cubit.
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
 
 class CompleteProfileScreen extends StatelessWidget {
-  CompleteProfileScreen({Key? key}) : super(key: key);
+  CompleteProfileScreen({
+    Key? key,
+    this.userPic,
+    required this.userName,
+    required this.firstName,
+    required this.lastName,
+    required this.fullName,
+    required this.age,
+    required this.email,
+    required this.phone,
+    required this.password,
+    required this.confirmPassword,
+  }) : super(key: key);
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController genderController = TextEditingController();
-  TextEditingController currencyController = TextEditingController();
-  TextEditingController pricePerMonth = TextEditingController();
-  TextEditingController dataOfBirth = TextEditingController();
+
+
+  File? userPic;
+  String? userName;
+  String? firstName;
+  String? lastName;
+  String? fullName;
+  String? age;
+  String? email;
+  String? phone;
+  String? password;
+  String? confirmPassword;
 
   bool isMoneyEmpty = false;
 
@@ -75,7 +97,7 @@ class CompleteProfileScreen extends StatelessWidget {
                                     child: CupertinoDatePicker(
                                       mode: CupertinoDatePickerMode.date,
                                       onDateTimeChanged: (value) {
-                                        dataOfBirth.text = registerCubit.changeDateFormat( value);
+                                        registerCubit.dataOfBirth.text = registerCubit.changeDateFormat( value);
                                       },
                                       initialDateTime: DateTime.now(),
                                       minimumYear: 2000,
@@ -84,9 +106,9 @@ class CompleteProfileScreen extends StatelessWidget {
                                   );
                                 });
                           },
-                          title: dataOfBirth.text.isEmpty
+                          title: registerCubit.dataOfBirth.text.isEmpty
                               ? AppString.date_of_brith
-                              : dataOfBirth.text,
+                              : registerCubit.dataOfBirth.text,
                           svgImg: Assets.images.svg.date,
                         ),
                         verticalSpace(2.h),
@@ -96,7 +118,7 @@ class CompleteProfileScreen extends StatelessWidget {
                               flex: 2,
                               child: myTextFill(
                                 svgImg: Assets.images.svg.dollarSignSvgrepoCom,
-                                controller: pricePerMonth,
+                                controller: registerCubit.pricePerMonth,
                                 hint: AppString.price_of_month,
                                 type: TextInputType.number,
                                 onChanged: (value) {
@@ -134,7 +156,7 @@ class CompleteProfileScreen extends StatelessWidget {
                                   ),
                                   fillColor: ColorsManager.textFieldColor,
                                   items: currency,
-                                  controller: currencyController,
+                                  controller: registerCubit.currencyController,
                                 ),
                               ),
                             ),
@@ -153,7 +175,7 @@ class CompleteProfileScreen extends StatelessWidget {
                               color: Colors.black
                           ),
                           items: gender,
-                          controller: genderController,
+                          controller: registerCubit.genderController,
                           excludeSelected: false,
                         ),
                         verticalSpace(2.h),
@@ -181,10 +203,11 @@ class CompleteProfileScreen extends StatelessWidget {
 
   bool isInteger(num value) => value is int || value == value.roundToDouble();
 
-  bool isCompleteData() {
+  bool isCompleteData(context) {
+    RegisterCubit registerCubit = RegisterCubit.get(context);
     return isMoneyEmpty &&
-        dataOfBirth.text.isEmpty &&
-        genderController.text.isNotEmpty &&
-        currencyController.text.isNotEmpty;
+        registerCubit.dataOfBirth.text.isEmpty &&
+        registerCubit.genderController.text.isNotEmpty &&
+        registerCubit.currencyController.text.isNotEmpty;
   }
 }

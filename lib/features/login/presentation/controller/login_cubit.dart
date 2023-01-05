@@ -25,7 +25,9 @@ class LoginCubit extends Cubit<LoginStates> {
     final result = await _logInUseCase(LogInParameters(email, password));
 
     result.fold((failure) {
-      emit(LoginErrorState());
+      emit(LoginErrorState(
+        failure: failure.toString()
+      ));
       debugPrintFullText('Error is ----------------------------- ${failure.toString()}');
       loginErrorMessege = failure.toString();
     }, (data) {

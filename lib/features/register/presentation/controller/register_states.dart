@@ -19,3 +19,16 @@ class RegisterGetCitiesState extends RegisterStates{}
 class RegisterPageFatControllerState extends RegisterStates{}
 class RegisterGetFatTextState extends RegisterStates{}
 
+class RegisterLoadingState extends RegisterStates {}
+
+class RegisterSuccessState extends RegisterStates {
+  final String token;
+  RegisterSuccessState({required this.token});
+}
+
+class RegisterErrorState extends RegisterStates {
+  final String failure;
+  RegisterErrorState({required this.failure});
+}
+
+

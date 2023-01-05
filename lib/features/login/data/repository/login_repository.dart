@@ -6,22 +6,23 @@ import 'package:gymawy/features/login/domain/entities/log_in_entity.dart';
 import 'package:gymawy/features/login/domain/repository/login_base_rebository.dart';
 import 'package:gymawy/features/login/domain/usecase/log_in_usecase.dart';
 
-class LoginRepository extends LogInBaseRepository{
-
+class LoginRepository extends LogInBaseRepository {
   LogInBaseRemoteDataSource logInBaseRemoteDataSource;
-
 
   LoginRepository(this.logInBaseRemoteDataSource);
 
   @override
-  Future<Either<Failure, LogIn>> logIn(LogInParameters logInParameters) async{
+  Future<Either<Failure, LogIn>> logIn(LogInParameters logInParameters) async {
     final result = await logInBaseRemoteDataSource.logIn(logInParameters);
 
-    try{
+    try {
       return right(result);
-    }on ServerException catch(failure){
-      return Left(ServerFailure(error: failure.error,message: failure.message,code: failure.code));
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(
+        error: failure.error,
+        message: failure.message,
+        code: failure.code,
+      ));
     }
   }
-
 }
