@@ -1,6 +1,6 @@
 import 'package:gymawy/features/login/domain/entities/log_in_entity.dart';
 
-class LogInModel extends LogIn {
+class LogInModel extends LoginEntity {
   LogInModel({
     required super.email,
     required super.token,

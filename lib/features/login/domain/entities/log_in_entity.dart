@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-class LogIn extends Equatable {
+class LoginEntity extends Equatable {
   String email;
   String token;
   int userId;
   bool isTrainer;
 
-  LogIn({
+  LoginEntity({
     required this.email,
     required this.token,
     required this.userId,

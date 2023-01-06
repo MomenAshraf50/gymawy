@@ -89,7 +89,7 @@ class DioImpl extends DioHelper {
       if (!isMultipart) 'Accept': 'application/json',
       'Accept-Language': isArabic ? 'ar' : 'en',
       if (token != null)
-        'Authorization': '${base == null ? 'Bearer' : ''} $token'
+        'Authorization': '${base == null ? 'Token' : ''} $token'
     };
 
     if (url.contains('??')) {
@@ -102,7 +102,7 @@ class DioImpl extends DioHelper {
     debugPrint('Query => $query');
 
     return await request(
-      () async => await dio.post(
+          () async => await dio.post(
         url,
         data: data,
         queryParameters: query,
@@ -143,7 +143,7 @@ class DioImpl extends DioHelper {
       if (!isMultipart) 'Accept': 'application/json',
       'Accept-Language': isArabic ? 'ar' : 'en',
       if (token != null)
-        'Authorization': '${base == null ? 'Bearer' : ''} $token'
+        'Authorization': '${base == null ? 'Token' : ''} $token'
     };
 
     if (url.contains('??')) {
@@ -156,7 +156,7 @@ class DioImpl extends DioHelper {
     debugPrint('Query => $query');
 
     return await request(
-      () async => await dio.get(
+          () async => await dio.get(
         url,
         queryParameters: query,
         cancelToken: cancelToken,
@@ -191,7 +191,7 @@ class DioImpl extends DioHelper {
       if (!isMultipart) 'Accept': 'application/json',
       'Accept-Language': isArabic ? 'ar' : 'en',
       if (token != null)
-        'Authorization': '${base == null ? 'Bearer' : ''} $token'
+        'Authorization': '${base == null ? 'Token' : ''} $token'
     };
 
     if (url.contains('??')) {
@@ -204,7 +204,7 @@ class DioImpl extends DioHelper {
     debugPrint('Query => $query');
 
     return await request(
-      () async => await dio.delete(
+          () async => await dio.delete(
         url,
         queryParameters: query,
         data: data,
@@ -240,7 +240,7 @@ class DioImpl extends DioHelper {
       if (!isMultipart) 'Accept': 'application/json',
       'Accept-Language': isArabic ? 'ar' : 'en',
       if (token != null)
-        'Authorization': '${base == null ? 'Bearer' : ''} $token'
+        'Authorization': '${base == null ? 'Token' : ''} $token'
     };
 
     if (url.contains('??')) {
@@ -253,7 +253,7 @@ class DioImpl extends DioHelper {
     debugPrint('Query => $query');
 
     return await request(
-      () async => await dio.put(
+          () async => await dio.put(
         url,
         queryParameters: query,
         data: data,
@@ -275,6 +275,7 @@ extension on DioHelper {
 
       if (e.response != null) {
         debugPrint("Error Response => ${e.response}");
+        debugPrint("Error Response Message => ${e.response!.statusMessage}");
         debugPrint("Error Response Status Code => ${e.response!.statusCode}");
         debugPrint("Error Response Data => ${e.response!.data}");
 
@@ -283,26 +284,25 @@ extension on DioHelper {
             e.response!.data['Response'] != null) {
           debugPrint(
               "Error Response Data Message => ${e.response!.data['Response']}");
-          errorMessage = e.response!.data['Response'];
         }
 
         throw ServerException(
-         // code: e.response!.statusCode!,
-          message: e.response!.data['Response']
-              // e.response!.data is Map && e.response!.data.toString().isNotEmpty
-              //     ? e.response!.data['Response'] ?? e.response!.statusMessage
-              //     : e.response!.data,
+          error: e.response!.statusMessage!,
+          code: e.response!.statusCode!,
+          message:
+          e.response!.data is Map && e.response!.data.toString().isNotEmpty
+              ? e.response!.data['Response'] ?? e.response!.statusMessage
+              : e.response!.data,
+        );
+      } else {
+        throw ServerException(
+          error: e.error.toString(),
+          code: 500,
+          message: e.message,
         );
       }
-      // else {
-      //   return ServerException(
-      //     code: 500,
-      //     message: e.message,
-      //   );
-      // }
+    } catch (e) {
+      throw Exception();
     }
-    // catch (e) {
-    //   throw Exception();
-    // }
   }
 }

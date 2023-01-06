@@ -1,30 +1,38 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:gymawy/core/error/failures.dart';
-import 'package:gymawy/core/usecase/use_case.dart';
 import 'package:gymawy/features/login/domain/entities/log_in_entity.dart';
-import 'package:gymawy/features/login/domain/repository/login_base_rebository.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/usecase/use_case.dart';
+import '../repository/login_base_rebository.dart';
 
-class LogInUseCase extends UseCase<LogIn,LogInParameters>{
+class LoginUseCase
+    implements UseCase<LoginEntity, LoginParams> {
+  final LogInBaseRepository repository;
 
-  LogInBaseRepository logInBaseRepository;
-
-
-  LogInUseCase(this.logInBaseRepository);
+  LoginUseCase(this.repository);
 
   @override
-  Future<Either<Failure, LogIn>> call(LogInParameters params) async{
-    return  await logInBaseRepository.logIn(params);
+  Future<Either<Failure, LoginEntity>> call(
+      LoginParams params) async {
+    return await repository.login(
+        userName: params.userName,
+        password: params.password,
+    );
   }
 }
 
-class LogInParameters extends Equatable{
+class LoginParams extends Equatable {
+  final String userName;
+  final String password;
 
-  String email;
-  String password;
-
-  LogInParameters(this.email, this.password);
+  const LoginParams({
+    required this.userName,
+    required this.password,
+  });
 
   @override
-  List<Object?> get props => [email,password];
+  List<Object> get props => [
+    userName,
+    password,
+  ];
 }

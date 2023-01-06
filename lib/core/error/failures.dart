@@ -1,4 +1,3 @@
-
 import 'package:equatable/equatable.dart';
 
 import '../util/resources/constants_manager.dart';
@@ -10,11 +9,13 @@ abstract class Failure extends Equatable {
 
 // General failures
 class ServerFailure extends Failure {
+  final String error;
   final String message;
- // final int? code;
+  final int code;
 
   ServerFailure({
-   // this.code,
+    required this.error,
+    required this.code,
     required this.message,
   });
 }
@@ -24,7 +25,7 @@ class CacheFailure extends Failure {}
 String mapFailureToError(Failure failure) {
   switch (failure.runtimeType) {
     case ServerFailure:
-      return (failure as ServerFailure).message.toString();
+      return (failure as ServerFailure).error.toString();
     case CacheFailure:
       return cacheFailureMessage;
     default:
@@ -32,7 +33,7 @@ String mapFailureToError(Failure failure) {
   }
 }
 
-//int mapFailureToCode(Failure failure) => (failure as ServerFailure).code!;
+int mapFailureToCode(Failure failure) => (failure as ServerFailure).code;
 
 String mapFailureToMessage(Failure failure) =>
     (failure as ServerFailure).message;

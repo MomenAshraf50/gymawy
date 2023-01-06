@@ -7,7 +7,6 @@ import 'package:gymawy/features/login/domain/usecase/log_in_usecase.dart';
 import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../features/register/data/data_source/register_coach_remote_data_source.dart';
 import '../../features/register/data/data_source/register_remote_data_source.dart';
 import '../../features/register/data/repository/register_coach_repository.dart';
@@ -20,9 +19,6 @@ import '/core/network/local/cache_helper.dart';
 import '/core/network/remote/dio_helper.dart';
 import '/core/network/repository.dart';
 import '/core/util/cubit/cubit.dart';
-
-
-
 
 final sl = GetIt.instance;
 
@@ -44,50 +40,36 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton<LogInBaseRepository>(
-    () => LoginRepository(sl()),
+    () => LoginRepoImplementation(
+        remoteDataSource: sl()),
   );
 
-
-  // Use cases
-  sl.registerLazySingleton(() => LogInUseCase(sl()));
-
-
-
-  //Data sources
-   sl.registerLazySingleton<LogInBaseRemoteDataSource>(
-     () => LogInRemoteDataSource(sl()),
-   );
-
-  // Repository
   sl.registerLazySingleton<RegisterBaseRepository>(
         () => RegisterRepository(sl()),
   );
 
-
-  // Use cases
-  sl.registerLazySingleton(() => RegisterUseCase(sl()));
-
-
-
-  //Data sources
-  sl.registerLazySingleton<RegisterBaseRemoteDataSource>(
-        () => RegisterRemoteDataSource(sl()),
-  );
-
-  // Repository
   sl.registerLazySingleton<RegisterCoachBaseRepository>(
         () => RegisterCoachRepository(sl()),
   );
 
-
   // Use cases
+  sl.registerLazySingleton(() => LoginUseCase(sl()));
+  sl.registerLazySingleton(() => RegisterUseCase(sl()));
   sl.registerLazySingleton(() => RegisterCoachUseCase(sl()));
 
-
-
   //Data sources
+   sl.registerLazySingleton<LogInBaseRemoteDataSource>(
+     () => LogInRemoteDataSourceImpl(
+         dioHelper: sl()
+     ),
+   );
+
   sl.registerLazySingleton<RegisterCoachBaseRemoteDataSource>(
         () => RegisterCoachRemoteDataSource(sl()),
+  );
+
+  sl.registerLazySingleton<RegisterBaseRemoteDataSource>(
+        () => RegisterRemoteDataSource(sl()),
   );
 
 
