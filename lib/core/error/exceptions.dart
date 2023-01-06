@@ -1,9 +1,9 @@
 class ServerException implements Exception {
   final String message;
-  final int code;
+//  final int? code;
 
   ServerException({
-    required this.code,
+  //   this.code,
     required this.message,
 });
 }

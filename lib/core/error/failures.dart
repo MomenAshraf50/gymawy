@@ -11,10 +11,10 @@ abstract class Failure extends Equatable {
 // General failures
 class ServerFailure extends Failure {
   final String message;
-  final int code;
+ // final int? code;
 
   ServerFailure({
-    required this.code,
+   // this.code,
     required this.message,
   });
 }
@@ -32,7 +32,7 @@ String mapFailureToError(Failure failure) {
   }
 }
 
-int mapFailureToCode(Failure failure) => (failure as ServerFailure).code;
+//int mapFailureToCode(Failure failure) => (failure as ServerFailure).code!;
 
 String mapFailureToMessage(Failure failure) =>
     (failure as ServerFailure).message;

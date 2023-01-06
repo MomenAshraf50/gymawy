@@ -275,7 +275,6 @@ extension on DioHelper {
 
       if (e.response != null) {
         debugPrint("Error Response => ${e.response}");
-        debugPrint("Error Response Message => ${e.response!.statusMessage}");
         debugPrint("Error Response Status Code => ${e.response!.statusCode}");
         debugPrint("Error Response Data => ${e.response!.data}");
 
@@ -284,23 +283,26 @@ extension on DioHelper {
             e.response!.data['Response'] != null) {
           debugPrint(
               "Error Response Data Message => ${e.response!.data['Response']}");
+          errorMessage = e.response!.data['Response'];
         }
 
-        return ServerException(
-          code: e.response!.statusCode!,
-          message:
-              e.response!.data is Map && e.response!.data.toString().isNotEmpty
-                  ? e.response!.data['Response'] ?? e.response!.statusMessage
-                  : e.response!.data,
-        );
-      } else {
-        return ServerException(
-          code: 500,
-          message: e.message,
+        throw ServerException(
+         // code: e.response!.statusCode!,
+          message: e.response!.data['Response']
+              // e.response!.data is Map && e.response!.data.toString().isNotEmpty
+              //     ? e.response!.data['Response'] ?? e.response!.statusMessage
+              //     : e.response!.data,
         );
       }
-    } catch (e) {
-      throw Exception();
+      // else {
+      //   return ServerException(
+      //     code: 500,
+      //     message: e.message,
+      //   );
+      // }
     }
+    // catch (e) {
+    //   throw Exception();
+    // }
   }
 }

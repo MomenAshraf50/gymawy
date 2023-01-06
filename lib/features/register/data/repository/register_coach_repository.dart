@@ -21,7 +21,7 @@ class RegisterCoachRepository extends RegisterCoachBaseRepository {
     } on ServerException catch (failure) {
       return Left(ServerFailure(
         message: failure.message,
-        code: failure.code,
+       // code: failure.code,
       ));
     }
   }

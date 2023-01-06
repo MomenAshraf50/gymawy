@@ -13,3 +13,4 @@ class HomeExerciseExampleVideoPlayerInitialized extends HomeStates{}
 class ExerciseExamplePauseAndPlayVideoState extends HomeStates{}
 class GetTextHeightState extends HomeStates{}
 class ChangeCurrentStepState extends HomeStates{}
+class SignOutState extends HomeStates{}

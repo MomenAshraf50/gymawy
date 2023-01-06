@@ -20,7 +20,7 @@ class LoginRepository extends LogInBaseRepository {
     } on ServerException catch (failure) {
       return Left(ServerFailure(
         message: failure.message,
-        code: failure.code,
+       // code: failure.code,
       ));
     }
   }

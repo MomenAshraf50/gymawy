@@ -25,6 +25,15 @@ class SocialMediaScreen extends StatelessWidget {
         {
           navigateAndFinish(context, LoginScreen());
         }
+        // /// العته البرمجي
+        // if(errorMessage!.isNotEmpty && state is! RegisterCoachSuccessState && state is! RegisterCoachLoadingState)
+        // {
+        //   designToastDialog(
+        //       context: context,
+        //       toast: TOAST.error,
+        //       text: errorMessage!);
+        //   debugPrintFullText('error ==========================${errorMessage!}');
+        // }
       },
       builder: (context, state) {
         return SingleChildScrollView(
