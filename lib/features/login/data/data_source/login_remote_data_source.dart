@@ -1,26 +1,36 @@
+import 'package:dio/dio.dart';
 import 'package:gymawy/core/network/remote/api_endpoints.dart';
 import 'package:gymawy/core/network/remote/dio_helper.dart';
 import 'package:gymawy/features/login/data/models/login_model.dart';
-import 'package:gymawy/features/login/domain/usecase/log_in_usecase.dart';
 
 abstract class LogInBaseRemoteDataSource {
+  Future<LogInModel> logIn({
+    required String userName,
+    required String password,
+  });
+}
+
+class LogInRemoteDataSourceImpl
+    implements LogInBaseRemoteDataSource {
   final DioHelper dioHelper;
 
-  LogInBaseRemoteDataSource(this.dioHelper);
-
-  Future<LogInModel> logIn(LogInParameters logInParameters);
-}
-
-class LogInRemoteDataSource extends LogInBaseRemoteDataSource {
-  LogInRemoteDataSource(super.dioHelper);
+  LogInRemoteDataSourceImpl({
+    required this.dioHelper,
+  });
 
   @override
-  Future<LogInModel> logIn(LogInParameters logInParameters) async {
-    final logInResponse = await dioHelper.post(url: logInEndPoint, data: {
-      'username': logInParameters.email,
-      'password': logInParameters.password
-    });
-
-    return LogInModel.fromJson(logInResponse.data);
+  Future<LogInModel> logIn({
+    required String userName,
+    required String password,
+  }) async {
+    final Response f = await dioHelper.post(
+      url: logInEndPoint,
+      data: {
+        'username':userName,
+        'password':password,
+      }
+    );
+    return LogInModel.fromJson(f.data);
   }
 }
+

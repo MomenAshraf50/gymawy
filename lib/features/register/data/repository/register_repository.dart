@@ -19,7 +19,7 @@ class RegisterRepository extends RegisterBaseRepository {
       return right(result);
     } on ServerException catch (failure) {
       return Left(ServerFailure(
-        message: failure.message,
+        message: failure.message, error: '', code: 100,
       //  code: failure.code,
       ));
     }

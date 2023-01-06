@@ -1,27 +1,47 @@
 import 'package:dartz/dartz.dart';
-import 'package:gymawy/core/error/exceptions.dart';
-import 'package:gymawy/core/error/failures.dart';
-import 'package:gymawy/features/login/data/data_source/login_remote_data_source.dart';
-import 'package:gymawy/features/login/domain/entities/log_in_entity.dart';
-import 'package:gymawy/features/login/domain/repository/login_base_rebository.dart';
-import 'package:gymawy/features/login/domain/usecase/log_in_usecase.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
+import '../../domain/entities/log_in_entity.dart';
+import '../../domain/repository/login_base_rebository.dart';
+import '../data_source/login_remote_data_source.dart';
 
-class LoginRepository extends LogInBaseRepository {
-  LogInBaseRemoteDataSource logInBaseRemoteDataSource;
 
-  LoginRepository(this.logInBaseRemoteDataSource);
+typedef Call = Future<LoginEntity> Function();
 
-  @override
-  Future<Either<Failure, LogIn>> logIn(LogInParameters logInParameters) async {
-    final result = await logInBaseRemoteDataSource.logIn(logInParameters);
+class LoginRepoImplementation extends LogInBaseRepository {
+  final LogInBaseRemoteDataSource remoteDataSource;
 
+  LoginRepoImplementation({
+    required this.remoteDataSource,
+  });
+
+  Future<Either<Failure, LoginEntity>> fetchData(
+      Call mainMethod,
+      ) async {
     try {
-      return right(result);
-    } on ServerException catch (failure) {
+      final loginData = await mainMethod();
+      return Right(loginData);
+    } on ServerException catch (e) {
       return Left(ServerFailure(
-        message: failure.message,
-       // code: failure.code,
+        error: e.error,
+        code: e.code,
+        message: e.message,
       ));
     }
   }
+
+  @override
+  Future<Either<Failure, LoginEntity>> login(
+      {
+    required String userName,
+    required String password
+      }) async {
+      return await fetchData(()
+      {
+        return remoteDataSource.logIn(
+            userName: userName,
+            password: password);
+      });
+  }
 }
+

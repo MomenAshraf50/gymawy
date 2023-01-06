@@ -145,7 +145,6 @@ class LoginScreen extends StatelessWidget {
                                       if(formKey.currentState!.validate())
                                       {
                                         loginCubit.logIn(email: emailController.text, password: passwordController.text);
-                                        debugPrintFullText(loginCubit.logInModel.toString());
                                       }
                                       else
                                       {
@@ -154,7 +153,6 @@ class LoginScreen extends StatelessWidget {
                                             toast: TOAST.warning,
                                             text: 'please fill ur data');
                                       }
-
 
                                     }),
                                 verticalSpace(5.h),

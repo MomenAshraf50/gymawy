@@ -1,20 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/features/login/data/models/login_model.dart';
 import 'package:gymawy/features/login/domain/entities/log_in_entity.dart';
 import 'package:gymawy/features/login/domain/usecase/log_in_usecase.dart';
 import 'package:gymawy/features/login/presentation/controller/login_states.dart';
 
 class LoginCubit extends Cubit<LoginStates> {
-  final LogInUseCase _logInUseCase;
+  final LoginUseCase _logInUseCase;
 
-  LoginCubit({required LogInUseCase logInUseCase})
+  LoginCubit({required LoginUseCase logInUseCase})
       : _logInUseCase = logInUseCase,
         super(LoginInitialState());
 
   static LoginCubit get(context) => BlocProvider.of(context);
 
-  LogIn? logInModel;
-  String? loginErrorMessege;
   void logIn({
     required String email,
     required String password,
@@ -22,16 +21,20 @@ class LoginCubit extends Cubit<LoginStates> {
   }) async {
     emit(LoginLoadingState());
 
-    final result = await _logInUseCase(LogInParameters(email, password));
+    final result = await _logInUseCase(
+        LoginParams(
+            userName: email,
+            password: password
+        )
+    );
 
     result.fold((failure) {
       emit(LoginErrorState(
         failure: failure.toString()
       ));
     }, (data) {
-      logInModel = data;
       emit(LoginSuccessState(
-        token: logInModel!.token
+        token: data.token
       ));
     });
   }
