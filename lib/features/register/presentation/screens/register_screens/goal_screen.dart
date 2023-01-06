@@ -58,9 +58,19 @@ class GoalScreen extends StatelessWidget {
           phoneRegister = '';
           passwordRegister = '';
           confirmPasswordRegister = '';
-        }else if (state is RegisterErrorState){
+        }
+        else if (state is RegisterErrorState){
           debugPrintFullText(state.failure);
         }
+        // /// العته البرمجي
+        // if(errorMessage!.isNotEmpty && state is! RegisterSuccessState && state is! RegisterLoadingState)
+        // {
+        //   designToastDialog(
+        //       context: context,
+        //       toast: TOAST.error,
+        //       text: errorMessage!);
+        //   debugPrintFullText('error ==========================${errorMessage!}');
+        // }
       },
       builder: (context, state) {
 

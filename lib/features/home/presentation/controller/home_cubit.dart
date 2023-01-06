@@ -8,8 +8,11 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/features/home/presentation/screens/qr_code/qr_code_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
+import '../../../../core/di/injection.dart';
+import '../../../../core/network/local/cache_helper.dart';
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
+import '../../../login/presentation/screens/login_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/profile/profile_screen.dart';
 import '../screens/search/search_screen.dart';
@@ -178,6 +181,18 @@ class HomeCubit extends Cubit<HomeStates> {
   void changeStep(int index){
     currentStep = index;
     emit(ChangeCurrentStepState());
+  }
+  void signOut (context)
+  {
+    sl<CacheHelper>().clear('token').then((value)
+    {
+      if(value)
+      {
+        navigateAndFinish(context, LoginScreen(),);
+        emit(SignOutState());
+        //Restart.restartApp();
+      }
+    });
   }
 
 }

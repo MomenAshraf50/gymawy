@@ -8,8 +8,10 @@ import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/screens/settings/notifications_screen.dart';
 
 import '../../../../core/util/resources/colors_manager.dart';
+import '../controller/home_cubit.dart';
 
 Widget buildSettingsItem({required String text,required String iconPath,required BuildContext context}) {
+  HomeCubit homeCubit = HomeCubit.get(context);
   return InkWell(
     onTap: () {
       if (text == 'Notifications') {
@@ -17,7 +19,9 @@ Widget buildSettingsItem({required String text,required String iconPath,required
       } else if (text == 'Location') {
       } else if (text == 'Support') {
       } else if (text == 'Share') {
-      } else {}
+      } else {
+        homeCubit.signOut(context);
+      }
     },
     child: Padding(
       padding: EdgeInsets.all(25.0.rSp),

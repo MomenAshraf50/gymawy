@@ -44,6 +44,15 @@ class LoginScreen extends StatelessWidget {
          if(state is LoginErrorState){
           designToastDialog(context: context, toast: TOAST.error,text: state.failure.toString());
         }
+        // /// العته البرمجي
+        // if(errorMessage!.isNotEmpty && state is! LoginSuccessState && state is! LoginLoadingState)
+        // {
+        //   designToastDialog(
+        //       context: context,
+        //       toast: TOAST.error,
+        //       text: errorMessage!);
+        //   debugPrintFullText('error ==========================${errorMessage!}');
+        // }
       },
       builder: (context, state) {
         LoginCubit loginCubit = LoginCubit.get(context);
@@ -132,7 +141,7 @@ class LoginScreen extends StatelessWidget {
                                     height: 3.h,
                                     text: AppString.login,
 
-                                    onPressed: () {
+                                    onPressed: () async{
                                       if(formKey.currentState!.validate())
                                       {
                                         loginCubit.logIn(email: emailController.text, password: passwordController.text);
