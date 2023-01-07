@@ -12,8 +12,8 @@ import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/myButton.dart';
 import '../../controller/home_cubit.dart';
 
-class AddCertifications extends StatelessWidget {
-  const AddCertifications({Key? key}) : super(key: key);
+class AddCoachCertifications extends StatelessWidget {
+  const AddCoachCertifications({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
+import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import '../controller/home_cubit.dart';
@@ -22,14 +23,20 @@ class MainScreen extends StatelessWidget {
                 key: bottomNavigationKey,
                 index: homeCubit.currentNavIndex,
                 height: 8.h,
-                items: const <Widget>
+                items: isCoachLogin == false ? const <Widget>
                 [
                   Icon(Icons.home),
                   Icon(Icons.search),
                   Icon(Icons.qr_code_scanner_outlined),
                   Icon(Icons.settings),
                   Icon(Icons.person),
-                ],
+                ] : [
+                  const Icon(Icons.home),
+                  const Icon(Icons.search),
+                  const Icon(Icons.settings),
+                  const Icon(Icons.person),
+                ]
+              ,
                 color: ColorsManager.white,
                 buttonBackgroundColor: ColorsManager.mainColor,
                 backgroundColor: ColorsManager.white,

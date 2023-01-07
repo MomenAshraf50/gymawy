@@ -46,7 +46,10 @@ void main() async
   //token = null;
   token = await sl<CacheHelper>().get('token');
   userId = await sl<CacheHelper>().get('userId');
+  isCoachLogin = await sl<CacheHelper>().get('isCoach');
   debugPrintFullText('My Current Token => $token');
+  debugPrintFullText('My Current ID => $userId');
+  debugPrintFullText('My Current type => $isCoachLogin');
 
 
   String translation = await rootBundle.loadString('assets/translations/${isRtl ? 'ar' : 'en'}.json');
@@ -57,6 +60,8 @@ void main() async
     translation: translation,
     widget: const SplashScreen(),
     token: token,
+    id: userId,
+    isCoach: isCoachLogin,
   ));
 
 }
@@ -66,6 +71,8 @@ class MyApp extends StatelessWidget {
   final String translation;
   final Widget widget;
   String? token;
+  bool? isCoach;
+  int? id;
 
    MyApp({
     Key? key,
@@ -73,6 +80,8 @@ class MyApp extends StatelessWidget {
     required this.translation,
     required this.widget,
     required this.token,
+    required this.isCoach,
+    required this.id,
 
   }) : super(key: key);
 

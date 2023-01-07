@@ -37,8 +37,12 @@ class LoginScreen extends StatelessWidget {
         if(state is LoginSuccessState){
           sl<CacheHelper>().put('token', state.token);
           sl<CacheHelper>().put('userId', state.id);
+          sl<CacheHelper>().put('isCoach', state.isCoach);
+
           userId = state.id;
           token = state.token;
+          isCoachLogin = state.isCoach;
+
           navigateAndFinish(context, MainScreen());
           debugPrintFullText(token!);
         }
@@ -46,15 +50,6 @@ class LoginScreen extends StatelessWidget {
          if(state is LoginErrorState){
           designToastDialog(context: context, toast: TOAST.error,text: state.failure.toString());
         }
-        // /// العته البرمجي
-        // if(errorMessage!.isNotEmpty && state is! LoginSuccessState && state is! LoginLoadingState)
-        // {
-        //   designToastDialog(
-        //       context: context,
-        //       toast: TOAST.error,
-        //       text: errorMessage!);
-        //   debugPrintFullText('error ==========================${errorMessage!}');
-        // }
       },
       builder: (context, state) {
         LoginCubit loginCubit = LoginCubit.get(context);
