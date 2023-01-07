@@ -1,4 +1,3 @@
-import 'package:gymawy/features/login/domain/entities/log_in_entity.dart';
 
 abstract class LoginStates {}
 
@@ -8,8 +7,9 @@ class LoginLoadingState extends LoginStates {}
 
 class LoginSuccessState extends LoginStates {
   final String token;
+  final int id;
 
-  LoginSuccessState({required this.token});
+  LoginSuccessState({required this.token,required this.id});
 }
 
 class LoginErrorState extends LoginStates {

@@ -24,7 +24,8 @@ class ProfileScreen extends StatelessWidget {
     HomeCubit homeCubit = HomeCubit.get(context);
 
     return SafeArea(
-      child: BlocBuilder<HomeCubit, HomeStates>(
+      child: BlocConsumer<HomeCubit, HomeStates>(
+        listener: (context,state){},
         builder: (context, state) {
           return Scaffold(
             body: SingleChildScrollView(
@@ -45,15 +46,15 @@ class ProfileScreen extends StatelessWidget {
                                 alignment: Alignment.topCenter,
                                 child: homeCubit.profileImageFile != null
                                     ? CircleAvatar(
-                                        radius: 60.rSp,
-                                        backgroundImage: FileImage(
-                                            homeCubit.profileImageFile!),
-                                      )
+                                  radius: 60.rSp,
+                                  backgroundImage: FileImage(
+                                      homeCubit.profileImageFile!),
+                                )
                                     : CircleAvatar(
-                                        radius: 60.rSp,
-                                        backgroundImage: const NetworkImage(
-                                            'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc='),
-                                      ),
+                                  radius: 60.rSp,
+                                  backgroundImage: const NetworkImage(
+                                      'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc='),
+                                ),
                               ),
                               IconButton(
                                 onPressed: () {
@@ -76,10 +77,10 @@ class ProfileScreen extends StatelessWidget {
                               children: [
                                 Padding(
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 10.rSp),
+                                  EdgeInsets.symmetric(horizontal: 10.rSp),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: const [
                                       myText(
                                         title: AppString.userNameProfile,
@@ -214,7 +215,7 @@ class ProfileScreen extends StatelessWidget {
                         Expanded(
                             child: DefaultIconButton(
                                 icon:
-                                    SvgPicture.asset(Assets.images.svg.tiktok),
+                                SvgPicture.asset(Assets.images.svg.tiktok),
                                 onPressed: () {})),
                         Expanded(
                             child: DefaultIconButton(
@@ -224,7 +225,7 @@ class ProfileScreen extends StatelessWidget {
                         Expanded(
                             child: DefaultIconButton(
                                 icon:
-                                    SvgPicture.asset(Assets.images.svg.youtube),
+                                SvgPicture.asset(Assets.images.svg.youtube),
                                 onPressed: () {})),
                       ],
                     ),
@@ -247,17 +248,17 @@ class ProfileScreen extends StatelessWidget {
                             verticalSpace(1.h),
                             homeCubit.certificationImageFile != null
                                 ? Image(
-                                    image: FileImage(
-                                        homeCubit.certificationImageFile!))
+                                image: FileImage(
+                                    homeCubit.certificationImageFile!))
                                 : InkWell(
-                                    onTap: () {
-                                      navigateTo(
-                                          context, const AddCertifications());
-                                    },
-                                    child: const myText(
-                                        title: AppString.getCertifications,
-                                        style: Style.medium),
-                                  ),
+                              onTap: () {
+                                navigateTo(
+                                    context, const AddCertifications());
+                              },
+                              child: const myText(
+                                  title: AppString.getCertifications,
+                                  style: Style.medium),
+                            ),
                           ],
                         ),
                       ),

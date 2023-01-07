@@ -24,13 +24,12 @@ class LogInRemoteDataSourceImpl
     required String password,
   }) async {
     final Response f = await dioHelper.post(
-      url: logInEndPoint,
-      data: {
-        'username':userName,
-        'password':password,
-      }
+        url: logInEndPoint,
+        data: {
+          'username':userName,
+          'password':password,
+        }
     );
     return LogInModel.fromJson(f.data);
   }
 }
-
