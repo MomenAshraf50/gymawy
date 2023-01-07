@@ -16,7 +16,8 @@ import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../login/presentation/screens/login_screen.dart';
 import '../screens/home/home_screen.dart';
-import '../screens/profile/profile_screen.dart';
+import '../screens/profile/profile_client_screen.dart';
+import '../screens/profile/profile_coach_screen.dart';
 import '../screens/search/search_screen.dart';
 import '../screens/settings/settings_screen.dart';
 import 'home_states.dart';
@@ -38,13 +39,20 @@ class HomeCubit extends Cubit<HomeStates> {
 
   static HomeCubit get(context) => BlocProvider.of(context);
 
-  List<Widget> widgets = [
-    const HomeClientScreen(),
-    const SearchScreen(),
-    const QRCodescreen(),
-    SettingsScreen(),
-    const ProfileScreen(),
-  ];
+  List<Widget> widgets =
+      isCoachLogin == false ?  [
+      const HomeClientScreen(),
+      const SearchScreen(),
+      const QRCodescreen(),
+      SettingsScreen(),
+      ClientProfileScreen(),
+      ] :
+      [
+        const HomeClientScreen(),
+        const SearchScreen(),
+        SettingsScreen(),
+        const ProfileCoachScreen(),
+      ];
 
   TextEditingController searchController = TextEditingController();
   int selected = 0;

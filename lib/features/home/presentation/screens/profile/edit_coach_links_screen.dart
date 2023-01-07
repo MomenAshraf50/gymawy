@@ -14,8 +14,8 @@ import '../../../../../core/util/widgets/back_button.dart';
 import '../../../../../core/util/widgets/myTextFill.dart';
 import '../../controller/home_cubit.dart';
 
-class EditLinksScreen extends StatelessWidget {
-  const EditLinksScreen({Key? key}) : super(key: key);
+class EditCoachLinksScreen extends StatelessWidget {
+  const EditCoachLinksScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

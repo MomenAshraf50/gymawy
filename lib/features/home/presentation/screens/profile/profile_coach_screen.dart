@@ -6,18 +6,18 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
-import 'package:gymawy/features/home/presentation/screens/profile/add_certifications.dart';
+import 'package:gymawy/features/home/presentation/screens/profile/add_coach_certifications.dart';
 
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/myText.dart';
 import '../../../../../core/util/widgets/my_icon_button.dart';
-import 'edit_links_screen.dart';
+import 'edit_coach_links_screen.dart';
 import 'edit_profile.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class ProfileCoachScreen extends StatelessWidget {
+  const ProfileCoachScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +96,7 @@ class ProfileScreen extends StatelessWidget {
                                 verticalSpace(1.h),
                                 Row(
                                   children: [
+                                    if(isCoachLogin == true)
                                     Expanded(
                                       child: myButton(
                                           text: AppString.editLinksButton,
@@ -103,7 +104,7 @@ class ProfileScreen extends StatelessWidget {
                                           fontSize: 10.rSp,
                                           onPressed: () {
                                             navigateTo(context,
-                                                const EditLinksScreen());
+                                                const EditCoachLinksScreen());
                                           }),
                                     ),
                                     horizontalSpace(1.w),
@@ -253,7 +254,7 @@ class ProfileScreen extends StatelessWidget {
                                 : InkWell(
                               onTap: () {
                                 navigateTo(
-                                    context, const AddCertifications());
+                                    context, const AddCoachCertifications());
                               },
                               child: const myText(
                                   title: AppString.getCertifications,

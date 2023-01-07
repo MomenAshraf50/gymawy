@@ -235,142 +235,147 @@ class HomeClientScreen extends StatelessWidget {
                         itemCount: homeCubit.listSuggestions.length,
                       ),
                     ),
-                    verticalSpace(2.h),
-                    const myText(
-                      title: AppString.todaySession,
-                      style: Style.extraSmall,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    verticalSpace(0.5.h),
-                    myText(
-                      title: AppString.doNotMiss,
-                      style: Style.extraSmall,
-                      fontSize: 12.rSp,
-                    ),
-                    verticalSpace(0.5.h),
-                    Stack(
+                    if(isCoachLogin == false)
+                    Column(
                       children: [
-                        SizedBox(
-                            height: 24.h,
-                            child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Image.asset(
-                                  Assets.images.svg.cardWithGirl,
-                                ))),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(5.w, 8.5.h, 0, 0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: 3.h,
-                                width: 15.w,
-                                decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        255, 252, 183, 146),
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Center(
-                                    child: myText(
-                                  title: AppString.daysNum,
-                                  style: Style.extraSmall,
-                                  fontSize: 9.rSp,
-                                  fontWeight: FontWeight.w600,
-                                )),
-                              ),
-                              verticalSpace(0.5.h),
-                              myText(
-                                title: AppString.fullBodyExercise,
-                                style: Style.extraSmall,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12.rSp,
-                              ),
-                              myText(
-                                title: AppString.level,
-                                style: Style.extraSmall,
-                                fontSize: 12.rSp,
-                              ),
-                              Row(
+                        verticalSpace(2.h),
+                        const myText(
+                          title: AppString.todaySession,
+                          style: Style.extraSmall,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        verticalSpace(0.5.h),
+                        myText(
+                          title: AppString.doNotMiss,
+                          style: Style.extraSmall,
+                          fontSize: 12.rSp,
+                        ),
+                        verticalSpace(0.5.h),
+                        Stack(
+                          children: [
+                            SizedBox(
+                                height: 24.h,
+                                child: Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Image.asset(
+                                      Assets.images.svg.cardWithGirl,
+                                    ))),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(5.w, 8.5.h, 0, 0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
                                     height: 3.h,
-                                    width: 20.w,
+                                    width: 15.w,
                                     decoration: BoxDecoration(
                                         color: const Color.fromARGB(
                                             255, 252, 183, 146),
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
+                                        borderRadius: BorderRadius.circular(15)),
                                     child: Center(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              Assets.images.svg.clock),
-                                          horizontalSpace(1.w),
-                                          myText(
-                                            title: AppString.clock,
-                                            style: Style.extraSmall,
-                                            fontSize: 12.rSp,
-                                            letterSpacing: 0.5,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                        child: myText(
+                                      title: AppString.daysNum,
+                                      style: Style.extraSmall,
+                                      fontSize: 9.rSp,
+                                      fontWeight: FontWeight.w600,
+                                    )),
                                   ),
-                                  horizontalSpace(0.5.w),
-                                  Container(
-                                    height: 3.h,
-                                    width: 20.w,
-                                    decoration: BoxDecoration(
-                                        color: const Color.fromARGB(
-                                            255, 252, 183, 146),
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    child: Center(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              Assets.images.svg.fire),
-                                          horizontalSpace(1.w),
-                                          myText(
-                                            title: AppString.cal,
-                                            style: Style.extraSmall,
-                                            fontSize: 12.rSp,
+                                  verticalSpace(0.5.h),
+                                  myText(
+                                    title: AppString.fullBodyExercise,
+                                    style: Style.extraSmall,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12.rSp,
+                                  ),
+                                  myText(
+                                    title: AppString.level,
+                                    style: Style.extraSmall,
+                                    fontSize: 12.rSp,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        height: 3.h,
+                                        width: 20.w,
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 252, 183, 146),
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: Center(
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(
+                                                  Assets.images.svg.clock),
+                                              horizontalSpace(1.w),
+                                              myText(
+                                                title: AppString.clock,
+                                                style: Style.extraSmall,
+                                                fontSize: 12.rSp,
+                                                letterSpacing: 0.5,
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                        ),
+                                      ),
+                                      horizontalSpace(0.5.w),
+                                      Container(
+                                        height: 3.h,
+                                        width: 20.w,
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 252, 183, 146),
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: Center(
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(
+                                                  Assets.images.svg.fire),
+                                              horizontalSpace(1.w),
+                                              myText(
+                                                title: AppString.cal,
+                                                style: Style.extraSmall,
+                                                fontSize: 12.rSp,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  verticalSpace(1.h),
+                                  InkWell(
+                                    child: Container(
+                                      height: 3.h,
+                                      width: 41.w,
+                                      decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              255, 0, 173, 199),
+                                          borderRadius: BorderRadius.circular(15)),
+                                      child: Center(
+                                        child: myText(
+                                          title: AppString.startNow,
+                                          style: Style.extraSmall,
+                                          fontSize: 12.rSp,
+                                        ),
                                       ),
                                     ),
+                                    onTap: () {},
                                   ),
                                 ],
                               ),
-                              verticalSpace(1.h),
-                              InkWell(
-                                child: Container(
-                                  height: 3.h,
-                                  width: 41.w,
-                                  decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                          255, 0, 173, 199),
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Center(
-                                    child: myText(
-                                      title: AppString.startNow,
-                                      style: Style.extraSmall,
-                                      fontSize: 12.rSp,
-                                    ),
-                                  ),
-                                ),
-                                onTap: () {},
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

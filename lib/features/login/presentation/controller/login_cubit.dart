@@ -35,7 +35,8 @@ class LoginCubit extends Cubit<LoginStates> {
     }, (data) {
       emit(LoginSuccessState(
         id: data.userId,
-        token: data.token
+        token: data.token,
+        isCoach: data.isTrainer,
       ));
     });
   }
