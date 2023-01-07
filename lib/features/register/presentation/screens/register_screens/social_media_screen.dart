@@ -19,21 +19,42 @@ class SocialMediaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RegisterCubit registerCubit = RegisterCubit.get(context);
-    return BlocConsumer<RegisterCubit,RegisterStates>(
+    return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {
-        if(state is RegisterCoachSuccessState)
+        if (state is RegisterSuccessState)
         {
           navigateAndFinish(context, LoginScreen());
+          debugPrintFullText(state.token);
+          userPicRegister = null;
+          genderRegister = '';
+          bodyFatRegister = '';
+          countryRegister = '';
+          governmentRegister = '';
+          userNameRegister = '';
+          firstNameRegister = '';
+          lastNameRegister = '';
+          fullNameRegister = '';
+          ageRegister = '';
+          emailRegister = '';
+          phoneRegister = '';
+          passwordRegister = '';
+          confirmPasswordRegister = '';
+          currentTallRegister = 0;
+          currentWeightRegister = 0;
+          fixedPriceRegister = 0;
+          facebookLinkRegister = '';
+          instagramLinkRegister = '';
+          youtubeLinkRegister = '';
+          tiktokLinkRegister = '';
         }
-        // /// العته البرمجي
-        // if(errorMessage!.isNotEmpty && state is! RegisterCoachSuccessState && state is! RegisterCoachLoadingState)
-        // {
-        //   designToastDialog(
-        //       context: context,
-        //       toast: TOAST.error,
-        //       text: errorMessage!);
-        //   debugPrintFullText('error ==========================${errorMessage!}');
-        // }
+        else if (state is RegisterErrorState){
+          debugPrintFullText(state.failure);
+          designToastDialog(
+              context: context,
+              toast: TOAST.error,
+              text: state.failure
+          );
+        }
       },
       builder: (context, state) {
         return SingleChildScrollView(
@@ -48,24 +69,26 @@ class SocialMediaScreen extends StatelessWidget {
                 myTextFill(
                   controller: registerCubit.facebookController,
                   hint: AppString.facebook,
-                  svgImg: Assets.images.svg.facebook,),
+                  svgImg: Assets.images.svg.facebook,
+                ),
                 verticalSpace(1.h),
-
                 myTextFill(
                   controller: registerCubit.instagramController,
                   hint: AppString.instagram,
-                  svgImg: Assets.images.svg.instagramSvgrepoCom,),
+                  svgImg: Assets.images.svg.instagramSvgrepoCom,
+                ),
                 verticalSpace(1.h),
-
                 myTextFill(
                   controller: registerCubit.youtubeController,
                   hint: AppString.youTube,
-                  svgImg: Assets.images.svg.youtubeSvgrepoCom,),
+                  svgImg: Assets.images.svg.youtubeSvgrepoCom,
+                ),
                 verticalSpace(1.h),
                 myTextFill(
                   controller: registerCubit.tiktokController,
                   hint: AppString.tiktok,
-                  svgImg: Assets.images.svg.tiktok,),
+                  svgImg: Assets.images.svg.tiktok,
+                ),
                 verticalSpace(2.h),
                 myButton(
                   elevation: 0.0,
@@ -74,31 +97,54 @@ class SocialMediaScreen extends StatelessWidget {
                   height: 3.h,
                   text: AppString.next,
                   onPressed: () {
-                    facebookLinkRegister = registerCubit.facebookController.text;
-                    instagramLinkRegister = registerCubit.instagramController.text;
+                    facebookLinkRegister =
+                        registerCubit.facebookController.text;
+                    instagramLinkRegister =
+                        registerCubit.instagramController.text;
                     youtubeLinkRegister = registerCubit.youtubeController.text;
                     tiktokLinkRegister = registerCubit.tiktokController.text;
-                    registerCubit.registerCoach(
-                        email: emailRegister!,
-                        password: passwordRegister!,
-                        bio: '',
-                        city: '',
-                        confirmPassword: confirmPasswordRegister!,
-                        country: countryRegister!,
-                        firstName: firstNameRegister!,
-                        fullName: fullNameRegister!,
-                        gander: genderRegister!,
-                        governorate: governmentRegister!,
-                        lastName: lastNameRegister!,
-                        phoneNumber: phoneRegister!,
-                        profilePicture: userPicRegister!,
-                        userName: userNameRegister!,
-                        facebookLink: facebookLinkRegister!,
-                        instagramLink: instagramLinkRegister!,
-                        youtubeLink: youtubeLinkRegister!,
-                        tiktokLink: tiktokLinkRegister!,
-                        fixedPrice: fixedPriceRegister!
+                    registerCubit.registerClient(
+                      email: emailRegister!,
+                      password: passwordRegister!,
+                      bio: '',
+                      city: '',
+                      confirmPassword: confirmPasswordRegister!,
+                      country: countryRegister!,
+                      firstName: firstNameRegister!,
+                      fullName: fullNameRegister!,
+                      gander: genderRegister!,
+                      governorate: governmentRegister!,
+                      lastName: lastNameRegister!,
+                      phoneNumber: phoneRegister!,
+                      profilePicture: userPicRegister!,
+                      userName: userNameRegister!,
+                      fixedPrice: fixedPriceRegister!,
+                      facebookLink: facebookLinkRegister!,
+                      instagramLink: instagramLinkRegister!,
+                      youTubeLink: youtubeLinkRegister!,
+                      tikTokLink: tiktokLinkRegister!,
                     );
+                    // registerCubit.registerCoach(
+                    //     email: emailRegister!,
+                    //     password: passwordRegister!,
+                    //     bio: '',
+                    //     city: '',
+                    //     confirmPassword: confirmPasswordRegister!,
+                    //     country: countryRegister!,
+                    //     firstName: firstNameRegister!,
+                    //     fullName: fullNameRegister!,
+                    //     gander: genderRegister!,
+                    //     governorate: governmentRegister!,
+                    //     lastName: lastNameRegister!,
+                    //     phoneNumber: phoneRegister!,
+                    //     profilePicture: userPicRegister!,
+                    //     userName: userNameRegister!,
+                    //     facebookLink: facebookLinkRegister!,
+                    //     instagramLink: instagramLinkRegister!,
+                    //     youtubeLink: youtubeLinkRegister!,
+                    //     tiktokLink: tiktokLinkRegister!,
+                    //     fixedPrice: fixedPriceRegister!
+                    // );
                   },
                 ),
               ],

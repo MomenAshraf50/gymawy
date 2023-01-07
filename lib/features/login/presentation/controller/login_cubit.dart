@@ -5,6 +5,8 @@ import 'package:gymawy/features/login/domain/entities/log_in_entity.dart';
 import 'package:gymawy/features/login/domain/usecase/log_in_usecase.dart';
 import 'package:gymawy/features/login/presentation/controller/login_states.dart';
 
+import '../../../../core/error/failures.dart';
+
 class LoginCubit extends Cubit<LoginStates> {
   final LoginUseCase _logInUseCase;
 
@@ -30,7 +32,7 @@ class LoginCubit extends Cubit<LoginStates> {
 
     result.fold((failure) {
       emit(LoginErrorState(
-        failure: failure.toString()
+          failure: mapFailureToMessage(failure)
       ));
     }, (data) {
       emit(LoginSuccessState(

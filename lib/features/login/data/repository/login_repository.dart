@@ -23,8 +23,8 @@ class LoginRepoImplementation extends LogInBaseRepository {
       return Right(loginData);
     } on ServerException catch (e) {
       return Left(ServerFailure(
-        error: e.error,
-        code: e.code,
+        // error: e.error,
+        // code: e.code,
         message: e.message,
       ));
     }

@@ -1,6 +1,6 @@
 import '../../domain/entities/register_entity.dart';
 
-class RegisterModel extends Register {
+class RegisterModel extends RegisterEntity {
   RegisterModel({
     required super.token,
   });
