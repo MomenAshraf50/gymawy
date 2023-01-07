@@ -1,7 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymawy/core/util/resources/constants_manager.dart';
-import 'package:gymawy/features/login/data/models/login_model.dart';
-import 'package:gymawy/features/login/domain/entities/log_in_entity.dart';
+
 import 'package:gymawy/features/login/domain/usecase/log_in_usecase.dart';
 import 'package:gymawy/features/login/presentation/controller/login_states.dart';
 
@@ -36,6 +34,7 @@ class LoginCubit extends Cubit<LoginStates> {
       ));
     }, (data) {
       emit(LoginSuccessState(
+        id: data.userId,
         token: data.token
       ));
     });

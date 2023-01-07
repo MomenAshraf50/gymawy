@@ -1,3 +1,5 @@
+import 'package:gymawy/features/home/domain/entities/update_coach_profile_entity.dart';
+
 abstract class HomeStates{}
 
 class HomeInitialState extends HomeStates{}
@@ -14,3 +16,14 @@ class ExerciseExamplePauseAndPlayVideoState extends HomeStates{}
 class GetTextHeightState extends HomeStates{}
 class ChangeCurrentStepState extends HomeStates{}
 class SignOutState extends HomeStates{}
+class UpdateCoachLoadingState extends HomeStates{}
+class UpdateCoachSuccessState extends HomeStates{
+  UpdateCoachEntity entity;
+
+  UpdateCoachSuccessState(this.entity);
+}
+class UpdateCoachErrorState extends HomeStates{
+  final String failure;
+
+  UpdateCoachErrorState(this.failure);
+}

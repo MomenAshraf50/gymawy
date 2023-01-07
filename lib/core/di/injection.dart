@@ -1,4 +1,10 @@
 import 'package:get_it/get_it.dart';
+import 'package:gymawy/features/home/data/data_source/update_remote_data_source.dart';
+import 'package:gymawy/features/home/data/repository/home_update_repository.dart';
+import 'package:gymawy/features/home/domain/repository/home_update_base_repository.dart';
+import 'package:gymawy/features/home/domain/usecase/update_coach_profile_picture.dart';
+import 'package:gymawy/features/home/domain/usecase/update_coach_profile_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/login/data/data_source/login_remote_data_source.dart';
 import 'package:gymawy/features/login/data/repository/login_repository.dart';
@@ -25,8 +31,14 @@ Future<void> init() async {
   );
 
   sl.registerLazySingleton<LoginCubit>(() => LoginCubit(logInUseCase: sl()));
-  sl.registerLazySingleton<RegisterCubit>(() => RegisterCubit(registerUseCase: sl(),));
-  sl.registerLazySingleton<HomeCubit>(() => HomeCubit() );
+  sl.registerLazySingleton<RegisterCubit>(() => RegisterCubit(
+        registerUseCase: sl(),
+      ));
+  sl.registerLazySingleton<HomeCubit>(() => HomeCubit(
+        updateCoachSocialLinks: sl(),
+        updateCoachProfilePicture: sl(),
+        updateCoachProfile: sl(),
+      ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
       dioHelper: sl(),
@@ -36,34 +48,36 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton<LogInBaseRepository>(
-    () => LoginRepoImplementation(
-        remoteDataSource: sl()),
+    () => LoginRepoImplementation(remoteDataSource: sl()),
   );
 
   sl.registerLazySingleton<RegisterBaseRepository>(
-        () => RegisterRepoImplementation(
-            remoteDataSource: sl()
-        ),
+    () => RegisterRepoImplementation(remoteDataSource: sl()),
   );
 
+  sl.registerLazySingleton<HomeUpdateBaseRepository>(
+    () => HomeUpdateRepository(remoteDataSource: sl()),
+  );
 
   // Use cases
   sl.registerLazySingleton(() => LoginUseCase(sl()));
   sl.registerLazySingleton(() => RegisterUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateCoachProfilePicture(sl()));
+  sl.registerLazySingleton(() => UpdateCoachProfile(sl()));
+  sl.registerLazySingleton(() => UpdateCoachSocialLinks(sl()));
 
   //Data sources
-   sl.registerLazySingleton<LogInBaseRemoteDataSource>(
-     () => LogInRemoteDataSourceImpl(
-         dioHelper: sl()
-     ),
-   );
-
-  sl.registerLazySingleton<RegisterBaseRemoteDataSource>(
-        () => RegisterRemoteDataSourceImpl(
-            dioHelper: sl()
-        ),
+  sl.registerLazySingleton<LogInBaseRemoteDataSource>(
+    () => LogInRemoteDataSourceImpl(dioHelper: sl()),
   );
 
+  sl.registerLazySingleton<RegisterBaseRemoteDataSource>(
+    () => RegisterRemoteDataSourceImpl(dioHelper: sl()),
+  );
+
+  sl.registerLazySingleton<UpdateCoachBaseDataSource>(
+    () => UpdateCoachDataSourceImpl(dioHelper: sl()),
+  );
 
   // Core
   sl.registerLazySingleton<DioHelper>(

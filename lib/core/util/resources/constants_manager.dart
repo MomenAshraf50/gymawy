@@ -37,6 +37,7 @@ Widget svgImage({required String path,Color? color}){
 }
 
 String? token = '';
+int? userId;
 double? currentLat = 0;
 double? currentLng = 0;
 

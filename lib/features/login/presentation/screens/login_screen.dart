@@ -36,6 +36,8 @@ class LoginScreen extends StatelessWidget {
       listener: (context, state) {
         if(state is LoginSuccessState){
           sl<CacheHelper>().put('token', state.token);
+          sl<CacheHelper>().put('userId', state.id);
+          userId = state.id;
           token = state.token;
           navigateAndFinish(context, MainScreen());
           debugPrintFullText(token!);

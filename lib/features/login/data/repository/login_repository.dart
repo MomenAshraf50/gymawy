@@ -33,15 +33,14 @@ class LoginRepoImplementation extends LogInBaseRepository {
   @override
   Future<Either<Failure, LoginEntity>> login(
       {
-    required String userName,
-    required String password
+        required String userName,
+        required String password
       }) async {
-      return await fetchData(()
-      {
-        return remoteDataSource.logIn(
-            userName: userName,
-            password: password);
-      });
+    return await fetchData(()
+    {
+      return remoteDataSource.logIn(
+          userName: userName,
+          password: password);
+    });
   }
 }
-

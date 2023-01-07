@@ -45,6 +45,7 @@ void main() async
   // });
   //token = null;
   token = await sl<CacheHelper>().get('token');
+  userId = await sl<CacheHelper>().get('userId');
   debugPrintFullText('My Current Token => $token');
 
 
