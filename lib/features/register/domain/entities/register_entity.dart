@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-class Register extends Equatable {
+class RegisterEntity extends Equatable {
   String token;
 
-  Register({
+  RegisterEntity({
     required this.token,
   });
 

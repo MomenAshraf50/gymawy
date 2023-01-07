@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
-import 'package:gymawy/features/register/domain/entities/register_coach_entity.dart';
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/address_screen.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/complete_profile_screen.dart';
@@ -14,29 +13,24 @@ import 'package:gymawy/features/register/presentation/screens/register_screens/s
 import 'package:gymawy/features/register/presentation/screens/register_screens/social_media_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-
+import '../../../../core/error/failures.dart';
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../../core/util/resources/goal_data_static.dart';
 import '../../../../core/util/widgets/myText.dart';
-import '../../domain/entities/register_entity.dart';
-import '../../domain/usecase/register_coach_usecase.dart';
 import '../../domain/usecase/register_usecase.dart';
-
 
 class RegisterCubit extends Cubit<RegisterStates>{
   final RegisterUseCase _registerUseCase;
-  final RegisterCoachUseCase _registerCoachUseCase;
-  RegisterCubit({required RegisterUseCase registerUseCase,required RegisterCoachUseCase registerCoachUseCase })
-      : _registerUseCase = registerUseCase, _registerCoachUseCase = registerCoachUseCase,
+  RegisterCubit({required RegisterUseCase registerUseCase,
+  })
+      : _registerUseCase = registerUseCase,
         super(RegisterInitialState());
 
   static RegisterCubit get(context) => BlocProvider.of(context);
 
   bool isCoach = false;
-
   int currentNavIndex = 0;
-
   TextEditingController emailController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   TextEditingController userFirstNameController = TextEditingController();
@@ -52,12 +46,12 @@ class RegisterCubit extends Cubit<RegisterStates>{
   TextEditingController dataOfBirth = TextEditingController();
   TextEditingController currentWeightController = TextEditingController();
   TextEditingController currentTallController = TextEditingController();
-
   bool isMoneyEmpty = true;
 
 
   Future selectType({required bool isCoach}) async {
     this.isCoach = isCoach;
+    isCoachRegister = isCoach;
     emit(RegisterChangeTypeState());
   }
  late List<Widget> pagesClint = [
@@ -303,14 +297,10 @@ class RegisterCubit extends Cubit<RegisterStates>{
   TextEditingController tiktokController  = TextEditingController();
 
 
-  Register? registerModel;
+  //RegisterModel? registerModel;
   void registerClient({
     required String email,
     required String password,
-    required int bodyFat,
-    required int currentWeight,
-    required int currentTall,
-    required String age,
     required String bio,
     required String city,
     required String confirmPassword,
@@ -323,41 +313,81 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String phoneNumber,
     required File profilePicture,
     required String userName,
+    int? bodyFat,
+    int? currentWeight,
+    int? currentTall,
+    int? fixedPrice,
+    String? age,
+    String? facebookLink,
+    String? instagramLink,
+    String? youTubeLink,
+    String? tikTokLink,
     context
   }) async {
     emit(RegisterLoadingState());
-
-    final result = await _registerUseCase(RegisterParameters(
-      email,
-      password,
-      bodyFat,
-      currentWeight,
-      currentTall,
-      age,
-      bio,
-      city,
-      confirmPassword,
-      country,
-      firstName,
-      fullName,
-      gander,
-      governorate,
-      lastName,
-      phoneNumber,
-      profilePicture,
-      userName,
-    ));
+    final result = await _registerUseCase(
+        isCoachRegister == false ?
+        RegisterParams(
+      userName: userName,
+      firstName: firstName,
+      lastName: lastName,
+      fullName: fullName,
+      email: email,
+      profilePicture: profilePicture,
+      bio: '',
+      phoneNumber: phoneNumber,
+      gander: gander,
+      country: country,
+      governorate: governorate,
+      city: '',
+      password: password,
+      confirmPassword: confirmPassword,
+      age: age!,
+      currentWeight: currentWeight!,
+      currentTall: currentTall!,
+      bodyFat: bodyFat!,
+      fixedPrice: 0,
+      instagramLink: '',
+      tikTokLink: '',
+      youTubeLink: '',
+      facebookLink: '',
+    ) :
+        RegisterParams(
+          userName: userName,
+          firstName: firstName,
+          lastName: lastName,
+          fullName: fullName,
+          email: email,
+          profilePicture: profilePicture,
+          bio: '',
+          phoneNumber: phoneNumber,
+          gander: gander,
+          country: country,
+          governorate: governorate,
+          city: '',
+          password: password,
+          confirmPassword: confirmPassword,
+          fixedPrice: fixedPrice!,
+          facebookLink: facebookLink!,
+          youTubeLink: youTubeLink!,
+          tikTokLink: tikTokLink!,
+          instagramLink: instagramLink!,
+          age: '',
+          bodyFat: 0,
+          currentTall: 0,
+          currentWeight: 0,
+        )
+    );
 
     result.fold((failure) {
       emit(RegisterErrorState(
-          failure: failure.toString()
+          failure: mapFailureToMessage(failure)
       ));
       debugPrintFullText('Error is ----------------------------- ${failure.toString()}');
     }, (data) {
-      registerModel = data;
-
+      //registerModel = data;
       emit(RegisterSuccessState(
-          token: registerModel!.token
+          token: data.token
       ));
       imageFile = null;
       emailController.text = '';
@@ -375,85 +405,89 @@ class RegisterCubit extends Cubit<RegisterStates>{
       userLastNameController.text = '';
       userFirstNameController.text = '';
       userNameController.text = '';
+      facebookController.text = '';
+      instagramController.text  = '';
+      youtubeController.text  = '';
+      tiktokController.text  = '';
+      cityController.text = '';
+      countryController.text = '';
     });
   }
-
-
-  RegisterCoach? registerCoachModel;
-  void registerCoach({
-    required String email,
-    required String password,
-    required String bio,
-    required String city,
-    required String confirmPassword,
-    required String country,
-    required String firstName,
-    required String fullName,
-    required String gander,
-    required String governorate,
-    required String lastName,
-    required String phoneNumber,
-    required File profilePicture,
-    required String userName,
-    required String facebookLink,
-    required String instagramLink,
-    required String youtubeLink,
-    required String tiktokLink,
-    required int fixedPrice,
-    context
-  }) async {
-    emit(RegisterLoadingState());
-
-    final result = await _registerCoachUseCase(RegisterCoachParameters(
-        email,
-        password,
-        bio,
-        city,
-        confirmPassword,
-        country,
-        firstName,
-        fullName,
-        gander,
-        governorate,
-        lastName,
-        phoneNumber,
-        profilePicture,
-        userName,
-        facebookLink,
-        fixedPrice,
-        instagramLink,
-        youtubeLink,
-        tiktokLink
-    ));
-
-    result.fold((failure) {
-      emit(RegisterCoachErrorState(
-          failure: failure.toString()
-      ));
-      debugPrintFullText('Error is ----------------------------- ${failure.toString()}');
-    }, (data) {
-      registerCoachModel = data;
-      emit(RegisterCoachSuccessState(
-          token: registerModel!.token
-      ));
-      imageFile = null;
-      emailController.text = '';
-      currentTallController.text = '';
-      currentWeightController.text = '';
-      dataOfBirth.text = '';
-      pricePerMonth.text = '';
-      currencyController.text = '';
-      genderController.text = '';
-      confirmPasswordController.text = '';
-      passwordController.text = '';
-      phoneController.text = '';
-      userAgeController.text = '';
-      fullNameController.text = '';
-      userLastNameController.text = '';
-      userFirstNameController.text = '';
-      userNameController.text = '';
-    });
-  }
+  // RegisterCoach? registerCoachModel;
+  // void registerCoach({
+  //   required String email,
+  //   required String password,
+  //   required String bio,
+  //   required String city,
+  //   required String confirmPassword,
+  //   required String country,
+  //   required String firstName,
+  //   required String fullName,
+  //   required String gander,
+  //   required String governorate,
+  //   required String lastName,
+  //   required String phoneNumber,
+  //   required File profilePicture,
+  //   required String userName,
+  //   required String facebookLink,
+  //   required String instagramLink,
+  //   required String youtubeLink,
+  //   required String tiktokLink,
+  //   required int fixedPrice,
+  //   context
+  // }) async {
+  //   emit(RegisterLoadingState());
+  //
+  //   final result = await _registerCoachUseCase(RegisterCoachParameters(
+  //       email,
+  //       password,
+  //       bio,
+  //       city,
+  //       confirmPassword,
+  //       country,
+  //       firstName,
+  //       fullName,
+  //       gander,
+  //       governorate,
+  //       lastName,
+  //       phoneNumber,
+  //       profilePicture,
+  //       userName,
+  //       facebookLink,
+  //       fixedPrice,
+  //       instagramLink,
+  //       youtubeLink,
+  //       tiktokLink
+  //   ));
+  //
+  //   result.fold((failure) {
+  //     emit(RegisterCoachErrorState(
+  //         failure: failure.toString()
+  //     ));
+  //     debugPrintFullText('Error is ----------------------------- ${failure.toString()}');
+  //   }, (data) {
+  //     registerCoachModel = data;
+  //     emit(RegisterCoachSuccessState(
+  //         token: registerModel!.token
+  //     ));
+  //     imageFile = null;
+  //     emailController.text = '';
+  //     currentTallController.text = '';
+  //     currentWeightController.text = '';
+  //     dataOfBirth.text = '';
+  //     pricePerMonth.text = '';
+  //     currencyController.text = '';
+  //     genderController.text = '';
+  //     confirmPasswordController.text = '';
+  //     passwordController.text = '';
+  //     phoneController.text = '';
+  //     userAgeController.text = '';
+  //     fullNameController.text = '';
+  //     userLastNameController.text = '';
+  //     userFirstNameController.text = '';
+  //     userNameController.text = '';
+  //   });
+  // }
 
 
 

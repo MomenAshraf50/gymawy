@@ -324,6 +324,7 @@ String? facebookLinkRegister = '';
 String? instagramLinkRegister = '';
 String? youtubeLinkRegister = '';
 String? tiktokLinkRegister = '';
+bool isCoachRegister = false;
 
 
 
