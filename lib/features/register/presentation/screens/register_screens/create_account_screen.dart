@@ -262,7 +262,7 @@ class CreateAccountScreen extends StatelessWidget {
                         text: AppString.next,
                         onPressed: () {
                           userPicRegister= registerCubit.imageFile;
-                          userNameRegister = registerCubit.phoneController.text;
+                          userNameRegister = registerCubit.userNameController.text;
                           firstNameRegister = registerCubit.userFirstNameController.text;
                           lastNameRegister = registerCubit.userLastNameController.text;
                           fullNameRegister = registerCubit.fullNameController.text;
