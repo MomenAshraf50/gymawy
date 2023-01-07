@@ -205,7 +205,6 @@ class HomeCubit extends Cubit<HomeStates> {
           LoginScreen(),
         );
         emit(SignOutState());
-        //Restart.restartApp();
       }
     });
   }

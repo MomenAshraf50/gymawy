@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
@@ -289,13 +288,10 @@ class RegisterCubit extends Cubit<RegisterStates>{
     ),
   ];
 
-
-
   TextEditingController facebookController = TextEditingController();
   TextEditingController instagramController  = TextEditingController();
   TextEditingController youtubeController  = TextEditingController();
   TextEditingController tiktokController  = TextEditingController();
-
 
   //RegisterModel? registerModel;
   void registerClient({
@@ -413,82 +409,5 @@ class RegisterCubit extends Cubit<RegisterStates>{
       countryController.text = '';
     });
   }
-  // RegisterCoach? registerCoachModel;
-  // void registerCoach({
-  //   required String email,
-  //   required String password,
-  //   required String bio,
-  //   required String city,
-  //   required String confirmPassword,
-  //   required String country,
-  //   required String firstName,
-  //   required String fullName,
-  //   required String gander,
-  //   required String governorate,
-  //   required String lastName,
-  //   required String phoneNumber,
-  //   required File profilePicture,
-  //   required String userName,
-  //   required String facebookLink,
-  //   required String instagramLink,
-  //   required String youtubeLink,
-  //   required String tiktokLink,
-  //   required int fixedPrice,
-  //   context
-  // }) async {
-  //   emit(RegisterLoadingState());
-  //
-  //   final result = await _registerCoachUseCase(RegisterCoachParameters(
-  //       email,
-  //       password,
-  //       bio,
-  //       city,
-  //       confirmPassword,
-  //       country,
-  //       firstName,
-  //       fullName,
-  //       gander,
-  //       governorate,
-  //       lastName,
-  //       phoneNumber,
-  //       profilePicture,
-  //       userName,
-  //       facebookLink,
-  //       fixedPrice,
-  //       instagramLink,
-  //       youtubeLink,
-  //       tiktokLink
-  //   ));
-  //
-  //   result.fold((failure) {
-  //     emit(RegisterCoachErrorState(
-  //         failure: failure.toString()
-  //     ));
-  //     debugPrintFullText('Error is ----------------------------- ${failure.toString()}');
-  //   }, (data) {
-  //     registerCoachModel = data;
-  //     emit(RegisterCoachSuccessState(
-  //         token: registerModel!.token
-  //     ));
-  //     imageFile = null;
-  //     emailController.text = '';
-  //     currentTallController.text = '';
-  //     currentWeightController.text = '';
-  //     dataOfBirth.text = '';
-  //     pricePerMonth.text = '';
-  //     currencyController.text = '';
-  //     genderController.text = '';
-  //     confirmPasswordController.text = '';
-  //     passwordController.text = '';
-  //     phoneController.text = '';
-  //     userAgeController.text = '';
-  //     fullNameController.text = '';
-  //     userLastNameController.text = '';
-  //     userFirstNameController.text = '';
-  //     userNameController.text = '';
-  //   });
-  // }
-
-
 
 }

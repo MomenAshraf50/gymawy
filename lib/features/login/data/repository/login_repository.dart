@@ -5,7 +5,6 @@ import '../../domain/entities/log_in_entity.dart';
 import '../../domain/repository/login_base_rebository.dart';
 import '../data_source/login_remote_data_source.dart';
 
-
 typedef Call = Future<LoginEntity> Function();
 
 class LoginRepoImplementation extends LogInBaseRepository {
@@ -23,8 +22,6 @@ class LoginRepoImplementation extends LogInBaseRepository {
       return Right(loginData);
     } on ServerException catch (e) {
       return Left(ServerFailure(
-        // error: e.error,
-        // code: e.code,
         message: e.message,
       ));
     }

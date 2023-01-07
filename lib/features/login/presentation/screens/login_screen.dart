@@ -19,7 +19,6 @@ import 'package:gymawy/features/login/presentation/controller/login_states.dart'
 import 'package:gymawy/features/login/presentation/screens/forget_password_screen.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/choose_your_type_screen.dart';
-
 import '../../../../core/di/injection.dart';
 
 
@@ -38,7 +37,6 @@ class LoginScreen extends StatelessWidget {
           sl<CacheHelper>().put('token', state.token);
           sl<CacheHelper>().put('userId', state.id);
           sl<CacheHelper>().put('isCoach', state.isCoach);
-
           userId = state.id;
           token = state.token;
           isCoachLogin = state.isCoach;

@@ -35,15 +35,6 @@ void main() async
 
   await di.init();
    bool isRtl = false;
-  // await sl<CacheHelper>().get('isRtl').then((value) {
-  //   debugPrint('rtl ------------- $value');
-  //   if (value != null) {
-  //     isRtl = value;
-  //   }
-  //
-  //   isArabic = isRtl;
-  // });
-  //token = null;
   token = await sl<CacheHelper>().get('token');
   userId = await sl<CacheHelper>().get('userId');
   isCoachLogin = await sl<CacheHelper>().get('isCoach');
@@ -116,8 +107,6 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             themeMode:ThemeMode.light,
             theme: AppBloc.get(context).lightTheme,
-            // initialRoute: Routes.splash,
-            // routes: Routes.routes,
             home: widget,
           );
         },

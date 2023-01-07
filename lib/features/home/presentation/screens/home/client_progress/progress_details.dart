@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
-import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/back_button.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_latest_client_activity.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-
 import '../../../../../../core/util/resources/assets.gen.dart';
 import '../../../widgets/build_day_progress.dart';
 
@@ -75,127 +71,6 @@ class ProgressDetailsScreen extends StatelessWidget {
                     },
                      itemCount: 10,
                 ),
-
-
-                // Row(
-                //   crossAxisAlignment: CrossAxisAlignment.end,
-                //   children: [
-                //     Expanded(
-                //       child: Column(
-                //         children: [
-                //           Container(
-                //             height: 10.h,
-                //             width: 6.w,
-                //             decoration: BoxDecoration(
-                //               gradient: const LinearGradient(
-                //                  end: Alignment.bottomCenter,
-                //                   begin: Alignment.topCenter,
-                //                   colors:
-                //                   [
-                //                   Color.fromARGB(255, 255, 185, 145)  ,
-                //                   ColorsManager.mainColor
-                //                   ]
-                //               ),
-                //               borderRadius: BorderRadius.circular(10.rSp),
-                //             ),
-                //           ),
-                //           const myText(title: 'Sat', style: Style.extraSmall)
-                //         ],
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: Column(
-                //         children: [
-                //           Container(
-                //             height: 10.h,
-                //             width: 6.w,
-                //             decoration: BoxDecoration(
-                //               color: ColorsManager.mainColor,
-                //               borderRadius: BorderRadius.circular(10.rSp),
-                //             ),
-                //           ),
-                //           const myText(title: 'Sat', style: Style.extraSmall)
-                //         ],
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: Column(
-                //         children: [
-                //           Container(
-                //             height: 10.h,
-                //             width: 6.w,
-                //             decoration: BoxDecoration(
-                //               color: ColorsManager.mainColor,
-                //               borderRadius: BorderRadius.circular(10.rSp),
-                //             ),
-                //           ),
-                //           const myText(title: 'Sat', style: Style.extraSmall)
-                //         ],
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: Column(
-                //         children: [
-                //           Container(
-                //             height: 10.h,
-                //             width: 6.w,
-                //             decoration: BoxDecoration(
-                //               color: ColorsManager.mainColor,
-                //               borderRadius: BorderRadius.circular(10.rSp),
-                //             ),
-                //           ),
-                //           const myText(title: 'Sat', style: Style.extraSmall)
-                //         ],
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: Column(
-                //         children: [
-                //           Container(
-                //             height: 10.h,
-                //             width: 6.w,
-                //             decoration: BoxDecoration(
-                //               color: ColorsManager.mainColor,
-                //               borderRadius: BorderRadius.circular(10.rSp),
-                //             ),
-                //           ),
-                //           const myText(title: 'Sat', style: Style.extraSmall)
-                //         ],
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: Column(
-                //         children: [
-                //           Container(
-                //             height: 10.h,
-                //             width: 6.w,
-                //             decoration: BoxDecoration(
-                //               color: ColorsManager.mainColor,
-                //               borderRadius: BorderRadius.circular(10.rSp),
-                //             ),
-                //           ),
-                //           const myText(title: 'Sat', style: Style.extraSmall)
-                //         ],
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: Column(
-                //         mainAxisAlignment: MainAxisAlignment.end,
-                //         children: [
-                //           Container(
-                //             height: 7.h,
-                //             width: 6.w,
-                //             decoration: BoxDecoration(
-                //               color: ColorsManager.mainColor,
-                //               borderRadius: BorderRadius.circular(10.rSp),
-                //             ),
-                //           ),
-                //           const myText(title: 'Sat', style: Style.extraSmall)
-                //         ],
-                //       ),
-                //     ),
-                //   ],
-                // )
               ],
             ),
           ),

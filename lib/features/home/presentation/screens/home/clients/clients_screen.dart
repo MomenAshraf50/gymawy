@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/back_button.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/features/home/presentation/screens/home/client_progress/progress_details.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_client_progress_item.dart';
 
 import 'clients_details_screen.dart';

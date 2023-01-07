@@ -1,6 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
-
 import '../../../../core/util/resources/colors_manager.dart';
 
 Widget leftTitleWidgets(double value, TitleMeta meta) {

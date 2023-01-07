@@ -7,10 +7,9 @@ import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/add_exercise_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/add_meal_screen.dart';
-import 'package:gymawy/features/home/presentation/widgets/build_latest_client_activity.dart';
 import '../../../../../../core/util/resources/assets.gen.dart';
 import '../../../widgets/build_client_details_screen_items.dart';
-import '../../../widgets/build_day_progress.dart';
+
 class ClientDetailsScreen extends StatelessWidget {
   ClientDetailsScreen({Key? key}) : super(key: key);
 
@@ -46,8 +45,6 @@ class ClientDetailsScreen extends StatelessWidget {
     '90',
     '90',
   ];
-
-
 
   @override
   Widget build(BuildContext context) {

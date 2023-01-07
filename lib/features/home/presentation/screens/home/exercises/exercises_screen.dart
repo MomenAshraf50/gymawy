@@ -2,9 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
-import 'package:gymawy/core/util/widgets/back_button.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/features/home/presentation/screens/home_layout.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_exercise_item.dart';
 
 import 'exercise_type.dart';

@@ -19,11 +19,9 @@ class SignOutState extends HomeStates{}
 class UpdateCoachLoadingState extends HomeStates{}
 class UpdateCoachSuccessState extends HomeStates{
   UpdateCoachEntity entity;
-
   UpdateCoachSuccessState(this.entity);
 }
 class UpdateCoachErrorState extends HomeStates{
   final String failure;
-
   UpdateCoachErrorState(this.failure);
 }

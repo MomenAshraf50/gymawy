@@ -7,26 +7,7 @@ RichText buildRichText(String title,context) {
         TextSpan(
           text: title,
           style: Theme.of(context).textTheme.displayMedium,
-          // recognizer: TapGestureRecognizer()..onTap = () {
-          //   // Single tapped.
-          // },
         ),
-        // TextSpan(
-        //     text: title,
-        //     style: Theme.of(context).textTheme.displayMedium!.copyWith(
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //     // recognizer:  DoubleTapGestureRecognizer()..onDoubleTap = () {
-        //     //   // Double tapped.
-        //     // }
-        // ),
-        // TextSpan(
-        //   text: ' Long press',
-        //   style: TextStyle(color: Colors.blue[300]),
-        //   // recognizer: LongPressGestureRecognizer()..onLongPress = () {
-        //   //   // Long Pressed.
-        //   // },
-        // ),
       ],
     ),
   );

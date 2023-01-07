@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
@@ -10,7 +9,6 @@ Widget buildClientDetailsScreenItems(
   required String icons,
   required String title,
   required String titleResult,
-
 })
 {
   return Card(

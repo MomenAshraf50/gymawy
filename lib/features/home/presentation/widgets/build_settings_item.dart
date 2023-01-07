@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
@@ -6,7 +5,6 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/screens/settings/notifications_screen.dart';
-
 import '../../../../core/util/resources/colors_manager.dart';
 import '../controller/home_cubit.dart';
 

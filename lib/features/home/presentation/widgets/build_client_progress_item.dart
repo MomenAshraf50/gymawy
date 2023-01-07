@@ -36,13 +36,10 @@ Widget buildClientProgressItem(
               // Defaults to 0.5.
               valueColor:
               const AlwaysStoppedAnimation(ColorsManager.mainColor),
-              // Defaults to the current Theme's accentColor.
               backgroundColor: Colors.white,
-              // Defaults to the current Theme's backgroundColor.
               borderColor: ColorsManager.mainColor,
               borderWidth: 5.0,
               direction: Axis.vertical,
-              // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
               center: myText(
                 title: AppString.progressAmount,
                 style: Style.extraSmall,
@@ -54,7 +51,6 @@ Widget buildClientProgressItem(
               Icons.arrow_forward_ios_outlined,
               color: Color.fromARGB(255, 208, 208, 208),
           )
-
         ],
       ),
     ),

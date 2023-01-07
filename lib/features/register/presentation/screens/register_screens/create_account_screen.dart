@@ -262,7 +262,7 @@ class CreateAccountScreen extends StatelessWidget {
                         text: AppString.next,
                         onPressed: () {
                           userPicRegister= registerCubit.imageFile;
-                          userNameRegister = registerCubit.phoneController.text;
+                          userNameRegister = registerCubit.userNameController.text;
                           firstNameRegister = registerCubit.userFirstNameController.text;
                           lastNameRegister = registerCubit.userLastNameController.text;
                           fullNameRegister = registerCubit.fullNameController.text;
@@ -273,10 +273,6 @@ class CreateAccountScreen extends StatelessWidget {
                           confirmPasswordRegister = registerCubit.confirmPasswordController.text;
                           currentWeightRegister = int.parse(registerCubit.currentWeightController.text);
                           currentTallRegister = int.parse(registerCubit.currentTallController.text);
-
-                          // registerCubit.isAccept
-                          //     ? registerCubit.nextPage(true, context)
-                          //     : null;
                           registerCubit.nextPage(true, context,);
                         }),
                   ],

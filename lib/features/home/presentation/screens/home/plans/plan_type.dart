@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/back_button.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/screens/home/exercises/add_exercise.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_type.dart';
 
@@ -40,7 +37,6 @@ class PlanType extends StatelessWidget {
                   itemBuilder: (context, index) => InkWell(
                     child: buildPlansTypeItems(),
                     onTap: () {
-                      //navigateTo(context, const ExerciseType());
                       debugPrintFullText('$index');
                     },
                   ),

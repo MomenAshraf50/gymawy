@@ -18,30 +18,14 @@ class RegisterGetCountryState extends RegisterStates{}
 class RegisterGetCitiesState extends RegisterStates{}
 class RegisterPageFatControllerState extends RegisterStates{}
 class RegisterGetFatTextState extends RegisterStates{}
-
 class RegisterLoadingState extends RegisterStates {}
-
 class RegisterSuccessState extends RegisterStates {
   final String token;
   RegisterSuccessState({required this.token});
 }
-
 class RegisterErrorState extends RegisterStates {
   final String failure;
   RegisterErrorState({required this.failure});
 }
-
-// class RegisterCoachLoadingState extends RegisterStates {}
-//
-// class RegisterCoachSuccessState extends RegisterStates {
-//   final String token;
-//   RegisterCoachSuccessState({required this.token});
-// }
-//
-// class RegisterCoachErrorState extends RegisterStates {
-//   final String failure;
-//   RegisterCoachErrorState({required this.failure});
-// }
-
 
 

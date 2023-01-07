@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
@@ -12,7 +9,6 @@ import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/loadingPage.dart';
 import '../../../../../core/util/widgets/myButton.dart';
-import '../../../../../core/util/widgets/myElevatedButton.dart';
 import '../../../../../core/util/widgets/my_icon_button.dart';
 import '../../controller/register_cubit.dart';
 import '../../controller/register_states.dart';

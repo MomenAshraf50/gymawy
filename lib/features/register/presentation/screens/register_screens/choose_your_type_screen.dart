@@ -8,7 +8,6 @@ import 'package:gymawy/features/register/presentation/controller/register_cubit.
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
 import 'package:gymawy/features/register/presentation/screens/register_layout.dart';
 import 'package:gymawy/features/register/presentation/widgets/build_card_widget.dart';
-
 import '../../../../../core/util/resources/constants_manager.dart';
 
 class ChooseYourTypeScreen extends StatelessWidget {

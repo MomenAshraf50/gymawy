@@ -1,6 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
-
 import '../../../../../../core/util/resources/colors_manager.dart';
 
 Widget bottomTitleWidgets(double value, TitleMeta meta) {
@@ -36,7 +35,6 @@ Widget bottomTitleWidgets(double value, TitleMeta meta) {
       text = const Text('', style: style);
       break;
   }
-
   return SideTitleWidget(
     axisSide: meta.axisSide,
     child: text,

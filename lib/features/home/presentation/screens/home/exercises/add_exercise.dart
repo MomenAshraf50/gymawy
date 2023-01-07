@@ -44,9 +44,7 @@ class AddExerciseScreen extends StatelessWidget {
                           icon: Icons.remove,
                           onPressed: () {}
                       ),
-
                     ],
-
                   ),
                   Expanded(
                     child: SingleChildScrollView(
@@ -119,7 +117,6 @@ class AddExerciseScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),

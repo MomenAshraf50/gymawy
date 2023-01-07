@@ -9,7 +9,6 @@ import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/myButton.dart';
-import '../../../../../core/util/widgets/myElevatedButton.dart';
 import '../../../../../core/util/widgets/myTextFill.dart';
 import '../../controller/register_cubit.dart';
 
@@ -124,27 +123,6 @@ class SocialMediaScreen extends StatelessWidget {
                       youTubeLink: youtubeLinkRegister!,
                       tikTokLink: tiktokLinkRegister!,
                     );
-                    // registerCubit.registerCoach(
-                    //     email: emailRegister!,
-                    //     password: passwordRegister!,
-                    //     bio: '',
-                    //     city: '',
-                    //     confirmPassword: confirmPasswordRegister!,
-                    //     country: countryRegister!,
-                    //     firstName: firstNameRegister!,
-                    //     fullName: fullNameRegister!,
-                    //     gander: genderRegister!,
-                    //     governorate: governmentRegister!,
-                    //     lastName: lastNameRegister!,
-                    //     phoneNumber: phoneRegister!,
-                    //     profilePicture: userPicRegister!,
-                    //     userName: userNameRegister!,
-                    //     facebookLink: facebookLinkRegister!,
-                    //     instagramLink: instagramLinkRegister!,
-                    //     youtubeLink: youtubeLinkRegister!,
-                    //     tiktokLink: tiktokLinkRegister!,
-                    //     fixedPrice: fixedPriceRegister!
-                    // );
                   },
                 ),
               ],

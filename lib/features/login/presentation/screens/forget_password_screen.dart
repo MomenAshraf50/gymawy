@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
@@ -8,7 +7,6 @@ import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
 import 'package:gymawy/features/login/presentation/screens/recovery_password_screen.dart';
-
 import '../../../../core/util/resources/colors_manager.dart';
 import '../../../../core/util/widgets/myButton.dart';
 
@@ -60,11 +58,6 @@ class ForgetPasswordScreen extends StatelessWidget {
                       onPressed: controller.text.isNotEmpty ? null : () {
                         navigateTo(context, const RecoveryPasswordScreen());
                       }),
-                  // myElevatedButton(
-                  //     text: AppString.send,
-                  //     onPressed: controller.text.isNotEmpty ? null : (){
-                  //   navigateTo(context, const RecoveryPasswordScreen());
-                  // })
                 ],
               ),
             ),

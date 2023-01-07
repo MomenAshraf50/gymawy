@@ -1,18 +1,6 @@
-// import 'package:dartz/dartz.dart';
-// import 'package:gymawy/core/error/failures.dart';
-// import '../entities/register_entity.dart';
-// import '../usecase/register_usecase.dart';
-//
-// abstract class RegisterBaseRepository{
-//
-//   Future<Either<Failure,Register>> register(RegisterParameters registerParameters);
-// }
-
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:gymawy/features/register/domain/entities/register_entity.dart';
-
 import '../../../../core/error/failures.dart';
 
 abstract class RegisterBaseRepository {

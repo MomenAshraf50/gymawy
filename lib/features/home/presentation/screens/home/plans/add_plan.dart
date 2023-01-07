@@ -10,9 +10,7 @@ import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
-import 'package:gymawy/features/home/presentation/screens/home/exercises/add_exercise.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/plans_screen.dart';
-
 
 class AddPlan extends StatelessWidget {
   const AddPlan({Key? key}) : super(key: key);

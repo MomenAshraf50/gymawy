@@ -1,15 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
-import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/resources/goal_data_static.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/core/util/widgets/myElevatedButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/login/presentation/screens/login_screen.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
@@ -159,22 +154,6 @@ class GoalScreen extends StatelessWidget {
                         profilePicture: userPicRegister!,
                         userName: userNameRegister!,
                     );
-                    debugPrintFullText(emailRegister!);
-                    debugPrintFullText(passwordRegister!);
-                    debugPrintFullText(confirmPasswordRegister!);
-                    debugPrintFullText(ageRegister!);
-                    debugPrintFullText(userNameRegister!);
-                    debugPrintFullText(firstNameRegister!);
-                    debugPrintFullText(fullNameRegister!);
-                    debugPrintFullText(lastNameRegister!);
-                    debugPrintFullText(phoneRegister!);
-                    debugPrintFullText(userPicRegister!.toString());
-                    debugPrintFullText(genderRegister!);
-                    debugPrintFullText(countryRegister!);
-                    debugPrintFullText(governmentRegister!);
-                    debugPrintFullText(bodyFatRegister!);
-                    debugPrintFullText(currentWeightRegister.toString());
-                    debugPrintFullText(currentTallRegister!.toString());
                   },
                 ),
               ),

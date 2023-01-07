@@ -7,7 +7,6 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/resources/trainig_image.dart';
-import 'package:gymawy/core/util/widgets/back_button.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 
@@ -177,7 +176,6 @@ class ExerciseType extends StatelessWidget {
                           textOnly: true,
                           text: AppString.complete,
                           onPressed: () {
-                            // navigateTo(context, PinPage());
                           }),
                       verticalSpace(10.h),
                     ],
