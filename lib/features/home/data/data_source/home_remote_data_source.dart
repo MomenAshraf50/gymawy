@@ -99,7 +99,8 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     required String search,
   }) async {
     final Response f = await dioHelper.get(
-      url: registerCoachEndPoint,
+      url: isCoachFilter == false? registerEndPoint : registerCoachEndPoint,
+      token: isCoachFilter == false ? token: null,
       query: {
         'search': search,
       },
