@@ -1,89 +1,3 @@
-// import 'dart:io';
-// import 'package:dartz/dartz.dart';
-// import 'package:gymawy/core/error/exceptions.dart';
-// import '../../../../core/error/failures.dart';
-// import '../../domain/entities/register_entity.dart';
-// import '../../domain/repository/register_base_rebository.dart';
-// import '../data_source/register_remote_data_source.dart';
-//
-// typedef CallRegister = Future<RegisterEntity> Function();
-//
-// class RegisterRepoImplementation extends RegisterRepository
-// {
-//   final RegisterBaseRemoteDataSource registerDataSource;
-//   RegisterRepoImplementation({
-//    required this.registerDataSource
-// });
-//
-//   Future<Either<Failure,RegisterEntity>> fetchRegister(
-//         CallRegister mainMethod,
-//       ) async {
-//     try {
-//       final registerData = await mainMethod();
-//       return Right(registerData);
-//     } on ServerException catch (e)
-//     {
-//       return Left(
-//           ServerFailure(
-//         message: e.message,
-//         // error: e.error,
-//         // code: e.code,
-//       )
-//       );
-//     }
-//   }
-//
-//   @override
-//   Future<Either<Failure, RegisterEntity>> register(
-//       {
-//         required String userName,
-//         required String firstName,
-//         required String lastName,
-//         required String fullName,
-//         required String email,
-//         required File profilePicture,
-//         required String bio,
-//         required String phoneNumber,
-//         required String gander,
-//         required String country,
-//         required String governorate,
-//         required String city,
-//         required String password,
-//         required String confirmPassword,
-//         required String age,
-//         required int currentWeight,
-//         required int currentTall,
-//         required int bodyFat,
-//       }) async {
-//     return await fetchRegister(()
-//     {
-//       return registerDataSource.register(
-//         userName: userName,
-//         password: password,
-//         confirmPassword: confirmPassword,
-//         firstName: firstName,
-//         fullName: fullName,
-//         lastName: lastName,
-//         email: email,
-//         phoneNumber: phoneNumber,
-//         age: age,
-//         bio: bio,
-//         bodyFat: bodyFat,
-//         city: city,
-//         country: country,
-//         currentTall: currentTall,
-//         currentWeight: currentWeight,
-//         gander: gander,
-//         governorate: governorate,
-//         profilePicture: profilePicture,
-//       );
-//     });
-//   }
-//
-//
-//
-// }
-
 import 'dart:io';
 import 'package:dartz/dartz.dart';
 import '../../../../core/error/exceptions.dart';
@@ -91,7 +5,6 @@ import '../../../../core/error/failures.dart';
 import '../../domain/entities/register_entity.dart';
 import '../../domain/repository/register_base_rebository.dart';
 import '../data_source/register_remote_data_source.dart';
-
 
 typedef Call = Future<RegisterEntity> Function();
 
@@ -110,8 +23,6 @@ class RegisterRepoImplementation extends RegisterBaseRepository {
       return Right(registerData);
     } on ServerException catch (e) {
       return Left(ServerFailure(
-        // error: e.error,
-        // code: e.code,
         message: e.message,
       ));
     }

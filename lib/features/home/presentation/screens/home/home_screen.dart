@@ -107,6 +107,12 @@ class HomeClientScreen extends StatelessWidget {
                             controller: homeCubit.searchController,
                             hint: AppString.search,
                             iconPrefix: Icons.search,
+                            onChanged: (value)
+                            {
+                              homeCubit.search(
+                                  search: homeCubit.searchController.text
+                              );
+                            },
                           ),
                         ),
                         horizontalSpace(1.w),

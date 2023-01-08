@@ -5,11 +5,11 @@ import 'package:equatable/equatable.dart';
 import 'package:gymawy/core/error/failures.dart';
 import 'package:gymawy/core/usecase/use_case.dart';
 import 'package:gymawy/features/home/domain/entities/update_coach_profile_entity.dart';
-import 'package:gymawy/features/home/domain/repository/home_update_base_repository.dart';
+import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
 
 class UpdateCoachProfilePicture
     implements UseCase<UpdateCoachEntity, UpdateCoachProfilePictureParams> {
-  final HomeUpdateBaseRepository repository;
+  final HomeBaseRepository repository;
 
   UpdateCoachProfilePicture(this.repository);
 

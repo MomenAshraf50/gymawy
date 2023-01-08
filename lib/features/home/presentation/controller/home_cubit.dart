@@ -15,6 +15,7 @@ import '../../../../core/network/local/cache_helper.dart';
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../login/presentation/screens/login_screen.dart';
+import '../../domain/usecase/search_usecase.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/profile/profile_client_screen.dart';
 import '../screens/profile/profile_coach_screen.dart';
@@ -26,15 +27,18 @@ class HomeCubit extends Cubit<HomeStates> {
   final UpdateCoachProfilePicture _updateCoachProfilePicture;
   final UpdateCoachProfile _updateCoachProfile;
   final UpdateCoachSocialLinks _updateCoachSocialLinks;
+  final SearchUseCase _searchUseCase;
 
   HomeCubit({
     required UpdateCoachProfilePicture updateCoachProfilePicture,
     required UpdateCoachProfile updateCoachProfile,
     required UpdateCoachSocialLinks updateCoachSocialLinks,
+    required SearchUseCase searchUseCase,
   })
       : _updateCoachProfilePicture = updateCoachProfilePicture,
         _updateCoachProfile = updateCoachProfile,
         _updateCoachSocialLinks = updateCoachSocialLinks,
+        _searchUseCase = searchUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -273,6 +277,28 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(UpdateCoachSuccessState(data));
     });
   }
+
+  dynamic results;
+  void search({
+    required search,
+  }) async {
+    emit(SearchLoadingState());
+    final result = await _searchUseCase(SearchParams(
+      search: search,
+    ));
+
+    result.fold((failure) {
+      emit(SearchErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      results = data;
+      emit(SearchSuccessState(
+          data,
+      ));
+      debugPrintFullText(results.toString());
+    });
+  }
+
+
 }
 
 class Suggestions extends Equatable {
