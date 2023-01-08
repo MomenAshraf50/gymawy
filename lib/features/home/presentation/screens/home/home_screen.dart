@@ -153,106 +153,104 @@ class HomeClientScreen extends StatelessWidget {
                     if(homeCubit.results != null)
                     SizedBox(
                         height: 20.h,
-                        child: Expanded(
-                          child: BlocBuilder<HomeCubit,HomeStates>(
-                            builder: (context, state) {
-                              return ListView.builder(
-                                itemBuilder: (context, index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      navigateTo(context, const SearchResultScreen());
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 1.h),
-                                      child: Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: const Color.fromARGB(255, 251, 239, 233),
-                                          borderRadius: BorderRadius.circular(10.rSp),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(10.0.rSp),
-                                          child: Row(
-                                            children: [
-                                              CircleAvatar(
-                                                radius: 33.rSp,
-                                                backgroundImage: NetworkImage(
-                                                    homeCubit.results![index].profilePicture!
+                        child: BlocBuilder<HomeCubit,HomeStates>(
+                          builder: (context, state) {
+                            return ListView.builder(
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    navigateTo(context, const SearchResultScreen());
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 1.h),
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromARGB(255, 251, 239, 233),
+                                        borderRadius: BorderRadius.circular(10.rSp),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(10.0.rSp),
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 33.rSp,
+                                              backgroundImage: NetworkImage(
+                                                  homeCubit.results![index].profilePicture!
+                                              ),
+                                            ),
+                                            horizontalSpace(2.w),
+                                            Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                myText(
+                                                  title: homeCubit.results![index].userName!,
+                                                  //AppString.resultSearchName,
+                                                  style: Style.extraSmall,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 14.rSp,
                                                 ),
-                                              ),
-                                              horizontalSpace(2.w),
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                                children: [
-                                                  myText(
-                                                    title: homeCubit.results![index].userName,
-                                                    //AppString.resultSearchName,
-                                                    style: Style.extraSmall,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 14.rSp,
-                                                  ),
-                                                  // verticalSpace(0.5.h),
-                                                  // myText(
-                                                  //   title: AppString.resultSearchType,
-                                                  //   style: Style.extraSmall,
-                                                  //   fontWeight: FontWeight.w400,
-                                                  //   fontSize: 14.rSp,
-                                                  // ),
-                                                  verticalSpace(0.5.h),
-                                                  Row(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: [
-                                                      // Icon(
-                                                      //   Icons.star,
-                                                      //   color: Colors.yellow,
-                                                      //   size: 20.rSp,
-                                                      // ),
-                                                      // Icon(
-                                                      //   Icons.star,
-                                                      //   color: Colors.yellow,
-                                                      //   size: 20.rSp,
-                                                      // ),
-                                                      // Icon(
-                                                      //   Icons.star,
-                                                      //   color: Colors.yellow,
-                                                      //   size: 20.rSp,
-                                                      // ),
-                                                      // Icon(
-                                                      //   Icons.star,
-                                                      //   color: Colors.yellow,
-                                                      //   size: 20.rSp,
-                                                      // ),
-                                                      // horizontalSpace(4.w),
-                                                      Icon(
-                                                        Icons.location_on,
-                                                        size: 15.rSp,
-                                                      ),
-                                                      myText(
-                                                        title: homeCubit.results![index].location!,
-                                                        //AppString.resultSearchLocation,
-                                                        style: Style.extraSmall,
-                                                        fontWeight: FontWeight.w400,
-                                                        fontSize: 14.rSp,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                                // verticalSpace(0.5.h),
+                                                // myText(
+                                                //   title: AppString.resultSearchType,
+                                                //   style: Style.extraSmall,
+                                                //   fontWeight: FontWeight.w400,
+                                                //   fontSize: 14.rSp,
+                                                // ),
+                                                verticalSpace(0.5.h),
+                                                Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    // Icon(
+                                                    //   Icons.star,
+                                                    //   color: Colors.yellow,
+                                                    //   size: 20.rSp,
+                                                    // ),
+                                                    // Icon(
+                                                    //   Icons.star,
+                                                    //   color: Colors.yellow,
+                                                    //   size: 20.rSp,
+                                                    // ),
+                                                    // Icon(
+                                                    //   Icons.star,
+                                                    //   color: Colors.yellow,
+                                                    //   size: 20.rSp,
+                                                    // ),
+                                                    // Icon(
+                                                    //   Icons.star,
+                                                    //   color: Colors.yellow,
+                                                    //   size: 20.rSp,
+                                                    // ),
+                                                    // horizontalSpace(4.w),
+                                                    Icon(
+                                                      Icons.location_on,
+                                                      size: 15.rSp,
+                                                    ),
+                                                    myText(
+                                                      title: homeCubit.results![index].location!,
+                                                      //AppString.resultSearchLocation,
+                                                      style: Style.extraSmall,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: 14.rSp,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                  );
-                                },
-                                physics: const BouncingScrollPhysics(),
-                                itemCount: 3,
-                              ) ;
-                            },
-                          ),
+                                  ),
+                                );
+                              },
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: homeCubit.results!.length,
+                            ) ;
+                          },
                         ),
                       ),
                     verticalSpace(2.h),
