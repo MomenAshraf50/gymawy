@@ -2,12 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:gymawy/core/network/remote/api_endpoints.dart';
 import 'package:gymawy/core/network/remote/dio_helper.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/data/models/update_coach_model.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 
-abstract class UpdateCoachBaseDataSource {
+abstract class HomeBaseDataSource {
   Future<UpdateCoachModel> updateCoachProfile(
       {required UpdateCoachProfileParams params});
 
@@ -16,12 +17,18 @@ abstract class UpdateCoachBaseDataSource {
 
   Future<UpdateCoachModel> updateCoachSocialLinks(
       {required UpdateCoachSocialLinksParams params});
+
+  Future<SearchModel> search(
+      {
+        required String search,
+      });
+
 }
 
-class UpdateCoachDataSourceImpl implements UpdateCoachBaseDataSource {
+class HomeDataSourceImpl implements HomeBaseDataSource {
   final DioHelper dioHelper;
 
-  UpdateCoachDataSourceImpl({
+  HomeDataSourceImpl({
     required this.dioHelper,
   });
 
@@ -73,5 +80,18 @@ class UpdateCoachDataSourceImpl implements UpdateCoachBaseDataSource {
       },
     );
     return UpdateCoachModel.fromJson(f.data);
+  }
+
+  @override
+  Future<SearchModel> search({
+    required String search,
+  }) async {
+    final Response f = await dioHelper.get(
+      url: registerCoachEndPoint,
+      query: {
+        'search': search,
+      },
+    );
+    return SearchModel.fromJson(f.data);
   }
 }

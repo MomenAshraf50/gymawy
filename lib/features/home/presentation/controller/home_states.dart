@@ -1,5 +1,7 @@
 import 'package:gymawy/features/home/domain/entities/update_coach_profile_entity.dart';
 
+import '../../domain/entities/search_entity.dart';
+
 abstract class HomeStates{}
 
 class HomeInitialState extends HomeStates{}
@@ -26,4 +28,15 @@ class UpdateCoachErrorState extends HomeStates{
   final String failure;
 
   UpdateCoachErrorState(this.failure);
+}
+
+class SearchLoadingState extends HomeStates{}
+class SearchSuccessState extends HomeStates{
+  SearchEntity entity;
+  SearchSuccessState(this.entity);
+}
+class SearchErrorState extends HomeStates{
+  final String failure;
+
+  SearchErrorState(this.failure);
 }

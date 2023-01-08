@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:gymawy/features/home/data/data_source/update_remote_data_source.dart';
-import 'package:gymawy/features/home/data/repository/home_update_repository.dart';
-import 'package:gymawy/features/home/domain/repository/home_update_base_repository.dart';
+import 'package:gymawy/features/home/data/data_source/home_remote_data_source.dart';
+import 'package:gymawy/features/home/data/repository/home_repository.dart';
+import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
@@ -13,6 +13,7 @@ import 'package:gymawy/features/login/domain/usecase/log_in_usecase.dart';
 import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../features/home/domain/usecase/search_usecase.dart';
 import '../../features/register/data/data_source/register_remote_data_source.dart';
 import '../../features/register/data/repository/register_repository.dart';
 import '../../features/register/domain/repository/register_base_rebository.dart';
@@ -38,6 +39,7 @@ Future<void> init() async {
         updateCoachSocialLinks: sl(),
         updateCoachProfilePicture: sl(),
         updateCoachProfile: sl(),
+        searchUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -55,8 +57,8 @@ Future<void> init() async {
     () => RegisterRepoImplementation(remoteDataSource: sl()),
   );
 
-  sl.registerLazySingleton<HomeUpdateBaseRepository>(
-    () => HomeUpdateRepository(remoteDataSource: sl()),
+  sl.registerLazySingleton<HomeBaseRepository>(
+    () => HomeRepository(remoteDataSource: sl()),
   );
 
   // Use cases
@@ -65,6 +67,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UpdateCoachProfilePicture(sl()));
   sl.registerLazySingleton(() => UpdateCoachProfile(sl()));
   sl.registerLazySingleton(() => UpdateCoachSocialLinks(sl()));
+  sl.registerLazySingleton(() => SearchUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(
@@ -75,8 +78,8 @@ Future<void> init() async {
     () => RegisterRemoteDataSourceImpl(dioHelper: sl()),
   );
 
-  sl.registerLazySingleton<UpdateCoachBaseDataSource>(
-    () => UpdateCoachDataSourceImpl(dioHelper: sl()),
+  sl.registerLazySingleton<HomeBaseDataSource>(
+    () => HomeDataSourceImpl(dioHelper: sl()),
   );
 
   // Core
