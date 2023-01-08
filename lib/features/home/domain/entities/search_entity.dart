@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
 class SearchEntity extends Equatable {
-  String userName;
-  // String userId;
+  String? userName;
+  int? userId;
   String? profilePicture;
   String? location;
 
   SearchEntity({
-    // required this.userId,
+    required this.userId,
     required this.userName,
     required this.profilePicture,
     required this.location,
@@ -18,6 +18,6 @@ class SearchEntity extends Equatable {
     userName,
     profilePicture,
     location,
-    // userId
+    userId
   ];
 }

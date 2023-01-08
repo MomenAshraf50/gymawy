@@ -115,7 +115,7 @@ class SearchScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                         children: [
                                           myText(
-                                            title: homeCubit.results![index].userName,
+                                            title: homeCubit.results![index].userName!,
                                             //AppString.resultSearchName,
                                             style: Style.extraSmall,
                                             fontWeight: FontWeight.w400,
@@ -177,7 +177,7 @@ class SearchScreen extends StatelessWidget {
                           );
                         },
                         physics: const BouncingScrollPhysics(),
-                        itemCount: 3,
+                        itemCount: homeCubit.results!.length,
                       ) ;
                     },
                   ),
