@@ -20,7 +20,7 @@ class ChangeCurrentStepState extends HomeStates{}
 class SignOutState extends HomeStates{}
 class UpdateCoachLoadingState extends HomeStates{}
 class UpdateCoachSuccessState extends HomeStates{
-  UpdateCoachEntity entity;
+  UpdateEntity entity;
 
   UpdateCoachSuccessState(this.entity);
 }
@@ -32,8 +32,8 @@ class UpdateCoachErrorState extends HomeStates{
 
 class SearchLoadingState extends HomeStates{}
 class SearchSuccessState extends HomeStates{
-  SearchEntity entity;
-  SearchSuccessState(this.entity);
+  List<SearchEntity> searchList;
+  SearchSuccessState(this.searchList);
 }
 class SearchErrorState extends HomeStates{
   final String failure;

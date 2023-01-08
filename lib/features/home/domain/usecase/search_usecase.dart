@@ -5,13 +5,13 @@ import '../../../../core/usecase/use_case.dart';
 import '../entities/search_entity.dart';
 import '../repository/home_base_repository.dart';
 
-class SearchUseCase implements UseCase<SearchEntity, SearchParams> {
+class SearchUseCase implements UseCase<List<SearchEntity>, SearchParams> {
   final HomeBaseRepository repository;
 
   SearchUseCase(this.repository);
 
   @override
-  Future<Either<Failure, SearchEntity>> call(
+  Future<Either<Failure, List<SearchEntity>>> call(
       SearchParams params) async {
     return await repository.search(
       search: params.search,

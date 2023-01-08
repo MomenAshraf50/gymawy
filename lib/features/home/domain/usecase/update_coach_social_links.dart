@@ -1,18 +1,18 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:gymawy/features/home/domain/entities/update_coach_profile_entity.dart';
+import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/use_case.dart';
-import '../repository/home_base_repository.dart';
 
 class UpdateCoachSocialLinks
-    implements UseCase<UpdateCoachEntity, UpdateCoachSocialLinksParams> {
+    implements UseCase<UpdateEntity, UpdateCoachSocialLinksParams> {
   final HomeBaseRepository repository;
 
   UpdateCoachSocialLinks(this.repository);
 
   @override
-  Future<Either<Failure, UpdateCoachEntity>> call(
+  Future<Either<Failure, UpdateEntity>> call(
       UpdateCoachSocialLinksParams params) async {
     return await repository.updateCoachSocialLinks(
       params: params,

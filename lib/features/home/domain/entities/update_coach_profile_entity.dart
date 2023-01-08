@@ -1,39 +1,51 @@
 import 'package:equatable/equatable.dart';
 
-class UpdateCoachEntity extends Equatable {
+class UpdateEntity extends Equatable {
   String userName;
+  String? userId;
   String fullName;
   String profilePicture;
   String bio;
   String phoneNumber;
   String gender;
-  double fixedPrice;
-  String facebookLink;
-  String instagramLink;
-  String tiktokLink;
-  String youtubeLink;
+  int? age;
+  int? bodyFat;
+  double? currentWeight;
+  double? currentTall;
+  double? fixedPrice;
+  String? goal;
+  String? facebookLink;
+  String? instagramLink;
+  String? tiktokLink;
+  String? youtubeLink;
   String country;
   String governorate;
   String city;
-  bool verification;
+  bool? verification;
 
 
-  UpdateCoachEntity({
+  UpdateEntity({
     required this.userName,
     required this.fullName,
     required this.profilePicture,
     required this.bio,
     required this.phoneNumber,
     required this.gender,
-    required this.fixedPrice,
-    required this.facebookLink,
-    required this.instagramLink,
-    required this.tiktokLink,
-    required this.youtubeLink,
+    this.fixedPrice,
+    this.facebookLink,
+    this.instagramLink,
+    this.tiktokLink,
+    this.youtubeLink,
     required this.country,
     required this.governorate,
     required this.city,
-    required this.verification
+    this.verification,
+    this.userId,
+    this.age,
+    this.bodyFat,
+    this.currentTall,
+    this.currentWeight,
+    this.goal
 });
 
   @override

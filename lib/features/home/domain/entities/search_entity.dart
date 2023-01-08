@@ -1,14 +1,20 @@
 import 'package:equatable/equatable.dart';
 
 class SearchEntity extends Equatable {
-  List results;
+  String userName;
+  String userId;
+  String profilePicture;
 
   SearchEntity({
-    required this.results,
+    required this.userId,
+    required this.userName,
+    required this.profilePicture,
   });
 
   @override
   List<Object?> get props => [
-    results,
+    userName,
+    profilePicture,
+    userId
   ];
 }

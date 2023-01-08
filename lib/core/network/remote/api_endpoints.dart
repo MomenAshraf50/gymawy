@@ -4,5 +4,6 @@ const String baseUrl = 'http://gemawy.pythonanywhere.com/';
 const String logInEndPoint = 'login/';
 const String registerEndPoint = 'clients/';
 const String registerCoachEndPoint = 'trainers/';
-String updateEndPoint = 'trainers/$userId/';
+String updateCoachEndPoint = 'trainers/$userId/';
+String updateClientsEndPoint = 'clients/$userId/';
 
