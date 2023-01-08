@@ -7,27 +7,26 @@ import 'package:gymawy/core/usecase/use_case.dart';
 import 'package:gymawy/features/home/domain/entities/update_coach_profile_entity.dart';
 import 'package:gymawy/features/home/domain/repository/home_update_base_repository.dart';
 
-class UpdateProfilePicture
-    implements UseCase<UpdateEntity, UpdateProfilePictureParams> {
+class UpdateCoachProfilePicture
+    implements UseCase<UpdateCoachEntity, UpdateCoachProfilePictureParams> {
   final HomeUpdateBaseRepository repository;
 
-  UpdateProfilePicture(this.repository);
+  UpdateCoachProfilePicture(this.repository);
 
   @override
-  Future<Either<Failure, UpdateEntity>> call(
-      UpdateProfilePictureParams params) async {
-    return await repository.updateProfilePicture(
+  Future<Either<Failure, UpdateCoachEntity>> call(
+      UpdateCoachProfilePictureParams params) async {
+    return await repository.updateCoachProfilePicture(
       params: params,
     );
   }
 }
 
-class UpdateProfilePictureParams extends Equatable {
-  final bool isCoach;
+class UpdateCoachProfilePictureParams extends Equatable {
   final File image;
 
 
-  const UpdateProfilePictureParams({required this.image,required this.isCoach});
+  const UpdateCoachProfilePictureParams({required this.image});
 
   @override
   List<Object> get props => [

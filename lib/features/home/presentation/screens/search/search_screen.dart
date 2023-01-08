@@ -36,6 +36,12 @@ class SearchScreen extends StatelessWidget {
                         controller: homeCubit.searchController,
                         hint: AppString.search,
                         iconPrefix: Icons.search,
+                        onChanged: (value)
+                        {
+                          homeCubit.search(
+                              search: homeCubit.searchController.text
+                          );
+                        },
                       ),
                     ),
                     horizontalSpace(2.w),
@@ -123,27 +129,27 @@ class SearchScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.yellow,
-                                            size: 20.rSp,
-                                          ),
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.yellow,
-                                            size: 20.rSp,
-                                          ),
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.yellow,
-                                            size: 20.rSp,
-                                          ),
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.yellow,
-                                            size: 20.rSp,
-                                          ),
-                                          horizontalSpace(4.w),
+                                          // Icon(
+                                          //   Icons.star,
+                                          //   color: Colors.yellow,
+                                          //   size: 20.rSp,
+                                          // ),
+                                          // Icon(
+                                          //   Icons.star,
+                                          //   color: Colors.yellow,
+                                          //   size: 20.rSp,
+                                          // ),
+                                          // Icon(
+                                          //   Icons.star,
+                                          //   color: Colors.yellow,
+                                          //   size: 20.rSp,
+                                          // ),
+                                          // Icon(
+                                          //   Icons.star,
+                                          //   color: Colors.yellow,
+                                          //   size: 20.rSp,
+                                          // ),
+                                          // horizontalSpace(4.w),
                                           Icon(
                                             Icons.location_on,
                                             size: 15.rSp,
@@ -167,7 +173,7 @@ class SearchScreen extends StatelessWidget {
                       );
                     },
                     physics: const BouncingScrollPhysics(),
-                    itemCount: 10,
+                    itemCount: 1,
                   ),
                 ),
               ],

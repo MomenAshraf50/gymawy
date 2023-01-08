@@ -1,6 +1,6 @@
 // import 'package:dartz/dartz.dart';
 // import 'package:gymawy/core/error/failures.dart';
-// import '../entities/register_entity.dart';
+// import '../entities/search_entity.dart';
 // import '../usecase/register_usecase.dart';
 //
 // abstract class RegisterBaseRepository{

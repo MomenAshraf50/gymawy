@@ -3,18 +3,18 @@ import 'package:gymawy/core/network/remote/api_endpoints.dart';
 import 'package:gymawy/core/network/remote/dio_helper.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/features/home/data/models/update_coach_model.dart';
-import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
-import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/update_coach_profile_picture.dart';
+import 'package:gymawy/features/home/domain/usecase/update_coach_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 
 abstract class UpdateCoachBaseDataSource {
-  Future<UpdateModel> updateCoachProfile(
-      {required UpdateProfileParams params});
+  Future<UpdateCoachModel> updateCoachProfile(
+      {required UpdateCoachProfileParams params});
 
-  Future<UpdateModel> updateCoachProfilePicture(
-      {required UpdateProfilePictureParams params});
+  Future<UpdateCoachModel> updateCoachProfilePicture(
+      {required UpdateCoachProfilePictureParams params});
 
-  Future<UpdateModel> updateCoachSocialLinks(
+  Future<UpdateCoachModel> updateCoachSocialLinks(
       {required UpdateCoachSocialLinksParams params});
 }
 
@@ -26,12 +26,12 @@ class UpdateCoachDataSourceImpl implements UpdateCoachBaseDataSource {
   });
 
   @override
-  Future<UpdateModel> updateCoachProfile(
-      {required UpdateProfileParams params}) async {
+  Future<UpdateCoachModel> updateCoachProfile(
+      {required UpdateCoachProfileParams params}) async {
     final Response f = await dioHelper.put(
-      url: isCoachLogin!?updateCoachEndPoint: updateClientsEndPoint,
+      url: updateEndPoint,
       token: token,
-      data: isCoachLogin! ?{
+      data: {
         'username': params.userName,
         'first_name': params.firstName,
         'last_name': params.lastName,
@@ -41,43 +41,30 @@ class UpdateCoachDataSourceImpl implements UpdateCoachBaseDataSource {
         'phone_number': params.phone,
         'password': params.password,
         'email': params.email,
-      }:{
-        'username': params.userName,
-        'first_name': params.firstName,
-        'last_name': params.lastName,
-        'bio': params.bio,
-        'name': params.fullName,
-        'phone_number': params.phone,
-        'current_tall':params.currentTall,
-        'current_weight':params.currentWeight,
-        'body_fat':params.bodyFat,
-        'goal': params.goal,
-        'password': params.password,
-        'email': params.email,
       },
     );
-    return UpdateModel.fromJson(f.data);
+    return UpdateCoachModel.fromJson(f.data);
   }
 
   @override
-  Future<UpdateModel> updateCoachProfilePicture(
-      {required UpdateProfilePictureParams params}) async {
+  Future<UpdateCoachModel> updateCoachProfilePicture(
+      {required UpdateCoachProfilePictureParams params}) async {
     final Response f = await dioHelper.put(
       token: token,
-      url: isCoachLogin!? updateCoachEndPoint:updateClientsEndPoint,
+      url: updateEndPoint,
       data: {
         'profile_picture': params.image,
       },
     );
-    return UpdateModel.fromJson(f.data);
+    return UpdateCoachModel.fromJson(f.data);
   }
 
   @override
-  Future<UpdateModel> updateCoachSocialLinks(
+  Future<UpdateCoachModel> updateCoachSocialLinks(
       {required UpdateCoachSocialLinksParams params}) async {
     final Response f = await dioHelper.put(
       token: token,
-      url: updateCoachEndPoint,
+      url: updateEndPoint,
       data: {
         'tik_tok_link': params.tiktokLink,
         'youtube_link': params.youtubeLink,
@@ -85,6 +72,6 @@ class UpdateCoachDataSourceImpl implements UpdateCoachBaseDataSource {
         'instagram_link': params.instagramLink,
       },
     );
-    return UpdateModel.fromJson(f.data);
+    return UpdateCoachModel.fromJson(f.data);
   }
 }
