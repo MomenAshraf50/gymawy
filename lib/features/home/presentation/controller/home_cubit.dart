@@ -236,7 +236,6 @@ class HomeCubit extends Cubit<HomeStates> {
       fullName: fullName,
       bio: bio,
       fixedPrice: fixedPrice,
-      isCoach: isCoachLogin!,
     ));
 
     result.fold((failure) {
@@ -250,7 +249,7 @@ class HomeCubit extends Cubit<HomeStates> {
   void updateCoachProfilePicture({required File image}) async {
     emit(UpdateCoachLoadingState());
     final result = await _updateProfilePicture(
-        UpdateProfilePictureParams(image: image,isCoach: isCoachLogin!));
+        UpdateProfilePictureParams(image: image));
     result.fold((failure) {
       emit(UpdateCoachErrorState(mapFailureToMessage(failure)));
     }, (data) {
