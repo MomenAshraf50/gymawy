@@ -328,6 +328,8 @@ String? youtubeLinkRegister = '';
 String? tiktokLinkRegister = '';
 bool isCoachRegister = false;
 
+bool isCoachFilter = false;
+
 
 String? errorMessage;
 

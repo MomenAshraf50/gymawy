@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/error/failures.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
@@ -15,6 +16,7 @@ import '../../../../core/network/local/cache_helper.dart';
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../login/presentation/screens/login_screen.dart';
+import '../../domain/entities/search_entity.dart';
 import '../../domain/usecase/search_usecase.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/profile/profile_client_screen.dart';
@@ -104,12 +106,14 @@ class HomeCubit extends Cubit<HomeStates> {
   void changeToFirstChoiceRadioButton() {
     coachRadioButton = !coachRadioButton;
     clientRadioButton = false;
+    isCoachFilter = coachRadioButton;
     emit(ChangeFirstChoiceRadioButtonState());
   }
 
   void changeToSecondChoiceRadioButton() {
     coachRadioButton = false;
     clientRadioButton = !clientRadioButton;
+    isCoachFilter = false;
     emit(ChangeSecondChoiceRadioButtonState());
   }
 
@@ -278,7 +282,8 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  dynamic results;
+  // SearchEntity? name;
+  List<SearchEntity>? results;
   void search({
     required search,
   }) async {
@@ -290,11 +295,10 @@ class HomeCubit extends Cubit<HomeStates> {
     result.fold((failure) {
       emit(SearchErrorState(mapFailureToMessage(failure)));
     }, (data) {
-      results = data;
       emit(SearchSuccessState(
           data,
       ));
-      debugPrintFullText(results.toString());
+      results = data;
     });
   }
 
