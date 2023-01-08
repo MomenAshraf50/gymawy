@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/error/failures.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
-import 'package:gymawy/features/home/domain/usecase/update_coach_profile_picture.dart';
-import 'package:gymawy/features/home/domain/usecase/update_coach_profile_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
+import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/presentation/screens/qr_code/qr_code_screen.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,17 +23,17 @@ import '../screens/settings/settings_screen.dart';
 import 'home_states.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
-  final UpdateCoachProfilePicture _updateCoachProfilePicture;
-  final UpdateCoachProfile _updateCoachProfile;
+  final UpdateProfilePicture _updateProfilePicture;
+  final UpdateProfile _updateProfile;
   final UpdateCoachSocialLinks _updateCoachSocialLinks;
 
   HomeCubit({
-    required UpdateCoachProfilePicture updateCoachProfilePicture,
-    required UpdateCoachProfile updateCoachProfile,
+    required UpdateProfilePicture updateProfilePicture,
+    required UpdateProfile updateProfile,
     required UpdateCoachSocialLinks updateCoachSocialLinks,
   })
-      : _updateCoachProfilePicture = updateCoachProfilePicture,
-        _updateCoachProfile = updateCoachProfile,
+      : _updateProfilePicture = updateProfilePicture,
+        _updateProfile = updateProfile,
         _updateCoachSocialLinks = updateCoachSocialLinks,
         super(HomeInitialState());
 
@@ -222,7 +222,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required String bio,
   }) async {
     emit(UpdateCoachLoadingState());
-    final result = await _updateCoachProfile(UpdateCoachProfileParams(
+    final result = await _updateProfile(UpdateProfileParams(
       email: email,
       userName: userName,
       password: password,
@@ -232,6 +232,7 @@ class HomeCubit extends Cubit<HomeStates> {
       fullName: fullName,
       bio: bio,
       fixedPrice: fixedPrice,
+      isCoach: isCoachLogin!,
     ));
 
     result.fold((failure) {
@@ -244,8 +245,8 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void updateCoachProfilePicture({required File image}) async {
     emit(UpdateCoachLoadingState());
-    final result = await _updateCoachProfilePicture(
-        UpdateCoachProfilePictureParams(image: image));
+    final result = await _updateProfilePicture(
+        UpdateProfilePictureParams(image: image,isCoach: isCoachLogin!));
     result.fold((failure) {
       emit(UpdateCoachErrorState(mapFailureToMessage(failure)));
     }, (data) {

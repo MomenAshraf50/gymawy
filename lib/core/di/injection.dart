@@ -2,8 +2,8 @@ import 'package:get_it/get_it.dart';
 import 'package:gymawy/features/home/data/data_source/update_remote_data_source.dart';
 import 'package:gymawy/features/home/data/repository/home_update_repository.dart';
 import 'package:gymawy/features/home/domain/repository/home_update_base_repository.dart';
-import 'package:gymawy/features/home/domain/usecase/update_coach_profile_picture.dart';
-import 'package:gymawy/features/home/domain/usecase/update_coach_profile_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
+import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/login/data/data_source/login_remote_data_source.dart';
@@ -36,8 +36,8 @@ Future<void> init() async {
       ));
   sl.registerLazySingleton<HomeCubit>(() => HomeCubit(
         updateCoachSocialLinks: sl(),
-        updateCoachProfilePicture: sl(),
-        updateCoachProfile: sl(),
+        updateProfilePicture: sl(),
+        updateProfile: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -62,8 +62,8 @@ Future<void> init() async {
   // Use cases
   sl.registerLazySingleton(() => LoginUseCase(sl()));
   sl.registerLazySingleton(() => RegisterUseCase(sl()));
-  sl.registerLazySingleton(() => UpdateCoachProfilePicture(sl()));
-  sl.registerLazySingleton(() => UpdateCoachProfile(sl()));
+  sl.registerLazySingleton(() => UpdateProfilePicture(sl()));
+  sl.registerLazySingleton(() => UpdateProfile(sl()));
   sl.registerLazySingleton(() => UpdateCoachSocialLinks(sl()));
 
   //Data sources

@@ -6,13 +6,13 @@ import '../../../../core/usecase/use_case.dart';
 import '../repository/home_update_base_repository.dart';
 
 class UpdateCoachSocialLinks
-    implements UseCase<UpdateCoachEntity, UpdateCoachSocialLinksParams> {
+    implements UseCase<UpdateEntity, UpdateCoachSocialLinksParams> {
   final HomeUpdateBaseRepository repository;
 
   UpdateCoachSocialLinks(this.repository);
 
   @override
-  Future<Either<Failure, UpdateCoachEntity>> call(
+  Future<Either<Failure, UpdateEntity>> call(
       UpdateCoachSocialLinksParams params) async {
     return await repository.updateCoachSocialLinks(
       params: params,

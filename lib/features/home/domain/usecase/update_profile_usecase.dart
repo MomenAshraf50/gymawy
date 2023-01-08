@@ -5,54 +5,63 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/use_case.dart';
 import '../repository/home_update_base_repository.dart';
 
-class UpdateCoachProfile
-    implements UseCase<UpdateCoachEntity, UpdateCoachProfileParams> {
+class UpdateProfile
+    implements UseCase<UpdateEntity, UpdateProfileParams> {
   final HomeUpdateBaseRepository repository;
 
-  UpdateCoachProfile(this.repository);
+  UpdateProfile(this.repository);
 
   @override
-  Future<Either<Failure, UpdateCoachEntity>> call(
-      UpdateCoachProfileParams params) async {
-    return await repository.updateCoachProfile(
+  Future<Either<Failure, UpdateEntity>> call(
+      UpdateProfileParams params) async {
+    return await repository.updateProfile(
       params: params,
     );
   }
 }
 
-class UpdateCoachProfileParams extends Equatable {
+class UpdateProfileParams extends Equatable {
+  final bool isCoach;
   final String userName;
   final String email;
-  final String? phone;
+  final String phone;
   final String firstName;
   final String lastName;
   final String fullName;
   final String bio;
-  final double fixedPrice;
+  final String? goal;
+  final double? fixedPrice;
+  final double? currentWeight;
+  final double? currentTall;
+  final double? bodyFat;
   final String password;
 
-  const UpdateCoachProfileParams({
+  const UpdateProfileParams({
+    required this.isCoach,
     required this.email,
     required this.userName,
     required this.password,
-    this.phone,
+    required this.phone,
     required this.firstName,
     required this.lastName,
     required this.fullName,
     required this.bio,
-    required this.fixedPrice,
+    this.goal,
+    this.fixedPrice,
+    this.currentWeight,
+    this.currentTall,
+    this.bodyFat
   });
 
   @override
   List<Object> get props => [
         userName,
         email,
-        //phone,
+        phone,
         firstName,
         lastName,
         fullName,
         bio,
-        fixedPrice,
         password,
       ];
 }
