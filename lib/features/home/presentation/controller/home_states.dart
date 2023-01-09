@@ -1,3 +1,4 @@
+import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_coach_profile_entity.dart';
 
 import '../../domain/entities/search_entity.dart';
@@ -39,4 +40,15 @@ class SearchErrorState extends HomeStates{
   final String failure;
 
   SearchErrorState(this.failure);
+}
+
+class ProfileLoadingState extends HomeStates{}
+class ProfileSuccessState extends HomeStates{
+  ProfileEntity entity;
+  ProfileSuccessState(this.entity);
+}
+class ProfileErrorState extends HomeStates{
+  final String failure;
+
+  ProfileErrorState(this.failure);
 }

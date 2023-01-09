@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:gymawy/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:gymawy/features/home/data/repository/home_repository.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
+import 'package:gymawy/features/home/domain/usecase/profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/search_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
@@ -39,7 +40,8 @@ Future<void> init() async {
         updateCoachSocialLinks: sl(),
         updateProfilePicture: sl(),
         updateProfile: sl(),
-    searchUseCase: sl(),
+        searchUseCase: sl(),
+        profileUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -68,6 +70,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UpdateProfile(sl()));
   sl.registerLazySingleton(() => UpdateCoachSocialLinks(sl()));
   sl.registerLazySingleton(() => SearchUseCase(sl()));
+  sl.registerLazySingleton(() => ProfileUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(

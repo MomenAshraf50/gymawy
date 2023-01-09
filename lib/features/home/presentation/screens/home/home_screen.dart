@@ -13,6 +13,7 @@ import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
+import '../../../../../core/util/widgets/loadingPage.dart';
 import '../../../../../core/util/widgets/myText.dart';
 import '../../../../../core/util/widgets/myTextFill.dart';
 import '../../controller/home_cubit.dart';
@@ -29,108 +30,115 @@ class HomeClientScreen extends StatelessWidget {
     HomeCubit homeCubit = HomeCubit.get(context);
 
     return SafeArea(
-      child: Scaffold(
-        body: HideKeyboardPage(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            child: Padding(
-                padding: designApp,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+      child: BlocBuilder<HomeCubit,HomeStates>(
+        builder: (context, state) {
+          return Scaffold(
+            body: homeCubit.profileResults == null ?
+            const Center(
+                child: LoadingPage()
+            ) :
+            HideKeyboardPage(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                child: Padding(
+                    padding: designApp,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SvgPicture.asset(
-                          Assets.images.svg.profile,
-                          width: 10.w,
-                          height: 10.h,
-                        ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: () {
-                            navigateTo(context, const NotificationsScreen());
-                          },
-                          child: Stack(
-                            alignment: Alignment.topLeft,
-                            children: [
-                              SvgPicture.asset(
-                                Assets.images.svg.notifications,
-                                width: 3.w,
-                                height: 4.h,
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 50.rSp,
+                              backgroundImage:
+                              NetworkImage(
+                                // 'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc='
+                                  homeCubit.profileResults!.profilePicture
                               ),
-                              Container(
-                                height: 2.h,
-                                width: 4.w,
-                                decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(7.rSp)),
-                                child: Center(
-                                  child: Text(AppString.notificationsNum,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .displayLarge!
-                                          .copyWith(
+                            ),
+                            const Spacer(),
+                            InkWell(
+                              onTap: () {
+                                navigateTo(context, const NotificationsScreen());
+                              },
+                              child: Stack(
+                                alignment: Alignment.topLeft,
+                                children: [
+                                  SvgPicture.asset(
+                                    Assets.images.svg.notifications,
+                                    width: 3.w,
+                                    height: 4.h,
+                                  ),
+                                  Container(
+                                    height: 2.h,
+                                    width: 4.w,
+                                    decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(7.rSp)),
+                                    child: Center(
+                                      child: Text(AppString.notificationsNum,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .displayLarge!
+                                              .copyWith(
                                               fontFamily: 'poppins',
                                               fontWeight: FontWeight.w400,
                                               fontSize: 11.rSp,
                                               color: Colors.white)),
-                                ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    verticalSpace(1.h),
-                    myText(
-                      title: AppString.helloClient,
-                      style: Style.small,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.rSp,
-                    ),
-                    verticalSpace(1.h),
-                    myText(
-                      title: AppString.ready,
-                      style: Style.small,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16.rSp,
-                    ),
-                    verticalSpace(4.h),
-
-                    /// will change this raw
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: myTextFill(
-                            controller: homeCubit.searchController,
-                            hint: AppString.search,
-                            iconPrefix: Icons.search,
-                            onChanged: (value)
-                            {
-                              homeCubit.search(
-                                  search: homeCubit.searchController.text
-                              );
-                            },
-                          ),
+                            )
+                          ],
                         ),
-                        horizontalSpace(1.w),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 2.h),
-                          child: InkWell(
-                            child: SvgPicture.asset(
-                              Assets.images.svg.filterSearch,
-                              height: 4.h,
-                              width: 4.w,
+                        verticalSpace(1.h),
+                        myText(
+                          title: '${AppString.helloClient}${homeCubit.profileResults!.fullName},',
+                          style: Style.small,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20.rSp,
+                        ),
+                        verticalSpace(1.h),
+                        myText(
+                          title: AppString.ready,
+                          style: Style.small,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.rSp,
+                        ),
+                        verticalSpace(4.h),
+
+                        /// will change this raw
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: myTextFill(
+                                controller: homeCubit.searchController,
+                                hint: AppString.search,
+                                iconPrefix: Icons.search,
+                                onChanged: (value)
+                                {
+                                  homeCubit.search(
+                                      search: homeCubit.searchController.text
+                                  );
+                                },
+                              ),
                             ),
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return BlocBuilder<HomeCubit, HomeStates>(
-                                    builder: (context, state) {
+                            horizontalSpace(1.w),
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 2.h),
+                              child: InkWell(
+                                child: SvgPicture.asset(
+                                  Assets.images.svg.filterSearch,
+                                  height: 4.h,
+                                  width: 4.w,
+                                ),
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
                                       return FilterDialog(
                                         firstFilterTitle: AppString.coaches,
                                         secondFilterTitle: AppString.clients,
@@ -144,18 +152,14 @@ class HomeClientScreen extends StatelessWidget {
                                     },
                                   );
                                 },
-                              );
-                            },
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    if(homeCubit.results != null)
-                    SizedBox(
-                        height: 20.h,
-                        child: BlocBuilder<HomeCubit,HomeStates>(
-                          builder: (context, state) {
-                            return ListView.builder(
+                        if(homeCubit.results != null)
+                          SizedBox(
+                            height: 20.h,
+                            child: ListView.builder(
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
@@ -249,251 +253,251 @@ class HomeClientScreen extends StatelessWidget {
                               },
                               physics: const BouncingScrollPhysics(),
                               itemCount: homeCubit.results!.length,
-                            ) ;
-                          },
-                        ),
-                      ),
-                    verticalSpace(2.h),
-                    const myText(
-                      title: AppString.suggestions,
-                      style: Style.extraSmall,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    verticalSpace(1.h),
-                    SizedBox(
-                      height: 21.h,
-                      child: PageView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        padEnds: false,
-                        controller: PageController(
-                          initialPage: homeCubit.selected,
-                          viewportFraction: 0.45,
-                          keepPage: true,
-                        ),
-                        allowImplicitScrolling: true,
-                        pageSnapping: true,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 1.w),
-                              child: Container(
-                                margin: EdgeInsets.all(9.rSp),
-                                decoration: BoxDecoration(
-                                  boxShadow: const [
-                                    // selected == index ?
-                                    BoxShadow(
-                                      color: ColorsManager.mainColor,
-                                      spreadRadius: 0,
-                                      blurRadius: 8,
-                                    )
-                                    // : const BoxShadow(),
-                                  ],
-                                  borderRadius: BorderRadius.circular(10),
-                                  // border: Border.all(color: Colors.orange),
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.bottomLeft,
-                                    end: Alignment.topRight,
-                                    colors: [
-                                      ColorsManager.whiteColor,
-                                      ColorsManager.whiteColor,
-                                    ],
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(10.rSp),
-                                  child: Column(
-                                    children: [
-                                      index == 3 || index == 4
-                                          ? Lottie.asset(
-                                              Assets.images.lotti.dumbble,
-                                              height: 11.h)
-                                          : SvgPicture.asset(
-                                              homeCubit
-                                                  .listSuggestions[index].img,
-                                            ),
-                                      verticalSpace(2.h),
-                                      myText(
-                                        title: homeCubit
-                                            .listSuggestions[index].title,
-                                        style: Style.extraSmall,
-                                        color: Colors.black,
-                                        fontSize: 12.rSp,
-                                        maxLines: 1,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
                             ),
-                            onTap: () {
-                              if (index == 0) {
-                                navigateTo(context, const PlansScreen());
-                              } else if (index == 1) {
-                                navigateTo(context, const ExercisesScreen());
-                              } else if (index == 2) {
-                                navigateTo(context, const ClientsScreen());
-                              } else if (index == 3){
-                                navigateTo(context, const ProgressScreen());
-                              }else{
-                                navigateTo(context, const WorkoutTrackerScreen());
-                              }
-                            },
-                          );
-                        },
-                        itemCount: homeCubit.listSuggestions.length,
-                      ),
-                    ),
-                    if(isCoachLogin == false)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                          ),
                         verticalSpace(2.h),
                         const myText(
-                          title: AppString.todaySession,
+                          title: AppString.suggestions,
                           style: Style.extraSmall,
                           fontWeight: FontWeight.w600,
                         ),
-                        verticalSpace(0.5.h),
-                        myText(
-                          title: AppString.doNotMiss,
-                          style: Style.extraSmall,
-                          fontSize: 12.rSp,
-                        ),
-                        verticalSpace(0.5.h),
-                        Stack(
-                          children: [
-                            SizedBox(
-                                height: 24.h,
-                                child: Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Image.asset(
-                                      Assets.images.svg.cardWithGirl,
-                                    ))),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(5.w, 8.5.h, 0, 0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 3.h,
-                                    width: 15.w,
+                        verticalSpace(1.h),
+                        SizedBox(
+                          height: 21.h,
+                          child: PageView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            padEnds: false,
+                            controller: PageController(
+                              initialPage: homeCubit.selected,
+                              viewportFraction: 0.45,
+                              keepPage: true,
+                            ),
+                            allowImplicitScrolling: true,
+                            pageSnapping: true,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 1.w),
+                                  child: Container(
+                                    margin: EdgeInsets.all(9.rSp),
                                     decoration: BoxDecoration(
-                                        color: const Color.fromARGB(
-                                            255, 252, 183, 146),
-                                        borderRadius: BorderRadius.circular(15)),
-                                    child: Center(
-                                        child: myText(
-                                      title: AppString.daysNum,
-                                      style: Style.extraSmall,
-                                      fontSize: 9.rSp,
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                                  ),
-                                  verticalSpace(0.5.h),
-                                  myText(
-                                    title: AppString.fullBodyExercise,
-                                    style: Style.extraSmall,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12.rSp,
-                                  ),
-                                  myText(
-                                    title: AppString.level,
-                                    style: Style.extraSmall,
-                                    fontSize: 12.rSp,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 3.h,
-                                        width: 20.w,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 252, 183, 146),
-                                            borderRadius:
-                                                BorderRadius.circular(15)),
-                                        child: Center(
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(
-                                                  Assets.images.svg.clock),
-                                              horizontalSpace(1.w),
-                                              myText(
-                                                title: AppString.clock,
-                                                style: Style.extraSmall,
-                                                fontSize: 12.rSp,
-                                                letterSpacing: 0.5,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                      boxShadow: const [
+                                        // selected == index ?
+                                        BoxShadow(
+                                          color: ColorsManager.mainColor,
+                                          spreadRadius: 0,
+                                          blurRadius: 8,
+                                        )
+                                        // : const BoxShadow(),
+                                      ],
+                                      borderRadius: BorderRadius.circular(10),
+                                      // border: Border.all(color: Colors.orange),
+                                      gradient: const LinearGradient(
+                                        begin: Alignment.bottomLeft,
+                                        end: Alignment.topRight,
+                                        colors: [
+                                          ColorsManager.whiteColor,
+                                          ColorsManager.whiteColor,
+                                        ],
                                       ),
-                                      horizontalSpace(0.5.w),
-                                      Container(
-                                        height: 3.h,
-                                        width: 20.w,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 252, 183, 146),
-                                            borderRadius:
-                                                BorderRadius.circular(15)),
-                                        child: Center(
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(
-                                                  Assets.images.svg.fire),
-                                              horizontalSpace(1.w),
-                                              myText(
-                                                title: AppString.cal,
-                                                style: Style.extraSmall,
-                                                fontSize: 12.rSp,
-                                              ),
-                                            ],
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(10.rSp),
+                                      child: Column(
+                                        children: [
+                                          index == 3 || index == 4
+                                              ? Lottie.asset(
+                                              Assets.images.lotti.dumbble,
+                                              height: 11.h)
+                                              : SvgPicture.asset(
+                                            homeCubit
+                                                .listSuggestions[index].img,
                                           ),
-                                        ),
+                                          verticalSpace(2.h),
+                                          myText(
+                                            title: homeCubit
+                                                .listSuggestions[index].title,
+                                            style: Style.extraSmall,
+                                            color: Colors.black,
+                                            fontSize: 12.rSp,
+                                            maxLines: 1,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                  verticalSpace(1.h),
-                                  InkWell(
-                                    child: Container(
-                                      height: 3.h,
-                                      width: 41.w,
-                                      decoration: BoxDecoration(
-                                          color: const Color.fromARGB(
-                                              255, 0, 173, 199),
-                                          borderRadius: BorderRadius.circular(15)),
-                                      child: Center(
-                                        child: myText(
-                                          title: AppString.startNow,
+                                ),
+                                onTap: () {
+                                  if (index == 0) {
+                                    navigateTo(context, const PlansScreen());
+                                  } else if (index == 1) {
+                                    navigateTo(context, const ExercisesScreen());
+                                  } else if (index == 2) {
+                                    navigateTo(context, const ClientsScreen());
+                                  } else if (index == 3){
+                                    navigateTo(context, const ProgressScreen());
+                                  }else{
+                                    navigateTo(context, const WorkoutTrackerScreen());
+                                  }
+                                },
+                              );
+                            },
+                            itemCount: homeCubit.listSuggestions.length,
+                          ),
+                        ),
+                        if(isCoachLogin == false)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              verticalSpace(2.h),
+                              const myText(
+                                title: AppString.todaySession,
+                                style: Style.extraSmall,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              verticalSpace(0.5.h),
+                              myText(
+                                title: AppString.doNotMiss,
+                                style: Style.extraSmall,
+                                fontSize: 12.rSp,
+                              ),
+                              verticalSpace(0.5.h),
+                              Stack(
+                                children: [
+                                  SizedBox(
+                                      height: 24.h,
+                                      child: Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Image.asset(
+                                            Assets.images.svg.cardWithGirl,
+                                          ))),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(5.w, 8.5.h, 0, 0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 3.h,
+                                          width: 15.w,
+                                          decoration: BoxDecoration(
+                                              color: const Color.fromARGB(
+                                                  255, 252, 183, 146),
+                                              borderRadius: BorderRadius.circular(15)),
+                                          child: Center(
+                                              child: myText(
+                                                title: AppString.daysNum,
+                                                style: Style.extraSmall,
+                                                fontSize: 9.rSp,
+                                                fontWeight: FontWeight.w600,
+                                              )),
+                                        ),
+                                        verticalSpace(0.5.h),
+                                        myText(
+                                          title: AppString.fullBodyExercise,
+                                          style: Style.extraSmall,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.rSp,
+                                        ),
+                                        myText(
+                                          title: AppString.level,
                                           style: Style.extraSmall,
                                           fontSize: 12.rSp,
                                         ),
-                                      ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              height: 3.h,
+                                              width: 20.w,
+                                              decoration: BoxDecoration(
+                                                  color: const Color.fromARGB(
+                                                      255, 252, 183, 146),
+                                                  borderRadius:
+                                                  BorderRadius.circular(15)),
+                                              child: Center(
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                        Assets.images.svg.clock),
+                                                    horizontalSpace(1.w),
+                                                    myText(
+                                                      title: AppString.clock,
+                                                      style: Style.extraSmall,
+                                                      fontSize: 12.rSp,
+                                                      letterSpacing: 0.5,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            horizontalSpace(0.5.w),
+                                            Container(
+                                              height: 3.h,
+                                              width: 20.w,
+                                              decoration: BoxDecoration(
+                                                  color: const Color.fromARGB(
+                                                      255, 252, 183, 146),
+                                                  borderRadius:
+                                                  BorderRadius.circular(15)),
+                                              child: Center(
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                        Assets.images.svg.fire),
+                                                    horizontalSpace(1.w),
+                                                    myText(
+                                                      title: AppString.cal,
+                                                      style: Style.extraSmall,
+                                                      fontSize: 12.rSp,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        verticalSpace(1.h),
+                                        InkWell(
+                                          child: Container(
+                                            height: 3.h,
+                                            width: 41.w,
+                                            decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                    255, 0, 173, 199),
+                                                borderRadius: BorderRadius.circular(15)),
+                                            child: Center(
+                                              child: myText(
+                                                title: AppString.startNow,
+                                                style: Style.extraSmall,
+                                                fontSize: 12.rSp,
+                                              ),
+                                            ),
+                                          ),
+                                          onTap: () {},
+                                        ),
+                                      ],
                                     ),
-                                    onTap: () {},
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
                       ],
-                    ),
-                  ],
-                )),
-          ),
-        ),
+                    )),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

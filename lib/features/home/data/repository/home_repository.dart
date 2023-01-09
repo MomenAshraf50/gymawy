@@ -1,6 +1,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:gymawy/features/home/data/data_source/home_remote_data_source.dart';
+import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_coach_profile_entity.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
@@ -12,6 +13,7 @@ import '../../../../core/error/failures.dart';
 
 typedef Call = Future<UpdateEntity> Function();
 typedef CallSearch = Future<List<SearchEntity>> Function();
+typedef CallProfile = Future<ProfileEntity> Function();
 
 class HomeRepository extends HomeBaseRepository {
   final HomeBaseDataSource remoteDataSource;
@@ -58,6 +60,7 @@ class HomeRepository extends HomeBaseRepository {
     });
   }
 
+
   Future<Either<Failure, List<SearchEntity>>> fetchSearch(
       CallSearch mainMethod,
       ) async {
@@ -81,4 +84,33 @@ class HomeRepository extends HomeBaseRepository {
       );
     });
   }
+
+
+
+
+  Future<Either<Failure, ProfileEntity>> fetchProfile(
+      CallProfile mainMethod,
+      ) async {
+    try {
+      final profileData = await mainMethod();
+      return Right(profileData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ProfileEntity>> profile({
+    required String id,
+  }) async {
+    return await fetchProfile(() {
+      return remoteDataSource.profile(
+          id: id
+      );
+    });
+  }
+
+
 }

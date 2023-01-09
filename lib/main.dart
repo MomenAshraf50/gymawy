@@ -52,6 +52,7 @@ void main() async
   debugPrintFullText('My Current type => $isCoachLogin');
 
 
+
   String translation = await rootBundle.loadString('assets/translations/${isRtl ? 'ar' : 'en'}.json');
   Bloc.observer = MyBlocObserver();
 
@@ -106,7 +107,7 @@ class MyApp extends StatelessWidget {
           create: (context) => sl<RegisterCubit>(),
         ),
         BlocProvider(
-          create: (context) => sl<HomeCubit>(),
+          create: (context) => sl<HomeCubit>()..profile(id: '$userId'),
         ),
       ],
       child: BlocBuilder<AppBloc, AppState>(

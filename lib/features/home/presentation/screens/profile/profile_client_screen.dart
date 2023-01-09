@@ -9,6 +9,7 @@ import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/add_exercise_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/add_meal_screen.dart';
 import '../../../../../../core/util/resources/assets.gen.dart';
+import '../../controller/home_cubit.dart';
 import '../../widgets/build_client_details_screen_items.dart';
 import 'edit_profile.dart';
 
@@ -37,21 +38,22 @@ class ClientProfileScreen extends StatelessWidget {
     AppString.bodyFat,
   ];
 
-  List<String> titleResult =
-  [
-    '3',
-    'Beginner',
-    'Mass Gain',
-    '2',
-    '4',
-    '90',
-    '90',
-  ];
+  // List<String> titleResult =
+  // [
+  //   '3',
+  //   'Beginner',
+  //   'Mass Gain',
+  //   '2',
+  //   '4',
+  //   '90',
+  //   '90',
+  // ];
 
 
 
   @override
   Widget build(BuildContext context) {
+    HomeCubit homeCubit = HomeCubit.get(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -68,7 +70,10 @@ class ClientProfileScreen extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 50.rSp,
-                            backgroundImage: const NetworkImage(AppString.networkImage),
+                            backgroundImage: NetworkImage(
+                                //AppString.networkImage
+                              homeCubit.profileResults!.profilePicture
+                            ),
                           ),
                           horizontalSpace(5.w),
                           Column(
@@ -77,12 +82,13 @@ class ClientProfileScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   myText(
-                                    title: AppString.userNameProfile,
+                                    title: homeCubit.profileResults!.fullName,
+                                    //AppString.userNameProfile,
                                     style: Style.medium,
                                     fontSize: 14.rSp,
                                     fontWeight: FontWeight.w600,
                                   ),
-                                  horizontalSpace(25.w),
+                                  horizontalSpace(15.w),
                                   CircleAvatar(
                                     radius: 20.rSp,
                                     backgroundColor: ColorsManager.mainColor,
@@ -104,11 +110,12 @@ class ClientProfileScreen extends StatelessWidget {
                                 fontSize: 14.rSp,
                                 fontWeight: FontWeight.w600,
                               ),
-                              myText(
-                                title: AppString.mail,
-                                style: Style.extraSmall,
-                                fontSize: 12.rSp,
-                              ),
+                              // myText(
+                              //   title: homeCubit.profileResults!.email,
+                              //   //AppString.mail,
+                              //   style: Style.extraSmall,
+                              //   fontSize: 12.rSp,
+                              // ),
                               Row(
                                 children: [
                                   Icon(
@@ -116,14 +123,16 @@ class ClientProfileScreen extends StatelessWidget {
                                     size: 15.rSp,
                                   ),
                                   myText(
-                                    title: AppString.address,
+                                    title: homeCubit.profileResults!.governorate,
+                                    //AppString.address,
                                     style: Style.extraSmall,
                                     fontSize: 12.rSp,
                                   ),
                                 ],
                               ),
                               myText(
-                                title: AppString.age,
+                                title: '${homeCubit.profileResults!.age} Years old',
+                                //AppString.age,
                                 style: Style.extraSmall,
                                 fontSize: 12.rSp,
                               ),
@@ -137,12 +146,22 @@ class ClientProfileScreen extends StatelessWidget {
                           return buildClientDetailsScreenItems(
                               icons: icons[index],
                               title: title[index],
-                              titleResult: titleResult[index]
+                              titleResult:
+                              [
+                                '3',
+                                'Beginner',
+                                homeCubit.profileResults!.goal!,
+                                '2',
+                                '${homeCubit.profileResults!.currentTall!}',
+                                '${homeCubit.profileResults!.currentWeight!}',
+                                '${homeCubit.profileResults!.bodyFat!}',
+                              ]
+                              [index],
                           );
                         },
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: titleResult.length,
+                        itemCount: title.length,
                       ),
                     ],
                   ),

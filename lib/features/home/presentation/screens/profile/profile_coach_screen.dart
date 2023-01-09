@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,7 +6,6 @@ import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/profile/add_coach_certifications.dart';
-
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
@@ -52,8 +50,11 @@ class ProfileCoachScreen extends StatelessWidget {
                                 )
                                     : CircleAvatar(
                                   radius: 60.rSp,
-                                  backgroundImage: const NetworkImage(
-                                      'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc='),
+                                  backgroundImage:
+                                  NetworkImage(
+                                    //  'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc='
+                                    homeCubit.profileResults!.profilePicture
+                                  ),
                                 ),
                               ),
                               IconButton(
@@ -81,13 +82,16 @@ class ProfileCoachScreen extends StatelessWidget {
                                   child: Column(
                                     crossAxisAlignment:
                                     CrossAxisAlignment.start,
-                                    children: const [
+                                    children: [
                                       myText(
-                                        title: AppString.userNameProfile,
+                                        title: homeCubit.profileResults!.fullName,
+                                        //AppString.userNameProfile,
                                         style: Style.small,
                                       ),
                                       myText(
-                                        title: AppString.accountType,
+                                        title: isCoachLogin == false?
+                                        AppString.client
+                                        :AppString.coach,
                                         style: Style.small,
                                       ),
                                     ],
@@ -132,7 +136,7 @@ class ProfileCoachScreen extends StatelessWidget {
                     children: [
                       const Icon(Icons.location_on_outlined),
                       myText(
-                        title: AppString.location,
+                        title: homeCubit.profileResults!.governorate,
                         style: Style.small,
                         fontSize: 16.rSp,
                       ),
