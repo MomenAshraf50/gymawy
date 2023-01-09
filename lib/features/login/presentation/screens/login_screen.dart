@@ -21,6 +21,7 @@ import 'package:gymawy/features/register/presentation/controller/register_cubit.
 import 'package:gymawy/features/register/presentation/screens/register_screens/choose_your_type_screen.dart';
 
 import '../../../../core/di/injection.dart';
+import '../../../home/presentation/controller/home_cubit.dart';
 
 
 class LoginScreen extends StatelessWidget {
@@ -32,6 +33,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RegisterCubit registerCubit = RegisterCubit.get(context);
+    HomeCubit homeCubit = HomeCubit.get(context);
+
     return BlocConsumer<LoginCubit, LoginStates>(
       listener: (context, state) {
         if(state is LoginSuccessState){
@@ -42,7 +45,9 @@ class LoginScreen extends StatelessWidget {
           userId = state.id;
           token = state.token;
           isCoachLogin = state.isCoach;
-
+          homeCubit.profile(
+              id: '${state.id}'
+          );
           navigateAndFinish(context, MainScreen());
           debugPrintFullText(token!);
         }

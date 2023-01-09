@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:gymawy/core/network/remote/api_endpoints.dart';
 import 'package:gymawy/core/network/remote/dio_helper.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/features/home/data/models/profile_model.dart';
 import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/data/models/update_coach_model.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
@@ -20,6 +21,11 @@ abstract class HomeBaseDataSource {
   Future<List<SearchModel>> search({
     required String search,
   });
+
+  Future<ProfileModel> profile({
+    required String id,
+  });
+
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -100,7 +106,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   }) async {
     final Response f = await dioHelper.get(
       url: isCoachFilter == false? registerEndPoint : registerCoachEndPoint,
-      token: isCoachFilter == false ? token: null,
+      token: token,
       query: {
         'search': search,
       },
@@ -108,4 +114,22 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     return List<SearchModel>.from(
         (f.data['results'] as List).map((e) => SearchModel.fromJson(e)));
   }
+
+  @override
+  Future<ProfileModel> profile({
+    required String id,
+  }) async {
+    final Response f = await dioHelper.get(
+        token: token,
+        url:
+        //'$registerCoachEndPoint$id/',
+        //'$registerEndPoint$id/',
+       isCoachLogin == false? '$registerEndPoint$id/' :'$registerCoachEndPoint$id/' ,
+    );
+    return ProfileModel.fromJson(f.data);
+  }
+
+
+
+
 }

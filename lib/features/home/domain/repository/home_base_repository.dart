@@ -6,6 +6,7 @@ import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.da
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import '../../../../core/error/failures.dart';
+import '../entities/profile_entity.dart';
 
 abstract class HomeBaseRepository {
   Future<Either<Failure, UpdateEntity>> updateCoachProfile(
@@ -19,5 +20,9 @@ abstract class HomeBaseRepository {
 
   Future<Either<Failure, List<SearchEntity>>> search({
     required String search,
+  });
+
+  Future<Either<Failure, ProfileEntity>> profile({
+    required String id,
   });
 }

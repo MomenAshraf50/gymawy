@@ -59,7 +59,7 @@ class ChooseYourTypeScreen extends StatelessWidget {
                                   }),
                               child: buildCard(
                                   image: Assets.images.svg.client,
-                                  title: AppString.clint,
+                                  title: AppString.client,
                                   context: context))),
                     ],
                   ),

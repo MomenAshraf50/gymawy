@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/error/failures.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/features/home/data/models/search_model.dart';
+import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
@@ -17,6 +18,7 @@ import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../login/presentation/screens/login_screen.dart';
 import '../../domain/entities/search_entity.dart';
+import '../../domain/usecase/profile_usecase.dart';
 import '../../domain/usecase/search_usecase.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/profile/profile_client_screen.dart';
@@ -30,17 +32,20 @@ class HomeCubit extends Cubit<HomeStates> {
   final UpdateProfile _updateProfile;
   final UpdateCoachSocialLinks _updateCoachSocialLinks;
   final SearchUseCase _searchUseCase;
+  final ProfileUseCase _profileUseCase;
 
   HomeCubit({
     required UpdateProfilePicture updateProfilePicture,
     required UpdateProfile updateProfile,
     required UpdateCoachSocialLinks updateCoachSocialLinks,
     required SearchUseCase searchUseCase,
+    required ProfileUseCase profileUseCase,
   })
       : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
         _updateCoachSocialLinks = updateCoachSocialLinks,
         _searchUseCase = searchUseCase,
+        _profileUseCase = profileUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -208,6 +213,8 @@ class HomeCubit extends Cubit<HomeStates> {
   void signOut(context) {
     sl<CacheHelper>().clear('token').then((value) {
       if (value) {
+        token = null;
+        profileResults = null;
         navigateAndFinish(
           context,
           LoginScreen(),
@@ -302,7 +309,26 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  ProfileEntity? profileResults;
+  void profile({
+    required String id,
+    context
+  }) async {
+    emit(ProfileLoadingState());
 
+    final result = await _profileUseCase(
+        ProfileParams(
+            id: id,
+        )
+    );
+
+    result.fold((failure) {
+      emit(ProfileErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(ProfileSuccessState(data));
+      profileResults = data;
+    });
+  }
 }
 
 class Suggestions extends Equatable {

@@ -39,7 +39,7 @@ class AppString {
   static const it_will_help = 'It will help us to know more about you!';
   static const select_type = 'Choose Your Type';
   static const coach = 'Coach';
-  static const clint = 'Client';
+  static const client = 'Client';
   static const what_is_goal = 'what is your goal ?';
   static const i_will_help_us_to_choose_a_best_program = 'it will help us to choose a best program for you';
   static const lean_tone = 'lean & tone';
@@ -56,7 +56,7 @@ class AppString {
   static const select_country = 'please select country';
   static const select_city = 'please select city';
   static const notificationsNum = '1';
-  static const helloClient = 'Hello Bassel,';
+  static const helloClient = 'Hello ';
   static const ready = 'Ready for a challenge ?';
   static const search = 'Search For Coaches Or Client';
   static const suggestions = 'Suggestions';
