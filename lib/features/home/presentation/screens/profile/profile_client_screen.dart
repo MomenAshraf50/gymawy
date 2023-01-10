@@ -81,14 +81,20 @@ class ClientProfileScreen extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  myText(
-                                    title: homeCubit.profileResults!.fullName,
-                                    //AppString.userNameProfile,
-                                    style: Style.medium,
-                                    fontSize: 14.rSp,
-                                    fontWeight: FontWeight.w600,
+                                  SizedBox(
+                                    width: 40.w,
+                                    child: myText(
+                                      title:
+                                      //'0000000000000000000000000000000000000',
+                                      homeCubit.profileResults!.fullName,
+                                      //AppString.userNameProfile,
+                                      style: Style.medium,
+                                      fontSize: 14.rSp,
+                                      fontWeight: FontWeight.w600,
+                                      maxLines: 1,
+                                    ),
                                   ),
-                                  horizontalSpace(15.w),
+                                  horizontalSpace(5.w),
                                   CircleAvatar(
                                     radius: 20.rSp,
                                     backgroundColor: ColorsManager.mainColor,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/network/local/cache_helper.dart';
@@ -34,6 +35,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     RegisterCubit registerCubit = RegisterCubit.get(context);
     HomeCubit homeCubit = HomeCubit.get(context);
+    SchedulerBinding.instance.addPostFrameCallback((_) {});
 
     return BlocConsumer<LoginCubit, LoginStates>(
       listener: (context, state) {

@@ -8,6 +8,7 @@ class AppString {
   static const forget_password_title = 'Forget Password';
   static const login = 'Login';
   static const oR = 'OR';
+  static const accountDetails = 'Account Details';
   static const dont_have_account = 'Don\'t have account ?';
   static const signUp = 'SignUp';
   static const register = 'Register';

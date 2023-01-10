@@ -50,20 +50,37 @@ class HomeCubit extends Cubit<HomeStates> {
 
   static HomeCubit get(context) => BlocProvider.of(context);
 
-  List<Widget> widgets =
-      isCoachLogin == false ?  [
-      const HomeClientScreen(),
-      const SearchScreen(),
-      const QRCodescreen(),
-      SettingsScreen(),
-      ClientProfileScreen(),
-      ] :
-      [
-        const HomeClientScreen(),
-        const SearchScreen(),
-        SettingsScreen(),
-        const ProfileCoachScreen(),
-      ];
+  List<Widget> clientWidgets =
+  [
+  const HomeClientScreen(),
+  const SearchScreen(),
+  const QRCodescreen(),
+  SettingsScreen(),
+  ClientProfileScreen(),
+  ];
+
+  List<Widget> coachWidgets =
+  [
+    const HomeClientScreen(),
+    const SearchScreen(),
+    SettingsScreen(),
+    const ProfileCoachScreen(),
+  ];
+  //
+  // List<Widget> widgets =
+  //     isCoachLogin == false ?  [
+  //     const HomeClientScreen(),
+  //     const SearchScreen(),
+  //     const QRCodescreen(),
+  //     SettingsScreen(),
+  //     ClientProfileScreen(),
+  //     ] :
+  //     [
+  //       const HomeClientScreen(),
+  //       const SearchScreen(),
+  //       SettingsScreen(),
+  //       const ProfileCoachScreen(),
+  //     ];
 
   TextEditingController searchController = TextEditingController();
   int selected = 0;
@@ -329,6 +346,7 @@ class HomeCubit extends Cubit<HomeStates> {
       profileResults = data;
     });
   }
+
 }
 
 class Suggestions extends Equatable {

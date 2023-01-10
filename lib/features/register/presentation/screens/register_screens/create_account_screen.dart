@@ -109,7 +109,9 @@ class CreateAccountScreen extends StatelessWidget {
                           }
                         },
                         controller: registerCubit.userAgeController,
-                        hint: AppString.userAge),
+                        hint: AppString.userAge,
+                        type: TextInputType.number,
+                    ),
                     myTextFill(
                         svgImg: Assets.images.svg.user,
                         validate: (String? value) {
@@ -118,7 +120,9 @@ class CreateAccountScreen extends StatelessWidget {
                           }
                         },
                         controller: registerCubit.currentWeightController,
-                        hint: AppString.currentWeight),
+                        hint: AppString.currentWeight,
+                        type: TextInputType.number,
+                    ),
                     myTextFill(
                         svgImg: Assets.images.svg.user,
                         validate: (String? value) {
@@ -127,7 +131,9 @@ class CreateAccountScreen extends StatelessWidget {
                           }
                         },
                         controller: registerCubit.currentTallController,
-                        hint: AppString.currentTall),
+                        hint: AppString.currentTall,
+                        type: TextInputType.number,
+                    ),
                     myTextFill(
                       svgImg: Assets.images.svg.email,
                       validate: (String? value) {
@@ -151,7 +157,9 @@ class CreateAccountScreen extends StatelessWidget {
                           }
                         },
                         controller: registerCubit.phoneController,
-                        hint: AppString.phone),
+                        hint: AppString.phone,
+                        type: TextInputType.number,
+                    ),
                     myTextFill(
                         isPassword: true,
                         svgImg: Assets.images.svg.lock,

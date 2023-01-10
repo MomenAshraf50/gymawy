@@ -144,7 +144,7 @@ class GoalScreen extends StatelessWidget {
                         /// bodyFat need Edit
                         bodyFat: int.parse(bodyFatRegister![0]),
                         currentWeight: currentWeightRegister!,
-                        currentTall: currentWeightRegister!,
+                        currentTall: currentTallRegister!,
                         age: ageRegister!,
                         bio: '',
                         city: '',
