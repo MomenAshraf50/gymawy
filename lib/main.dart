@@ -107,7 +107,8 @@ class MyApp extends StatelessWidget {
           create: (context) => sl<RegisterCubit>(),
         ),
         BlocProvider(
-          create: (context) => sl<HomeCubit>()..profile(id: '$userId'),
+          create: (context) => sl<HomeCubit>()
+            //..profile(id: '$userId'),
         ),
       ],
       child: BlocBuilder<AppBloc, AppState>(

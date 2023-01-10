@@ -163,7 +163,12 @@ class HomeClientScreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    navigateTo(context, const SearchResultScreen());
+                                    navigateTo(context, SearchResultScreen(
+                                      userId: homeCubit.results![index].userId,
+                                      name: homeCubit.results![index].userName,
+                                      pic: homeCubit.results![index].profilePicture,
+                                      location: homeCubit.results![index].location,
+                                    ));
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(vertical: 1.h),

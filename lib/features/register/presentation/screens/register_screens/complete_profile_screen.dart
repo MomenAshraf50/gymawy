@@ -179,7 +179,7 @@ class CompleteProfileScreen extends StatelessWidget {
                             height: 3.h,
                             text: AppString.next,
                             onPressed: () {
-                              genderRegister = registerCubit.genderController.text[0];
+                              genderRegister = registerCubit.genderController.text;
                               if(registerCubit.isCoach){
                                 fixedPriceRegister =  int.parse(registerCubit.pricePerMonth.text);
                               }
