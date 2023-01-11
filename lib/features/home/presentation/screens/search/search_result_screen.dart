@@ -13,25 +13,60 @@ import '../../../../../core/util/widgets/my_icon_button.dart';
 import '../../controller/home_cubit.dart';
 
 class SearchResultScreen extends StatelessWidget {
-  SearchResultScreen({
-    Key? key,
-    required this.userId,
-    required this.pic,
-    required this.name,
-    required this.location,
-  }) : super(key: key);
+  SearchResultScreen(
+      {Key? key,
+      required this.userId,
+      required this.pic,
+      required this.name,
+      required this.location,
+       this.tiktokLink,
+       this.youtubeLink,
+       this.instagramLink,
+       this.facebookLink,
+       this.fixedPrice,
+       this.verification,
+       this.bodyFat,
+       this.currentTall,
+       this.currentWeight,
+       this.goal,
+       this.bio,
+       this.age})
+      : super(key: key);
   int? userId;
   String? pic;
   String? name;
   String? location;
+  String? facebookLink;
+  String? instagramLink;
+  String? youtubeLink;
+  String? tiktokLink;
+  String? bio;
+  double? fixedPrice;
+  bool? verification;
+  int? age;
+  int? bodyFat;
+  int? currentTall;
+  double? currentWeight;
+  String? goal;
 
   @override
   Widget build(BuildContext context) {
     debugPrintFullText(' user id issssssssssssssssssssssss $userId');
-    HomeCubit homeCubit = HomeCubit.get(context);
-    // homeCubit.searchResult(
-    //     id: '$userId'
-    // );
+    debugPrintFullText(' user pic issssssssssssssssssssssss $pic');
+    debugPrintFullText(' user name issssssssssssssssssssssss $name');
+    debugPrintFullText(' user location issssssssssssssssssssssss $location');
+    debugPrintFullText(' user facebookLink issssssssssssssssssssssss $facebookLink');
+    debugPrintFullText(' user instagramLink issssssssssssssssssssssss $instagramLink');
+    debugPrintFullText(' user youtubeLink issssssssssssssssssssssss $youtubeLink');
+    debugPrintFullText(' user tiktokLink issssssssssssssssssssssss $tiktokLink');
+    debugPrintFullText(' user bio issssssssssssssssssssssss $bio');
+    debugPrintFullText(' user fixedPrice issssssssssssssssssssssss $fixedPrice');
+    debugPrintFullText(' user verification issssssssssssssssssssssss $verification');
+    debugPrintFullText(' user age issssssssssssssssssssssss $age');
+    debugPrintFullText(' user bodyFat issssssssssssssssssssssss $bodyFat');
+    debugPrintFullText(' user currentTall issssssssssssssssssssssss $currentTall');
+    debugPrintFullText(' user currentWeight issssssssssssssssssssssss $currentWeight');
+    debugPrintFullText(' user goal issssssssssssssssssssssss $goal');
     return SafeArea(
       child: Scaffold(
         body:
@@ -55,29 +90,15 @@ class SearchResultScreen extends StatelessWidget {
                   children: [
                     SizedBox(
                       height: 17.h,
-                      child: Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: CircleAvatar(
-                              radius: 60.rSp,
-                              backgroundImage: NetworkImage(
-                                // 'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc='
-                                //homeCubit.searchResults!.profilePicture,
-                                pic!
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              Assets.images.svg.camera,
-                              height: 4.h,
-                              width: 4.w,
-                            ),
-                          )
-                        ],
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: CircleAvatar(
+                          radius: 60.rSp,
+                          backgroundImage: NetworkImage(
+                              // 'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc='
+                              //homeCubit.searchResults!.profilePicture,
+                              pic!),
+                        ),
                       ),
                     ),
                     Expanded(
@@ -93,23 +114,21 @@ class SearchResultScreen extends StatelessWidget {
                                 children: [
                                   myText(
                                     title:
-                                    //homeCubit.searchResults!.fullName,
-                                    name!,
+                                        //homeCubit.searchResults!.fullName,
+                                        name!,
                                     //AppString.userNameProfile,
                                     style: Style.small,
                                   ),
-                                  // if (homeCubit.searchResults!.verification !=
-                                  //     null)
-                                  //   const myText(
-                                  //     title: AppString.client,
-                                  //     style: Style.small,
-                                  //   ),
-                                  // if (homeCubit.searchResults!.verification ==
-                                  //     null)
-                                  //   const myText(
-                                  //     title: AppString.coach,
-                                  //     style: Style.small,
-                                  //   ),
+                                  if (verification == null)
+                                    const myText(
+                                      title: AppString.client,
+                                      style: Style.small,
+                                    ),
+                                  if (verification != null)
+                                    const myText(
+                                      title: AppString.coach,
+                                      style: Style.small,
+                                    ),
                                   // const myText(
                                   //   title: AppString.coach,
                                   //   style: Style.small,
@@ -161,26 +180,31 @@ class SearchResultScreen extends StatelessWidget {
                 padding: EdgeInsets.all(20.0.rSp),
                 child: Row(
                   children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          myText(
-                            title: AppString.rating,
-                            style: Style.extraSmall,
-                            fontSize: 16.rSp,
+                    if (verification != null)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              myText(
+                                title: AppString.rating,
+                                style: Style.extraSmall,
+                                fontSize: 16.rSp,
+                              ),
+                              myText(
+                                title: AppString.ratingLabel,
+                                style: Style.extraSmall,
+                                fontSize: 16.rSp,
+                              ),
+                            ],
                           ),
-                          myText(
-                            title: AppString.ratingLabel,
-                            style: Style.extraSmall,
-                            fontSize: 16.rSp,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 4.h,
-                      width: 0.5.w,
-                      color: Colors.grey,
+                        ),
+                        Container(
+                          height: 4.h,
+                          width: 0.5.w,
+                          color: Colors.grey,
+                        ),
+                      ],
                     ),
                     Expanded(
                       child: Column(
@@ -222,91 +246,96 @@ class SearchResultScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.h),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: DefaultIconButton(
-                            icon: SvgPicture.asset(
-                              Assets.images.svg.facebook_icon,
+              if (verification != null)
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.h),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: DefaultIconButton(
+                                icon: SvgPicture.asset(
+                                  Assets.images.svg.facebook_icon,
+                                ),
+                                onPressed: () {})),
+                        Expanded(
+                            child: DefaultIconButton(
+                                icon: SvgPicture.asset(Assets.images.svg.tiktok),
+                                onPressed: () {})),
+                        Expanded(
+                            child: DefaultIconButton(
+                                icon: SvgPicture.asset(Assets.images.svg.instagram),
+                                onPressed: () {})),
+                        Expanded(
+                            child: DefaultIconButton(
+                                icon: SvgPicture.asset(Assets.images.svg.youtube),
+                                onPressed: () {})),
+                      ],
+                    ),
+                  ),
+                  Card(
+                    margin: EdgeInsets.all(25.rSp),
+                    elevation: 5,
+                    child: Padding(
+                      padding: EdgeInsets.all(20.0.rSp),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            myText(
+                              title: AppString.certifications,
+                              style: Style.medium,
+                              fontWeight: FontWeight.w600,
                             ),
-                            onPressed: () {})),
-                    Expanded(
-                        child: DefaultIconButton(
-                            icon: SvgPicture.asset(Assets.images.svg.tiktok),
-                            onPressed: () {})),
-                    Expanded(
-                        child: DefaultIconButton(
-                            icon: SvgPicture.asset(Assets.images.svg.instagram),
-                            onPressed: () {})),
-                    Expanded(
-                        child: DefaultIconButton(
-                            icon: SvgPicture.asset(Assets.images.svg.youtube),
-                            onPressed: () {})),
-                  ],
-                ),
-              ),
-              Card(
-                margin: EdgeInsets.all(25.rSp),
-                elevation: 5,
-                child: Padding(
-                  padding: EdgeInsets.all(20.0.rSp),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        myText(
-                          title: AppString.certifications,
-                          style: Style.medium,
-                          fontWeight: FontWeight.w600,
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-              Card(
-                margin: EdgeInsets.all(25.rSp),
-                elevation: 5,
-                child: Padding(
-                  padding: EdgeInsets.all(20.0.rSp),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        myText(
-                          title: AppString.cv,
-                          style: Style.medium,
-                          fontWeight: FontWeight.w600,
+                  Card(
+                    margin: EdgeInsets.all(25.rSp),
+                    elevation: 5,
+                    child: Padding(
+                      padding: EdgeInsets.all(20.0.rSp),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            myText(
+                              title: AppString.cv,
+                              style: Style.medium,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-              Card(
-                margin: EdgeInsets.all(25.rSp),
-                elevation: 5,
-                child: Padding(
-                  padding: EdgeInsets.all(20.0.rSp),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        myText(
-                          title: AppString.personalTraining,
-                          style: Style.medium,
-                          fontWeight: FontWeight.w600,
+                  Card(
+                    margin: EdgeInsets.all(25.rSp),
+                    elevation: 5,
+                    child: Padding(
+                      padding: EdgeInsets.all(20.0.rSp),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            myText(
+                              title: AppString.personalTraining,
+                              style: Style.medium,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            myText(title: AppString.strict, style: Style.medium),
+                          ],
                         ),
-                        myText(title: AppString.strict, style: Style.medium),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ],
           ),

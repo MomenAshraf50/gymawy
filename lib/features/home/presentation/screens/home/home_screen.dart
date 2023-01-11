@@ -139,14 +139,18 @@ class HomeClientScreen extends StatelessWidget {
                                   showDialog(
                                     context: context,
                                     builder: (context) {
-                                      return FilterDialog(
-                                        firstFilterTitle: AppString.coaches,
-                                        secondFilterTitle: AppString.clients,
-                                        onTapFirstChoice: (){
-                                          homeCubit.changeToFirstChoiceRadioButton();
-                                        },
-                                        onTapSecondChoice: (){
-                                          homeCubit.changeToSecondChoiceRadioButton();
+                                      return BlocBuilder<HomeCubit, HomeStates>(
+                                        builder: (context, state) {
+                                          return FilterDialog(
+                                            firstFilterTitle: AppString.coaches,
+                                            secondFilterTitle: AppString.clients,
+                                            onTapFirstChoice: (){
+                                              homeCubit.changeToFirstChoiceRadioButton();
+                                            },
+                                            onTapSecondChoice: (){
+                                              homeCubit.changeToSecondChoiceRadioButton();
+                                            },
+                                          );
                                         },
                                       );
                                     },
@@ -163,12 +167,32 @@ class HomeClientScreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
+                                    isCoachFilter == false?
                                     navigateTo(context, SearchResultScreen(
                                       userId: homeCubit.results![index].userId,
                                       name: homeCubit.results![index].userName,
                                       pic: homeCubit.results![index].profilePicture,
                                       location: homeCubit.results![index].location,
-                                    ));
+                                      bio: homeCubit.results![index].bio,
+                                      age: homeCubit.results![index].age,
+                                      currentWeight: homeCubit.results![index].currentWeight,
+                                      currentTall: homeCubit.results![index].currentTall,
+                                      bodyFat: homeCubit.results![index].bodyFat,
+                                      goal: homeCubit.results![index].goal,
+                                    )) :
+                                    navigateTo(context, SearchResultScreen(
+                                      userId: homeCubit.results![index].userId,
+                                      name: homeCubit.results![index].userName,
+                                      pic: homeCubit.results![index].profilePicture,
+                                      location: homeCubit.results![index].location,
+                                      fixedPrice: homeCubit.results![index].fixedPrice,
+                                      facebookLink: homeCubit.results![index].facebookLink,
+                                      instagramLink: homeCubit.results![index].instagramLink,
+                                      youtubeLink: homeCubit.results![index].youtubeLink,
+                                      tiktokLink: homeCubit.results![index].tiktokLink,
+                                      verification: homeCubit.results![index].verification,
+                                    ))
+                                    ;
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(vertical: 1.h),
