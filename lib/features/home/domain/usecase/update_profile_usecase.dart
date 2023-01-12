@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:gymawy/features/home/domain/entities/update_coach_profile_entity.dart';
+import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/use_case.dart';
@@ -14,7 +14,7 @@ class UpdateProfile
   @override
   Future<Either<Failure, UpdateEntity>> call(
       UpdateProfileParams params) async {
-    return await repository.updateCoachProfile(
+    return await repository.updateProfile(
       params: params,
     );
   }

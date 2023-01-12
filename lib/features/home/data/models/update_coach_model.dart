@@ -1,4 +1,4 @@
-import 'package:gymawy/features/home/domain/entities/update_coach_profile_entity.dart';
+import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 
 class UpdateModel extends UpdateEntity {
   UpdateModel({

@@ -26,7 +26,6 @@ class SettingsScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const myText(title: AppString.settings, style: Style.small),
             Expanded(
               child: ListView.builder(itemBuilder:(context,index) => BlocBuilder<HomeCubit,HomeStates>(
                 builder: (context, state) {

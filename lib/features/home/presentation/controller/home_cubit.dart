@@ -30,6 +30,8 @@ import '../screens/profile/profile_coach_screen.dart';
 import '../screens/search/search_screen.dart';
 import '../screens/settings/settings_screen.dart';
 import 'home_states.dart';
+import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
+
 
 class HomeCubit extends Cubit<HomeStates> {
   final UpdateProfilePicture _updateProfilePicture;
@@ -38,6 +40,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final SearchUseCase _searchUseCase;
   final ProfileUseCase _profileUseCase;
   final CertificateUseCase _certificateUseCase;
+  final GetCertificateUseCase _getCertificateUseCase;
 
   HomeCubit({
     required UpdateProfilePicture updateProfilePicture,
@@ -46,6 +49,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required SearchUseCase searchUseCase,
     required ProfileUseCase profileUseCase,
     required CertificateUseCase certificateUseCase,
+    required GetCertificateUseCase getCertificateUseCase,
   })
       : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -53,6 +57,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _searchUseCase = searchUseCase,
         _profileUseCase = profileUseCase,
         _certificateUseCase = certificateUseCase,
+        _getCertificateUseCase = getCertificateUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -405,6 +410,17 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(CertificationSuccessState(data));
       certificateResult = data;
     });
+  }
+
+  void getCertificates(GetCertificateParams params)async{
+    emit(GetCertificateLoadingState());
+    final result = await _getCertificateUseCase(params);
+    result.fold((failure){
+      emit(GetCertificateErrorState(mapFailureToMessage(failure)));
+    }
+        , (data) {
+      emit(GetCertificateSuccessState(data));
+        });
   }
 }
 

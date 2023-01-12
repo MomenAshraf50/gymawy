@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
-import 'package:gymawy/features/home/domain/entities/update_coach_profile_entity.dart';
+import 'package:gymawy/features/home/domain/entities/update_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/search_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
@@ -13,13 +14,13 @@ import '../entities/certificate_entity.dart';
 import '../entities/profile_entity.dart';
 
 abstract class HomeBaseRepository {
-  Future<Either<Failure, UpdateEntity>> updateCoachProfile(
+  Future<Either<Failure, UpdateEntity>> updateProfile(
       {required UpdateProfileParams params});
 
   Future<Either<Failure, UpdateEntity>> updateCoachSocialLinks(
       {required UpdateCoachSocialLinksParams params});
 
-  Future<Either<Failure, UpdateEntity>> updateCoachProfilePicture(
+  Future<Either<Failure, UpdateEntity>> updateProfilePicture(
       {required UpdateProfilePictureParams params});
 
   Future<Either<Failure, List<SearchEntity>>> search({
@@ -36,4 +37,6 @@ abstract class HomeBaseRepository {
     required FilePickerResult certificateFile,
     required String certificateDate,
   });
+
+  Future<Either<Failure,List<CertificateEntity>>> getCertificate(GetCertificateParams params);
 }

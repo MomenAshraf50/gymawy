@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/profile/add_coach_certifications.dart';
+import 'package:gymawy/features/home/presentation/screens/profile/social_web_view.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
@@ -218,36 +220,36 @@ class ProfileCoachScreen extends StatelessWidget {
                                   Assets.images.svg.facebook_icon,
                                 ),
                                 onPressed: () {
-                                   WebView(
-                                     initialUrl: homeCubit.profileResults!.facebookLink,
-                                   );
+                                  navigateTo(context, SocialWebView(
+                                    socialUrl: homeCubit.profileResults!.facebookLink!,
+                                  ));
                                 })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon:
                                 SvgPicture.asset(Assets.images.svg.tiktok),
                                 onPressed: () {
-                                  WebView(
-                                    initialUrl: homeCubit.profileResults!.tiktokLink,
-                                  );
+                                  navigateTo(context, SocialWebView(
+                                    socialUrl: homeCubit.profileResults!.tiktokLink!,
+                                  ));
                                 })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon: SvgPicture.asset(
                                     Assets.images.svg.instagram),
                                 onPressed: () {
-                                  WebView(
-                                    initialUrl: homeCubit.profileResults!.instagramLink,
-                                  );
+                                  navigateTo(context, SocialWebView(
+                                    socialUrl: homeCubit.profileResults!.instagramLink!,
+                                  ));
                                 })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon:
                                 SvgPicture.asset(Assets.images.svg.youtube),
                                 onPressed: () {
-                                  WebView(
-                                    initialUrl: homeCubit.profileResults!.youtubeLink,
-                                  );
+                                  navigateTo(context, SocialWebView(
+                                    socialUrl: homeCubit.profileResults!.youtubeLink!,
+                                  ));
                                 })),
                       ],
                     ),
