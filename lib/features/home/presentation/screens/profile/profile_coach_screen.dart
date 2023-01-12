@@ -1,3 +1,4 @@
+import 'package:file_previewer/file_previewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,9 +9,11 @@ import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/profile/add_coach_certifications.dart';
 import 'package:gymawy/features/home/presentation/screens/profile/social_web_view.dart';
+import 'package:gymawy/features/home/presentation/screens/profile/view_certification.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
+import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/myText.dart';
 import '../../../../../core/util/widgets/my_icon_button.dart';
@@ -23,6 +26,25 @@ class ProfileCoachScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
+    homeCubit.getCertificates(
+      GetCertificateParams(
+          ownerId: homeCubit.profileResults!.userId!,
+          ownerName: '',
+      ),
+      context
+    );
+
+    int selected = 0;
+    // List<TrainingImage> listTrainingImages = [
+    //   TrainingImage(
+    //     img: Assets.images.svg.client,
+    //   ),
+    //   TrainingImage(
+    //     img: Assets.images.svg.coach,
+    //   ),
+    // ];
+    //Widget? certificateResultImg;
+    //var certificationImage;
 
     return SafeArea(
       child: BlocConsumer<HomeCubit, HomeStates>(
@@ -254,42 +276,159 @@ class ProfileCoachScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Card(
-                    margin: EdgeInsets.all(25.rSp),
-                    elevation: 5,
-                    child: Padding(
-                      padding: EdgeInsets.all(20.0.rSp),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const myText(
-                              title: AppString.certifications,
-                              style: Style.medium,
-                              fontWeight: FontWeight.w600,
+
+                  if(homeCubit.certificateResult != null)
+                    SizedBox(
+                      height: 25.h,
+                      child: PageView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        padEnds: false,
+                        controller: PageController(
+                          initialPage: selected,
+                          viewportFraction: 0.4,
+                          keepPage: true,
+                        ),
+                        allowImplicitScrolling: true,
+                        pageSnapping: true,
+                        itemBuilder: (context, index) {
+                          if(homeCubit.certificateResultImg == null) {
+                            homeCubit.convertCertificateToImg(index);
+                          }
+                          //certificateResultImg = FilePreview.getThumbnail(homeCubit.certificateResult![index].certificateFile );
+                          //  certificationImage = FilePreview.getThumbnail(homeCubit.certificateResult![index].certificateFile);
+                          return homeCubit.certificateResultImg != null?
+                            Container(
+                            margin: EdgeInsets.all(9.rSp),
+                            decoration: BoxDecoration(
+                              boxShadow: const [
+                                // selected == index ?
+                                BoxShadow(
+                                  color: ColorsManager.mainColor,
+                                  spreadRadius: 0,
+                                  blurRadius: 4,
+                                )
+                                // : const BoxShadow(),
+                              ],
+                              borderRadius: BorderRadius.circular(10),
+                              // border: Border.all(color: Colors.orange),
+                              gradient: const LinearGradient(
+                                begin: Alignment.bottomLeft,
+                                end: Alignment.topRight,
+                                colors: [
+                                  ColorsManager.whiteColor,
+                                  ColorsManager.whiteColor,
+                                ],
+                              ),
                             ),
-                            verticalSpace(1.h),
-                            homeCubit.certificationImageFile != null
-                                ? Image(
-                                image: FileImage(
-                                    homeCubit.certificationImageFile!))
-                                : InkWell(
-                              onTap: () {
-                                navigateTo(
-                                    context, AddCoachCertifications(
-                                  userId: homeCubit.profileResults!.userId,
-                                ));
-                              },
-                              child: const myText(
-                                  title: AppString.getCertifications,
-                                  style: Style.medium),
+                            child: Padding(
+                              padding: EdgeInsets.all(10.rSp),
+                              child: index != homeCubit.certificateResult!.length?
+                              InkWell(
+                                onTap: () {
+                                  navigateTo(context, ViewCertification(
+                                      certification: homeCubit.certificateResult![index].certificateFile,
+                                      certificationName: homeCubit.certificateResult![index].certificateName,
+                                  )
+                                  );
+                                },
+                                child: Column(
+                                  children: [
+                                    homeCubit.certificateResultImg!,
+                                    verticalSpace(1.h),
+                                    myText(
+                                        title: homeCubit.certificateResult![index].certificateName,
+                                        style: Style.medium
+                                    ),
+                                    verticalSpace(1.h),
+                                    myText(
+                                        title: homeCubit.certificateResult![index].certificateDate,
+                                        style: Style.medium
+                                    ),
+                                    //certificateResultImg!
+                                    // Image.network(
+                                    //   homeCubit.certificateResult![index].certificateFile,
+                                    //   height: 25.h,
+                                    // ),
+                                    // SvgPicture.asset(
+                                    //   listTrainingImages[index].img,
+                                    //   height: 25.h,
+                                    // ),
+                                  ],
+                                ),
+                              )
+                              :
+                              TextButton(
+                                onPressed: ()
+                                {
+                                  navigateTo(context, AddCoachCertifications(
+                                      userId: userId
+                                  )
+                                  );
+                                },
+                                child: const myText(
+                                    title: 'add more',
+                                    style: Style.medium
+                                ),
+                              )
+                              ,
                             ),
-                          ],
+                          ) :
+                            null;
+                        },
+                        itemCount: homeCubit.certificateResult!.length + 1,
+                      ),
+                    ),
+                  if(homeCubit.certificateResult == null)
+                    InkWell(
+                      onTap: () {
+                        navigateTo(context, AddCoachCertifications(
+                            userId: userId
+                        )
+                        );
+                      },
+                      child: Card(
+                        margin: EdgeInsets.all(25.rSp),
+                        elevation: 5,
+                        child: Padding(
+                          padding: EdgeInsets.all(20.0.rSp),
+                          child: const SizedBox(
+                            width: double.infinity,
+                            child: Center(
+                              child: myText(
+                                align: TextAlign.center,
+                                title: AppString.getCertifications,
+                                style: Style.medium,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  // Container(
+                  //   width: 40.w,
+                  //   height: 10.h,
+                  //   child: Card(
+                  //     margin: EdgeInsets.all(25.rSp),
+                  //     elevation: 5,
+                  //     child: Padding(
+                  //       padding: EdgeInsets.all(20.0.rSp),
+                  //       child: Expanded(
+                  //         child: ListView.builder(
+                  //             itemBuilder: (context, index) {
+                  //               return myText(title: 'title', style: Style.medium);
+                  //             },
+                  //           physics: const BouncingScrollPhysics(),
+                  //           itemCount: homeCubit.certificateResult!.length,
+                  //           shrinkWrap: true,
+                  //           scrollDirection: Axis.horizontal,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+
                   Card(
                     margin: EdgeInsets.all(25.rSp),
                     elevation: 5,

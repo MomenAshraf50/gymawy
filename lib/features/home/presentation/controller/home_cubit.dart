@@ -32,7 +32,6 @@ import '../screens/settings/settings_screen.dart';
 import 'home_states.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 
-
 class HomeCubit extends Cubit<HomeStates> {
   final UpdateProfilePicture _updateProfilePicture;
   final UpdateProfile _updateProfile;
@@ -50,8 +49,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required ProfileUseCase profileUseCase,
     required CertificateUseCase certificateUseCase,
     required GetCertificateUseCase getCertificateUseCase,
-  })
-      : _updateProfilePicture = updateProfilePicture,
+  })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
         _updateCoachSocialLinks = updateCoachSocialLinks,
         _searchUseCase = searchUseCase,
@@ -62,22 +60,21 @@ class HomeCubit extends Cubit<HomeStates> {
 
   static HomeCubit get(context) => BlocProvider.of(context);
 
-  List<Widget> clientWidgets =
-  [
-  const HomeClientScreen(),
-  const SearchScreen(),
-  const QRCodescreen(),
-  SettingsScreen(),
-  ClientProfileScreen(),
+  List<Widget> clientWidgets = [
+    const HomeClientScreen(),
+    const SearchScreen(),
+    const QRCodescreen(),
+    SettingsScreen(),
+    ClientProfileScreen(),
   ];
 
-  List<Widget> coachWidgets =
-  [
+  List<Widget> coachWidgets = [
     const HomeClientScreen(),
     const SearchScreen(),
     SettingsScreen(),
     const ProfileCoachScreen(),
   ];
+
   //
   // List<Widget> widgets =
   //     isCoachLogin == false ?  [
@@ -177,8 +174,6 @@ class HomeCubit extends Cubit<HomeStates> {
   String? month;
   String? day;
 
-
-
   File? exerciseImageFile;
   File? mealImageFile;
   File? profileImageFile;
@@ -188,7 +183,7 @@ class HomeCubit extends Cubit<HomeStates> {
     File? image;
     try {
       final pickedImage =
-      await ImagePicker().pickImage(source: ImageSource.gallery);
+          await ImagePicker().pickImage(source: ImageSource.gallery);
 
       if (pickedImage != null) {
         image = File(pickedImage.path);
@@ -286,7 +281,8 @@ class HomeCubit extends Cubit<HomeStates> {
     ));
 
     result.fold((failure) {
-      debugPrintFullText('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+      debugPrintFullText(
+          '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
       emit(UpdateCoachErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(UpdateCoachSuccessState(data));
@@ -295,8 +291,8 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void updateCoachProfilePicture({required File image}) async {
     emit(UpdateCoachLoadingState());
-    final result = await _updateProfilePicture(
-        UpdateProfilePictureParams(image: image));
+    final result =
+        await _updateProfilePicture(UpdateProfilePictureParams(image: image));
     result.fold((failure) {
       emit(UpdateCoachErrorState(mapFailureToMessage(failure)));
     }, (data) {
@@ -312,10 +308,10 @@ class HomeCubit extends Cubit<HomeStates> {
   }) async {
     emit(UpdateCoachLoadingState());
     final result = await _updateCoachSocialLinks(UpdateCoachSocialLinksParams(
-        facebookLink: facebookLink,
-        instagramLink: instagramLink,
-        tiktokLink: tiktokLink,
-        youtubeLink: youtubeLink,
+      facebookLink: facebookLink,
+      instagramLink: instagramLink,
+      tiktokLink: tiktokLink,
+      youtubeLink: youtubeLink,
     ));
 
     result.fold((failure) {
@@ -327,6 +323,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   // SearchEntity? name;
   List<SearchEntity>? results;
+
   void search({
     required search,
   }) async {
@@ -339,24 +336,20 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(SearchErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(SearchSuccessState(
-          data,
+        data,
       ));
       results = data;
     });
   }
 
   ProfileEntity? profileResults;
-  void profile({
-    required String id,
-    context
-  }) async {
+
+  void profile({required String id, context}) async {
     emit(ProfileLoadingState());
 
-    final result = await _profileUseCase(
-        ProfileParams(
-            id: id,
-        )
-    );
+    final result = await _profileUseCase(ProfileParams(
+      id: id,
+    ));
 
     result.fold((failure) {
       emit(ProfileErrorState(mapFailureToMessage(failure)));
@@ -369,12 +362,13 @@ class HomeCubit extends Cubit<HomeStates> {
   FilePickerResult? certificationPdf;
   Widget? certificationImage;
 
-  void selectCertificationPdf() async
-  {
+  void selectCertificationPdf() async {
     certificationPdf = await FilePicker.platform.pickFiles(
       allowMultiple: false,
       type: FileType.custom,
-      allowedExtensions: ['pdf',],
+      allowedExtensions: [
+        'pdf',
+      ],
     );
     //certificationImage = await FilePreview.getThumbnail(certificationPdf!.files.first.path!);
     final file = certificationPdf!.files.first;
@@ -386,42 +380,48 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(PickCertificationPdf());
   }
 
-
-  CertificateEntity? certificateResult;
-  void certificate({
-    required String id,
-    required String certificateName,
-    required FilePickerResult certificateFile,
-    required String certificateDate,
-    context
-  }) async {
+  void certificate(
+      {
+      required String id,
+      required String certificateName,
+      required FilePickerResult certificateFile,
+      required String certificateDate,
+      context}) async {
     emit(CertificationLoadingState());
-    final result = await _certificateUseCase(
-        CertificateParams(
-          id: id,
-          certificateName: certificateName,
-          certificateFile: certificateFile,
-          certificateDate: certificateDate,
-        )
-    );
+    final result = await _certificateUseCase(CertificateParams(
+      id: id,
+      certificateName: certificateName,
+      certificateFile: certificateFile,
+      certificateDate: certificateDate,
+    ));
     result.fold((failure) {
       emit(CertificationErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(CertificationSuccessState(data));
+    });
+  }
+
+  List<CertificateEntity>? certificateResult;
+  Widget? certificateResultImg;
+
+  void getCertificates(GetCertificateParams params, index) async {
+    emit(GetCertificateLoadingState());
+    final result = await _getCertificateUseCase(params);
+    result.fold((failure) {
+      emit(GetCertificateErrorState(mapFailureToMessage(failure)));
+    }, (data) async {
+      emit(GetCertificateSuccessState(data));
       certificateResult = data;
     });
   }
 
-  void getCertificates(GetCertificateParams params)async{
-    emit(GetCertificateLoadingState());
-    final result = await _getCertificateUseCase(params);
-    result.fold((failure){
-      emit(GetCertificateErrorState(mapFailureToMessage(failure)));
-    }
-        , (data) {
-      emit(GetCertificateSuccessState(data));
-        });
+  void convertCertificateToImg(index)
+  async
+  {
+    certificateResultImg = await FilePreview.getThumbnail(certificateResult![index].certificateFile);
+    emit(ConvertCertificateToImgState());
   }
+
 }
 
 class Suggestions extends Equatable {

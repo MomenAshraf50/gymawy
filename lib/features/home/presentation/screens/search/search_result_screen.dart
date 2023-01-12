@@ -12,6 +12,7 @@ import '../../../../../core/util/widgets/loadingPage.dart';
 import '../../../../../core/util/widgets/myText.dart';
 import '../../../../../core/util/widgets/my_icon_button.dart';
 import '../../controller/home_cubit.dart';
+import '../profile/social_web_view.dart';
 
 class SearchResultScreen extends StatelessWidget {
   SearchResultScreen(
@@ -260,33 +261,33 @@ class SearchResultScreen extends StatelessWidget {
                                   Assets.images.svg.facebook_icon,
                                 ),
                                 onPressed: () {
-                                  WebView(
-                                    initialUrl: facebookLink,
-                                  );
+                                  navigateTo(context, SocialWebView(
+                                    socialUrl: facebookLink!,
+                                  ));
                                 })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon: SvgPicture.asset(Assets.images.svg.tiktok),
                                 onPressed: () {
-                                  WebView(
-                                    initialUrl: tiktokLink,
-                                  );
+                                  navigateTo(context, SocialWebView(
+                                    socialUrl: tiktokLink!,
+                                  ));
                                 })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon: SvgPicture.asset(Assets.images.svg.instagram),
                                 onPressed: () {
-                                  WebView(
-                                    initialUrl: instagramLink,
-                                  );
+                                  navigateTo(context, SocialWebView(
+                                    socialUrl: instagramLink!,
+                                  ));
                                 })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon: SvgPicture.asset(Assets.images.svg.youtube),
                                 onPressed: () {
-                                  WebView(
-                                    initialUrl: youtubeLink,
-                                  );
+                                  navigateTo(context, SocialWebView(
+                                    socialUrl: youtubeLink!,
+                                  ));
                                 })),
                       ],
                     ),
