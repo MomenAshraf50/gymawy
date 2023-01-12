@@ -15,6 +15,7 @@ import 'package:gymawy/features/login/domain/usecase/log_in_usecase.dart';
 import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../features/home/domain/usecase/certification_usecase.dart';
 import '../../features/register/data/data_source/register_remote_data_source.dart';
 import '../../features/register/data/repository/register_repository.dart';
 import '../../features/register/domain/repository/register_base_rebository.dart';
@@ -42,6 +43,7 @@ Future<void> init() async {
         updateProfile: sl(),
         searchUseCase: sl(),
         profileUseCase: sl(),
+        certificateUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -71,6 +73,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UpdateCoachSocialLinks(sl()));
   sl.registerLazySingleton(() => SearchUseCase(sl()));
   sl.registerLazySingleton(() => ProfileUseCase(sl()));
+  sl.registerLazySingleton(() => CertificateUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(

@@ -73,36 +73,49 @@ class CreateAccountScreen extends StatelessWidget {
                           }
                         },
                         controller: registerCubit.userNameController,
-                        hint: AppString.userName),
+                        hint: AppString.userName,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: myTextFill(
+                              svgImg: Assets.images.svg.user,
+                              validate: (String? value) {
+                                if (value!.isEmpty) {
+                                  return 'isEmpty';
+                                }
+                              },
+                              controller: registerCubit.userFirstNameController,
+                              hint: AppString.firstName,
+                          ),
+                        ),
+                        horizontalSpace(5.w),
+                        Expanded(
+                          child: myTextFill(
+                              svgImg: Assets.images.svg.user,
+                              validate: (String? value) {
+                                if (value!.isEmpty) {
+                                  return 'isEmpty';
+                                }
+                              },
+                              controller: registerCubit.userLastNameController,
+                              hint: AppString.lastName,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // myTextFill(
+                    //     svgImg: Assets.images.svg.user,
+                    //     validate: (String? value) {
+                    //       if (value!.isEmpty) {
+                    //         return 'isEmpty';
+                    //       }
+                    //     },
+                    //     controller: registerCubit.fullNameController,
+                    //     hint: AppString.fullName,
+                    // ),
                     myTextFill(
-                        svgImg: Assets.images.svg.user,
-                        validate: (String? value) {
-                          if (value!.isEmpty) {
-                            return 'isEmpty';
-                          }
-                        },
-                        controller: registerCubit.userFirstNameController,
-                        hint: AppString.firstName),
-                    myTextFill(
-                        svgImg: Assets.images.svg.user,
-                        validate: (String? value) {
-                          if (value!.isEmpty) {
-                            return 'isEmpty';
-                          }
-                        },
-                        controller: registerCubit.userLastNameController,
-                        hint: AppString.lastName),
-                    myTextFill(
-                        svgImg: Assets.images.svg.user,
-                        validate: (String? value) {
-                          if (value!.isEmpty) {
-                            return 'isEmpty';
-                          }
-                        },
-                        controller: registerCubit.fullNameController,
-                        hint: AppString.fullName),
-                    myTextFill(
-                        svgImg: Assets.images.svg.user,
+                        svgImg: Assets.images.svg.age,
                         validate: (String? value) {
                           if (value!.isEmpty) {
                             return 'isEmpty';
@@ -112,27 +125,36 @@ class CreateAccountScreen extends StatelessWidget {
                         hint: AppString.userAge,
                         type: TextInputType.number,
                     ),
-                    myTextFill(
-                        svgImg: Assets.images.svg.user,
-                        validate: (String? value) {
-                          if (value!.isEmpty) {
-                            return 'isEmpty';
-                          }
-                        },
-                        controller: registerCubit.currentWeightController,
-                        hint: AppString.currentWeight,
-                        type: TextInputType.number,
-                    ),
-                    myTextFill(
-                        svgImg: Assets.images.svg.user,
-                        validate: (String? value) {
-                          if (value!.isEmpty) {
-                            return 'isEmpty';
-                          }
-                        },
-                        controller: registerCubit.currentTallController,
-                        hint: AppString.currentTall,
-                        type: TextInputType.number,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: myTextFill(
+                              svgImg: Assets.images.svg.weight,
+                              validate: (String? value) {
+                                if (value!.isEmpty) {
+                                  return 'isEmpty';
+                                }
+                              },
+                              controller: registerCubit.currentWeightController,
+                              hint: AppString.currentWeight,
+                              type: TextInputType.number,
+                          ),
+                        ),
+                        horizontalSpace(5.w),
+                        Expanded(
+                          child: myTextFill(
+                              svgImg: Assets.images.svg.tall,
+                              validate: (String? value) {
+                                if (value!.isEmpty) {
+                                  return 'isEmpty';
+                                }
+                              },
+                              controller: registerCubit.currentTallController,
+                              hint: AppString.currentTall,
+                              type: TextInputType.number,
+                          ),
+                        ),
+                      ],
                     ),
                     myTextFill(
                       svgImg: Assets.images.svg.email,
@@ -273,7 +295,7 @@ class CreateAccountScreen extends StatelessWidget {
                           userNameRegister = registerCubit.userNameController.text;
                           firstNameRegister = registerCubit.userFirstNameController.text;
                           lastNameRegister = registerCubit.userLastNameController.text;
-                          fullNameRegister = registerCubit.fullNameController.text;
+                          fullNameRegister = '${registerCubit.userFirstNameController.text} ${registerCubit.userLastNameController.text}';
                           ageRegister = registerCubit.userAgeController.text;
                           emailRegister = registerCubit.emailController.text;
                           phoneRegister = registerCubit.phoneController.text;

@@ -93,6 +93,9 @@ dependencies:
   video_player: ^2.4.10
   another_stepper: ^1.1.6
   google_nav_bar: ^5.0.6
+  webview_flutter: ^3.0.4
+  file_previewer: ^0.0.5
+  file_picker: ^4.6.0
 
 dev_dependencies:
   flutter_test:

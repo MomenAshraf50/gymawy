@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:equatable/equatable.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:file_previewer/file_previewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/error/failures.dart';
@@ -17,7 +19,9 @@ import '../../../../core/network/local/cache_helper.dart';
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../login/presentation/screens/login_screen.dart';
+import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/search_entity.dart';
+import '../../domain/usecase/certification_usecase.dart';
 import '../../domain/usecase/profile_usecase.dart';
 import '../../domain/usecase/search_usecase.dart';
 import '../screens/home/home_screen.dart';
@@ -33,6 +37,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final UpdateCoachSocialLinks _updateCoachSocialLinks;
   final SearchUseCase _searchUseCase;
   final ProfileUseCase _profileUseCase;
+  final CertificateUseCase _certificateUseCase;
 
   HomeCubit({
     required UpdateProfilePicture updateProfilePicture,
@@ -40,12 +45,14 @@ class HomeCubit extends Cubit<HomeStates> {
     required UpdateCoachSocialLinks updateCoachSocialLinks,
     required SearchUseCase searchUseCase,
     required ProfileUseCase profileUseCase,
+    required CertificateUseCase certificateUseCase,
   })
       : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
         _updateCoachSocialLinks = updateCoachSocialLinks,
         _searchUseCase = searchUseCase,
         _profileUseCase = profileUseCase,
+        _certificateUseCase = certificateUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -159,6 +166,13 @@ class HomeCubit extends Cubit<HomeStates> {
   TextEditingController confirmPasswordController = TextEditingController();
 
   TextEditingController nameOfPlanController = TextEditingController();
+
+  TextEditingController certificateNameController = TextEditingController();
+  String? year;
+  String? month;
+  String? day;
+
+
 
   File? exerciseImageFile;
   File? mealImageFile;
@@ -347,6 +361,51 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  FilePickerResult? certificationPdf;
+  Widget? certificationImage;
+
+  void selectCertificationPdf() async
+  {
+    certificationPdf = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: FileType.custom,
+      allowedExtensions: ['pdf',],
+    );
+    //certificationImage = await FilePreview.getThumbnail(certificationPdf!.files.first.path!);
+    final file = certificationPdf!.files.first;
+    debugPrintFullText('NAme: ${file.name}');
+    debugPrintFullText('NAme: ${file.size}');
+    debugPrintFullText('NAme: ${file.bytes}');
+    debugPrintFullText('NAme: ${file.extension}');
+    debugPrintFullText('NAme: ${file.path}');
+    emit(PickCertificationPdf());
+  }
+
+
+  CertificateEntity? certificateResult;
+  void certificate({
+    required String id,
+    required String certificateName,
+    required FilePickerResult certificateFile,
+    required String certificateDate,
+    context
+  }) async {
+    emit(CertificationLoadingState());
+    final result = await _certificateUseCase(
+        CertificateParams(
+          id: id,
+          certificateName: certificateName,
+          certificateFile: certificateFile,
+          certificateDate: certificateDate,
+        )
+    );
+    result.fold((failure) {
+      emit(CertificationErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(CertificationSuccessState(data));
+      certificateResult = data;
+    });
+  }
 }
 
 class Suggestions extends Equatable {

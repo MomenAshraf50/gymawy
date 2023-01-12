@@ -160,7 +160,7 @@ class HomeClientScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        if(homeCubit.results != null)
+                        if(homeCubit.results != null && homeCubit.searchController.text.isNotEmpty)
                           SizedBox(
                             height: 20.h,
                             child: ListView.builder(

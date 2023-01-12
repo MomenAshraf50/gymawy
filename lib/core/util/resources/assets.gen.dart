@@ -327,6 +327,15 @@ class $AssetsImagesSvgGen {
   /// File path: assets/images/svg/user.svg
   String get user => 'assets/images/svg/user.svg';
 
+  /// File path: assets/images/svg/age.svg
+  String get age => 'assets/images/svg/age.svg';
+
+  /// File path: assets/images/svg/weight.svg
+  String get weight => 'assets/images/svg/weight.svg';
+
+  /// File path: assets/images/svg/tall.svg
+  String get tall => 'assets/images/svg/tall.svg';
+
   /// File path: assets/images/svg/certificate.svg
   String get certificate => 'assets/images/svg/certificate.svg';
 

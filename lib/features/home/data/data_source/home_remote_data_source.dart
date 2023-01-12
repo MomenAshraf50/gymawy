@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:gymawy/core/network/remote/api_endpoints.dart';
 import 'package:gymawy/core/network/remote/dio_helper.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/features/home/data/models/certificate_model.dart';
 import 'package:gymawy/features/home/data/models/profile_model.dart';
 import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/data/models/update_coach_model.dart';
@@ -24,6 +28,13 @@ abstract class HomeBaseDataSource {
 
   Future<ProfileModel> profile({
     required String id,
+  });
+
+  Future<CertificateModel> certificate({
+    required String id,
+    required String certificateName,
+    required FilePickerResult certificateFile,
+    required String certificateDate,
   });
 
 }
@@ -129,7 +140,32 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     return ProfileModel.fromJson(f.data);
   }
 
+  @override
+  Future<CertificateModel> certificate({
+    required String id,
+    required String certificateName,
+    required FilePickerResult certificateFile,
+    required String certificateDate,
+  }) async {
+    final Response f = await dioHelper.post(
+      token: token,
+      url: certificateEndPoint,
+      query:
+      {
+        'owner': id,
+      },
+      data: FormData.fromMap({
+        'certificate_name': certificateName,
+        'certificate_file': await MultipartFile.fromFile(
+            certificateFile.files.first.path!,
+          filename: Uri.file(certificateFile.files.first.path!).pathSegments.last
+        ),
+        'date': certificateDate,
+      })
 
+    );
+    return CertificateModel.fromJson(f.data);
+  }
 
 
 }
