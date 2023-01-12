@@ -92,6 +92,13 @@ class SearchScreen extends StatelessWidget {
                                   name: homeCubit.results![index].userName,
                                   pic: homeCubit.results![index].profilePicture,
                                   location: homeCubit.results![index].location,
+                                  bio: homeCubit.results![index].bio,
+                                  verification: homeCubit.results![index].verification,
+                                  facebookLink: homeCubit.results![index].facebookLink,
+                                  fixedPrice: homeCubit.results![index].fixedPrice,
+                                  instagramLink: homeCubit.results![index].instagramLink,
+                                  tiktokLink: homeCubit.results![index].tiktokLink,
+                                  youtubeLink: homeCubit.results![index].youtubeLink,
                                 ));
                               },
                               child: Padding(
