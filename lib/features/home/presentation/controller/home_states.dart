@@ -78,3 +78,6 @@ class GetCertificateErrorState extends HomeStates{
 
   GetCertificateErrorState(this.failure);
 }
+
+class ConvertCertificateToImgState extends HomeStates{}
+
