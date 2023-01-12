@@ -81,7 +81,7 @@ class SearchScreen extends StatelessWidget {
                       ],
                     ),
                     verticalSpace(1.h),
-                    if(homeCubit.results != null)
+                    if(homeCubit.results != null && homeCubit.searchController.text.isNotEmpty)
                       Expanded(
                         child: ListView.builder(
                           itemBuilder: (context, index) {

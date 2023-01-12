@@ -1,6 +1,7 @@
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_coach_profile_entity.dart';
 
+import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/search_entity.dart';
 
 abstract class HomeStates{}
@@ -51,4 +52,17 @@ class ProfileErrorState extends HomeStates{
   final String failure;
 
   ProfileErrorState(this.failure);
+}
+
+class PickCertificationPdf extends HomeStates{}
+
+class CertificationLoadingState extends HomeStates{}
+class CertificationSuccessState extends HomeStates{
+  CertificateEntity entity;
+  CertificationSuccessState(this.entity);
+}
+class CertificationErrorState extends HomeStates{
+  final String failure;
+
+  CertificationErrorState(this.failure);
 }

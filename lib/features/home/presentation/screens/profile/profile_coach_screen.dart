@@ -6,6 +6,7 @@ import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/profile/add_coach_certifications.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
@@ -216,22 +217,38 @@ class ProfileCoachScreen extends StatelessWidget {
                                 icon: SvgPicture.asset(
                                   Assets.images.svg.facebook_icon,
                                 ),
-                                onPressed: () {})),
+                                onPressed: () {
+                                   WebView(
+                                     initialUrl: homeCubit.profileResults!.facebookLink,
+                                   );
+                                })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon:
                                 SvgPicture.asset(Assets.images.svg.tiktok),
-                                onPressed: () {})),
+                                onPressed: () {
+                                  WebView(
+                                    initialUrl: homeCubit.profileResults!.tiktokLink,
+                                  );
+                                })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon: SvgPicture.asset(
                                     Assets.images.svg.instagram),
-                                onPressed: () {})),
+                                onPressed: () {
+                                  WebView(
+                                    initialUrl: homeCubit.profileResults!.instagramLink,
+                                  );
+                                })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon:
                                 SvgPicture.asset(Assets.images.svg.youtube),
-                                onPressed: () {})),
+                                onPressed: () {
+                                  WebView(
+                                    initialUrl: homeCubit.profileResults!.youtubeLink,
+                                  );
+                                })),
                       ],
                     ),
                   ),
@@ -258,7 +275,9 @@ class ProfileCoachScreen extends StatelessWidget {
                                 : InkWell(
                               onTap: () {
                                 navigateTo(
-                                    context, const AddCoachCertifications());
+                                    context, AddCoachCertifications(
+                                  userId: homeCubit.profileResults!.userId,
+                                ));
                               },
                               child: const myText(
                                   title: AppString.getCertifications,

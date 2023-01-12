@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
@@ -258,19 +259,35 @@ class SearchResultScreen extends StatelessWidget {
                                 icon: SvgPicture.asset(
                                   Assets.images.svg.facebook_icon,
                                 ),
-                                onPressed: () {})),
+                                onPressed: () {
+                                  WebView(
+                                    initialUrl: facebookLink,
+                                  );
+                                })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon: SvgPicture.asset(Assets.images.svg.tiktok),
-                                onPressed: () {})),
+                                onPressed: () {
+                                  WebView(
+                                    initialUrl: tiktokLink,
+                                  );
+                                })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon: SvgPicture.asset(Assets.images.svg.instagram),
-                                onPressed: () {})),
+                                onPressed: () {
+                                  WebView(
+                                    initialUrl: instagramLink,
+                                  );
+                                })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon: SvgPicture.asset(Assets.images.svg.youtube),
-                                onPressed: () {})),
+                                onPressed: () {
+                                  WebView(
+                                    initialUrl: youtubeLink,
+                                  );
+                                })),
                       ],
                     ),
                   ),

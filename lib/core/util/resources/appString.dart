@@ -112,6 +112,8 @@ class AppString {
   static const followersNumber = '5634';
   static const followers = 'Followers';
   static const certifications = 'Certifications';
+  static const certificateName = 'Certificate Name';
+  static const certificateDate = 'Certificate Date';
   static const cv = 'CV';
   static const follow = 'Follow';
   static const contact = 'Contact';
@@ -144,8 +146,8 @@ class AppString {
   static const mail = 'mohammed.gallya39@gmail.com';
   static const completedDay = 'Completed Day';
   static const goals = 'Goals';
-  static const currentTall = 'Current Tall';
-  static const currentWeight = 'Current Weight';
+  static const currentTall = 'Tall';
+  static const currentWeight = 'Weight';
   static const bodyFat = 'Body Fat';
   static const nameOfExercise = 'Name Of Exercise';
   static const equipmentRequired = 'Equipment Required';
