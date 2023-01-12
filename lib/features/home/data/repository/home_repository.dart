@@ -6,8 +6,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:gymawy/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
-import 'package:gymawy/features/home/domain/entities/update_coach_profile_entity.dart';
+import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
+import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
@@ -19,6 +20,7 @@ typedef Call = Future<UpdateEntity> Function();
 typedef CallSearch = Future<List<SearchEntity>> Function();
 typedef CallProfile = Future<ProfileEntity> Function();
 typedef CallCertification = Future<CertificateEntity> Function();
+typedef CallGetCertification = Future<List<CertificateEntity>> Function();
 
 class HomeRepository extends HomeBaseRepository {
   final HomeBaseDataSource remoteDataSource;
@@ -42,18 +44,18 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, UpdateEntity>> updateCoachProfile(
+  Future<Either<Failure, UpdateEntity>> updateProfile(
       {required UpdateProfileParams params}) async {
     return await fetchData(() {
-      return remoteDataSource.updateCoachProfile(params: params);
+      return remoteDataSource.updateProfile(params: params);
     });
   }
 
   @override
-  Future<Either<Failure, UpdateEntity>> updateCoachProfilePicture(
+  Future<Either<Failure, UpdateEntity>> updateProfilePicture(
       {required UpdateProfilePictureParams params}) async{
     return await fetchData(() {
-      return remoteDataSource.updateCoachProfilePicture(params: params);
+      return remoteDataSource.updateProfilePicture(params: params);
     });
   }
 
@@ -146,6 +148,26 @@ class HomeRepository extends HomeBaseRepository {
           certificateFile:certificateFile,
           certificateDate:certificateDate,
       );
+    });
+  }
+
+  Future<Either<Failure,List<CertificateEntity>>> fetchGetCertificate(
+      CallGetCertification mainMethod,
+      ) async {
+    try {
+      final certificateData = await mainMethod();
+      return Right(certificateData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CertificateEntity>>> getCertificate(GetCertificateParams params)async {
+    return await fetchGetCertificate((){
+      return remoteDataSource.getCertificate(params);
     });
   }
 

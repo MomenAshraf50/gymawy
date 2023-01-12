@@ -71,7 +71,7 @@ class EditCoachLinksScreen extends StatelessWidget {
                       ),
                       myButton(text: AppString.finish, onPressed: () {
                         homeCubit.updateCoachSocialLinks(
-                          facebookLink: 'facebookLink',
+                          facebookLink: 'https://www.facebook.com/profile.php?id=100002763743389',
                           instagramLink: 'instagramLink',
                           tiktokLink: 'tiktokLink',
                           youtubeLink: 'youtubeLink',
