@@ -22,6 +22,7 @@ import '../../../login/presentation/screens/login_screen.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/search_entity.dart';
 import '../../domain/usecase/certification_usecase.dart';
+import '../../domain/usecase/delete_certification_usecase.dart';
 import '../../domain/usecase/profile_usecase.dart';
 import '../../domain/usecase/search_usecase.dart';
 import '../screens/home/home_screen.dart';
@@ -40,6 +41,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final ProfileUseCase _profileUseCase;
   final CertificateUseCase _certificateUseCase;
   final GetCertificateUseCase _getCertificateUseCase;
+  final DeleteCertificateUseCase _deleteCertificateUseCase;
 
   HomeCubit({
     required UpdateProfilePicture updateProfilePicture,
@@ -49,6 +51,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required ProfileUseCase profileUseCase,
     required CertificateUseCase certificateUseCase,
     required GetCertificateUseCase getCertificateUseCase,
+    required DeleteCertificateUseCase deleteCertificateUseCase,
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
         _updateCoachSocialLinks = updateCoachSocialLinks,
@@ -56,6 +59,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _profileUseCase = profileUseCase,
         _certificateUseCase = certificateUseCase,
         _getCertificateUseCase = getCertificateUseCase,
+        _deleteCertificateUseCase = deleteCertificateUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -420,6 +424,25 @@ class HomeCubit extends Cubit<HomeStates> {
   {
     certificateResultImg = await FilePreview.getThumbnail(certificateResult![index].certificateFile);
     emit(ConvertCertificateToImgState());
+  }
+
+
+
+  void deleteCertificate(
+      {
+        required String certificateId,
+        context
+      }) async {
+    emit(DeleteCertificateLoadingState());
+    final result = await _deleteCertificateUseCase(DeleteCertificateParams(
+        certificateId: certificateId
+    )
+    );
+    result.fold((failure) {
+      emit(DeleteCertificateErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(DeleteCertificateSuccessState());
+    });
   }
 
 }

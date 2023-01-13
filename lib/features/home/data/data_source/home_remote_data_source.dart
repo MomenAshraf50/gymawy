@@ -40,6 +40,10 @@ abstract class HomeBaseDataSource {
 
   Future<List<CertificateModel>> getCertificate(GetCertificateParams params);
 
+  Future<void> deleteCertificate({
+    required String certificateId,
+  });
+
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -189,6 +193,17 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     );
     return  List<CertificateModel>.from(
         (f.data['results'] as List).map((e) => CertificateModel.fromJson(e)));
+  }
+
+  @override
+  Future<void> deleteCertificate({
+    required String certificateId,
+  }) async {
+    final Response f = await dioHelper.delete(
+      token: token,
+      url: '$certificateEndPoint$certificateId/',
+    );
+    return f.data;
   }
 
 

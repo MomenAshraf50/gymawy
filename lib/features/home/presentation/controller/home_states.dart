@@ -81,3 +81,11 @@ class GetCertificateErrorState extends HomeStates{
 
 class ConvertCertificateToImgState extends HomeStates{}
 
+class DeleteCertificateLoadingState extends HomeStates{}
+class DeleteCertificateSuccessState extends HomeStates{}
+class DeleteCertificateErrorState extends HomeStates{
+  final String failure;
+
+  DeleteCertificateErrorState(this.failure);
+}
+

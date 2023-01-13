@@ -353,6 +353,7 @@ class SearchResultScreen extends StatelessWidget {
                                         navigateTo(context, ViewCertification(
                                           certification: homeCubit.certificateResult![index].certificateFile,
                                           certificationName: homeCubit.certificateResult![index].certificateName,
+                                          certificationID: (homeCubit.certificateResult![index].certificateId).toString(),
                                         )
                                         );
                                       },
