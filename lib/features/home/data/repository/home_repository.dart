@@ -9,6 +9,7 @@ import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
+import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
@@ -194,6 +195,13 @@ class HomeRepository extends HomeBaseRepository {
       return remoteDataSource.deleteCertificate(
         certificateId: certificateId
       );
+    });
+  }
+
+  @override
+  Future<Either<Failure, CertificateEntity>> updateCertificate(UpdateCertificateParams params) {
+    return fetchCertificate((){
+      return remoteDataSource.updateCertificate(params);
     });
   }
 

@@ -6,6 +6,7 @@ import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/search_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
@@ -43,4 +44,6 @@ abstract class HomeBaseRepository {
   Future<Either<Failure, void>> deleteCertificate({
     required String certificateId,
   });
+
+  Future<Either<Failure,CertificateEntity>> updateCertificate(UpdateCertificateParams params);
 }

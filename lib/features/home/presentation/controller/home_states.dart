@@ -20,16 +20,16 @@ class ExerciseExamplePauseAndPlayVideoState extends HomeStates{}
 class GetTextHeightState extends HomeStates{}
 class ChangeCurrentStepState extends HomeStates{}
 class SignOutState extends HomeStates{}
-class UpdateCoachLoadingState extends HomeStates{}
-class UpdateCoachSuccessState extends HomeStates{
+class UpdateLoadingState extends HomeStates{}
+class UpdateSuccessState extends HomeStates{
   UpdateEntity entity;
 
-  UpdateCoachSuccessState(this.entity);
+  UpdateSuccessState(this.entity);
 }
-class UpdateCoachErrorState extends HomeStates{
+class UpdateErrorState extends HomeStates{
   final String failure;
 
-  UpdateCoachErrorState(this.failure);
+  UpdateErrorState(this.failure);
 }
 
 class SearchLoadingState extends HomeStates{}
@@ -88,4 +88,18 @@ class DeleteCertificateErrorState extends HomeStates{
 
   DeleteCertificateErrorState(this.failure);
 }
+
+class UpdateCertificateLoadingState extends HomeStates{}
+class UpdateCertificateSuccessState extends HomeStates{
+  final CertificateEntity certificateEntity;
+
+  UpdateCertificateSuccessState(this.certificateEntity);
+}
+class UpdateCertificateErrorState extends HomeStates{
+  final String failure;
+
+  UpdateCertificateErrorState(this.failure);
+}
+
+
 

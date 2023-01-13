@@ -8,6 +8,7 @@ import 'package:gymawy/core/error/failures.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
@@ -42,6 +43,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final CertificateUseCase _certificateUseCase;
   final GetCertificateUseCase _getCertificateUseCase;
   final DeleteCertificateUseCase _deleteCertificateUseCase;
+  final UpdateCertificateUseCase _updateCertificateUseCase;
 
   HomeCubit({
     required UpdateProfilePicture updateProfilePicture,
@@ -52,6 +54,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required CertificateUseCase certificateUseCase,
     required GetCertificateUseCase getCertificateUseCase,
     required DeleteCertificateUseCase deleteCertificateUseCase,
+    required UpdateCertificateUseCase updateCertificateUseCase,
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
         _updateCoachSocialLinks = updateCoachSocialLinks,
@@ -60,6 +63,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _certificateUseCase = certificateUseCase,
         _getCertificateUseCase = getCertificateUseCase,
         _deleteCertificateUseCase = deleteCertificateUseCase,
+        _updateCertificateUseCase = updateCertificateUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -177,6 +181,7 @@ class HomeCubit extends Cubit<HomeStates> {
   String? year;
   String? month;
   String? day;
+  String? certificateDate;
 
   File? exerciseImageFile;
   File? mealImageFile;
@@ -212,7 +217,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void selectProfileImage(context) async {
     profileImageFile = await pickImageFromGallery(context);
-    updateCoachProfilePicture(image: profileImageFile!);
+    updateProfilePicture(image: profileImageFile!);
     emit(HomePlansImageSelectedState());
   }
 
@@ -260,7 +265,7 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void updateCoachProfile({
+  void updateProfile({
     required String userName,
     required String email,
     required String password,
@@ -271,7 +276,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required double fixedPrice,
     required String bio,
   }) async {
-    emit(UpdateCoachLoadingState());
+    emit(UpdateLoadingState());
     final result = await _updateProfile(UpdateProfileParams(
       email: email,
       userName: userName,
@@ -287,20 +292,20 @@ class HomeCubit extends Cubit<HomeStates> {
     result.fold((failure) {
       debugPrintFullText(
           '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-      emit(UpdateCoachErrorState(mapFailureToMessage(failure)));
+      emit(UpdateErrorState(mapFailureToMessage(failure)));
     }, (data) {
-      emit(UpdateCoachSuccessState(data));
+      emit(UpdateSuccessState(data));
     });
   }
 
-  void updateCoachProfilePicture({required File image}) async {
-    emit(UpdateCoachLoadingState());
+  void updateProfilePicture({required File image}) async {
+    emit(UpdateLoadingState());
     final result =
         await _updateProfilePicture(UpdateProfilePictureParams(image: image));
     result.fold((failure) {
-      emit(UpdateCoachErrorState(mapFailureToMessage(failure)));
+      emit(UpdateErrorState(mapFailureToMessage(failure)));
     }, (data) {
-      emit(UpdateCoachSuccessState(data));
+      emit(UpdateSuccessState(data));
     });
   }
 
@@ -310,7 +315,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required tiktokLink,
     required youtubeLink,
   }) async {
-    emit(UpdateCoachLoadingState());
+    emit(UpdateLoadingState());
     final result = await _updateCoachSocialLinks(UpdateCoachSocialLinksParams(
       facebookLink: facebookLink,
       instagramLink: instagramLink,
@@ -319,9 +324,9 @@ class HomeCubit extends Cubit<HomeStates> {
     ));
 
     result.fold((failure) {
-      emit(UpdateCoachErrorState(mapFailureToMessage(failure)));
+      emit(UpdateErrorState(mapFailureToMessage(failure)));
     }, (data) {
-      emit(UpdateCoachSuccessState(data));
+      emit(UpdateSuccessState(data));
     });
   }
 
@@ -442,6 +447,18 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(DeleteCertificateErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(DeleteCertificateSuccessState());
+    });
+  }
+
+  void updateCertificate(UpdateCertificateParams params) async{
+    emit(UpdateCertificateLoadingState());
+
+    final result = await _updateCertificateUseCase(params);
+
+    result.fold((failure) {
+      emit(UpdateCertificateErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(UpdateCertificateSuccessState(data));
     });
   }
 
