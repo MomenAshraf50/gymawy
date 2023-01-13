@@ -1,17 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../core/util/widgets/default_action_button.dart';
-import '../../../../../core/util/widgets/loadingPage.dart';
 import '../../../../../core/util/widgets/myText.dart';
 import '../../../../../core/util/widgets/my_icon_button.dart';
 import '../../../domain/usecase/get_certifications.dart';
@@ -384,7 +380,7 @@ class SearchResultScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ) :
-                                null;
+                                const Center(child: CircularProgressIndicator());
                               },
                               itemCount: homeCubit.certificateResult!.length,
                             ),

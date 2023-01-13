@@ -99,7 +99,7 @@ class EditProfileScreen extends StatelessWidget {
                         myButton(
                             text: AppString.finish,
                             onPressed: () {
-                              homeCubit.updateCoachProfile(
+                              homeCubit.updateProfile(
                                   userName: 'mo',
                                   email: 'momen@gmail.com',
                                   password: '123456',

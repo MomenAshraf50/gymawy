@@ -10,6 +10,7 @@ import 'package:gymawy/features/home/data/models/profile_model.dart';
 import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/data/models/update_coach_model.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
+import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
@@ -43,6 +44,8 @@ abstract class HomeBaseDataSource {
   Future<void> deleteCertificate({
     required String certificateId,
   });
+
+  Future<CertificateModel> updateCertificate(UpdateCertificateParams params);
 
 }
 
@@ -191,7 +194,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       },
       token: token,
     );
-    return  List<CertificateModel>.from(
+    return List<CertificateModel>.from(
         (f.data['results'] as List).map((e) => CertificateModel.fromJson(e)));
   }
 
@@ -207,4 +210,19 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   }
 
 
+  @override
+  Future<CertificateModel> updateCertificate(
+      UpdateCertificateParams params) async {
+    final Response f = await dioHelper.put(
+      url: '$certificateEndPoint${params.certificateId}/',
+
+      data: {
+        'certificate_name': params.certificateName,
+         'date' : params.certificateDate
+      },
+      token: token,
+    );
+
+    return CertificateModel.fromJson(f.data);
+  }
 }

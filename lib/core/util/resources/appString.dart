@@ -189,6 +189,7 @@ class AppString {
   static const description = 'Description';
   static const diet = 'Diet';
   static const mealName = 'Batates';
+  static const update = 'Update';
 
 
 
