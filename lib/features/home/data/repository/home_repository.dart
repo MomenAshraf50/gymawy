@@ -21,6 +21,7 @@ typedef CallSearch = Future<List<SearchEntity>> Function();
 typedef CallProfile = Future<ProfileEntity> Function();
 typedef CallCertification = Future<CertificateEntity> Function();
 typedef CallGetCertification = Future<List<CertificateEntity>> Function();
+typedef CallDeleteCertification = Future<void> Function();
 
 class HomeRepository extends HomeBaseRepository {
   final HomeBaseDataSource remoteDataSource;
@@ -170,6 +171,32 @@ class HomeRepository extends HomeBaseRepository {
       return remoteDataSource.getCertificate(params);
     });
   }
+
+  Future<Either<Failure,void>> fetchDeleteCertificate(
+      CallDeleteCertification mainMethod,
+      ) async {
+    try {
+      final deleteCertificateData = await mainMethod();
+      return Right(deleteCertificateData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteCertificate(
+      {
+    required String certificateId,
+  })async {
+    return await fetchDeleteCertificate((){
+      return remoteDataSource.deleteCertificate(
+        certificateId: certificateId
+      );
+    });
+  }
+
 
 
 }

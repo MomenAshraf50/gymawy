@@ -12,6 +12,7 @@ import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/myButton.dart';
+import '../../../domain/usecase/get_certifications.dart';
 import '../../controller/home_cubit.dart';
 
 class AddCoachCertifications extends StatelessWidget {
@@ -33,6 +34,13 @@ class AddCoachCertifications extends StatelessWidget {
           homeCubit.day = null;
           homeCubit.certificationPdf = null;
           homeCubit.certificateNameController.text = '';
+          homeCubit.getCertificates(
+              GetCertificateParams(
+                ownerId: userId!,
+                ownerName: '',
+              ),
+              context
+          );
         }
       },
       builder: (context, state) {
