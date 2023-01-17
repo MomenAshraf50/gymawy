@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:gymawy/core/network/remote/api_endpoints.dart';
 import 'package:gymawy/core/network/remote/dio_helper.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/features/home/data/models/add_exercise_model.dart';
 import 'package:gymawy/features/home/data/models/certificate_model.dart';
 import 'package:gymawy/features/home/data/models/profile_model.dart';
 import 'package:gymawy/features/home/data/models/search_model.dart';
@@ -14,6 +16,9 @@ import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
+
+import '../../../../core/util/widgets/progress.dart';
+import '../../domain/usecase/add_exercise_usecase.dart';
 
 abstract class HomeBaseDataSource {
   Future<UpdateModel> updateProfile({required UpdateProfileParams params});
@@ -47,7 +52,16 @@ abstract class HomeBaseDataSource {
 
   Future<CertificateModel> updateCertificate(UpdateCertificateParams params);
 
+  Future<AddExerciseModel> addExercise({
+    required String exerciseName,
+    required String exerciseCategory,
+    required String exerciseVisibility,
+    required File exercisePic,
+    required FilePickerResult exerciseVideo,
+  });
+
 }
+
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
   final DioHelper dioHelper;
@@ -102,7 +116,9 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
           'profile_picture': await MultipartFile.fromFile(
             params.image.path,
           )}
-        ));
+        ),
+      isMultipart: true,
+    );
     return UpdateModel.fromJson(f.data);
   }
 
@@ -171,13 +187,13 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
           'certificate_name': certificateName,
           'certificate_file': await MultipartFile.fromFile(
               certificateFile.files.first.path!,
-              filename: Uri
-                  .file(certificateFile.files.first.path!)
+              filename: Uri.file(certificateFile.files.first.path!)
                   .pathSegments
                   .last
           ),
           'date': certificateDate,
-        })
+        }),
+      isMultipart: true,
 
     );
     return CertificateModel.fromJson(f.data);
@@ -225,4 +241,43 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
 
     return CertificateModel.fromJson(f.data);
   }
+
+  @override
+  Future<AddExerciseModel> addExercise({
+        required String exerciseName,
+        required String exerciseCategory,
+        required String exerciseVisibility,
+        required File exercisePic,
+        required FilePickerResult exerciseVideo,
+      }
+      ) async {
+        final Response f = await dioHelper.post(
+          url: addExerciseEndPoint,
+          token: token,
+          data: FormData.fromMap({
+              'exercise_name': exerciseName,
+              'category' : exerciseCategory,
+              'exercise_pic' : await MultipartFile.fromFile(
+                exercisePic.path,
+                filename: Uri.file(exercisePic.path).pathSegments.last,
+              ),
+              'exercise_vid' : await MultipartFile.fromFile(
+                  exerciseVideo.files.first.path!,
+                  filename: Uri.file(exerciseVideo.files.first.path!
+                  )
+                      .pathSegments
+                      .last
+              ),
+              'visibility' : exerciseVisibility,
+          }),
+          isMultipart: true,
+          progressCallback: (int count, int total)
+          {
+            debugPrintFullText('progress this request is ${count ~/ total * 100}%');
+          }
+        );
+
+    return AddExerciseModel.fromJson(f.data);
+  }
+
 }

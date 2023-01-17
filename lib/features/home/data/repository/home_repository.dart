@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:gymawy/features/home/data/data_source/home_remote_data_source.dart';
+import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
@@ -23,6 +24,7 @@ typedef CallProfile = Future<ProfileEntity> Function();
 typedef CallCertification = Future<CertificateEntity> Function();
 typedef CallGetCertification = Future<List<CertificateEntity>> Function();
 typedef CallDeleteCertification = Future<void> Function();
+typedef CallAddExercise= Future<AddExerciseEntity> Function();
 
 class HomeRepository extends HomeBaseRepository {
   final HomeBaseDataSource remoteDataSource;
@@ -205,6 +207,38 @@ class HomeRepository extends HomeBaseRepository {
     });
   }
 
+  Future<Either<Failure, AddExerciseEntity>> fetchAddExercise(
+      CallAddExercise mainMethod,
+      ) async {
+    try {
+      final addExerciseData = await mainMethod();
+      return Right(addExerciseData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
 
+  @override
+  Future<Either<Failure, AddExerciseEntity>> addExercise({
+    required String exerciseName,
+    required String exerciseCategory,
+    required String exerciseVisibility,
+    required File exercisePic,
+    required FilePickerResult exerciseVideo,
+    context
+
+  }) async {
+    return await fetchAddExercise(() {
+      return remoteDataSource.addExercise(
+        exerciseName: exerciseName,
+        exerciseCategory: exerciseCategory,
+        exerciseVisibility: exerciseVisibility,
+        exercisePic: exercisePic,
+        exerciseVideo: exerciseVideo,
+      );
+    });
+  }
 
 }

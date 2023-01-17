@@ -332,5 +332,9 @@ bool isCoachFilter = false;
 
 
 String? errorMessage;
+//
+//
+// int? countProgressVideoUpload=0;
+// int? totalProgressVideoUpload=0;
 
 

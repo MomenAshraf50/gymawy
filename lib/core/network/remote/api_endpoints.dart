@@ -5,6 +5,7 @@ const String logInEndPoint = 'login/';
 const String registerEndPoint = 'clients/';
 const String registerCoachEndPoint = 'trainers/';
 const String certificateEndPoint = 'certificates/';
+const String addExerciseEndPoint = 'exercises/';
 String updateCoachEndPoint = 'trainers/$userId/';
 String updateClientsEndPoint = 'clients/$userId/';
 

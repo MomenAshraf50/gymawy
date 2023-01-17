@@ -3,11 +3,15 @@ import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:file_previewer/file_previewer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/error/failures.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/data/models/search_model.dart';
+import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
@@ -44,6 +48,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final GetCertificateUseCase _getCertificateUseCase;
   final DeleteCertificateUseCase _deleteCertificateUseCase;
   final UpdateCertificateUseCase _updateCertificateUseCase;
+  final AddExerciseUseCase _addExerciseUseCase;
 
   HomeCubit({
     required UpdateProfilePicture updateProfilePicture,
@@ -55,6 +60,8 @@ class HomeCubit extends Cubit<HomeStates> {
     required GetCertificateUseCase getCertificateUseCase,
     required DeleteCertificateUseCase deleteCertificateUseCase,
     required UpdateCertificateUseCase updateCertificateUseCase,
+    required AddExerciseUseCase addExerciseUseCase,
+
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
         _updateCoachSocialLinks = updateCoachSocialLinks,
@@ -64,6 +71,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _getCertificateUseCase = getCertificateUseCase,
         _deleteCertificateUseCase = deleteCertificateUseCase,
         _updateCertificateUseCase = updateCertificateUseCase,
+        _addExerciseUseCase = addExerciseUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -206,7 +214,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   void selectExerciseImage(context) async {
-    profileImageFile = await pickImageFromGallery(context);
+    exerciseImageFile = await pickImageFromGallery(context);
     emit(HomePlansImageSelectedState());
   }
 
@@ -370,7 +378,6 @@ class HomeCubit extends Cubit<HomeStates> {
 
   FilePickerResult? certificationPdf;
   Widget? certificationImage;
-
   void selectCertificationPdf() async {
     certificationPdf = await FilePicker.platform.pickFiles(
       allowMultiple: false,
@@ -461,6 +468,118 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(UpdateCertificateSuccessState(data));
     });
   }
+
+
+  bool? isVisibilityExerciseIcon = false;
+  String? visibilityExerciseValue = 'private';
+
+  void visibilityExercise() {
+    isVisibilityExerciseIcon = !isVisibilityExerciseIcon!;
+    isVisibilityExerciseIcon == true ? visibilityExerciseValue = 'public': visibilityExerciseValue = 'private';
+    debugPrintFullText('isVisibilityExerciseIcon is $isVisibilityExerciseIcon');
+    debugPrintFullText('visibilityExerciseValue is $visibilityExerciseValue');
+    emit(ChangeVisibilityExerciseState());
+  }
+
+  List<DropdownMenuItem<String>> get exerciseItems{
+    List<DropdownMenuItem<String>> menuItems = const[
+      DropdownMenuItem(value: "Abs", child: myText(title: "Abs", style: Style.extraSmall)),
+      DropdownMenuItem(value: "core", child: myText(title: "core", style: Style.extraSmall)),
+      DropdownMenuItem(value: "Chest", child: myText(title: "Chest", style: Style.extraSmall)),
+      DropdownMenuItem(value: "back", child: myText(title: "back", style: Style.extraSmall)),
+      DropdownMenuItem(value: "Shoulder", child: myText(title: "Shoulder", style: Style.extraSmall)),
+      DropdownMenuItem(value: "Arms", child: myText(title: "Arms", style: Style.extraSmall)),
+      DropdownMenuItem(value: "Legs", child: myText(title: "Legs", style: Style.extraSmall)),
+    ];
+    emit(ExerciseItemsState());
+    return menuItems;
+  }
+  String selectedValue = 'Abs';
+
+  FilePickerResult? exerciseVideo;
+  Widget? exercisePreVideo;
+  void selectExerciseVideo() async {
+    exerciseVideo = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: FileType.custom,
+      allowedExtensions: [
+        'mkv',
+        'webm',
+        'flv',
+        'vob',
+        'ogv',
+        'ogg',
+        'ogg',
+        'avi',
+        'M2TS',
+        'TS',
+        'mov',
+        'qt',
+        'wmv',
+        'yuv',
+        'rm',
+        'rmvb',
+        'viv',
+        'asf',
+        'amv',
+        'mp4',
+        'm4p',
+        'mpg',
+        'mp2',
+        'mpeg',
+        'mpv',
+        'mpg',
+        'm2v',
+        'm4v',
+        'svi',
+        '3gp',
+        '3g2',
+        'mxf',
+        'roq',
+        'nsv',
+        'f4v',
+        'f4p',
+        'f4a',
+        'f4b',
+      ],
+    );
+    //certificationImage = await FilePreview.getThumbnail(certificationPdf!.files.first.path!);
+    final file = certificationPdf!.files.first;
+    debugPrintFullText('NAme: ${file.name}');
+    debugPrintFullText('NAme: ${file.size}');
+    debugPrintFullText('NAme: ${file.bytes}');
+    debugPrintFullText('NAme: ${file.extension}');
+    debugPrintFullText('NAme: ${file.path}');
+    emit(PickExerciseVideoState());
+  }
+
+  void addExercise(
+      {
+        required String exerciseName,
+        required String exerciseCategory,
+        required String exerciseVisibility,
+        required File exercisePic,
+        required FilePickerResult exerciseVideo,
+        context,
+      }
+      ) async {
+    emit(AddExerciseLoadingState());
+
+    final result = await _addExerciseUseCase(AddExerciseParams(
+        exerciseName: exerciseName,
+        exerciseCategory: exerciseCategory,
+        exerciseVisibility: exerciseVisibility,
+        exercisePic: exercisePic,
+        exerciseVideo: exerciseVideo,
+    ));
+
+    result.fold((failure) {
+      emit(AddExerciseErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(AddExerciseSuccessState(data));
+    });
+  }
+
 
 }
 

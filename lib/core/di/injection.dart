@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:gymawy/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:gymawy/features/home/data/repository/home_repository.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
+import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/search_usecase.dart';
@@ -49,7 +50,8 @@ Future<void> init() async {
         certificateUseCase: sl(),
         getCertificateUseCase: sl(),
         deleteCertificateUseCase: sl(),
-    updateCertificateUseCase: sl()
+        updateCertificateUseCase: sl(),
+        addExerciseUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -83,6 +85,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetCertificateUseCase(sl()));
   sl.registerLazySingleton(() => DeleteCertificateUseCase(sl()));
   sl.registerLazySingleton(() => UpdateCertificateUseCase(sl()));
+  sl.registerLazySingleton(() => AddExerciseUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(

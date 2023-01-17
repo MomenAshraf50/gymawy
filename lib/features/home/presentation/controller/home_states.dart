@@ -1,6 +1,7 @@
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 
+import '../../domain/entities/add_exercise_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/search_entity.dart';
 
@@ -101,5 +102,18 @@ class UpdateCertificateErrorState extends HomeStates{
   UpdateCertificateErrorState(this.failure);
 }
 
+class PickExerciseVideoState extends HomeStates{}
+class ExerciseItemsState extends HomeStates{}
+class ChangeVisibilityExerciseState extends HomeStates{}
+
+class AddExerciseLoadingState extends HomeStates{}
+class AddExerciseSuccessState extends HomeStates{
+  final AddExerciseEntity addExerciseEntity;
+  AddExerciseSuccessState(this.addExerciseEntity);
+}
+class AddExerciseErrorState extends HomeStates{
+  final String failure;
+  AddExerciseErrorState(this.failure);
+}
 
 
