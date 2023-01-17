@@ -19,7 +19,7 @@ Widget buildPlansTypeItems() {
         padding: EdgeInsets.fromLTRB(5.w, 0, 0, 0),
         child: Column(
           children: [
-            exerciseDetails(onPressed: (){}),
+            // exerciseDetails(onPressed: (){}),
             verticalSpace(2.h),
           ],
         ),

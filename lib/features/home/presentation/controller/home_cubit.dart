@@ -21,10 +21,12 @@ import '../../../../core/network/local/cache_helper.dart';
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../login/presentation/screens/login_screen.dart';
+import '../../domain/entities/add_exercise_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/search_entity.dart';
 import '../../domain/usecase/certification_usecase.dart';
 import '../../domain/usecase/delete_certification_usecase.dart';
+import '../../domain/usecase/get_exercise_usecase.dart';
 import '../../domain/usecase/profile_usecase.dart';
 import '../../domain/usecase/search_usecase.dart';
 import '../screens/home/home_screen.dart';
@@ -46,6 +48,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final DeleteCertificateUseCase _deleteCertificateUseCase;
   final UpdateCertificateUseCase _updateCertificateUseCase;
   final AddExerciseUseCase _addExerciseUseCase;
+  final GetExerciseUseCase _getExerciseUseCase;
 
   HomeCubit({
     required UpdateProfilePicture updateProfilePicture,
@@ -58,6 +61,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required DeleteCertificateUseCase deleteCertificateUseCase,
     required UpdateCertificateUseCase updateCertificateUseCase,
     required AddExerciseUseCase addExerciseUseCase,
+    required GetExerciseUseCase getExerciseUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -69,6 +73,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _deleteCertificateUseCase = deleteCertificateUseCase,
         _updateCertificateUseCase = updateCertificateUseCase,
         _addExerciseUseCase = addExerciseUseCase,
+        _getExerciseUseCase = getExerciseUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -604,6 +609,22 @@ class HomeCubit extends Cubit<HomeStates> {
         countProgressValue,totalProgressValue
     ));
   }
+
+  List<AddExerciseEntity>? exerciseResult;
+  void getExercise() async {
+    emit(GetExerciseLoadingState());
+
+    final result = await _getExerciseUseCase(const GetExerciseParams());
+
+    result.fold((failure) {
+      emit(GetExerciseErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(GetExerciseSuccessState(data));
+      exerciseResult = data;
+
+    });
+  }
+
 
 }
 

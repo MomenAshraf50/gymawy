@@ -15,6 +15,7 @@ import '../../../../core/error/failures.dart';
 import '../entities/add_exercise_entity.dart';
 import '../entities/certificate_entity.dart';
 import '../entities/profile_entity.dart';
+import '../usecase/get_exercise_usecase.dart';
 
 abstract class HomeBaseRepository {
   Future<Either<Failure, UpdateEntity>> updateProfile(
@@ -57,4 +58,7 @@ abstract class HomeBaseRepository {
     required FilePickerResult exerciseVideo,
     required BuildContext context,
   });
+
+  Future<Either<Failure,List<AddExerciseEntity>>> getExercise(GetExerciseParams params);
+
 }
