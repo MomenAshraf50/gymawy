@@ -6,12 +6,12 @@ import 'myText.dart';
 
 class ProgressDialog extends Dialog {
   final double height;
-  final double width;
+  final double value;
   final String message;
 
   const ProgressDialog({
     this.height = 160.0,
-    this.width = 80.0,
+    this.value = 0.0,
     required this.message,
     Key? key,
   }) : super(key: key);
@@ -33,44 +33,10 @@ class ProgressDialog extends Dialog {
               myText(
                   title: message, align: TextAlign.center, style: Style.medium),
               verticalSpace(5.h),
-              Container(
-                height: 1.h,
-                width: width,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                      end: Alignment.bottomCenter,
-                      begin: Alignment.topCenter,
-                      colors:
-                      [
-                        Color.fromARGB(255, 255, 185, 145)  ,
-                        ColorsManager.mainColor
-                      ]
-                  ),
-                  borderRadius: BorderRadius.circular(10.rSp),
-                ),
-              ),
-              // myText(
-              //     title: message, align: TextAlign.center, style: Style.medium),
-              // const Spacer(),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: myButton(
-              //         onPressed: popButtonVoidCallback,
-              //         text: popButtonText,
-              //         fontSize: 20.rSp,
-              //       ),
-              //     ),
-              //     horizontalSpace(2.h),
-              //     Expanded(
-              //       child: myButton(
-              //         onPressed: pushButtonVoidCallback,
-              //         text: pushButtonText,
-              //         fontSize: 20.rSp,
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              LinearProgressIndicator(
+                color: ColorsManager.mainColor,
+                value: value, backgroundColor: ColorsManager.lightGrey,
+              )
             ],
           ),
         ),

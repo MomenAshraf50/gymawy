@@ -116,4 +116,11 @@ class AddExerciseErrorState extends HomeStates{
   AddExerciseErrorState(this.failure);
 }
 
+class ChangeProgressValueState extends HomeStates{
+  final int? countProgress;
+  final int? totalProgress;
+  ChangeProgressValueState(this.countProgress, this.totalProgress);
+}
+
+
 

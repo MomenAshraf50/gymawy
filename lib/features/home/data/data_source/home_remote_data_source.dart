@@ -16,6 +16,7 @@ import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
+import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 
 import '../../../../core/util/widgets/progress.dart';
 import '../../domain/usecase/add_exercise_usecase.dart';
@@ -275,15 +276,13 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
           isMultipart: true,
           progressCallback: (int count, int total)
           {
-            debugPrintFullText('progress this request is ${count ~/ total * 100}%');
-            showDialog(
-              context: context,
-              builder: (context) {
-                return ProgressDialog(
-                  message: 'processing...',
-                  width: (count ~/ total * 100)/2.w,
-                );
-              },
+            debugPrintFullText('count this request is $count');
+            debugPrintFullText('total this request is $total');
+          //  debugPrintFullText('progress this request is ${count ~/ total * 100}%');
+            HomeCubit homeCubit = HomeCubit.get(context);
+            homeCubit.changeProgressValue(
+              countProgressValue: count,
+              totalProgressValue: total,
             );
           }
         );

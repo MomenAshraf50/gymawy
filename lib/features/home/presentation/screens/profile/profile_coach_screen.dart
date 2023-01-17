@@ -75,7 +75,6 @@ class ProfileCoachScreen extends StatelessWidget {
                                     : CircleAvatar(
                                         radius: 60.rSp,
                                         backgroundImage: NetworkImage(
-                                            //  'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc='
                                             homeCubit.profileResults!
                                                 .profilePicture),
                                       ),
@@ -290,7 +289,7 @@ class ProfileCoachScreen extends StatelessWidget {
 
                   if (homeCubit.certificateResult != null)
                     SizedBox(
-                      height: 25.h,
+                      height: 30.h,
                       child: PageView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -306,9 +305,6 @@ class ProfileCoachScreen extends StatelessWidget {
                           if (homeCubit.certificateResultImg == null) {
                             homeCubit.convertCertificateToImg(index);
                           }
-
-                          //certificateResultImg = FilePreview.getThumbnail(homeCubit.certificateResult![index].certificateFile );
-                          //  certificationImage = FilePreview.getThumbnail(homeCubit.certificateResult![index].certificateFile);
                           return homeCubit.certificateResultImg != null
                               ? InkWell(
                                   onLongPress: () {
@@ -370,31 +366,13 @@ class ProfileCoachScreen extends StatelessWidget {
                                               },
                                               child: Column(
                                                 children: [
-                                                  homeCubit
-                                                      .certificateResultImg!,
-                                                  verticalSpace(1.h),
+                                                  homeCubit.certificateResultImg!,
+                                                  verticalSpace(3.h),
                                                   myText(
-                                                      title: homeCubit
-                                                          .certificateResult![
-                                                              index]
-                                                          .certificateName,
+                                                      title: homeCubit.certificateResult![index].certificateName,
                                                       style: Style.medium),
-                                                  verticalSpace(1.h),
-                                                  myText(
-                                                      title: homeCubit
-                                                          .certificateResult![
-                                                              index]
-                                                          .certificateDate,
+                                                  myText(title: homeCubit.certificateResult![index].certificateDate,
                                                       style: Style.medium),
-                                                  //certificateResultImg!
-                                                  // Image.network(
-                                                  //   homeCubit.certificateResult![index].certificateFile,
-                                                  //   height: 25.h,
-                                                  // ),
-                                                  // SvgPicture.asset(
-                                                  //   listTrainingImages[index].img,
-                                                  //   height: 25.h,
-                                                  // ),
                                                 ],
                                               ),
                                             )
@@ -443,29 +421,6 @@ class ProfileCoachScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  // Container(
-                  //   width: 40.w,
-                  //   height: 10.h,
-                  //   child: Card(
-                  //     margin: EdgeInsets.all(25.rSp),
-                  //     elevation: 5,
-                  //     child: Padding(
-                  //       padding: EdgeInsets.all(20.0.rSp),
-                  //       child: Expanded(
-                  //         child: ListView.builder(
-                  //             itemBuilder: (context, index) {
-                  //               return myText(title: 'title', style: Style.medium);
-                  //             },
-                  //           physics: const BouncingScrollPhysics(),
-                  //           itemCount: homeCubit.certificateResult!.length,
-                  //           shrinkWrap: true,
-                  //           scrollDirection: Axis.horizontal,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-
                   Card(
                     margin: EdgeInsets.all(25.rSp),
                     elevation: 5,
