@@ -10,6 +10,8 @@ import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/screens/home/exercises/add_exercise.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_type.dart';
 
+import '../exercises/exercise_type.dart';
+
 class PlanType extends StatelessWidget {
   const PlanType({Key? key}) : super(key: key);
 
@@ -24,15 +26,6 @@ class PlanType extends StatelessWidget {
               defaultAppBar(
                 title: AppString.planType,
                 context: context,
-                actions: [
-                  defaultActionButton(
-                    icon: Icons.add,
-                    onPressed: (){
-                      navigateTo(context, AddExerciseScreen());
-                    },
-                    backgroundColor: Colors.green
-                  )
-                ],
               ),
               verticalSpace(2.h),
               Expanded(
@@ -40,7 +33,7 @@ class PlanType extends StatelessWidget {
                   itemBuilder: (context, index) => InkWell(
                     child: buildPlansTypeItems(),
                     onTap: () {
-                      //navigateTo(context, const ExerciseType());
+                      navigateTo(context, const ExerciseType());
                       debugPrintFullText('$index');
                     },
                   ),

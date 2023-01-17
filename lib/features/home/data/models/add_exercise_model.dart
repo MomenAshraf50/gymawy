@@ -19,9 +19,9 @@ class AddExerciseModel extends AddExerciseEntity {
       exerciseName:  json['exercise_name'] ?? 'UnKnown',
       exerciseId:  json['EXERCICE_id'] ?? 0,
       exerciseCategory:  json['category'] ?? 'UnKnown',
-      exerciseVisibility:  json['exercise_pic'] ?? 'UnKnown',
-      exercisePic:  json['exercise_vid'] ?? 'UnKnown',
-      exerciseVid:  json['visibility'] ?? 'UnKnown',
+      exerciseVisibility:  json['visibility'] ?? 'UnKnown',
+      exercisePic: json['exercise_pic'] ?? 'UnKnown',
+      exerciseVid:  json['exercise_vid'] ?? 'UnKnown',
     );
   }
 }

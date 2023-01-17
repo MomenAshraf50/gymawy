@@ -6,7 +6,12 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 
-Widget exerciseDetails({required VoidCallback onPressed}){
+Widget exerciseDetails({
+  required VoidCallback onPressed,
+  required String exerciseImage,
+  required String exerciseName,
+  required String exerciseCategory,
+}){
   return Row(
     children: [
       Container(
@@ -16,11 +21,16 @@ Widget exerciseDetails({required VoidCallback onPressed}){
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.rSp),
         ),
-        child: SvgPicture.asset(
-          Assets.images.svg.exercise_photo,
-          alignment: Alignment.topCenter,
+        child: Image.network(
+          exerciseImage,
           fit: BoxFit.cover,
-        ),
+          alignment: Alignment.topCenter,
+        )
+        // SvgPicture.asset(
+        //   Assets.images.svg.exercise_photo,
+        //   alignment: Alignment.topCenter,
+        //   fit: BoxFit.cover,
+        // ),
       ),
       Padding(
         padding: EdgeInsets.symmetric(
@@ -31,7 +41,7 @@ Widget exerciseDetails({required VoidCallback onPressed}){
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             myText(
-              title: AppString.frontPullUps,
+              title: exerciseName,
               style: Style.small,
               fontWeight: FontWeight.w600,
               fontSize: 16.rSp,
@@ -39,48 +49,55 @@ Widget exerciseDetails({required VoidCallback onPressed}){
               letterSpacing: 0.1,
             ),
             verticalSpace(1.h),
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    myText(
-                      letterSpacing: 0.1,
-                      title: AppString.sets,
-                      style: Style.extraSmall,
-                    ),
-                    myText(
-                      letterSpacing: 0.1,
-                      title: AppString.reps,
-                      style: Style.extraSmall,
-                    ),
-                    myText(
-                      letterSpacing: 0.1,
-                      title: AppString.rest,
-                      style: Style.extraSmall,
-                    ),
-                  ],
+                myText(
+                  title: exerciseCategory,
+                  letterSpacing: 0.1,
+                  style: Style.extraSmall,
                 ),
-                horizontalSpace(2.w),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    myText(
-                      title: '3',
-                      style: Style.extraSmall,
-                    ),
-                    myText(
-                      title: '12-10-8',
-                      style: Style.extraSmall,
-                    ),
-                    myText(
-                      title: '30 sec',
-                      style: Style.extraSmall,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            verticalSpace(1.h),
+
+            // Row(
+            //   children: [
+            //     Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: const [
+            //         myText(
+            //           letterSpacing: 0.1,
+            //           title: AppString.sets,
+            //           style: Style.extraSmall,
+            //         ),
+            //         myText(
+            //           letterSpacing: 0.1,
+            //           title: AppString.reps,
+            //           style: Style.extraSmall,
+            //         ),
+            //         myText(
+            //           letterSpacing: 0.1,
+            //           title: AppString.rest,
+            //           style: Style.extraSmall,
+            //         ),
+            //       ],
+            //     ),
+            //     horizontalSpace(2.w),
+            //     Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: const [
+            //         myText(
+            //           title: '3',
+            //           style: Style.extraSmall,
+            //         ),
+            //         myText(
+            //           title: '12-10-8',
+            //           style: Style.extraSmall,
+            //         ),
+            //         myText(
+            //           title: '30 sec',
+            //           style: Style.extraSmall,
+            //         ),
+            //       ],
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),

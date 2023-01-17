@@ -13,7 +13,11 @@ import '../../../../core/util/resources/assets.gen.dart';
 import '../../../../core/util/resources/constants_manager.dart';
 import '../../../../core/util/widgets/myText.dart';
 
-Widget buildExercisesItems() => BlocBuilder<HomeCubit, HomeStates>(
+Widget buildExercisesItems({
+  required String exerciseImage,
+  required String exerciseName,
+  required String exerciseCategory,
+}) => BlocBuilder<HomeCubit, HomeStates>(
   builder: (context, state) {
 
     HomeCubit homeCubit = HomeCubit.get(context);
@@ -28,18 +32,26 @@ Widget buildExercisesItems() => BlocBuilder<HomeCubit, HomeStates>(
           padding: EdgeInsets.fromLTRB(5.w, 0, 5.w, 0),
           child: Column(
             children: [
-              exerciseDetails(onPressed: () {
-                navigateTo(context, const ExerciseType());
-              }),
+              exerciseDetails(
+                  onPressed: () {
+                //navigateTo(context, const ExerciseType());
+              },
+                exerciseCategory: exerciseCategory,
+                exerciseImage: exerciseImage,
+                exerciseName: exerciseName,
+              ),
+              if(isCoachLogin == false)
               Container(
                 width: double.infinity,
                 height: 0.3.h,
                 color: Colors.grey.shade300,
               ),
-              verticalSpace(0.5.h),
-              InkWell(
+              if(isCoachLogin == false)
+                verticalSpace(0.5.h),
+              if(isCoachLogin == false)
+                InkWell(
                 onTap: () {
-                  homeCubit.changeCompleted();
+                  //homeCubit.changeCompleted();
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

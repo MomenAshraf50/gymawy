@@ -52,12 +52,12 @@ class AddExerciseScreen extends StatelessWidget {
                     defaultAppBar(
                       title: 'Add Exercise',
                       context: context,
-                      actions: [
-                        defaultActionButton(
-                            backgroundColor: Colors.red,
-                            icon: Icons.remove,
-                            onPressed: () {}),
-                      ],
+                      // actions: [
+                      //   defaultActionButton(
+                      //       backgroundColor: Colors.red,
+                      //       icon: Icons.remove,
+                      //       onPressed: () {}),
+                      // ],
                     ),
                     Expanded(
                       child: SingleChildScrollView(

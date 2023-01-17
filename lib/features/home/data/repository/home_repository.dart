@@ -11,6 +11,7 @@ import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
+import 'package:gymawy/features/home/domain/usecase/get_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
@@ -26,6 +27,8 @@ typedef CallCertification = Future<CertificateEntity> Function();
 typedef CallGetCertification = Future<List<CertificateEntity>> Function();
 typedef CallDeleteCertification = Future<void> Function();
 typedef CallAddExercise= Future<AddExerciseEntity> Function();
+typedef CallGetExercise = Future<List<AddExerciseEntity>> Function();
+
 
 class HomeRepository extends HomeBaseRepository {
   final HomeBaseDataSource remoteDataSource;
@@ -243,5 +246,27 @@ class HomeRepository extends HomeBaseRepository {
       );
     });
   }
+
+
+  Future<Either<Failure,List<AddExerciseEntity>>> fetchGetExercise(
+      CallGetExercise mainMethod,
+      ) async {
+    try {
+      final exerciseData = await mainMethod();
+      return Right(exerciseData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<AddExerciseEntity>>> getExercise(GetExerciseParams params)async {
+    return await fetchGetExercise((){
+      return remoteDataSource.getExercise(params);
+    });
+  }
+
 
 }

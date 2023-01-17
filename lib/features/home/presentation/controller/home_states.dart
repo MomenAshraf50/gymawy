@@ -123,4 +123,16 @@ class ChangeProgressValueState extends HomeStates{
 }
 
 
+class GetExerciseLoadingState extends HomeStates{}
+class GetExerciseSuccessState extends HomeStates{
+  final List<AddExerciseEntity> exerciseList;
+
+  GetExerciseSuccessState(this.exerciseList);
+}
+class GetExerciseErrorState extends HomeStates{
+  final String failure;
+
+  GetExerciseErrorState(this.failure);
+}
+
 
