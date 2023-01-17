@@ -494,6 +494,22 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(ExerciseItemsState());
     return menuItems;
   }
+
+  List<DropdownMenuItem<String>>? exerciseValue = const[
+  DropdownMenuItem(value: "Abs", child: myText(title: "Abs", style: Style.extraSmall)),
+  DropdownMenuItem(value: "core", child: myText(title: "core", style: Style.extraSmall)),
+  DropdownMenuItem(value: "Chest", child: myText(title: "Chest", style: Style.extraSmall)),
+  DropdownMenuItem(value: "back", child: myText(title: "back", style: Style.extraSmall)),
+  DropdownMenuItem(value: "Shoulder", child: myText(title: "Shoulder", style: Style.extraSmall)),
+  DropdownMenuItem(value: "Arms", child: myText(title: "Arms", style: Style.extraSmall)),
+  DropdownMenuItem(value: "Legs", child: myText(title: "Legs", style: Style.extraSmall)),
+  ];
+  void pickExercise()
+  {
+    exerciseValue;
+    emit(ExerciseItemsState());
+  }
+
   String selectedValue = 'Abs';
 
   FilePickerResult? exerciseVideo;
@@ -544,7 +560,7 @@ class HomeCubit extends Cubit<HomeStates> {
       ],
     );
     //certificationImage = await FilePreview.getThumbnail(certificationPdf!.files.first.path!);
-    final file = certificationPdf!.files.first;
+    final file = exerciseVideo!.files.first;
     debugPrintFullText('NAme: ${file.name}');
     debugPrintFullText('NAme: ${file.size}');
     debugPrintFullText('NAme: ${file.bytes}');
@@ -560,7 +576,7 @@ class HomeCubit extends Cubit<HomeStates> {
         required String exerciseVisibility,
         required File exercisePic,
         required FilePickerResult exerciseVideo,
-        context,
+        required BuildContext context,
       }
       ) async {
     emit(AddExerciseLoadingState());
@@ -571,6 +587,7 @@ class HomeCubit extends Cubit<HomeStates> {
         exerciseVisibility: exerciseVisibility,
         exercisePic: exercisePic,
         exerciseVideo: exerciseVideo,
+        context: context
     ));
 
     result.fold((failure) {

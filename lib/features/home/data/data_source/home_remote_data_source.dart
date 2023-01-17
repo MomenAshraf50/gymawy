@@ -1,11 +1,11 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/network/remote/api_endpoints.dart';
 import 'package:gymawy/core/network/remote/dio_helper.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/features/home/data/models/add_exercise_model.dart';
 import 'package:gymawy/features/home/data/models/certificate_model.dart';
 import 'package:gymawy/features/home/data/models/profile_model.dart';
@@ -58,6 +58,7 @@ abstract class HomeBaseDataSource {
     required String exerciseVisibility,
     required File exercisePic,
     required FilePickerResult exerciseVideo,
+    required BuildContext context,
   });
 
 }
@@ -249,6 +250,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
         required String exerciseVisibility,
         required File exercisePic,
         required FilePickerResult exerciseVideo,
+        required BuildContext context,
       }
       ) async {
         final Response f = await dioHelper.post(
@@ -274,6 +276,15 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
           progressCallback: (int count, int total)
           {
             debugPrintFullText('progress this request is ${count ~/ total * 100}%');
+            showDialog(
+              context: context,
+              builder: (context) {
+                return ProgressDialog(
+                  message: 'processing...',
+                  width: (count ~/ total * 100)/2.w,
+                );
+              },
+            );
           }
         );
 

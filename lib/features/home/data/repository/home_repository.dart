@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:gymawy/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
@@ -227,7 +228,8 @@ class HomeRepository extends HomeBaseRepository {
     required String exerciseVisibility,
     required File exercisePic,
     required FilePickerResult exerciseVideo,
-    context
+    required BuildContext context,
+
 
   }) async {
     return await fetchAddExercise(() {
@@ -237,6 +239,7 @@ class HomeRepository extends HomeBaseRepository {
         exerciseVisibility: exerciseVisibility,
         exercisePic: exercisePic,
         exerciseVideo: exerciseVideo,
+        context: context,
       );
     });
   }

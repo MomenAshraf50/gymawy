@@ -17,6 +17,7 @@ import 'package:gymawy/core/util/widgets/text_field.dart';
 import 'package:gymawy/core/util/widgets/two_option_dialog.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:lottie/lottie.dart';
 
 class AddExerciseScreen extends StatelessWidget {
@@ -54,6 +55,7 @@ class AddExerciseScreen extends StatelessWidget {
       listener: (context, state) {
         if(state is AddExerciseSuccessState)
         {
+          Navigator.pop(context);
           Navigator.pop(context);
           designToastDialog(
               context: context,
@@ -158,10 +160,11 @@ class AddExerciseScreen extends StatelessWidget {
                                   builder: (context, state) {
                                     return DropdownButton(
                                       value: homeCubit.selectedValue,
-                                      items: homeCubit.exerciseItems,
+                                      items: homeCubit.exerciseValue,
                                       onChanged: (value) {
                                         homeCubit.selectedValue = value!;
-                                        return;
+                                        homeCubit.pickExercise();
+                                        debugPrintFullText(homeCubit.selectedValue);
                                       },
                                     );
                                   },
@@ -247,23 +250,18 @@ class AddExerciseScreen extends StatelessWidget {
                                 if (formKey.currentState!.validate()) {
                                   if (homeCubit.exerciseImageFile != null) {
                                     if (homeCubit.exerciseVideo != null) {
-                                      debugPrintFullText(
-                                          homeCubit.selectedValue);
-                                      debugPrintFullText(
-                                          '${homeCubit.exerciseVideo}');
-                                      debugPrintFullText(
-                                          '${homeCubit.exerciseImageFile}');
-                                      debugPrintFullText(
-                                          '${homeCubit.isVisibilityExerciseIcon}');
-                                      debugPrintFullText(
-                                          '${homeCubit.visibilityExerciseValue}');
+                                      debugPrintFullText(homeCubit.selectedValue);
+                                      debugPrintFullText('${homeCubit.exerciseVideo}');
+                                      debugPrintFullText('${homeCubit.exerciseImageFile}');
+                                      debugPrintFullText('${homeCubit.isVisibilityExerciseIcon}');
+                                      debugPrintFullText('${homeCubit.visibilityExerciseValue}');
                                       homeCubit.addExercise(
                                         exerciseName: exerciseNameController.text,
                                         exerciseCategory: homeCubit.selectedValue,
                                         exerciseVisibility: homeCubit.visibilityExerciseValue!,
                                         exercisePic: homeCubit.exerciseImageFile!,
                                         exerciseVideo: homeCubit.exerciseVideo!,
-                                        context: context
+                                        context: context,
                                       );
                                     } else {
                                       designToastDialog(

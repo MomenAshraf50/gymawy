@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/use_case.dart';
 import '../entities/add_exercise_entity.dart';
@@ -21,6 +22,7 @@ class AddExerciseUseCase implements UseCase<AddExerciseEntity, AddExerciseParams
       exerciseVisibility: params.exerciseVisibility,
       exercisePic: params.exercisePic,
       exerciseVideo: params.exerciseVideo,
+      context: params.context
 
     );
   }
@@ -32,6 +34,8 @@ class AddExerciseParams extends Equatable {
   final String exerciseVisibility;
   final File exercisePic;
   final FilePickerResult exerciseVideo;
+  final BuildContext context;
+
 
 
   const AddExerciseParams({
@@ -40,7 +44,7 @@ class AddExerciseParams extends Equatable {
     required this.exerciseVisibility,
     required this.exercisePic,
     required this.exerciseVideo,
-    context
+    required this.context,
   });
 
   @override
@@ -50,5 +54,6 @@ class AddExerciseParams extends Equatable {
     exerciseVisibility,
     exercisePic,
     exerciseVideo,
+    context,
   ];
 }

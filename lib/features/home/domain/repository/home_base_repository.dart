@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
@@ -54,5 +55,6 @@ abstract class HomeBaseRepository {
     required String exerciseVisibility,
     required File exercisePic,
     required FilePickerResult exerciseVideo,
+    required BuildContext context,
   });
 }
