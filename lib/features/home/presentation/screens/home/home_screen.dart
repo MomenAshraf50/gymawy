@@ -342,6 +342,7 @@ class HomeClientScreen extends StatelessWidget {
                                               : SvgPicture.asset(
                                             homeCubit
                                                 .listSuggestions[index].img,
+                                              height: 11.h
                                           ),
                                           verticalSpace(2.h),
                                           myText(

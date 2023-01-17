@@ -13,6 +13,8 @@ import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/exercises/add_exercise.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/plans_screen.dart';
 
+import '../../../../../../core/util/widgets/hideKeyboard.dart';
+
 
 class AddPlan extends StatelessWidget {
   const AddPlan({Key? key}) : super(key: key);
@@ -27,21 +29,21 @@ class AddPlan extends StatelessWidget {
           padding: designApp,
           child: BlocBuilder<HomeCubit, HomeStates>(
             builder: (context, state) {
-              return Column(
-                children: [
-                  defaultAppBar(
-                      title: AppString.addPlan,
-                      context: context,
-                    onPressed: ()
-                    {
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    }
-                  ),
-                  verticalSpace(20.h),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+              return SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: HideKeyboardPage(
+                  child: Column(
                     children: [
+                      defaultAppBar(
+                          title: AppString.addPlan,
+                          context: context,
+                        onPressed: ()
+                        {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        }
+                      ),
+                      verticalSpace(20.h),
                       myTextFill(
                         controller: homeCubit.nameOfPlanController,
                         hint: AppString.nameOfPlan,
@@ -81,22 +83,21 @@ class AddPlan extends StatelessWidget {
                           ],
                         ),
                       ),
+                      verticalSpace(30.h),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 5.h),
+                        child: myButton(
+                          text: AppString.next,
+                          textOnly: true,
+                          onPressed: () {
+                            navigateAndFinish(context,const PlansScreen());
+                          },
+
+                        ),
+                      )
                     ],
                   ),
-                  const Spacer(),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 5.h),
-                    child: myButton(
-                      text: AppString.next,
-                      textOnly: true,
-                      onPressed: () {
-                        navigateAndFinish(context,const PlansScreen());
-                      },
-
-                    ),
-                  )
-
-                ],
+                ),
               );
             },
           ),

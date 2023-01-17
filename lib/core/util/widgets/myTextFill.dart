@@ -80,18 +80,19 @@ class myTextFill extends StatelessWidget {
                 cursorColor: ColorsManager.mainColor,
                 decoration: InputDecoration(
                   suffixIcon: suffixIcon,
-                  prefixIcon: svgImg != null
+                  prefixIcon: svgImg == null && iconPrefix == null ?
+                  svgImg != null
                       ? Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: SvgPicture.asset(
-                            svgImg!,
-                            height: 24,
-                            width: 24,
-                            // fit: BoxFit.scaleDown,
-                          ),
-                        )
+                    padding: const EdgeInsets.all(10.0),
+                    child: SvgPicture.asset(
+                      svgImg!,
+                      height: 24,
+                      width: 24,
+                      // fit: BoxFit.scaleDown,
+                    ),
+                  )
                       : Icon(iconPrefix,
-                          color: colorPrefixIcon ?? ColorsManager.iconColor),
+                      color: colorPrefixIcon ?? ColorsManager.iconColor) : null,
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   border: InputBorder.none,
                   hintText: hint,

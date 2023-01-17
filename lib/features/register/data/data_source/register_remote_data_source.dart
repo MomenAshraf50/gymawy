@@ -209,8 +209,8 @@ class RegisterRemoteDataSourceImpl
             'youtube_link': youTubeLink,
             'tik_tok_link': tikTokLink,
           }
-      )
-      ,
+      ),
+      isMultipart: true,
     );
     return RegisterModel.fromJson(f.data);
   }

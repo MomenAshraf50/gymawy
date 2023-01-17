@@ -28,7 +28,7 @@ class PlanType extends StatelessWidget {
                   defaultActionButton(
                     icon: Icons.add,
                     onPressed: (){
-                      navigateTo(context, const AddExerciseScreen());
+                      navigateTo(context, AddExerciseScreen());
                     },
                     backgroundColor: Colors.green
                   )
