@@ -27,30 +27,6 @@ class AddExerciseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController exerciseNameController = TextEditingController();
-    //  List<DropdownMenuItem<String>> exerciseType =
-    // const [
-    //    DropdownMenuItem(value: "Abs", child: Text("Abs")),
-    //    DropdownMenuItem(value: "core", child: Text("core")),
-    //    DropdownMenuItem(value: "Chest", child: Text("Chest")),
-    //    DropdownMenuItem(value: "back", child: Text("back")),
-    //    DropdownMenuItem(value: "Shoulder", child: Text("Shoulder")),
-    //    DropdownMenuItem(value: "Arms", child: Text("Arms")),
-    //    DropdownMenuItem(value: "Legs", child: Text("Legs")),
-    //    // 'Abs',
-    //    // 'core',
-    //    // 'Chest',
-    //    // 'back',
-    //    // 'Shoulder',
-    //    // 'Arms',
-    //    // 'Legs',
-    //  ];
-    // TextEditingController setsController = TextEditingController();
-    // TextEditingController repsController = TextEditingController();
-    // TextEditingController restController = TextEditingController();
-    // TextEditingController equipmentController = TextEditingController();
-    // TextEditingController targetMuscleController = TextEditingController();
-    // TextEditingController minutesController = TextEditingController();
-    // TextEditingController caloriesController = TextEditingController();
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
         if(state is AddExerciseSuccessState)
@@ -193,57 +169,44 @@ class AddExerciseScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            // verticalSpace(6.h),
-                            // InkWell(
-                            //   onTap: ()
-                            //   {
-                            //     homeCubit.selectExerciseVideo();
-                            //   },
-                            //   child: Align(
-                            //     alignment: AlignmentDirectional.center,
-                            //     child: myText(
-                            //       title: 'Press To Pick Video',
-                            //       style: Style.extraSmall,
-                            //       fontWeight: FontWeight.w700,
-                            //       fontSize: 12.rSp,
-                            //       align: TextAlign.left,
-                            //     ),
-                            //   ),
-                            // ),
-
-                            // textField(
-                            //     controller: exerciseNameController,
-                            //     label: AppString.nameOfExercise
-                            // ),
-                            // textField(
-                            //     controller: setsController,
-                            //     label: AppString.sets
-                            // ),
-                            // textField(
-                            //     controller: repsController,
-                            //     label: AppString.reps
-                            // ),
-                            // textField(
-                            //     controller: restController,
-                            //     label: AppString.rest
-                            // ),
-                            // textField(
-                            //     controller: equipmentController,
-                            //     label: AppString.equipmentRequired
-                            // ),
-                            // textField(
-                            //     controller: targetMuscleController,
-                            //     label: AppString.targetMuscle
-                            // ),
-                            // textField(
-                            //     controller: minutesController,
-                            //     label: AppString.minutes
-                            // ),
-                            // textField(
-                            //     controller: caloriesController,
-                            //     label: AppString.calories
-                            // ),
-                            verticalSpace(20.h),
+                            verticalSpace(6.h),
+                            if(homeCubit.exerciseVideo != null)
+                              Row(
+                              children: [
+                                const Icon(
+                                    Icons.upload
+                                ),
+                                horizontalSpace(5.w),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    myText(
+                                      title:
+                                      homeCubit.exerciseVideo!.files.first.name,
+                                      //AppString.certificationSize,
+                                      style: Style.extraSmall,
+                                      fontSize: 12.rSp,
+                                      color: Colors.blue,
+                                    ),
+                                    verticalSpace(1.h),
+                                    myText(
+                                      title:
+                                      '${homeCubit.exerciseVideo!.files.first.size ~/ 1024} kB',
+                                      //AppString.certificationSize,
+                                      style: Style.extraSmall,
+                                      fontSize: 12.rSp,
+                                      color: Colors.blue,
+                                    ),
+                                  ],
+                                ),
+                                const Spacer(),
+                                const Icon(
+                                  Icons.check_circle_rounded,
+                                  color: ColorsManager.mainColor,
+                                )
+                              ],
+                            ),
+                            verticalSpace(15.h),
                             myButton(
                               text: AppString.done,
                               onPressed: () {
@@ -262,6 +225,22 @@ class AddExerciseScreen extends StatelessWidget {
                                         exercisePic: homeCubit.exerciseImageFile!,
                                         exerciseVideo: homeCubit.exerciseVideo!,
                                         context: context,
+                                      );
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return BlocBuilder<HomeCubit,HomeStates>(
+                                              builder: (context, state) {
+                                                if(state is ChangeProgressValueState) {
+                                                  return ProgressDialog(
+                                                  message: 'Processing... ${((state.countProgress! / state.totalProgress!) * 100).toInt()}%' ,
+                                                  value: state.countProgress!/state.totalProgress!,
+                                                );
+                                                }
+                                                return Container();
+                                              },
+                                            );
+                                          },
                                       );
                                     } else {
                                       designToastDialog(
