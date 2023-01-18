@@ -20,8 +20,8 @@ class AddExerciseUseCase implements UseCase<AddExerciseEntity, AddExerciseParams
       exerciseName: params.exerciseName,
       exerciseCategory: params.exerciseCategory,
       exerciseVisibility: params.exerciseVisibility,
-      exercisePic: params.exercisePic,
-      exerciseVideo: params.exerciseVideo,
+      exercisePic: params.exercisePic!,
+      exerciseVideo: params.exerciseVideo!,
       context: params.context
 
     );
@@ -29,12 +29,15 @@ class AddExerciseUseCase implements UseCase<AddExerciseEntity, AddExerciseParams
 }
 
 class AddExerciseParams extends Equatable {
+  final int? exerciseId;
   final String exerciseName;
   final String exerciseCategory;
   final String exerciseVisibility;
-  final File exercisePic;
-  final FilePickerResult exerciseVideo;
+  final File? exercisePic;
+  final FilePickerResult? exerciseVideo;
   final BuildContext context;
+  final bool? isVideo;
+  final bool? isImage;
 
 
 
@@ -42,9 +45,12 @@ class AddExerciseParams extends Equatable {
     required this.exerciseName,
     required this.exerciseCategory,
     required this.exerciseVisibility,
-    required this.exercisePic,
-    required this.exerciseVideo,
+    this.exercisePic,
+    this.exerciseVideo,
     required this.context,
+    this.exerciseId,
+    this.isImage,
+    this.isVideo
   });
 
   @override
@@ -52,8 +58,6 @@ class AddExerciseParams extends Equatable {
     exerciseName,
     exerciseCategory,
     exerciseVisibility,
-    exercisePic,
-    exerciseVideo,
     context,
   ];
 }

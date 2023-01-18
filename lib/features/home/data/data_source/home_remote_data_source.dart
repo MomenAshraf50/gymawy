@@ -11,6 +11,7 @@ import 'package:gymawy/features/home/data/models/certificate_model.dart';
 import 'package:gymawy/features/home/data/models/profile_model.dart';
 import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/data/models/update_coach_model.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/get_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
@@ -64,6 +65,9 @@ abstract class HomeBaseDataSource {
   });
 
   Future<List<AddExerciseModel>> getExercise(GetExerciseParams params);
+  
+  Future<AddExerciseModel> updateExercise(AddExerciseParams params);
+  Future<void> deleteExercise(DeleteExerciseParams params);
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -227,16 +231,33 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   @override
   Future<CertificateModel> updateCertificate(
       UpdateCertificateParams params) async {
-    final Response f = await dioHelper.put(
-      url: '$certificateEndPoint${params.certificateId}/',
-      data: {
-        'certificate_name': params.certificateName,
-        'date': params.certificateDate
-      },
-      token: token,
-    );
+    if(params.isFile){
+      final Response f = await dioHelper.put(
+        url: '$certificateEndPoint${params.certificateId}/',
+        data: {
+          'certificate_file': await MultipartFile.fromFile(
+              params.certificate!.files.first.path!,
+              filename:
+              Uri.file(params.certificate!.files.first.path!).pathSegments.last),
+          'certificate_name': params.certificateName,
+          'date': params.certificateDate
+        },
+        token: token,
+      );
+      return CertificateModel.fromJson(f.data);
+    }
+    else{
+      final Response f = await dioHelper.put(
+        url: '$certificateEndPoint${params.certificateId}/',
+        data: {
+          'certificate_name': params.certificateName,
+          'date': params.certificateDate
+        },
+        token: token,
+      );
+      return CertificateModel.fromJson(f.data);
+    }
 
-    return CertificateModel.fromJson(f.data);
   }
 
   @override
@@ -290,5 +311,111 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
 
     // return List<AddExerciseModel>.from(
     //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
+  }
+
+  @override
+  Future<AddExerciseModel> updateExercise(AddExerciseParams params) async{
+
+    final Response f;
+
+    if(params.isVideo == false && params.isImage == false){
+      final Response f = await dioHelper.put(
+          url: '$addExerciseEndPoint${params.exerciseId}/',
+          token: token,
+          data: {
+            'exercise_name': params.exerciseName,
+            'category': params.exerciseCategory,
+            'visibility': params.exerciseVisibility,
+          }
+      );
+      return AddExerciseModel.fromJson(f.data);
+    }else if(params.isVideo == true && params.isImage == true){
+      final Response f = await dioHelper.put(
+          url: '$addExerciseEndPoint${params.exerciseId}/',
+          token: token,
+          data: FormData.fromMap({
+            'exercise_name': params.exerciseName,
+            'category': params.exerciseCategory,
+            'exercise_pic': await MultipartFile.fromFile(
+              params.exercisePic!.path,
+              filename: Uri.file(params.exercisePic!.path).pathSegments.last,
+            ),
+            'exercise_vid': await MultipartFile.fromFile(
+                params.exerciseVideo!.files.first.path!,
+                filename:
+                Uri.file(params.exerciseVideo!.files.first.path!).pathSegments.last),
+            'visibility': params.exerciseVisibility,
+          }),
+          isMultipart: true,
+          progressCallback: (int count, int total) {
+            debugPrintFullText('count this request is $count');
+            debugPrintFullText('total this request is $total');
+            //  debugPrintFullText('progress this request is ${count ~/ total * 100}%');
+            HomeCubit homeCubit = HomeCubit.get(params.context);
+            homeCubit.changeProgressValue(
+              countProgressValue: count,
+              totalProgressValue: total,
+            );
+          });
+      return AddExerciseModel.fromJson(f.data);
+    }else if(params.isVideo == true && params.isImage == false){
+      final Response f = await dioHelper.put(
+          url: '$addExerciseEndPoint${params.exerciseId}/',
+          token: token,
+          data: FormData.fromMap({
+            'exercise_name': params.exerciseName,
+            'category': params.exerciseCategory,
+            'exercise_vid': await MultipartFile.fromFile(
+                params.exerciseVideo!.files.first.path!,
+                filename:
+                Uri.file(params.exerciseVideo!.files.first.path!).pathSegments.last),
+            'visibility': params.exerciseVisibility,
+          }),
+          isMultipart: true,
+          progressCallback: (int count, int total) {
+            debugPrintFullText('count this request is $count');
+            debugPrintFullText('total this request is $total');
+            //  debugPrintFullText('progress this request is ${count ~/ total * 100}%');
+            HomeCubit homeCubit = HomeCubit.get(params.context);
+            homeCubit.changeProgressValue(
+              countProgressValue: count,
+              totalProgressValue: total,
+            );
+          });
+      return AddExerciseModel.fromJson(f.data);
+    }else{
+      final Response f = await dioHelper.put(
+          url: '$addExerciseEndPoint${params.exerciseId}/',
+          token: token,
+          data: FormData.fromMap({
+            'exercise_name': params.exerciseName,
+            'category': params.exerciseCategory,
+            'exercise_pic': await MultipartFile.fromFile(
+              params.exercisePic!.path,
+              filename: Uri.file(params.exercisePic!.path).pathSegments.last,
+            ),
+            'visibility': params.exerciseVisibility,
+          }),
+          isMultipart: true,
+          progressCallback: (int count, int total) {
+            debugPrintFullText('count this request is $count');
+            debugPrintFullText('total this request is $total');
+            //  debugPrintFullText('progress this request is ${count ~/ total * 100}%');
+            HomeCubit homeCubit = HomeCubit.get(params.context);
+            homeCubit.changeProgressValue(
+              countProgressValue: count,
+              totalProgressValue: total,
+            );
+          });
+      return AddExerciseModel.fromJson(f.data);
+    }
+  }
+
+  @override
+  Future<void> deleteExercise(params) async{
+    await dioHelper.delete(
+      url: '$addExerciseEndPoint${params.exerciseId}/',
+      token: token,
+    );
   }
 }

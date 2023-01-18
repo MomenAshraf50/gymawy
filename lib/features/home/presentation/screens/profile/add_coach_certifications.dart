@@ -62,7 +62,6 @@ class AddCoachCertifications extends StatelessWidget {
                         certificateEntity!.certificateDate;
                     print(homeCubit.certificateDate);
                   }
-
                   return Form(
                     key: formKey,
                     child: Column(
@@ -212,17 +211,34 @@ class AddCoachCertifications extends StatelessWidget {
                                       text: 'please fill ur data');
                                 }
                               } else {
-                                homeCubit.updateCertificate(
-                                  UpdateCertificateParams(
-                                      certificateId: certificateEntity!.certificateId,
-                                      certificateName: homeCubit
-                                          .certificateNameController.text,
-                                      certificateDate: homeCubit
-                                                  .certificateDate !=
-                                              '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
-                                          ? '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
-                                          : homeCubit.certificateDate!),
-                                );
+                                if(homeCubit.certificationPdf != null){
+                                  homeCubit.updateCertificate(
+                                    UpdateCertificateParams(
+                                      certificate: homeCubit.certificationPdf,
+                                        isFile: true,
+                                        certificateId: certificateEntity!.certificateId,
+                                        certificateName: homeCubit
+                                            .certificateNameController.text,
+                                        certificateDate: homeCubit
+                                            .certificateDate !=
+                                            '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
+                                            ? '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
+                                            : homeCubit.certificateDate!),
+                                  );
+                                }else{
+                                  homeCubit.updateCertificate(
+                                    UpdateCertificateParams(
+                                        isFile: false,
+                                        certificateId: certificateEntity!.certificateId,
+                                        certificateName: homeCubit
+                                            .certificateNameController.text,
+                                        certificateDate: homeCubit
+                                            .certificateDate !=
+                                            '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
+                                            ? '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
+                                            : homeCubit.certificateDate!),
+                                  );
+                                }
                               }
                               // Navigator.pop(context);
                             }),

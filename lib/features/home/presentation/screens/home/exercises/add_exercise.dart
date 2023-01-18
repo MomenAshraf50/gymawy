@@ -10,27 +10,28 @@ import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/core/util/widgets/myTextFild.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
 import 'package:gymawy/core/util/widgets/progress.dart';
-import 'package:gymawy/core/util/widgets/text_field.dart';
 import 'package:gymawy/core/util/widgets/two_option_dialog.dart';
+import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:lottie/lottie.dart';
 
 class AddExerciseScreen extends StatelessWidget {
-  AddExerciseScreen({Key? key}) : super(key: key);
+  AddExerciseScreen({Key? key, this.exerciseEntity}) : super(key: key);
   var formKey = GlobalKey<FormState>();
+
+  AddExerciseEntity? exerciseEntity;
 
   @override
   Widget build(BuildContext context) {
+    HomeCubit homeCubit = HomeCubit.get(context);
     TextEditingController exerciseNameController = TextEditingController();
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
-        if(state is AddExerciseSuccessState)
-        {
+        if (state is AddExerciseSuccessState) {
           Navigator.pop(context);
           Navigator.pop(context);
           designToastDialog(
@@ -40,7 +41,10 @@ class AddExerciseScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        HomeCubit homeCubit = HomeCubit.get(context);
+        if (exerciseEntity != null) {
+          exerciseNameController.text = exerciseEntity!.exerciseName;
+          homeCubit.selectedValue = exerciseEntity!.exerciseCategory;
+        }
         return Scaffold(
           body: HideKeyboardPage(
             child: Padding(
@@ -50,7 +54,9 @@ class AddExerciseScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     defaultAppBar(
-                      title: 'Add Exercise',
+                      title: exerciseEntity != null
+                          ? 'Update Exercise'
+                          : 'Add Exercise',
                       context: context,
                       // actions: [
                       //   defaultActionButton(
@@ -74,13 +80,13 @@ class AddExerciseScreen extends StatelessWidget {
                                     child: homeCubit.exerciseImageFile == null
                                         ? Lottie.asset(
                                             Assets.images.lotti.exercise,
-                                    )
+                                          )
                                         : CircleAvatar(
                                             backgroundImage: FileImage(
-                                                homeCubit.exerciseImageFile!,
+                                              homeCubit.exerciseImageFile!,
                                             ),
-                                      minRadius: 50.rSp,
-                                      maxRadius: 100.rSp,
+                                            minRadius: 50.rSp,
+                                            maxRadius: 100.rSp,
                                           ),
                                   ),
                                   defaultActionButton(
@@ -140,7 +146,8 @@ class AddExerciseScreen extends StatelessWidget {
                                       onChanged: (value) {
                                         homeCubit.selectedValue = value!;
                                         homeCubit.pickExercise();
-                                        debugPrintFullText(homeCubit.selectedValue);
+                                        debugPrintFullText(
+                                            homeCubit.selectedValue);
                                       },
                                     );
                                   },
@@ -170,89 +177,173 @@ class AddExerciseScreen extends StatelessWidget {
                               ],
                             ),
                             verticalSpace(6.h),
-                            if(homeCubit.exerciseVideo != null)
+                            if (homeCubit.exerciseVideo != null)
                               Row(
-                              children: [
-                                const Icon(
-                                    Icons.upload
-                                ),
-                                horizontalSpace(5.w),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    myText(
-                                      title:
-                                      homeCubit.exerciseVideo!.files.first.name,
-                                      //AppString.certificationSize,
-                                      style: Style.extraSmall,
-                                      fontSize: 12.rSp,
-                                      color: Colors.blue,
-                                    ),
-                                    verticalSpace(1.h),
-                                    myText(
-                                      title:
-                                      '${homeCubit.exerciseVideo!.files.first.size ~/ 1024} kB',
-                                      //AppString.certificationSize,
-                                      style: Style.extraSmall,
-                                      fontSize: 12.rSp,
-                                      color: Colors.blue,
-                                    ),
-                                  ],
-                                ),
-                                const Spacer(),
-                                const Icon(
-                                  Icons.check_circle_rounded,
-                                  color: ColorsManager.mainColor,
-                                )
-                              ],
-                            ),
+                                children: [
+                                  const Icon(Icons.upload),
+                                  horizontalSpace(5.w),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      myText(
+                                        title: homeCubit
+                                            .exerciseVideo!.files.first.name,
+                                        //AppString.certificationSize,
+                                        style: Style.extraSmall,
+                                        fontSize: 12.rSp,
+                                        color: Colors.blue,
+                                      ),
+                                      verticalSpace(1.h),
+                                      myText(
+                                        title:
+                                            '${homeCubit.exerciseVideo!.files.first.size ~/ 1024} kB',
+                                        //AppString.certificationSize,
+                                        style: Style.extraSmall,
+                                        fontSize: 12.rSp,
+                                        color: Colors.blue,
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  const Icon(
+                                    Icons.check_circle_rounded,
+                                    color: ColorsManager.mainColor,
+                                  )
+                                ],
+                              ),
                             verticalSpace(15.h),
                             myButton(
                               text: AppString.done,
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  if (homeCubit.exerciseImageFile != null) {
-                                    if (homeCubit.exerciseVideo != null) {
-                                      debugPrintFullText(homeCubit.selectedValue);
-                                      debugPrintFullText('${homeCubit.exerciseVideo}');
-                                      debugPrintFullText('${homeCubit.exerciseImageFile}');
-                                      debugPrintFullText('${homeCubit.isVisibilityExerciseIcon}');
-                                      debugPrintFullText('${homeCubit.visibilityExerciseValue}');
-                                      homeCubit.addExercise(
-                                        exerciseName: exerciseNameController.text,
-                                        exerciseCategory: homeCubit.selectedValue,
-                                        exerciseVisibility: homeCubit.visibilityExerciseValue!,
-                                        exercisePic: homeCubit.exerciseImageFile!,
-                                        exerciseVideo: homeCubit.exerciseVideo!,
-                                        context: context,
-                                      );
+                                  if (exerciseEntity == null) {
+                                    if (homeCubit.exerciseImageFile != null) {
+                                      if (homeCubit.exerciseVideo != null) {
+                                        debugPrintFullText(
+                                            homeCubit.selectedValue);
+                                        debugPrintFullText(
+                                            '${homeCubit.exerciseVideo}');
+                                        debugPrintFullText(
+                                            '${homeCubit.exerciseImageFile}');
+                                        debugPrintFullText(
+                                            '${homeCubit.isVisibilityExerciseIcon}');
+                                        debugPrintFullText(
+                                            '${homeCubit.visibilityExerciseValue}');
+                                        homeCubit.addExercise(
+                                          exerciseName:
+                                              exerciseNameController.text,
+                                          exerciseCategory:
+                                              homeCubit.selectedValue,
+                                          exerciseVisibility: homeCubit
+                                              .visibilityExerciseValue!,
+                                          exercisePic:
+                                              homeCubit.exerciseImageFile!,
+                                          exerciseVideo:
+                                              homeCubit.exerciseVideo!,
+                                          context: context,
+                                        );
                                         showDialog(
                                           context: context,
                                           builder: (context) {
-                                            return BlocBuilder<HomeCubit,HomeStates>(
+                                            return BlocBuilder<HomeCubit,
+                                                HomeStates>(
                                               builder: (context, state) {
-                                                if(state is ChangeProgressValueState) {
+                                                if (state
+                                                    is ChangeProgressValueState) {
                                                   return ProgressDialog(
-                                                  message: 'Processing... ${((state.countProgress! / state.totalProgress!) * 100).toInt()}%' ,
-                                                  value: state.countProgress!/state.totalProgress!,
-                                                );
+                                                    message:
+                                                        'Processing... ${((state.countProgress! / state.totalProgress!) * 100).toInt()}%',
+                                                    value: state
+                                                            .countProgress! /
+                                                        state.totalProgress!,
+                                                  );
                                                 }
                                                 return Container();
                                               },
                                             );
                                           },
-                                      );
+                                        );
+                                      } else {
+                                        designToastDialog(
+                                            context: context,
+                                            toast: TOAST.warning,
+                                            text: 'please pick exercise video');
+                                      }
                                     } else {
                                       designToastDialog(
                                           context: context,
                                           toast: TOAST.warning,
-                                          text: 'please pick exercise video');
+                                          text: 'please pick exercise photo');
                                     }
                                   } else {
-                                    designToastDialog(
+                                    if (homeCubit.exerciseImageFile != null &&
+                                        homeCubit.exerciseVideo == null) {
+                                      homeCubit.updateExercise(
+                                          AddExerciseParams(
+                                              context: context,
+                                              isImage: true,
+                                              exercisePic:
+                                                  homeCubit.exerciseImageFile,
+                                              exerciseCategory:
+                                                  homeCubit.selectedValue,
+                                              exerciseName:
+                                                  exerciseNameController.text,
+                                              exerciseVisibility: homeCubit
+                                                  .visibilityExerciseValue!,
+                                              exerciseId:
+                                                  exerciseEntity!.exerciseId,
+                                              isVideo: false));
+                                    } else if (homeCubit.exerciseImageFile ==
+                                            null &&
+                                        homeCubit.exerciseVideo != null) {
+                                      homeCubit
+                                          .updateExercise(AddExerciseParams(
                                         context: context,
-                                        toast: TOAST.warning,
-                                        text: 'please pick exercise photo');
+                                        isImage: false,
+                                        exerciseCategory:
+                                            homeCubit.selectedValue,
+                                        exerciseName:
+                                            exerciseNameController.text,
+                                        exerciseVisibility:
+                                            homeCubit.visibilityExerciseValue!,
+                                        exerciseId: exerciseEntity!.exerciseId,
+                                        isVideo: true,
+                                        exerciseVideo: homeCubit.exerciseVideo,
+                                      ));
+                                    } else if (homeCubit.exerciseImageFile !=
+                                            null &&
+                                        homeCubit.exerciseVideo != null) {
+                                      homeCubit
+                                          .updateExercise(AddExerciseParams(
+                                        context: context,
+                                        isImage: true,
+                                        exercisePic: homeCubit.exerciseImageFile,
+                                        exerciseCategory:
+                                            homeCubit.selectedValue,
+                                        exerciseName:
+                                            exerciseNameController.text,
+                                        exerciseVisibility:
+                                            homeCubit.visibilityExerciseValue!,
+                                        exerciseId: exerciseEntity!.exerciseId,
+                                        isVideo: true,
+                                        exerciseVideo: homeCubit.exerciseVideo,
+                                      ));
+                                    }else{
+                                      homeCubit
+                                          .updateExercise(AddExerciseParams(
+                                        context: context,
+                                        isImage: false,
+                                        exerciseCategory:
+                                        homeCubit.selectedValue,
+                                        exerciseName:
+                                        exerciseNameController.text,
+                                        exerciseVisibility:
+                                        homeCubit.visibilityExerciseValue!,
+                                        exerciseId: exerciseEntity!.exerciseId,
+                                        isVideo: false,
+                                      ));
+                                    }
                                   }
                                 } else {
                                   designToastDialog(

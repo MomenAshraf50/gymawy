@@ -135,4 +135,24 @@ class GetExerciseErrorState extends HomeStates{
   GetExerciseErrorState(this.failure);
 }
 
+class UpdateExerciseLoadingState extends HomeStates{}
+class UpdateExerciseSuccessState extends HomeStates{
+  final AddExerciseEntity exerciseEntity;
 
+  UpdateExerciseSuccessState(this.exerciseEntity);
+}
+class UpdateExerciseErrorState extends HomeStates{
+  final String failure;
+
+  UpdateExerciseErrorState(this.failure);
+}
+
+class DeleteExerciseLoadingState extends HomeStates{}
+class DeleteExerciseSuccessState extends HomeStates{}
+class DeleteExerciseErrorState extends HomeStates{
+  final String failure;
+
+  DeleteExerciseErrorState(this.failure);
+}
+
+class ChangeDropDownSelectedValueState extends HomeStates {}
