@@ -17,7 +17,7 @@ class ExerciseExampleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
-    homeCubit.initializeVideoPlayerController();
+    homeCubit.initializeVideoPlayerController(video: 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4');
 
 
     return BlocBuilder<HomeCubit, HomeStates>(
@@ -43,18 +43,14 @@ class ExerciseExampleScreen extends StatelessWidget {
                           Stack(
                             alignment: Alignment.center,
                             children: [
-                              homeCubit
-                                      .videoPlayerController.value.isInitialized
-                                  ? AspectRatio(
+                              homeCubit.videoPlayerController.value.isInitialized ? AspectRatio(
                                       aspectRatio: homeCubit
                                           .videoPlayerController
                                           .value
                                           .aspectRatio,
-                                      child: VideoPlayer(
-                                          homeCubit.videoPlayerController),
+                                      child: VideoPlayer(homeCubit.videoPlayerController),
                                     )
-                                  : SvgPicture.asset(
-                                      Assets.images.svg.jumpingJacks),
+                                  : SvgPicture.asset(Assets.images.svg.jumpingJacks),
                               FloatingActionButton(
                                 onPressed: () {
                                   homeCubit.pauseAndPlayVideo();
