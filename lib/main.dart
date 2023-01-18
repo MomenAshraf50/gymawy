@@ -107,8 +107,7 @@ class MyApp extends StatelessWidget {
           create: (context) => sl<RegisterCubit>(),
         ),
         BlocProvider(
-          create: (context) => sl<HomeCubit>()
-            //..profile(id: '$userId'),
+          create: (context) => sl<HomeCubit>()..profile(id: '$userId')..getExercise(),
         ),
       ],
       child: BlocBuilder<AppBloc, AppState>(

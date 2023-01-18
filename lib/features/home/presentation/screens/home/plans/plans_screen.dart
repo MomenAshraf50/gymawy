@@ -59,8 +59,8 @@ class PlansScreen extends StatelessWidget {
                       InkWell(
                         child: buildPlansItems(context),
                         onTap: () {
-                          navigateTo(context, const PlanType());
-                          debugPrintFullText('$index');
+                          // navigateTo(context, const PlanType());
+                          // debugPrintFullText('$index');
                         },
                       ),
                   itemCount: 10,
