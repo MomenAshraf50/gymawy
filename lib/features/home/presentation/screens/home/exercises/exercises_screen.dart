@@ -16,6 +16,7 @@ class ExercisesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
+    homeCubit.getExercise();
     return BlocBuilder<HomeCubit,HomeStates>(
       builder: (context, state) {
         return SafeArea(
