@@ -31,20 +31,31 @@ class AddExerciseScreen extends StatelessWidget {
     TextEditingController exerciseNameController = TextEditingController();
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
-        if (state is AddExerciseSuccessState) {
+        if (exerciseEntity != null) {
+          exerciseNameController.text = exerciseEntity!.exerciseName;// debugPrintFullText(homeCubit.selectedValue);
+        }
+        if (state is UpdateExerciseSuccessState) {
           Navigator.pop(context);
           Navigator.pop(context);
+          homeCubit.getExercise();
           designToastDialog(
               context: context,
               toast: TOAST.success,
-              text: 'Exercise Add Successfully');
+              text: 'Exercise Updated Successfully');
+        }
+        if (state is AddExerciseSuccessState) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.pop(context);
+          homeCubit.getExercise();
+          designToastDialog(
+              context: context,
+              toast: TOAST.success,
+              text: 'Exercise Added Successfully');
         }
       },
       builder: (context, state) {
-        if (exerciseEntity != null) {
-          exerciseNameController.text = exerciseEntity!.exerciseName;
-          homeCubit.selectedValue = exerciseEntity!.exerciseCategory;
-        }
+        debugPrintFullText('ssssssssssssssssssssssssssss${homeCubit.selectedValue}');
         return Scaffold(
           body: HideKeyboardPage(
             child: Padding(
@@ -127,7 +138,9 @@ class AddExerciseScreen extends StatelessWidget {
                                   return null;
                                 },
                                 controller: exerciseNameController,
-                                hint: AppString.nameOfExercise),
+                                hint: exerciseEntity != null ?
+                                exerciseEntity!.exerciseName  : AppString.nameOfExercise
+                            ),
                             verticalSpace(3.h),
                             Row(
                               children: [
@@ -138,19 +151,14 @@ class AddExerciseScreen extends StatelessWidget {
                                   fontSize: 12.rSp,
                                 ),
                                 const Spacer(),
-                                BlocBuilder<HomeCubit, HomeStates>(
-                                  builder: (context, state) {
-                                    return DropdownButton(
-                                      value: homeCubit.selectedValue,
-                                      items: homeCubit.exerciseValue,
-                                      onChanged: (value) {
-                                        homeCubit.selectedValue = value!;
-                                        homeCubit.pickExercise();
-                                        debugPrintFullText(
-                                            homeCubit.selectedValue);
-                                      },
-                                    );
-                                  },
+                                DropdownButton(
+                                  value: homeCubit.selectedValue,
+                                  items: homeCubit.exerciseValue,
+                                  onChanged: (value) {
+                                    homeCubit.pickExercise();
+                                    homeCubit.selectedValue = value!;
+                                    debugPrintFullText('second  value  is =$value');
+                                    debugPrintFullText('second is =${homeCubit.selectedValue}');                                      },
                                 ),
                               ],
                             ),
@@ -165,15 +173,28 @@ class AddExerciseScreen extends StatelessWidget {
                                   fontSize: 12.rSp,
                                 ),
                                 const Spacer(),
+                                if(exerciseEntity == null || exerciseEntity!.exerciseVisibility == 'private')
                                 InkWell(
                                   child: SvgPicture.asset(
                                       homeCubit.isVisibilityExerciseIcon!
                                           ? Assets.images.svg.visibility_true
-                                          : Assets.images.svg.visibility_false),
+                                          : Assets.images.svg.visibility_false
+                                  ),
                                   onTap: () {
                                     homeCubit.visibilityExercise();
                                   },
                                 ),
+                                if(exerciseEntity != null && exerciseEntity!.exerciseVisibility == 'public')
+                                  InkWell(
+                                    child: SvgPicture.asset(
+                                        homeCubit.isVisibilityExerciseIcon == false
+                                            ? Assets.images.svg.visibility_false
+                                            : Assets.images.svg.visibility_true
+                                    ),
+                                    onTap: () {
+                                      homeCubit.visibilityExercise();
+                                    },
+                                  ),
                               ],
                             ),
                             verticalSpace(6.h),
@@ -187,8 +208,7 @@ class AddExerciseScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       myText(
-                                        title: homeCubit
-                                            .exerciseVideo!.files.first.name,
+                                        title: homeCubit.exerciseVideo!.files.first.name,
                                         //AppString.certificationSize,
                                         style: Style.extraSmall,
                                         fontSize: 12.rSp,
@@ -220,37 +240,25 @@ class AddExerciseScreen extends StatelessWidget {
                                   if (exerciseEntity == null) {
                                     if (homeCubit.exerciseImageFile != null) {
                                       if (homeCubit.exerciseVideo != null) {
-                                        debugPrintFullText(
-                                            homeCubit.selectedValue);
-                                        debugPrintFullText(
-                                            '${homeCubit.exerciseVideo}');
-                                        debugPrintFullText(
-                                            '${homeCubit.exerciseImageFile}');
-                                        debugPrintFullText(
-                                            '${homeCubit.isVisibilityExerciseIcon}');
-                                        debugPrintFullText(
-                                            '${homeCubit.visibilityExerciseValue}');
+                                        debugPrintFullText(homeCubit.selectedValue);
+                                        debugPrintFullText('${homeCubit.exerciseVideo}');
+                                        debugPrintFullText('${homeCubit.exerciseImageFile}');
+                                        debugPrintFullText('${homeCubit.isVisibilityExerciseIcon}');
+                                        debugPrintFullText('${homeCubit.visibilityExerciseValue}');
                                         homeCubit.addExercise(
-                                          exerciseName:
-                                              exerciseNameController.text,
-                                          exerciseCategory:
-                                              homeCubit.selectedValue,
-                                          exerciseVisibility: homeCubit
-                                              .visibilityExerciseValue!,
-                                          exercisePic:
-                                              homeCubit.exerciseImageFile!,
-                                          exerciseVideo:
-                                              homeCubit.exerciseVideo!,
+                                          exerciseName: exerciseNameController.text,
+                                          exerciseCategory: homeCubit.selectedValue,
+                                          exerciseVisibility: homeCubit.visibilityExerciseValue!,
+                                          exercisePic: homeCubit.exerciseImageFile!,
+                                          exerciseVideo: homeCubit.exerciseVideo!,
                                           context: context,
                                         );
                                         showDialog(
                                           context: context,
                                           builder: (context) {
-                                            return BlocBuilder<HomeCubit,
-                                                HomeStates>(
+                                            return BlocBuilder<HomeCubit, HomeStates>(
                                               builder: (context, state) {
-                                                if (state
-                                                    is ChangeProgressValueState) {
+                                                if (state is ChangeProgressValueState) {
                                                   return ProgressDialog(
                                                     message:
                                                         'Processing... ${((state.countProgress! / state.totalProgress!) * 100).toInt()}%',
@@ -277,72 +285,127 @@ class AddExerciseScreen extends StatelessWidget {
                                           text: 'please pick exercise photo');
                                     }
                                   } else {
-                                    if (homeCubit.exerciseImageFile != null &&
-                                        homeCubit.exerciseVideo == null) {
+                                    if (homeCubit.exerciseImageFile != null && homeCubit.exerciseVideo == null) {
                                       homeCubit.updateExercise(
                                           AddExerciseParams(
                                               context: context,
                                               isImage: true,
-                                              exercisePic:
-                                                  homeCubit.exerciseImageFile,
-                                              exerciseCategory:
-                                                  homeCubit.selectedValue,
-                                              exerciseName:
-                                                  exerciseNameController.text,
-                                              exerciseVisibility: homeCubit
-                                                  .visibilityExerciseValue!,
-                                              exerciseId:
-                                                  exerciseEntity!.exerciseId,
-                                              isVideo: false));
-                                    } else if (homeCubit.exerciseImageFile ==
-                                            null &&
-                                        homeCubit.exerciseVideo != null) {
-                                      homeCubit
-                                          .updateExercise(AddExerciseParams(
+                                              exercisePic: homeCubit.exerciseImageFile,
+                                              exerciseCategory: homeCubit.selectedValue,
+                                              exerciseName: exerciseNameController.text,
+                                              exerciseVisibility: homeCubit.visibilityExerciseValue!,
+                                              exerciseId: exerciseEntity!.exerciseId,
+                                              isVideo: false
+                                          ));
+                                      // showDialog(
+                                      //   context: context,
+                                      //   builder: (context) {
+                                      //     return BlocBuilder<HomeCubit, HomeStates>(
+                                      //       builder: (context, state) {
+                                      //         if (state is ChangeProgressValueState) {
+                                      //           return ProgressDialog(
+                                      //             message:
+                                      //             'Processing... ${((state.countProgress! / state.totalProgress!) * 100).toInt()}%',
+                                      //             value: state
+                                      //                 .countProgress! /
+                                      //                 state.totalProgress!,
+                                      //           );
+                                      //         }
+                                      //         return Container();
+                                      //       },
+                                      //     );
+                                      //   },
+                                      // );
+                                    } else if (homeCubit.exerciseImageFile == null && homeCubit.exerciseVideo != null) {
+                                      homeCubit.updateExercise(AddExerciseParams(
                                         context: context,
                                         isImage: false,
-                                        exerciseCategory:
-                                            homeCubit.selectedValue,
-                                        exerciseName:
-                                            exerciseNameController.text,
-                                        exerciseVisibility:
-                                            homeCubit.visibilityExerciseValue!,
+                                        exerciseCategory: homeCubit.selectedValue,
+                                        exerciseName: exerciseNameController.text,
+                                        exerciseVisibility: homeCubit.visibilityExerciseValue!,
                                         exerciseId: exerciseEntity!.exerciseId,
                                         isVideo: true,
                                         exerciseVideo: homeCubit.exerciseVideo,
                                       ));
-                                    } else if (homeCubit.exerciseImageFile !=
-                                            null &&
-                                        homeCubit.exerciseVideo != null) {
-                                      homeCubit
-                                          .updateExercise(AddExerciseParams(
+                                      // showDialog(
+                                      //   context: context,
+                                      //   builder: (context) {
+                                      //     return BlocBuilder<HomeCubit, HomeStates>(
+                                      //       builder: (context, state) {
+                                      //         if (state is ChangeProgressValueState) {
+                                      //           return ProgressDialog(
+                                      //             message:
+                                      //             'Processing... ${((state.countProgress! / state.totalProgress!) * 100).toInt()}%',
+                                      //             value: state
+                                      //                 .countProgress! /
+                                      //                 state.totalProgress!,
+                                      //           );
+                                      //         }
+                                      //         return Container();
+                                      //       },
+                                      //     );
+                                      //   },
+                                      // );
+                                    } else if (homeCubit.exerciseImageFile != null && homeCubit.exerciseVideo != null) {
+                                      homeCubit.updateExercise(AddExerciseParams(
                                         context: context,
                                         isImage: true,
                                         exercisePic: homeCubit.exerciseImageFile,
-                                        exerciseCategory:
-                                            homeCubit.selectedValue,
-                                        exerciseName:
-                                            exerciseNameController.text,
-                                        exerciseVisibility:
-                                            homeCubit.visibilityExerciseValue!,
+                                        exerciseCategory: homeCubit.selectedValue,
+                                        exerciseName: exerciseNameController.text,
+                                        exerciseVisibility: homeCubit.visibilityExerciseValue!,
                                         exerciseId: exerciseEntity!.exerciseId,
                                         isVideo: true,
                                         exerciseVideo: homeCubit.exerciseVideo,
                                       ));
+                                      // showDialog(
+                                      //   context: context,
+                                      //   builder: (context) {
+                                      //     return BlocBuilder<HomeCubit, HomeStates>(
+                                      //       builder: (context, state) {
+                                      //         if (state is ChangeProgressValueState) {
+                                      //           return ProgressDialog(
+                                      //             message:
+                                      //             'Processing... ${((state.countProgress! / state.totalProgress!) * 100).toInt()}%',
+                                      //             value: state
+                                      //                 .countProgress! /
+                                      //                 state.totalProgress!,
+                                      //           );
+                                      //         }
+                                      //         return Container();
+                                      //       },
+                                      //     );
+                                      //   },
+                                      // );
                                     }else{
-                                      homeCubit
-                                          .updateExercise(AddExerciseParams(
+                                      homeCubit.updateExercise(AddExerciseParams(
                                         context: context,
                                         isImage: false,
-                                        exerciseCategory:
-                                        homeCubit.selectedValue,
-                                        exerciseName:
-                                        exerciseNameController.text,
-                                        exerciseVisibility:
-                                        homeCubit.visibilityExerciseValue!,
+                                        exerciseCategory: homeCubit.selectedValue,
+                                        exerciseName: exerciseNameController.text,
+                                        exerciseVisibility: homeCubit.visibilityExerciseValue!,
                                         exerciseId: exerciseEntity!.exerciseId,
                                         isVideo: false,
                                       ));
+                                      // showDialog(
+                                      //   context: context,
+                                      //   builder: (context) {
+                                      //     return BlocBuilder<HomeCubit, HomeStates>(
+                                      //       builder: (context, state) {
+                                      //         if (state is ChangeProgressValueState) {
+                                      //           return ProgressDialog(
+                                      //             message:
+                                      //             'Processing... ${((state.countProgress! / state.totalProgress!) * 100).toInt()}%',
+                                      //             value: state
+                                      //                 .countProgress! /
+                                      //                 state.totalProgress!,
+                                      //           );
+                                      //         }
+                                      //         return Container();
+                                      //       },
+                                      //     );
+                                      //   },
+                                      // );
                                     }
                                   }
                                 } else {
