@@ -50,14 +50,7 @@ class ExercisesScreen extends StatelessWidget {
                         ),
                         onTap: () {
                           navigateTo(context, ExerciseBasicData(
-                            exerciseId: homeCubit.exerciseResult![index].exerciseId,
-                            coachAddedId: homeCubit.exerciseResult![index].userId,
-                            coachAddedName: homeCubit.exerciseResult![index].userName,
-                            exerciseCategory: homeCubit.exerciseResult![index].exerciseCategory,
-                            exerciseName: homeCubit.exerciseResult![index].exerciseName,
-                            exercisePic: homeCubit.exerciseResult![index].exercisePic,
-                            exerciseVideo: homeCubit.exerciseResult![index].exerciseVid,
-                            exerciseVisibility: homeCubit.exerciseResult![index].exerciseVisibility,
+                            exerciseEntity: homeCubit.exerciseResult![index],
                           ));
                           debugPrintFullText('$index');
                         },

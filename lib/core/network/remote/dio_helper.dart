@@ -46,9 +46,11 @@ abstract class DioHelper {
     dynamic data,
     dynamic query,
     String? token,
+    ProgressCallback? progressCallback,
     CancelToken? cancelToken,
     int? timeOut,
     bool isMultipart = false,
+
   });
 }
 
@@ -102,7 +104,7 @@ class DioImpl extends DioHelper {
     debugPrint('Query => $query');
 
     return await request(
-          () async => await dio.post(
+      () async => await dio.post(
         url,
         data: data,
         queryParameters: query,
@@ -156,7 +158,7 @@ class DioImpl extends DioHelper {
     debugPrint('Query => $query');
 
     return await request(
-          () async => await dio.get(
+      () async => await dio.get(
         url,
         queryParameters: query,
         cancelToken: cancelToken,
@@ -204,7 +206,7 @@ class DioImpl extends DioHelper {
     debugPrint('Query => $query');
 
     return await request(
-          () async => await dio.delete(
+      () async => await dio.delete(
         url,
         queryParameters: query,
         data: data,
@@ -220,6 +222,7 @@ class DioImpl extends DioHelper {
     dynamic data,
     dynamic query,
     String? token,
+    ProgressCallback? progressCallback,
     CancelToken? cancelToken,
     int? timeOut,
     bool isMultipart = false,
@@ -253,9 +256,10 @@ class DioImpl extends DioHelper {
     debugPrint('Query => $query');
 
     return await request(
-          () async => await dio.put(
+      () async => await dio.put(
         url,
         queryParameters: query,
+        onSendProgress: progressCallback,
         data: data,
         cancelToken: cancelToken,
       ),

@@ -9,7 +9,9 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
+import 'package:gymawy/features/home/domain/usecase/update_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
@@ -49,6 +51,8 @@ class HomeCubit extends Cubit<HomeStates> {
   final UpdateCertificateUseCase _updateCertificateUseCase;
   final AddExerciseUseCase _addExerciseUseCase;
   final GetExerciseUseCase _getExerciseUseCase;
+  final UpdateExerciseUseCase _updateExerciseUseCase;
+  final DeleteExerciseUseCase _deleteExerciseUseCase;
 
   HomeCubit({
     required UpdateProfilePicture updateProfilePicture,
@@ -62,6 +66,8 @@ class HomeCubit extends Cubit<HomeStates> {
     required UpdateCertificateUseCase updateCertificateUseCase,
     required AddExerciseUseCase addExerciseUseCase,
     required GetExerciseUseCase getExerciseUseCase,
+    required UpdateExerciseUseCase updateExerciseUseCase,
+    required DeleteExerciseUseCase deleteExerciseUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -74,6 +80,8 @@ class HomeCubit extends Cubit<HomeStates> {
         _updateCertificateUseCase = updateCertificateUseCase,
         _addExerciseUseCase = addExerciseUseCase,
         _getExerciseUseCase = getExerciseUseCase,
+        _updateExerciseUseCase = updateExerciseUseCase,
+        _deleteExerciseUseCase = deleteExerciseUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -516,8 +524,12 @@ class HomeCubit extends Cubit<HomeStates> {
     exerciseValue;
     emit(ExerciseItemsState());
   }
-
   String selectedValue = 'Abs';
+
+  void changeDropDownSelectedValue(String value){
+    selectedValue = value;
+    emit(ChangeDropDownSelectedValueState());
+  }
 
   FilePickerResult? exerciseVideo;
   Widget? exercisePreVideo;
@@ -628,6 +640,30 @@ class HomeCubit extends Cubit<HomeStates> {
       exerciseResult = data;
 
     });
+  }
+
+  void updateExercise(AddExerciseParams params) async{
+    emit(UpdateExerciseLoadingState());
+
+    final result = await _updateExerciseUseCase(params);
+
+    result.fold((failure) {
+      emit(UpdateExerciseErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(UpdateExerciseSuccessState(data));
+    });  }
+
+  void deleteExercise(DeleteExerciseParams params) async{
+    emit(DeleteExerciseLoadingState());
+
+    final result = await _deleteExerciseUseCase(params);
+
+    result.fold((failure){
+      emit(DeleteExerciseErrorState(mapFailureToMessage(failure)));
+    }, (r){
+      emit(DeleteExerciseSuccessState());
+    });
+
   }
 
 

@@ -3,11 +3,13 @@ import 'package:gymawy/features/home/data/data_source/home_remote_data_source.da
 import 'package:gymawy/features/home/data/repository/home_repository.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/search_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
+import 'package:gymawy/features/home/domain/usecase/update_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
@@ -54,6 +56,8 @@ Future<void> init() async {
         updateCertificateUseCase: sl(),
         addExerciseUseCase: sl(),
         getExerciseUseCase: sl(),
+    updateExerciseUseCase: sl(),
+    deleteExerciseUseCase: sl()
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -89,6 +93,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UpdateCertificateUseCase(sl()));
   sl.registerLazySingleton(() => AddExerciseUseCase(sl()));
   sl.registerLazySingleton(() => GetExerciseUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateExerciseUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteExerciseUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(

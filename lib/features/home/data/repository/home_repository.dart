@@ -10,6 +10,8 @@ import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
+import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/get_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
@@ -26,8 +28,9 @@ typedef CallProfile = Future<ProfileEntity> Function();
 typedef CallCertification = Future<CertificateEntity> Function();
 typedef CallGetCertification = Future<List<CertificateEntity>> Function();
 typedef CallDeleteCertification = Future<void> Function();
-typedef CallAddExercise= Future<AddExerciseEntity> Function();
+typedef CallExercise= Future<AddExerciseEntity> Function();
 typedef CallGetExercise = Future<List<AddExerciseEntity>> Function();
+typedef CallDeleteExercise = Future<void> Function();
 
 
 class HomeRepository extends HomeBaseRepository {
@@ -211,8 +214,8 @@ class HomeRepository extends HomeBaseRepository {
     });
   }
 
-  Future<Either<Failure, AddExerciseEntity>> fetchAddExercise(
-      CallAddExercise mainMethod,
+  Future<Either<Failure, AddExerciseEntity>> fetchExercise(
+      CallExercise mainMethod,
       ) async {
     try {
       final addExerciseData = await mainMethod();
@@ -235,7 +238,7 @@ class HomeRepository extends HomeBaseRepository {
 
 
   }) async {
-    return await fetchAddExercise(() {
+    return await fetchExercise(() {
       return remoteDataSource.addExercise(
         exerciseName: exerciseName,
         exerciseCategory: exerciseCategory,
@@ -267,6 +270,36 @@ class HomeRepository extends HomeBaseRepository {
       return remoteDataSource.getExercise(params);
     });
   }
+
+  @override
+  Future<Either<Failure, AddExerciseEntity>> updateExercise(AddExerciseParams params) async{
+    return await fetchExercise((){
+      return remoteDataSource.updateExercise(params);
+    });
+  }
+
+
+  Future<Either<Failure,void>> fetchDeleteExercise(
+      CallDeleteCertification mainMethod,
+      ) async {
+    try {
+      final deleteExercise = await mainMethod();
+      return Right(deleteExercise);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteExercise(DeleteExerciseParams params) async{
+    return await fetchDeleteExercise((){
+      return remoteDataSource.deleteExercise(params);
+    });
+  }
+
+
 
 
 }

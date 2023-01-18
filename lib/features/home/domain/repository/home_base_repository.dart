@@ -5,6 +5,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/search_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
@@ -60,5 +62,9 @@ abstract class HomeBaseRepository {
   });
 
   Future<Either<Failure,List<AddExerciseEntity>>> getExercise(GetExerciseParams params);
+
+  Future<Either<Failure,AddExerciseEntity>> updateExercise(AddExerciseParams params);
+
+  Future<Either<Failure,void>> deleteExercise(DeleteExerciseParams params);
 
 }
