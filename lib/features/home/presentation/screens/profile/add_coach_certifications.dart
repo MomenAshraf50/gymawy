@@ -39,12 +39,24 @@ class AddCoachCertifications extends StatelessWidget {
           homeCubit.day = null;
           homeCubit.certificationPdf = null;
           homeCubit.certificateNameController.text = '';
-          homeCubit.getCertificates(
-              GetCertificateParams(
-                ownerId: userId!,
-                ownerName: '',
-              ),
-              context);
+          homeCubit.getCertificates(GetCertificateParams( ownerId: userId!, ownerName: '',), context);
+          designToastDialog(
+              context: context,
+              toast: TOAST.success,
+              text: 'Certification Added Successfully');
+        }
+        if (state is UpdateCertificateSuccessState) {
+          Navigator.pop(context);
+          homeCubit.year = null;
+          homeCubit.month = null;
+          homeCubit.day = null;
+          homeCubit.certificationPdf = null;
+          homeCubit.certificateNameController.text = '';
+          homeCubit.getCertificates(GetCertificateParams( ownerId: userId!, ownerName: '',), context);
+          designToastDialog(
+              context: context,
+              toast: TOAST.success,
+              text: 'Certification Updated Successfully');
         }
       },
       builder: (context, state) {
@@ -191,9 +203,7 @@ class AddCoachCertifications extends StatelessWidget {
                             fontSize: 14.rSp,
                             onPressed: () {
                               if (certificateEntity == null) {
-                                if (formKey.currentState!.validate() &&
-                                    homeCubit.month != null &&
-                                    homeCubit.certificationPdf != null) {
+                                if (formKey.currentState!.validate() && homeCubit.month != null && homeCubit.certificationPdf != null) {
                                   homeCubit.certificate(
                                     id: userId.toString(),
                                     certificateName: homeCubit

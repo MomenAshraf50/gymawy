@@ -65,8 +65,9 @@ abstract class HomeBaseDataSource {
   });
 
   Future<List<AddExerciseModel>> getExercise(GetExerciseParams params);
-  
+
   Future<AddExerciseModel> updateExercise(AddExerciseParams params);
+
   Future<void> deleteExercise(DeleteExerciseParams params);
 }
 
@@ -231,22 +232,22 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   @override
   Future<CertificateModel> updateCertificate(
       UpdateCertificateParams params) async {
-    if(params.isFile){
+    if (params.isFile) {
       final Response f = await dioHelper.put(
         url: '$certificateEndPoint${params.certificateId}/',
         data: {
           'certificate_file': await MultipartFile.fromFile(
               params.certificate!.files.first.path!,
-              filename:
-              Uri.file(params.certificate!.files.first.path!).pathSegments.last),
+              filename: Uri.file(params.certificate!.files.first.path!)
+                  .pathSegments
+                  .last),
           'certificate_name': params.certificateName,
           'date': params.certificateDate
         },
         token: token,
       );
       return CertificateModel.fromJson(f.data);
-    }
-    else{
+    } else {
       final Response f = await dioHelper.put(
         url: '$certificateEndPoint${params.certificateId}/',
         data: {
@@ -257,7 +258,6 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       );
       return CertificateModel.fromJson(f.data);
     }
-
   }
 
   @override
@@ -314,22 +314,21 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   }
 
   @override
-  Future<AddExerciseModel> updateExercise(AddExerciseParams params) async{
-
+  Future<AddExerciseModel> updateExercise(AddExerciseParams params) async {
     final Response f;
 
-    if(params.isVideo == false && params.isImage == false){
+    if (params.isVideo == false && params.isImage == false) {
       final Response f = await dioHelper.put(
           url: '$addExerciseEndPoint${params.exerciseId}/',
           token: token,
-          data: {
+          data: FormData.fromMap({
             'exercise_name': params.exerciseName,
             'category': params.exerciseCategory,
             'visibility': params.exerciseVisibility,
-          }
-      );
+          })
+          );
       return AddExerciseModel.fromJson(f.data);
-    }else if(params.isVideo == true && params.isImage == true){
+    } else if (params.isVideo == true && params.isImage == true) {
       final Response f = await dioHelper.put(
           url: '$addExerciseEndPoint${params.exerciseId}/',
           token: token,
@@ -342,8 +341,9 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             ),
             'exercise_vid': await MultipartFile.fromFile(
                 params.exerciseVideo!.files.first.path!,
-                filename:
-                Uri.file(params.exerciseVideo!.files.first.path!).pathSegments.last),
+                filename: Uri.file(params.exerciseVideo!.files.first.path!)
+                    .pathSegments
+                    .last),
             'visibility': params.exerciseVisibility,
           }),
           isMultipart: true,
@@ -358,7 +358,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             );
           });
       return AddExerciseModel.fromJson(f.data);
-    }else if(params.isVideo == true && params.isImage == false){
+    } else if (params.isVideo == true && params.isImage == false) {
       final Response f = await dioHelper.put(
           url: '$addExerciseEndPoint${params.exerciseId}/',
           token: token,
@@ -367,8 +367,9 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             'category': params.exerciseCategory,
             'exercise_vid': await MultipartFile.fromFile(
                 params.exerciseVideo!.files.first.path!,
-                filename:
-                Uri.file(params.exerciseVideo!.files.first.path!).pathSegments.last),
+                filename: Uri.file(params.exerciseVideo!.files.first.path!)
+                    .pathSegments
+                    .last),
             'visibility': params.exerciseVisibility,
           }),
           isMultipart: true,
@@ -383,7 +384,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             );
           });
       return AddExerciseModel.fromJson(f.data);
-    }else{
+    } else {
       final Response f = await dioHelper.put(
           url: '$addExerciseEndPoint${params.exerciseId}/',
           token: token,
@@ -412,7 +413,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   }
 
   @override
-  Future<void> deleteExercise(params) async{
+  Future<void> deleteExercise(params) async {
     await dioHelper.delete(
       url: '$addExerciseEndPoint${params.exerciseId}/',
       token: token,

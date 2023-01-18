@@ -51,12 +51,12 @@ class ExerciseBasicData extends StatelessWidget {
                       actions: [
                         defaultActionButton(
                             backgroundColor: ColorsManager.mainColor,
-                            icon: Icons.upload,
+                            icon: Icons.edit,
                             onPressed: (){
                               navigateTo(context, AddExerciseScreen(exerciseEntity: exerciseEntity,));
                             }
                         ),
-                        horizontalSpace(1.w),
+                        horizontalSpace(2.w),
                         defaultActionButton(
                             backgroundColor: Colors.red,
                             icon: Icons.delete,
