@@ -240,12 +240,13 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void initializeVideoPlayerController({
   required String video,
-  }) {
+  }) async {
     videoPlayerController = VideoPlayerController.network(
        // 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'
-      video
+      video,
+      //videoPlayerOptions: VideoPlayerOptions(mixWithOthers: false,allowBackgroundPlayback: true),
     );
-    videoPlayerController.initialize().then((value) {
+   await videoPlayerController.initialize().then((value) {
       emit(HomeExerciseExampleVideoPlayerInitialized());
     });
   }
