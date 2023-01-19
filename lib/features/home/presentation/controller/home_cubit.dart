@@ -30,10 +30,12 @@ import '../../domain/entities/search_entity.dart';
 import '../../domain/usecase/add_exercise_plan_usecase.dart';
 import '../../domain/usecase/certification_usecase.dart';
 import '../../domain/usecase/delete_certification_usecase.dart';
+import '../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_usecase.dart';
 import '../../domain/usecase/profile_usecase.dart';
 import '../../domain/usecase/search_usecase.dart';
+import '../../domain/usecase/update_exercise_plan_usecase.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/profile/profile_client_screen.dart';
 import '../screens/profile/profile_coach_screen.dart';
@@ -58,6 +60,8 @@ class HomeCubit extends Cubit<HomeStates> {
   final DeleteExerciseUseCase _deleteExerciseUseCase;
   final AddExercisePlanUseCase _addExercisePlanUseCase;
   final GetExercisePlanUseCase _getExercisePlanUseCase;
+  final UpdateExercisePlanUseCase _updateExercisePlanUseCase;
+  final DeleteExercisePlanUseCase _deleteExercisePlanUseCase;
 
 
   HomeCubit({
@@ -76,6 +80,8 @@ class HomeCubit extends Cubit<HomeStates> {
     required DeleteExerciseUseCase deleteExerciseUseCase,
     required AddExercisePlanUseCase addExercisePlanUseCase,
     required GetExercisePlanUseCase getExercisePlanUseCase,
+    required UpdateExercisePlanUseCase updateExercisePlanUseCase,
+    required DeleteExercisePlanUseCase deleteExercisePlanUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -92,6 +98,8 @@ class HomeCubit extends Cubit<HomeStates> {
         _deleteExerciseUseCase = deleteExerciseUseCase,
         _addExercisePlanUseCase = addExercisePlanUseCase,
         _getExercisePlanUseCase = getExercisePlanUseCase,
+        _updateExercisePlanUseCase = updateExercisePlanUseCase,
+        _deleteExercisePlanUseCase = deleteExercisePlanUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -714,6 +722,40 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  void updateExercisePlan(
+      {
+        required String exercisePlanName,
+        required String exercisePlanVisibility,
+        required int exercisePlanId,
+      }
+      ) async {
+    emit(UpdateExercisePlanLoadingState());
+
+    final result = await _updateExercisePlanUseCase(AddExercisePlanParams(
+      exercisePlanName: exercisePlanName,
+      exercisePlanVisibility: exercisePlanVisibility,
+      exercisePlanId: exercisePlanId,
+    ));
+
+    result.fold((failure) {
+      emit(UpdateExercisePlanErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(UpdateExercisePlanSuccessState(data));
+    });
+  }
+
+  void deleteExercisePlan(DeleteExercisePlanParams params) async{
+    emit(DeleteExercisePlanLoadingState());
+
+    final result = await _deleteExercisePlanUseCase(params);
+
+    result.fold((failure){
+      emit(DeleteExercisePlanErrorState(mapFailureToMessage(failure)));
+    }, (r){
+      emit(DeleteExercisePlanSuccessState());
+    });
+
+  }
 
 
 }

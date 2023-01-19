@@ -16,6 +16,7 @@ class AddExercisePlanUseCase implements UseCase<AddExercisePlanEntity, AddExerci
     return await repository.addExercisePlan(
         exercisePlanName: params.exercisePlanName,
         exercisePlanVisibility: params.exercisePlanVisibility,
+
     );
   }
 }
@@ -23,12 +24,14 @@ class AddExercisePlanUseCase implements UseCase<AddExercisePlanEntity, AddExerci
 class AddExercisePlanParams extends Equatable {
   final String exercisePlanVisibility;
   final String exercisePlanName;
+  final int? exercisePlanId;
 
 
 
   const AddExercisePlanParams({
     required this.exercisePlanName,
     required this.exercisePlanVisibility,
+    this.exercisePlanId
   });
 
   @override

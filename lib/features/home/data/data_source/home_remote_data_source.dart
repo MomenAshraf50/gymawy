@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:gymawy/core/network/remote/api_endpoints.dart';
 import 'package:gymawy/core/network/remote/dio_helper.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
-import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/features/home/data/models/add_exercise_model.dart';
 import 'package:gymawy/features/home/data/models/certificate_model.dart';
 import 'package:gymawy/features/home/data/models/profile_model.dart';
@@ -19,9 +18,9 @@ import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.da
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
-
-import '../../../../core/util/widgets/progress.dart';
+import '../../domain/usecase/add_exercise_plan_usecase.dart';
 import '../../domain/usecase/add_exercise_usecase.dart';
+import '../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_usecase.dart';
 import '../models/add_exercise_plan_model.dart';
 import '../models/get_exercise_plan_model.dart';
@@ -79,6 +78,10 @@ abstract class HomeBaseDataSource {
   });
 
   Future<List<GetExercisePlanModel>> getExercisePlan(GetExercisePlanParams params);
+
+  Future<AddExercisePlanModel> updateExercisePlan(AddExercisePlanParams params);
+
+  Future<void> deleteExercisePlan(DeleteExercisePlanParams params);
 
 
 }
@@ -461,6 +464,28 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     // return List<AddExerciseModel>.from(
     //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
   }
+
+  @override
+  Future<AddExercisePlanModel> updateExercisePlan(AddExercisePlanParams params) async {
+    final Response f = await dioHelper.put(
+        url: '$addExercisePlanEndPoint${params.exercisePlanId}/',
+        token: token,
+        data: FormData.fromMap({
+          'plan_name': params.exercisePlanName,
+          'visibility': params.exercisePlanVisibility,
+        })
+    );
+    return AddExercisePlanModel.fromJson(f.data);
+  }
+
+  @override
+  Future<void> deleteExercisePlan(params) async {
+    await dioHelper.delete(
+      url: '$addExercisePlanEndPoint${params.exercisePlanId}/',
+      token: token,
+    );
+  }
+
 
 
 }

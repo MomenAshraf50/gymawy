@@ -73,8 +73,18 @@ class PlansScreen extends StatelessWidget {
                                   ColorsManager.green : ColorsManager.error,
                                 ),
                                 onTap: () {
-                                   navigateTo(context, const PlanDetails());
+                                   navigateTo(context, PlanDetails(
+                                       exercisePlanId: homeCubit.exercisePlanResult![index].exercisePlanId,
+                                   ));
                                    debugPrintFullText('$index');
+                                },
+                                onLongPress: ()
+                                {
+                                  navigateTo(context, AddPlan(
+                                    exercisePlanId: homeCubit.exercisePlanResult![index].exercisePlanId,
+                                    exercisePlanName: homeCubit.exercisePlanResult![index].exercisePlanName,
+                                    exercisePlanVisibility: homeCubit.exercisePlanResult![index].exercisePlanVisibility,
+                                  ));
                                 },
                               ),
                           itemCount: homeCubit.exercisePlanResult!.length,
@@ -85,13 +95,10 @@ class PlansScreen extends StatelessWidget {
                   )
                 ],
               ),
-            ) :
-            const LoadingPage(),
+            ) : Container(),
           );
         },
       )
-
-      );
-
+    );
   }
 }

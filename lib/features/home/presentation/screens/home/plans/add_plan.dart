@@ -17,13 +17,19 @@ import '../../../../../../core/util/widgets/hideKeyboard.dart';
 
 
 class AddPlan extends StatelessWidget {
-   AddPlan({Key? key}) : super(key: key);
+   AddPlan({Key? key, this.exercisePlanId,this.exercisePlanVisibility,this.exercisePlanName}) : super(key: key);
   var formKey = GlobalKey<FormState>();
+  int? exercisePlanId;
+  String? exercisePlanName;
+  String? exercisePlanVisibility;
 
 
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
+    debugPrintFullText(exercisePlanName!);
+    debugPrintFullText(exercisePlanVisibility!);
+    debugPrintFullText('$exercisePlanId');
 
     return SafeArea(
       child: Scaffold(
@@ -33,17 +39,33 @@ class AddPlan extends StatelessWidget {
             padding: designApp,
             child: BlocConsumer<HomeCubit, HomeStates>(
               listener: (context, state) {
+                if(exercisePlanName != null) {
+                  homeCubit.nameOfPlanController.text == exercisePlanName;
+                  homeCubit.visibilityExerciseValue = exercisePlanVisibility;
+                }
+                if(state is UpdateExercisePlanSuccessState)
+                {
+                  Navigator.pop(context);
+                  homeCubit.getExercisePlan();
+                  designToastDialog(
+                      context: context,
+                      toast: TOAST.success,
+                      text: 'Exercise Plan Updated Successfully');
+                }
                 if(state is AddExercisePlanSuccessState)
                 {
                   Navigator.pop(context);
                   Navigator.pop(context);
+                  homeCubit.getExercisePlan();
                   designToastDialog(
                       context: context,
                       toast: TOAST.success,
                       text: 'Exercise Plan Added Successfully');
+
                 }
               },
               builder: (context, state) {
+
                 return SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: HideKeyboardPage(
@@ -52,16 +74,17 @@ class AddPlan extends StatelessWidget {
                         defaultAppBar(
                             title: AppString.addPlan,
                             context: context,
-                          onPressed: ()
-                          {
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          }
+                            onPressed: ()
+                            {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            }
                         ),
                         verticalSpace(20.h),
                         myTextFill(
                           controller: homeCubit.nameOfPlanController,
-                          hint: AppString.nameOfPlan,
+                          hint: exercisePlanName ??
+                              AppString.nameOfPlan,
                           validate: (String? value) {
                             if (value!.isEmpty) {
                               return 'isEmpty';
@@ -84,15 +107,28 @@ class AddPlan extends StatelessWidget {
                                 fontSize: 12.rSp,
                               ),
                               const Spacer(),
-                              InkWell(
-                                child: SvgPicture.asset(
-                                    homeCubit.isVisibilityPlanIcon! ?Assets.images.svg.visibility_true
-                                        : Assets.images.svg.visibility_false
+                              if(exercisePlanVisibility == null || exercisePlanVisibility == 'private')
+                                InkWell(
+                                  child: SvgPicture.asset(
+                                      homeCubit.isVisibilityPlanIcon!
+                                          ?Assets.images.svg.visibility_true
+                                          : Assets.images.svg.visibility_false
+                                  ),
+                                  onTap: () {
+                                    homeCubit.visibilityPlan();
+                                  },
                                 ),
-                                onTap: () {
-                                  homeCubit.visibilityPlan();
-                                },
-                              ),
+                              if(exercisePlanVisibility != null && exercisePlanVisibility == 'public')
+                                InkWell(
+                                  child: SvgPicture.asset(
+                                      homeCubit.isVisibilityPlanIcon!
+                                          ?Assets.images.svg.visibility_false
+                                          :Assets.images.svg.visibility_true
+                                  ),
+                                  onTap: () {
+                                    homeCubit.visibilityPlan();
+                                  },
+                                ),
 
                             ],
                           ),
@@ -105,15 +141,26 @@ class AddPlan extends StatelessWidget {
                             onPressed: () {
                               debugPrintFullText('plan name ======================${homeCubit.nameOfPlanController.text}' );
                               debugPrintFullText('plan visibility ======================${homeCubit.visibilityExerciseValue!}' );
-                              if(formKey.currentState!.validate())
+
+                              if(exercisePlanId == null)
                               {
-                                homeCubit.addExercisePlan(
-                                    exercisePlanName: homeCubit.nameOfPlanController.text,
-                                    exercisePlanVisibility: homeCubit.visibilityExerciseValue!
+                                if(formKey.currentState!.validate())
+                                {
+                                  homeCubit.addExercisePlan(
+                                      exercisePlanName: homeCubit.nameOfPlanController.text,
+                                      exercisePlanVisibility: homeCubit.visibilityExerciseValue!
+                                  );
+                                }
+                              } if (exercisePlanId != null)
+                              {
+                                homeCubit.updateExercisePlan(
+                                  exercisePlanName: homeCubit.nameOfPlanController.text,
+                                  exercisePlanVisibility: homeCubit.visibilityExerciseValue!,
+                                  exercisePlanId: exercisePlanId!,
                                 );
                               }
                               // navigateAndFinish(context,const PlansScreen());
-                             // Navigator.pop(context);
+                              // Navigator.pop(context);
                             },
 
                           ),
