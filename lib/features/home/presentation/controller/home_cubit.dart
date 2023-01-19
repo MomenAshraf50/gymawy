@@ -26,6 +26,7 @@ import '../../../login/presentation/screens/login_screen.dart';
 import '../../domain/entities/add_exercise_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/search_entity.dart';
+import '../../domain/usecase/add_exercise_plan_usecase.dart';
 import '../../domain/usecase/certification_usecase.dart';
 import '../../domain/usecase/delete_certification_usecase.dart';
 import '../../domain/usecase/get_exercise_usecase.dart';
@@ -53,6 +54,8 @@ class HomeCubit extends Cubit<HomeStates> {
   final GetExerciseUseCase _getExerciseUseCase;
   final UpdateExerciseUseCase _updateExerciseUseCase;
   final DeleteExerciseUseCase _deleteExerciseUseCase;
+  final AddExercisePlanUseCase _addExercisePlanUseCase;
+
 
   HomeCubit({
     required UpdateProfilePicture updateProfilePicture,
@@ -68,6 +71,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required GetExerciseUseCase getExerciseUseCase,
     required UpdateExerciseUseCase updateExerciseUseCase,
     required DeleteExerciseUseCase deleteExerciseUseCase,
+    required AddExercisePlanUseCase addExercisePlanUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -82,6 +86,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _getExerciseUseCase = getExerciseUseCase,
         _updateExerciseUseCase = updateExerciseUseCase,
         _deleteExerciseUseCase = deleteExerciseUseCase,
+        _addExercisePlanUseCase = addExercisePlanUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -651,7 +656,8 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(UpdateExerciseErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(UpdateExerciseSuccessState(data));
-    });  }
+    });
+  }
 
   void deleteExercise(DeleteExerciseParams params) async{
     emit(DeleteExerciseLoadingState());
@@ -665,6 +671,29 @@ class HomeCubit extends Cubit<HomeStates> {
     });
 
   }
+
+
+  void addExercisePlan(
+      {
+        required String exercisePlanName,
+        required String exercisePlanVisibility,
+      }
+      ) async {
+    emit(AddExercisePlanLoadingState());
+
+    final result = await _addExercisePlanUseCase(AddExercisePlanParams(
+        exercisePlanName: exercisePlanName,
+        exercisePlanVisibility: exercisePlanVisibility,
+    ));
+
+    result.fold((failure) {
+      emit(AddExercisePlanErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(AddExercisePlanSuccessState(data));
+
+    });
+  }
+
 
 
 }

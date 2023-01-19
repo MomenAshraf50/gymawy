@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
@@ -6,7 +5,6 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
-import 'package:gymawy/features/home/presentation/screens/home/plans/plan_type.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/meal_schedule.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_items.dart';
 import 'package:gymawy/features/home/presentation/widgets/filter_dialog.dart';
@@ -38,7 +36,7 @@ class PlansScreen extends StatelessWidget {
                                 secondFilterTitle: AppString.diet,
                                 onTapFirstChoice: (){
                                   homeCubit.changeToFirstChoiceRadioButton();
-                                  navigateTo(context, const AddPlan());
+                                  navigateTo(context,  AddPlan());
                                 },
                                 onTapSecondChoice: (){
                                   homeCubit.changeToSecondChoiceRadioButton();
@@ -53,19 +51,28 @@ class PlansScreen extends StatelessWidget {
                     backgroundColor: Colors.green,
                     icon: Icons.add)
               ]),
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) =>
-                      InkWell(
-                        child: buildPlansItems(context),
-                        onTap: () {
-                          // navigateTo(context, const PlanType());
-                          // debugPrintFullText('$index');
-                        },
-                      ),
-                  itemCount: 10,
-                  physics: const BouncingScrollPhysics(),
-                ),
+              BlocBuilder<HomeCubit,HomeStates>(
+                builder: (context, state) {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemBuilder: (context, index) =>
+                          InkWell(
+                            child: buildPlansItems(
+                              context,
+                              planTitle: 'zzz',
+                              visibilityIcon: Icons.visibility,
+                              visibilityIconColor: Colors.black,
+                            ),
+                            onTap: () {
+                              // navigateTo(context, const PlanType());
+                              // debugPrintFullText('$index');
+                            },
+                          ),
+                      itemCount: 10,
+                      physics: const BouncingScrollPhysics(),
+                    ),
+                  );
+                },
               )
             ],
           ),

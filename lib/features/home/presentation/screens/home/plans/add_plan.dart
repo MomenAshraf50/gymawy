@@ -17,7 +17,9 @@ import '../../../../../../core/util/widgets/hideKeyboard.dart';
 
 
 class AddPlan extends StatelessWidget {
-  const AddPlan({Key? key}) : super(key: key);
+   AddPlan({Key? key}) : super(key: key);
+  var formKey = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,81 +27,103 @@ class AddPlan extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: designApp,
-          child: BlocBuilder<HomeCubit, HomeStates>(
-            builder: (context, state) {
-              return SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: HideKeyboardPage(
-                  child: Column(
-                    children: [
-                      defaultAppBar(
-                          title: AppString.addPlan,
-                          context: context,
-                        onPressed: ()
-                        {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        }
-                      ),
-                      verticalSpace(20.h),
-                      myTextFill(
-                        controller: homeCubit.nameOfPlanController,
-                        hint: AppString.nameOfPlan,
-                        validate: (String? value) {
-                          if (value!.isEmpty) {
-                            return 'isEmpty';
+        body: Form(
+          key: formKey,
+          child: Padding(
+            padding: designApp,
+            child: BlocConsumer<HomeCubit, HomeStates>(
+              listener: (context, state) {
+                if(state is AddExercisePlanSuccessState)
+                {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  designToastDialog(
+                      context: context,
+                      toast: TOAST.success,
+                      text: 'Exercise Plan Added Successfully');
+                }
+              },
+              builder: (context, state) {
+                return SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: HideKeyboardPage(
+                    child: Column(
+                      children: [
+                        defaultAppBar(
+                            title: AppString.addPlan,
+                            context: context,
+                          onPressed: ()
+                          {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
                           }
-                        },
-
-                      ),
-                      verticalSpace(5.h),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 5.w
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            myText(
-                              title: AppString.visibility,
-                              style: Style.extraSmall,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12.rSp,
-                            ),
-                            const Spacer(),
-                            InkWell(
-                              child: SvgPicture.asset(
-                                  homeCubit.isVisibilityPlanIcon! ?
-                                  Assets.images.svg.visibility_false : Assets
-                                      .images.svg.visibility_true
-                              ),
-                              onTap: () {
-                                homeCubit.visibilityPlan();
-                              },
-                            ),
-
-                          ],
-                        ),
-                      ),
-                      verticalSpace(30.h),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 5.h),
-                        child: myButton(
-                          text: AppString.next,
-                          textOnly: true,
-                          onPressed: () {
-                            navigateAndFinish(context,const PlansScreen());
+                        verticalSpace(20.h),
+                        myTextFill(
+                          controller: homeCubit.nameOfPlanController,
+                          hint: AppString.nameOfPlan,
+                          validate: (String? value) {
+                            if (value!.isEmpty) {
+                              return 'isEmpty';
+                            }
                           },
 
                         ),
-                      )
-                    ],
+                        verticalSpace(5.h),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 5.w
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              myText(
+                                title: AppString.visibility,
+                                style: Style.extraSmall,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12.rSp,
+                              ),
+                              const Spacer(),
+                              InkWell(
+                                child: SvgPicture.asset(
+                                    homeCubit.isVisibilityPlanIcon! ?Assets.images.svg.visibility_true
+                                        : Assets.images.svg.visibility_false
+                                ),
+                                onTap: () {
+                                  homeCubit.visibilityPlan();
+                                },
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        verticalSpace(30.h),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 5.h),
+                          child: myButton(
+                            text: AppString.done,
+                            onPressed: () {
+                              debugPrintFullText('plan name ======================${homeCubit.nameOfPlanController.text}' );
+                              debugPrintFullText('plan visibility ======================${homeCubit.visibilityExerciseValue!}' );
+                              if(formKey.currentState!.validate())
+                              {
+                                homeCubit.addExercisePlan(
+                                    exercisePlanName: homeCubit.nameOfPlanController.text,
+                                    exercisePlanVisibility: homeCubit.visibilityExerciseValue!
+                                );
+                              }
+                              // navigateAndFinish(context,const PlansScreen());
+                             // Navigator.pop(context);
+                            },
+
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),

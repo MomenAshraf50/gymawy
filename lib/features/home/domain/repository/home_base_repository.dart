@@ -15,6 +15,7 @@ import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart'
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import '../../../../core/error/failures.dart';
 import '../entities/add_exercise_entity.dart';
+import '../entities/add_exercise_plan_entity.dart';
 import '../entities/certificate_entity.dart';
 import '../entities/profile_entity.dart';
 import '../usecase/get_exercise_usecase.dart';
@@ -66,5 +67,10 @@ abstract class HomeBaseRepository {
   Future<Either<Failure,AddExerciseEntity>> updateExercise(AddExerciseParams params);
 
   Future<Either<Failure,void>> deleteExercise(DeleteExerciseParams params);
+
+  Future<Either<Failure, AddExercisePlanEntity>> addExercisePlan({
+    required String exercisePlanName,
+    required String exercisePlanVisibility,
+  });
 
 }
