@@ -18,6 +18,7 @@ import '../entities/add_exercise_entity.dart';
 import '../entities/add_exercise_plan_entity.dart';
 import '../entities/certificate_entity.dart';
 import '../entities/profile_entity.dart';
+import '../usecase/get_exercise_plan_usecase.dart';
 import '../usecase/get_exercise_usecase.dart';
 
 abstract class HomeBaseRepository {
@@ -72,5 +73,8 @@ abstract class HomeBaseRepository {
     required String exercisePlanName,
     required String exercisePlanVisibility,
   });
+
+  Future<Either<Failure,List<AddExercisePlanEntity>>> getExercisePlan(GetExercisePlanParams params);
+
 
 }

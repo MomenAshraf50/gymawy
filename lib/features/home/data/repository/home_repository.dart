@@ -22,6 +22,7 @@ import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/add_exercise_plan_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
+import '../../domain/usecase/get_exercise_plan_usecase.dart';
 
 typedef Call = Future<UpdateEntity> Function();
 typedef CallSearch = Future<List<SearchEntity>> Function();
@@ -33,6 +34,8 @@ typedef CallExercise= Future<AddExerciseEntity> Function();
 typedef CallGetExercise = Future<List<AddExerciseEntity>> Function();
 typedef CallDeleteExercise = Future<void> Function();
 typedef CallAddExercisePlan = Future<AddExercisePlanEntity> Function();
+typedef CallGetExercisePlan = Future<List<AddExercisePlanEntity>> Function();
+
 
 
 class HomeRepository extends HomeBaseRepository {
@@ -325,6 +328,26 @@ class HomeRepository extends HomeBaseRepository {
         exercisePlanName: exercisePlanName,
         exercisePlanVisibility: exercisePlanVisibility,
       );
+    });
+  }
+
+  Future<Either<Failure,List<AddExercisePlanEntity>>> fetchGetExercisePlan(
+      CallGetExercisePlan mainMethod,
+      ) async {
+    try {
+      final exercisePlanData = await mainMethod();
+      return Right(exercisePlanData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<AddExercisePlanEntity>>> getExercisePlan(GetExercisePlanParams params)async {
+    return await fetchGetExercisePlan((){
+      return remoteDataSource.getExercisePlan(params);
     });
   }
 
