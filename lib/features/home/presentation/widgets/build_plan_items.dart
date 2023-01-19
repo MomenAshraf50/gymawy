@@ -5,7 +5,12 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import '../../../../core/util/resources/appString.dart';
 
-Widget buildPlansItems(context) {
+Widget buildPlansItems(context,
+{
+  required String planTitle,
+  required IconData visibilityIcon,
+  required Color visibilityIconColor,
+}) {
   return Padding(
     padding: EdgeInsets.symmetric(vertical: 2.h),
     child: Card(
@@ -20,7 +25,9 @@ Widget buildPlansItems(context) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const myText(title: AppString.planType,
+                myText(
+                  title: planTitle,
+                  //AppString.planType,
                     style: Style.small,
                   fontWeight: FontWeight.w600,
                 ),
@@ -30,8 +37,10 @@ Widget buildPlansItems(context) {
                     const myText(title: AppString.visibility, style: Style.extraSmall),
                     horizontalSpace(2.w),
                     Icon(
-                      Icons.visibility_off_outlined,
-                      color: Colors.red,
+                     // Icons.visibility_off_outlined,
+                      visibilityIcon,
+                      color: visibilityIconColor,
+                      //Colors.red,
                       size: 15.rSp,
                     ),
                   ],

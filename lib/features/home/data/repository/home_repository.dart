@@ -20,6 +20,7 @@ import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart'
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
+import '../../domain/entities/add_exercise_plan_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 
 typedef Call = Future<UpdateEntity> Function();
@@ -31,6 +32,7 @@ typedef CallDeleteCertification = Future<void> Function();
 typedef CallExercise= Future<AddExerciseEntity> Function();
 typedef CallGetExercise = Future<List<AddExerciseEntity>> Function();
 typedef CallDeleteExercise = Future<void> Function();
+typedef CallAddExercisePlan = Future<AddExercisePlanEntity> Function();
 
 
 class HomeRepository extends HomeBaseRepository {
@@ -300,6 +302,31 @@ class HomeRepository extends HomeBaseRepository {
   }
 
 
+  Future<Either<Failure, AddExercisePlanEntity>> fetchExercisePlan(
+      CallAddExercisePlan mainMethod,
+      ) async {
+    try {
+      final addExercisePlanData = await mainMethod();
+      return Right(addExercisePlanData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AddExercisePlanEntity>> addExercisePlan({
+    required String exercisePlanName,
+    required String exercisePlanVisibility,
+  }) async {
+    return await fetchExercisePlan(() {
+      return remoteDataSource.addExercisePlan(
+        exercisePlanName: exercisePlanName,
+        exercisePlanVisibility: exercisePlanVisibility,
+      );
+    });
+  }
 
 
 }

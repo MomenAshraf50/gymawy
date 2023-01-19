@@ -2,6 +2,7 @@ import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 
 import '../../domain/entities/add_exercise_entity.dart';
+import '../../domain/entities/add_exercise_plan_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/search_entity.dart';
 
@@ -156,3 +157,14 @@ class DeleteExerciseErrorState extends HomeStates{
 }
 
 class ChangeDropDownSelectedValueState extends HomeStates {}
+
+
+class AddExercisePlanLoadingState extends HomeStates{}
+class AddExercisePlanSuccessState extends HomeStates{
+  final AddExercisePlanEntity addExercisePlanEntity;
+  AddExercisePlanSuccessState(this.addExercisePlanEntity);
+}
+class AddExercisePlanErrorState extends HomeStates{
+  final String failure;
+  AddExercisePlanErrorState(this.failure);
+}

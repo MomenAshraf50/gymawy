@@ -20,6 +20,7 @@ import 'package:gymawy/features/login/domain/usecase/log_in_usecase.dart';
 import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../features/home/domain/usecase/add_exercise_plan_usecase.dart';
 import '../../features/home/domain/usecase/certification_usecase.dart';
 import '../../features/home/domain/usecase/delete_certification_usecase.dart';
 import '../../features/home/domain/usecase/get_exercise_usecase.dart';
@@ -56,8 +57,9 @@ Future<void> init() async {
         updateCertificateUseCase: sl(),
         addExerciseUseCase: sl(),
         getExerciseUseCase: sl(),
-    updateExerciseUseCase: sl(),
-    deleteExerciseUseCase: sl()
+        updateExerciseUseCase: sl(),
+        deleteExerciseUseCase: sl(),
+        addExercisePlanUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -95,6 +97,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetExerciseUseCase(sl()));
   sl.registerLazySingleton(() => UpdateExerciseUseCase(sl()));
   sl.registerLazySingleton(() => DeleteExerciseUseCase(sl()));
+  sl.registerLazySingleton(() => AddExercisePlanUseCase(sl()));
+
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(

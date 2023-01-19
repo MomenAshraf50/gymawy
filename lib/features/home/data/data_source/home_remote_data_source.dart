@@ -22,6 +22,7 @@ import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 
 import '../../../../core/util/widgets/progress.dart';
 import '../../domain/usecase/add_exercise_usecase.dart';
+import '../models/add_exercise_plan_model.dart';
 
 abstract class HomeBaseDataSource {
   Future<UpdateModel> updateProfile({required UpdateProfileParams params});
@@ -69,6 +70,12 @@ abstract class HomeBaseDataSource {
   Future<AddExerciseModel> updateExercise(AddExerciseParams params);
 
   Future<void> deleteExercise(DeleteExerciseParams params);
+
+  Future<AddExercisePlanModel> addExercisePlan({
+    required String exercisePlanName,
+    required String exercisePlanVisibility,
+  });
+
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -419,4 +426,23 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       token: token,
     );
   }
+
+
+  @override
+  Future<AddExercisePlanModel> addExercisePlan({
+    required String exercisePlanName,
+    required String exercisePlanVisibility,
+  }) async {
+    final Response f = await dioHelper.post(
+        url: addExercisePlanEndPoint,
+        token: token,
+        data: FormData.fromMap({
+          'plan_name': exercisePlanName,
+          'visibility': exercisePlanVisibility,
+        },),
+    );
+
+    return AddExercisePlanModel.fromJson(f.data);
+  }
+
 }
