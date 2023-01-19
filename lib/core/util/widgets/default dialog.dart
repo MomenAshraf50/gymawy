@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
@@ -10,12 +11,14 @@ class DefaultDialog extends Dialog {
   final String pushButtonText;
   final VoidCallback pushButtonVoidCallback;
   final double height;
+  final Color buttonColor;
 
   const DefaultDialog({
     required this.message,
     required this.pushButtonText,
     required this.pushButtonVoidCallback,
     this.height = 160.0,
+    this.buttonColor= ColorsManager.mainColor,
     Key? key,
   }) : super(key: key);
 
@@ -38,6 +41,7 @@ class DefaultDialog extends Dialog {
               const Spacer(),
               Expanded(
                 child: myButton(
+                  color: buttonColor,
                   onPressed: pushButtonVoidCallback,
                   text: pushButtonText,
                   fontSize: 20.rSp,

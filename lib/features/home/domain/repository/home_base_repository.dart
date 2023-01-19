@@ -18,6 +18,8 @@ import '../entities/add_exercise_entity.dart';
 import '../entities/add_exercise_plan_entity.dart';
 import '../entities/certificate_entity.dart';
 import '../entities/profile_entity.dart';
+import '../usecase/add_exercise_plan_usecase.dart';
+import '../usecase/delete_exersice_plan_usecase.dart';
 import '../usecase/get_exercise_plan_usecase.dart';
 import '../usecase/get_exercise_usecase.dart';
 
@@ -75,6 +77,10 @@ abstract class HomeBaseRepository {
   });
 
   Future<Either<Failure,List<AddExercisePlanEntity>>> getExercisePlan(GetExercisePlanParams params);
+
+  Future<Either<Failure,AddExercisePlanEntity>> updateExercisePlan(AddExercisePlanParams params);
+
+  Future<Either<Failure,void>> deleteExercisePlan(DeleteExercisePlanParams params);
 
 
 }

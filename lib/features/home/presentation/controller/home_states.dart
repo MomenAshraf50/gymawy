@@ -180,3 +180,24 @@ class GetExercisePlanErrorState extends HomeStates{
 
   GetExercisePlanErrorState(this.failure);
 }
+
+class UpdateExercisePlanLoadingState extends HomeStates{}
+class UpdateExercisePlanSuccessState extends HomeStates{
+  final AddExercisePlanEntity updateExercisePlan;
+
+  UpdateExercisePlanSuccessState(this.updateExercisePlan);
+}
+class UpdateExercisePlanErrorState extends HomeStates{
+  final String failure;
+
+  UpdateExercisePlanErrorState(this.failure);
+}
+
+class DeleteExercisePlanLoadingState extends HomeStates{}
+class DeleteExercisePlanSuccessState extends HomeStates{}
+class DeleteExercisePlanErrorState extends HomeStates{
+  final String failure;
+
+  DeleteExercisePlanErrorState(this.failure);
+}
+
