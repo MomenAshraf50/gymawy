@@ -12,8 +12,8 @@ import 'package:gymawy/features/home/presentation/widgets/build_plan_type.dart';
 
 import '../exercises/exercise_type.dart';
 
-class PlanType extends StatelessWidget {
-  const PlanType({Key? key}) : super(key: key);
+class PlanDetails extends StatelessWidget {
+  const PlanDetails({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

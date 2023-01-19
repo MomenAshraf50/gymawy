@@ -168,3 +168,15 @@ class AddExercisePlanErrorState extends HomeStates{
   final String failure;
   AddExercisePlanErrorState(this.failure);
 }
+
+class GetExercisePlanLoadingState extends HomeStates{}
+class GetExercisePlanSuccessState extends HomeStates{
+  final List<AddExercisePlanEntity> exercisePlanList;
+
+  GetExercisePlanSuccessState(this.exercisePlanList);
+}
+class GetExercisePlanErrorState extends HomeStates{
+  final String failure;
+
+  GetExercisePlanErrorState(this.failure);
+}

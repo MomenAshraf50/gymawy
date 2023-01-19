@@ -2,13 +2,15 @@ import 'package:equatable/equatable.dart';
 
 class AddExercisePlanEntity extends Equatable {
   int exercisePlanId;
-  int userId;
+  int? userId;
   String exercisePlanName;
   String exercisePlanVisibility;
+  String? userName;
 
   AddExercisePlanEntity({
     required this.exercisePlanId,
-    required this.userId,
+    this.userId,
+    this.userName,
     required this.exercisePlanName,
     required this.exercisePlanVisibility,
   });
@@ -17,6 +19,7 @@ class AddExercisePlanEntity extends Equatable {
   List<Object?> get props => [
     exercisePlanId,
     userId,
+    userName,
     exercisePlanName,
     exercisePlanVisibility,
 

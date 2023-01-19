@@ -22,7 +22,9 @@ import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 
 import '../../../../core/util/widgets/progress.dart';
 import '../../domain/usecase/add_exercise_usecase.dart';
+import '../../domain/usecase/get_exercise_plan_usecase.dart';
 import '../models/add_exercise_plan_model.dart';
+import '../models/get_exercise_plan_model.dart';
 
 abstract class HomeBaseDataSource {
   Future<UpdateModel> updateProfile({required UpdateProfileParams params});
@@ -75,6 +77,9 @@ abstract class HomeBaseDataSource {
     required String exercisePlanName,
     required String exercisePlanVisibility,
   });
+
+  Future<List<GetExercisePlanModel>> getExercisePlan(GetExercisePlanParams params);
+
 
 }
 
@@ -444,5 +449,18 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
 
     return AddExercisePlanModel.fromJson(f.data);
   }
+
+  @override
+  Future<List<GetExercisePlanModel>> getExercisePlan(GetExercisePlanParams params) async {
+    final Response f = await dioHelper.get(
+      url: addExercisePlanEndPoint,
+      token: token,
+    );
+    return List<GetExercisePlanModel>.from(
+        (f.data as List).map((e) => GetExercisePlanModel.fromJson(e)));
+    // return List<AddExerciseModel>.from(
+    //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
+  }
+
 
 }
