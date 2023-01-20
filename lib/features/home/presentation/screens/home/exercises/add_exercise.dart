@@ -6,6 +6,7 @@ import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/default%20dialog.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
@@ -32,7 +33,8 @@ class AddExerciseScreen extends StatelessWidget {
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
         if (exerciseEntity != null) {
-          exerciseNameController.text = exerciseEntity!.exerciseName;// debugPrintFullText(homeCubit.selectedValue);
+          exerciseNameController.text = exerciseEntity!
+              .exerciseName; // debugPrintFullText(homeCubit.selectedValue);
         }
         if (state is UpdateExerciseSuccessState) {
           Navigator.pop(context);
@@ -55,7 +57,8 @@ class AddExerciseScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        debugPrintFullText('ssssssssssssssssssssssssssss${homeCubit.selectedValue}');
+        debugPrintFullText(
+            'ssssssssssssssssssssssssssss${homeCubit.selectedValue}');
         return Scaffold(
           body: HideKeyboardPage(
             child: Padding(
@@ -90,15 +93,15 @@ class AddExerciseScreen extends StatelessWidget {
                                     alignment: AlignmentDirectional.centerStart,
                                     child: homeCubit.exerciseImageFile == null
                                         ? Lottie.asset(
-                                            Assets.images.lotti.exercise,
-                                          )
+                                      Assets.images.lotti.exercise,
+                                    )
                                         : CircleAvatar(
-                                            backgroundImage: FileImage(
-                                              homeCubit.exerciseImageFile!,
-                                            ),
-                                            minRadius: 50.rSp,
-                                            maxRadius: 100.rSp,
-                                          ),
+                                      backgroundImage: FileImage(
+                                        homeCubit.exerciseImageFile!,
+                                      ),
+                                      minRadius: 50.rSp,
+                                      maxRadius: 100.rSp,
+                                    ),
                                   ),
                                   defaultActionButton(
                                     onPressed: () {
@@ -139,7 +142,8 @@ class AddExerciseScreen extends StatelessWidget {
                                 },
                                 controller: exerciseNameController,
                                 hint: exerciseEntity != null ?
-                                exerciseEntity!.exerciseName  : AppString.nameOfExercise
+                                exerciseEntity!.exerciseName : AppString
+                                    .nameOfExercise
                             ),
                             verticalSpace(3.h),
                             Row(
@@ -157,8 +161,11 @@ class AddExerciseScreen extends StatelessWidget {
                                   onChanged: (value) {
                                     homeCubit.pickExercise();
                                     homeCubit.selectedValue = value!;
-                                    debugPrintFullText('second  value  is =$value');
-                                    debugPrintFullText('second is =${homeCubit.selectedValue}');                                      },
+                                    debugPrintFullText(
+                                        'second  value  is =$value');
+                                    debugPrintFullText('second is =${homeCubit
+                                        .selectedValue}');
+                                  },
                                 ),
                               ],
                             ),
@@ -173,21 +180,26 @@ class AddExerciseScreen extends StatelessWidget {
                                   fontSize: 12.rSp,
                                 ),
                                 const Spacer(),
-                                if(exerciseEntity == null || exerciseEntity!.exerciseVisibility == 'private')
-                                InkWell(
-                                  child: SvgPicture.asset(
-                                      homeCubit.isVisibilityExerciseIcon!
-                                          ? Assets.images.svg.visibility_true
-                                          : Assets.images.svg.visibility_false
-                                  ),
-                                  onTap: () {
-                                    homeCubit.visibilityExercise();
-                                  },
-                                ),
-                                if(exerciseEntity != null && exerciseEntity!.exerciseVisibility == 'public')
+                                if(exerciseEntity == null ||
+                                    exerciseEntity!.exerciseVisibility ==
+                                        'private')
                                   InkWell(
                                     child: SvgPicture.asset(
-                                        homeCubit.isVisibilityExerciseIcon == false
+                                        homeCubit.isVisibilityExerciseIcon!
+                                            ? Assets.images.svg.visibility_true
+                                            : Assets.images.svg.visibility_false
+                                    ),
+                                    onTap: () {
+                                      homeCubit.visibilityExercise();
+                                    },
+                                  ),
+                                if(exerciseEntity != null &&
+                                    exerciseEntity!.exerciseVisibility ==
+                                        'public')
+                                  InkWell(
+                                    child: SvgPicture.asset(
+                                        homeCubit.isVisibilityExerciseIcon ==
+                                            false
                                             ? Assets.images.svg.visibility_false
                                             : Assets.images.svg.visibility_true
                                     ),
@@ -205,10 +217,11 @@ class AddExerciseScreen extends StatelessWidget {
                                   horizontalSpace(5.w),
                                   Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       myText(
-                                        title: homeCubit.exerciseVideo!.files.first.name,
+                                        title: homeCubit.exerciseVideo!.files
+                                            .first.name,
                                         //AppString.certificationSize,
                                         style: Style.extraSmall,
                                         fontSize: 12.rSp,
@@ -217,7 +230,8 @@ class AddExerciseScreen extends StatelessWidget {
                                       verticalSpace(1.h),
                                       myText(
                                         title:
-                                            '${homeCubit.exerciseVideo!.files.first.size ~/ 1024} kB',
+                                        '${homeCubit.exerciseVideo!.files.first
+                                            .size ~/ 1024} kB',
                                         //AppString.certificationSize,
                                         style: Style.extraSmall,
                                         fontSize: 12.rSp,
@@ -240,30 +254,45 @@ class AddExerciseScreen extends StatelessWidget {
                                   if (exerciseEntity == null) {
                                     if (homeCubit.exerciseImageFile != null) {
                                       if (homeCubit.exerciseVideo != null) {
-                                        debugPrintFullText(homeCubit.selectedValue);
-                                        debugPrintFullText('${homeCubit.exerciseVideo}');
-                                        debugPrintFullText('${homeCubit.exerciseImageFile}');
-                                        debugPrintFullText('${homeCubit.isVisibilityExerciseIcon}');
-                                        debugPrintFullText('${homeCubit.visibilityExerciseValue}');
+                                        debugPrintFullText(
+                                            homeCubit.selectedValue);
+                                        debugPrintFullText(
+                                            '${homeCubit.exerciseVideo}');
+                                        debugPrintFullText(
+                                            '${homeCubit.exerciseImageFile}');
+                                        debugPrintFullText('${homeCubit
+                                            .isVisibilityExerciseIcon}');
+                                        debugPrintFullText('${homeCubit
+                                            .visibilityExerciseValue}');
                                         homeCubit.addExercise(
-                                          exerciseName: exerciseNameController.text,
-                                          exerciseCategory: homeCubit.selectedValue,
-                                          exerciseVisibility: homeCubit.visibilityExerciseValue!,
-                                          exercisePic: homeCubit.exerciseImageFile!,
-                                          exerciseVideo: homeCubit.exerciseVideo!,
+                                          exerciseName: exerciseNameController
+                                              .text,
+                                          exerciseCategory: homeCubit
+                                              .selectedValue,
+                                          exerciseVisibility: homeCubit
+                                              .visibilityExerciseValue!,
+                                          exercisePic: homeCubit
+                                              .exerciseImageFile!,
+                                          exerciseVideo: homeCubit
+                                              .exerciseVideo!,
                                           context: context,
                                         );
                                         showDialog(
                                           context: context,
                                           builder: (context) {
-                                            return BlocBuilder<HomeCubit, HomeStates>(
+                                            return BlocBuilder<
+                                                HomeCubit,
+                                                HomeStates>(
                                               builder: (context, state) {
                                                 if (state is ChangeProgressValueState) {
                                                   return ProgressDialog(
                                                     message:
-                                                        'Processing... ${((state.countProgress! / state.totalProgress!) * 100).toInt()}%',
+                                                    'Processing... ${((state
+                                                        .countProgress! /
+                                                        state.totalProgress!) *
+                                                        100).toInt()}%',
                                                     value: state
-                                                            .countProgress! /
+                                                        .countProgress! /
                                                         state.totalProgress!,
                                                   );
                                                 }
@@ -285,18 +314,66 @@ class AddExerciseScreen extends StatelessWidget {
                                           text: 'please pick exercise photo');
                                     }
                                   } else {
-                                    if (homeCubit.exerciseImageFile != null && homeCubit.exerciseVideo == null) {
-                                      homeCubit.updateExercise(
-                                          AddExerciseParams(
-                                              context: context,
-                                              isImage: true,
-                                              exercisePic: homeCubit.exerciseImageFile,
-                                              exerciseCategory: homeCubit.selectedValue,
-                                              exerciseName: exerciseNameController.text,
-                                              exerciseVisibility: homeCubit.visibilityExerciseValue!,
-                                              exerciseId: exerciseEntity!.exerciseId,
-                                              isVideo: false
-                                          ));
+                                    if (homeCubit.exerciseImageFile != null &&
+                                        homeCubit.exerciseVideo == null) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return DefaultDialog(
+                                            message: 'Are you sure to update Exerxise',
+                                            pushButtonText: 'Okay',
+                                            pushButtonVoidCallback: (){
+                                              homeCubit.updateExercise(
+                                                  AddExerciseParams(
+                                                      context: context,
+                                                      isImage: true,
+                                                      exercisePic: homeCubit
+                                                          .exerciseImageFile,
+                                                      exerciseCategory: homeCubit
+                                                          .selectedValue,
+                                                      exerciseName: exerciseNameController
+                                                          .text,
+                                                      exerciseVisibility: homeCubit
+                                                          .visibilityExerciseValue!,
+                                                      exerciseId: exerciseEntity!
+                                                          .exerciseId,
+                                                      isVideo: false
+                                                  ));
+                                            },
+                                          );
+                                        },
+                                      );
+                                    } else
+                                    if (homeCubit.exerciseImageFile == null &&
+                                        homeCubit.exerciseVideo != null) {
+
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return DefaultDialog(
+                                            message: 'Are you sure to update Exerxise',
+                                            pushButtonText: 'Okay',
+                                            pushButtonVoidCallback: (){
+                                              homeCubit.updateExercise(
+                                                  AddExerciseParams(
+                                                    context: context,
+                                                    isImage: false,
+                                                    exerciseCategory: homeCubit
+                                                        .selectedValue,
+                                                    exerciseName: exerciseNameController
+                                                        .text,
+                                                    exerciseVisibility: homeCubit
+                                                        .visibilityExerciseValue!,
+                                                    exerciseId: exerciseEntity!
+                                                        .exerciseId,
+                                                    isVideo: true,
+                                                    exerciseVideo: homeCubit
+                                                        .exerciseVideo,
+                                                  ));
+                                            },
+                                          );
+                                        },
+                                      );
                                       // showDialog(
                                       //   context: context,
                                       //   builder: (context) {
@@ -316,17 +393,39 @@ class AddExerciseScreen extends StatelessWidget {
                                       //     );
                                       //   },
                                       // );
-                                    } else if (homeCubit.exerciseImageFile == null && homeCubit.exerciseVideo != null) {
-                                      homeCubit.updateExercise(AddExerciseParams(
+                                    } else
+                                    if (homeCubit.exerciseImageFile != null &&
+                                        homeCubit.exerciseVideo != null) {
+
+                                      showDialog(
                                         context: context,
-                                        isImage: false,
-                                        exerciseCategory: homeCubit.selectedValue,
-                                        exerciseName: exerciseNameController.text,
-                                        exerciseVisibility: homeCubit.visibilityExerciseValue!,
-                                        exerciseId: exerciseEntity!.exerciseId,
-                                        isVideo: true,
-                                        exerciseVideo: homeCubit.exerciseVideo,
-                                      ));
+                                        builder: (context) {
+                                          return DefaultDialog(
+                                            message: 'Are you sure to update Exerxise',
+                                            pushButtonText: 'Okay',
+                                            pushButtonVoidCallback: (){
+                                              homeCubit.updateExercise(
+                                                  AddExerciseParams(
+                                                    context: context,
+                                                    isImage: true,
+                                                    exercisePic: homeCubit
+                                                        .exerciseImageFile,
+                                                    exerciseCategory: homeCubit
+                                                        .selectedValue,
+                                                    exerciseName: exerciseNameController
+                                                        .text,
+                                                    exerciseVisibility: homeCubit
+                                                        .visibilityExerciseValue!,
+                                                    exerciseId: exerciseEntity!
+                                                        .exerciseId,
+                                                    isVideo: true,
+                                                    exerciseVideo: homeCubit
+                                                        .exerciseVideo,
+                                                  ));
+                                            },
+                                          );
+                                        },
+                                      );
                                       // showDialog(
                                       //   context: context,
                                       //   builder: (context) {
@@ -346,47 +445,33 @@ class AddExerciseScreen extends StatelessWidget {
                                       //     );
                                       //   },
                                       // );
-                                    } else if (homeCubit.exerciseImageFile != null && homeCubit.exerciseVideo != null) {
-                                      homeCubit.updateExercise(AddExerciseParams(
+                                    } else {
+
+                                      showDialog(
                                         context: context,
-                                        isImage: true,
-                                        exercisePic: homeCubit.exerciseImageFile,
-                                        exerciseCategory: homeCubit.selectedValue,
-                                        exerciseName: exerciseNameController.text,
-                                        exerciseVisibility: homeCubit.visibilityExerciseValue!,
-                                        exerciseId: exerciseEntity!.exerciseId,
-                                        isVideo: true,
-                                        exerciseVideo: homeCubit.exerciseVideo,
-                                      ));
-                                      // showDialog(
-                                      //   context: context,
-                                      //   builder: (context) {
-                                      //     return BlocBuilder<HomeCubit, HomeStates>(
-                                      //       builder: (context, state) {
-                                      //         if (state is ChangeProgressValueState) {
-                                      //           return ProgressDialog(
-                                      //             message:
-                                      //             'Processing... ${((state.countProgress! / state.totalProgress!) * 100).toInt()}%',
-                                      //             value: state
-                                      //                 .countProgress! /
-                                      //                 state.totalProgress!,
-                                      //           );
-                                      //         }
-                                      //         return Container();
-                                      //       },
-                                      //     );
-                                      //   },
-                                      // );
-                                    }else{
-                                      homeCubit.updateExercise(AddExerciseParams(
-                                        context: context,
-                                        isImage: false,
-                                        exerciseCategory: homeCubit.selectedValue,
-                                        exerciseName: exerciseNameController.text,
-                                        exerciseVisibility: homeCubit.visibilityExerciseValue!,
-                                        exerciseId: exerciseEntity!.exerciseId,
-                                        isVideo: false,
-                                      ));
+                                        builder: (context) {
+                                          return DefaultDialog(
+                                            message: 'Are you sure to update Exerxise',
+                                            pushButtonText: 'Okay',
+                                            pushButtonVoidCallback: (){
+                                              homeCubit.updateExercise(
+                                                  AddExerciseParams(
+                                                    context: context,
+                                                    isImage: false,
+                                                    exerciseCategory: homeCubit
+                                                        .selectedValue,
+                                                    exerciseName: exerciseNameController
+                                                        .text,
+                                                    exerciseVisibility: homeCubit
+                                                        .visibilityExerciseValue!,
+                                                    exerciseId: exerciseEntity!
+                                                        .exerciseId,
+                                                    isVideo: false,
+                                                  ));
+                                            },
+                                          );
+                                        },
+                                      );
                                       // showDialog(
                                       //   context: context,
                                       //   builder: (context) {
@@ -407,6 +492,7 @@ class AddExerciseScreen extends StatelessWidget {
                                       //   },
                                       // );
                                     }
+
                                   }
                                 } else {
                                   designToastDialog(

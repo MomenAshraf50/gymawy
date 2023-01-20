@@ -27,9 +27,9 @@ class AddPlan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
-    debugPrintFullText(exercisePlanName!);
-    debugPrintFullText(exercisePlanVisibility!);
-    debugPrintFullText('$exercisePlanId');
+    // debugPrintFullText(exercisePlanName!);
+     debugPrintFullText('ssssssssssss${homeCubit.visibilityExerciseValue!}');
+    // debugPrintFullText('$exercisePlanId');
 
     return SafeArea(
       child: Scaffold(
@@ -41,7 +41,7 @@ class AddPlan extends StatelessWidget {
               listener: (context, state) {
                 if(exercisePlanName != null) {
                   homeCubit.nameOfPlanController.text == exercisePlanName;
-                  homeCubit.visibilityExerciseValue = exercisePlanVisibility;
+                  // homeCubit.visibilityExerciseValue = exercisePlanVisibility;
                 }
                 if(state is UpdateExercisePlanSuccessState)
                 {
@@ -110,23 +110,23 @@ class AddPlan extends StatelessWidget {
                               if(exercisePlanVisibility == null || exercisePlanVisibility == 'private')
                                 InkWell(
                                   child: SvgPicture.asset(
-                                      homeCubit.isVisibilityPlanIcon!
-                                          ?Assets.images.svg.visibility_true
-                                          : Assets.images.svg.visibility_false
+                                      homeCubit.isVisibilityExerciseIcon == false
+                                          ? Assets.images.svg.visibility_false
+                                          : Assets.images.svg.visibility_true
                                   ),
                                   onTap: () {
-                                    homeCubit.visibilityPlan();
+                                    homeCubit.visibilityExercise();
                                   },
                                 ),
                               if(exercisePlanVisibility != null && exercisePlanVisibility == 'public')
                                 InkWell(
                                   child: SvgPicture.asset(
-                                      homeCubit.isVisibilityPlanIcon!
-                                          ?Assets.images.svg.visibility_false
-                                          :Assets.images.svg.visibility_true
+                                      homeCubit.isVisibilityExerciseIcon == false
+                                          ? Assets.images.svg.visibility_false
+                                          : Assets.images.svg.visibility_true
                                   ),
                                   onTap: () {
-                                    homeCubit.visibilityPlan();
+                                    homeCubit.visibilityExercise();
                                   },
                                 ),
 
