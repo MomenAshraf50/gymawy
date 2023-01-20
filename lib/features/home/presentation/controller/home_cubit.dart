@@ -192,12 +192,12 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(ChangeSecondChoiceRadioButtonState());
   }
 
-  bool? isVisibilityPlanIcon = false;
-
-  void visibilityPlan() {
-    isVisibilityPlanIcon = !isVisibilityPlanIcon!;
-    emit(ChangeVisibilityPlanState());
-  }
+  // bool? isVisibilityPlanIcon = false;
+  //
+  // // void visibilityPlan() {
+  // //   isVisibilityPlanIcon = !isVisibilityPlanIcon!;
+  // //   emit(ChangeVisibilityPlanState());
+  // // }
 
   TextEditingController facebookLinkController = TextEditingController();
   TextEditingController instagramLinkController = TextEditingController();
