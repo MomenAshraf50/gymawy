@@ -25,6 +25,7 @@ class ProfileCoachScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     HomeCubit homeCubit = HomeCubit.get(context);
     homeCubit.getCertificates(
         GetCertificateParams(
@@ -32,6 +33,7 @@ class ProfileCoachScreen extends StatelessWidget {
           ownerName: '',
         ),
         context);
+    debugPrintFullText('sssssssssssssssssssss${homeCubit.certificateResult}');
 
     int selected = 0;
     // List<TrainingImage> listTrainingImages = [
@@ -287,7 +289,7 @@ class ProfileCoachScreen extends StatelessWidget {
                     ),
                   ),
 
-                  if (homeCubit.certificateResult != null)
+                  if (homeCubit.certificateResult.isNotEmpty)
                     SizedBox(
                       height: 30.h,
                       child: PageView.builder(
@@ -396,7 +398,7 @@ class ProfileCoachScreen extends StatelessWidget {
                         itemCount: homeCubit.certificateResult!.length + 1,
                       ),
                     ),
-                  if (homeCubit.certificateResult == null)
+                  if (homeCubit.certificateResult.isEmpty)
                     InkWell(
                       onTap: () {
                         navigateTo(

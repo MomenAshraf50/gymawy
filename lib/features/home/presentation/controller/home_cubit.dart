@@ -450,10 +450,11 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  List<CertificateEntity>? certificateResult;
+  List<CertificateEntity> certificateResult = [];
   Widget? certificateResultImg;
 
   void getCertificates(GetCertificateParams params, index) async {
+    certificateResult = [];
     emit(GetCertificateLoadingState());
     final result = await _getCertificateUseCase(params);
     result.fold((failure) {
@@ -467,7 +468,7 @@ class HomeCubit extends Cubit<HomeStates> {
   void convertCertificateToImg(index)
   async
   {
-    certificateResultImg = await FilePreview.getThumbnail(certificateResult![index].certificateFile);
+    certificateResultImg = await FilePreview.getThumbnail(certificateResult[index].certificateFile);
     emit(ConvertCertificateToImgState());
   }
 
