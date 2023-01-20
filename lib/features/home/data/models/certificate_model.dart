@@ -13,7 +13,7 @@ class CertificateModel extends CertificateEntity {
   factory CertificateModel.fromJson(Map<String, dynamic> json) {
     return CertificateModel(
       ownerName: json['owner_name'] ?? 'UnKnown',
-      certificateId: json['certificate_id'] ?? 0,
+      certificateId: json['certificate_id'],
       ownerId: json['owner'] ?? 0,
       certificateName: json['certificate_name'] ?? 'UnKnown',
       certificateFile: json['certificate_file'] ?? 'UnKnown',

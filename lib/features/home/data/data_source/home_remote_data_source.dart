@@ -460,7 +460,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       token: token,
     );
     return List<GetExercisePlanModel>.from(
-        (f.data as List).map((e) => GetExercisePlanModel.fromJson(e)));
+        (f.data['results'] as List).map((e) => GetExercisePlanModel.fromJson(e)));
     // return List<AddExerciseModel>.from(
     //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
   }

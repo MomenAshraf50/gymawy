@@ -10,7 +10,7 @@ class AddExercisePlanModel extends AddExercisePlanEntity {
 
   factory AddExercisePlanModel.fromJson(Map<String, dynamic> json) {
     return AddExercisePlanModel(
-      userId:  json['maker_id'] ?? 0,
+      userId:  json['maker'] ?? 0,
       exercisePlanName:  json['plan_name'] ?? 'UnKnown',
       exercisePlanId:  json['EXERCISE_PLAN_id'] ?? 0,
       exercisePlanVisibility:  json['visibility'] ?? 'public',
