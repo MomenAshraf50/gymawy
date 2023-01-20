@@ -80,8 +80,7 @@ class myTextFill extends StatelessWidget {
                 cursorColor: ColorsManager.mainColor,
                 decoration: InputDecoration(
                   suffixIcon: suffixIcon,
-                  prefixIcon: svgImg == null && iconPrefix == null ?
-                  svgImg != null
+                  prefixIcon: svgImg != null
                       ? Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: SvgPicture.asset(
@@ -91,8 +90,7 @@ class myTextFill extends StatelessWidget {
                       // fit: BoxFit.scaleDown,
                     ),
                   )
-                      : Icon(iconPrefix,
-                      color: colorPrefixIcon ?? ColorsManager.iconColor) : null,
+                      : null,
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   border: InputBorder.none,
                   hintText: hint,
