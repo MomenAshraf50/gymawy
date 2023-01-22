@@ -29,6 +29,8 @@ class ProgressScreen extends StatelessWidget {
                     navigateTo(context, const ProgressDetailsScreen());
                   },
                   child: buildClientProgressItem(
+                    image: const NetworkImage(AppString.networkImage),
+                    name: AppString.userNameProfile,
                     isProgress: true
                   ),
                 ),

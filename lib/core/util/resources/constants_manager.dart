@@ -333,6 +333,9 @@ bool isCoachFilter = false;
 
 String? errorMessage;
 
+String? constClientVariable;
+
+
 
 // int? countProgressVideoUpload=0;
 // int? totalProgressVideoUpload=0;
