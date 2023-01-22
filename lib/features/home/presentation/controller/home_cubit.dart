@@ -106,7 +106,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   List<Widget> clientWidgets = [
     const HomeClientScreen(),
-    const SearchScreen(),
+    SearchScreen(),
     const QRCodescreen(),
     SettingsScreen(),
     ClientProfileScreen(),
@@ -114,7 +114,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   List<Widget> coachWidgets = [
     const HomeClientScreen(),
-    const SearchScreen(),
+    SearchScreen(),
     SettingsScreen(),
     const ProfileCoachScreen(),
   ];

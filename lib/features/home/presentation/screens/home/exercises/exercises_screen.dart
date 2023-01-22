@@ -23,8 +23,7 @@ class ExercisesScreen extends StatelessWidget {
           child: Scaffold(
             body: Padding(
               padding: designApp,
-              child: homeCubit.exerciseResult != null?
-              Column(
+              child: Column(
                 children: [
                   defaultAppBar(
                     title: AppString.exercises,
@@ -40,6 +39,7 @@ class ExercisesScreen extends StatelessWidget {
                         )
                     ],
                   ),
+                  if(homeCubit.exerciseResult != null)
                   Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) => InkWell(
@@ -60,7 +60,7 @@ class ExercisesScreen extends StatelessWidget {
                     ),
                   )
                 ],
-              ) : null,
+              ),
             ),
           ),
         );

@@ -334,6 +334,7 @@ bool isCoachFilter = false;
 String? errorMessage;
 
 String? constClientVariable;
+bool? constClientSearchVariable;
 
 
 
