@@ -709,10 +709,16 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   List<AddExercisePlanEntity>? exercisePlanResult;
-  void getExercisePlan() async {
+  void getExercisePlan(
+    {
+        String? searchPlan,
+    }
+      ) async {
     emit(GetExercisePlanLoadingState());
 
-    final result = await _getExercisePlanUseCase(const GetExercisePlanParams());
+    final result = await _getExercisePlanUseCase(GetExercisePlanParams(
+      searchPlan: searchPlan
+    ));
 
     result.fold((failure) {
       emit(GetExercisePlanErrorState(mapFailureToMessage(failure)));

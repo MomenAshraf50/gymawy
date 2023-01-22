@@ -6,22 +6,29 @@ import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/clients_details_screen.dart';
+import 'package:gymawy/features/home/presentation/screens/home/plans/plan_details.dart';
 import 'package:gymawy/features/home/presentation/screens/search/search_result_screen.dart';
+import 'package:gymawy/features/home/presentation/widgets/build_plan_items.dart';
 import 'package:gymawy/features/home/presentation/widgets/filter_dialog.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
+import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/myTextFill.dart';
 import '../../controller/home_cubit.dart';
 
 class SearchScreen extends StatelessWidget {
   SearchScreen({Key? key
-  ,this.clientsScreen}) : super(key: key);
+  ,this.clientsScreen,
+    this.plans
+  }) : super(key: key);
   bool? clientsScreen;
+  bool? plans;
 
   @override
   Widget build(BuildContext context) {
     constClientSearchVariable = clientsScreen;
+    constPlanSearchVariable = plans;
     HomeCubit homeCubit = HomeCubit.get(context);
 
     return SafeArea(
@@ -34,6 +41,9 @@ class SearchScreen extends StatelessWidget {
                 Navigator.pop(context);
                 clientsScreen = null;
                 constClientSearchVariable = null;
+                plans = null;
+                constPlanSearchVariable = null;
+                homeCubit.searchController.text = '';
                 return false;
               },
               child: HideKeyboardPage(
@@ -41,15 +51,19 @@ class SearchScreen extends StatelessWidget {
                   padding: designApp,
                   child: Column(
                     children: [
-                      if(clientsScreen != null)
+                      if(clientsScreen != null || plans != null)
                       defaultAppBar(
-                          title: 'Search for clients',
+                          title: clientsScreen != null ?
+                          'Search for clients' : plans != null ? 'Search for plans' : '',
                           context: context,
                         onPressed: ()
                         {
                           Navigator.pop(context);
                           clientsScreen = null;
                           constClientSearchVariable = null;
+                          plans = null;
+                          constPlanSearchVariable = null;
+                          homeCubit.searchController.text = '';
                         }
                       ),
                       Row(
@@ -59,18 +73,20 @@ class SearchScreen extends StatelessWidget {
                           Expanded(
                             child: myTextFill(
                               controller: homeCubit.searchController,
-                              hint: AppString.search,
+                              hint: clientsScreen != null ?
+                              'Search for clients' : plans != null ? 'Search for plans':
+                              AppString.search,
                               iconPrefix: Icons.search,
                               onChanged: (value)
                               {
-                                homeCubit.search(
-                                    search: homeCubit.searchController.text
-                                );
+                                plans != null ? homeCubit.getExercisePlan(
+                                  searchPlan: homeCubit.searchController.text)
+                                    : homeCubit.search(search: homeCubit.searchController.text);
                               },
                             ),
                           ),
                           horizontalSpace(2.w),
-                          if(clientsScreen == null)
+                          if(clientsScreen == null && plans == null)
                           Padding(
                             padding: EdgeInsets.only(bottom: 2.h),
                             child: InkWell(
@@ -105,11 +121,33 @@ class SearchScreen extends StatelessWidget {
                         ],
                       ),
                       verticalSpace(1.h),
-                      if(homeCubit.results != null && homeCubit.searchController.text.isNotEmpty)
+                      if(
+                      homeCubit.results != null && homeCubit.searchController.text.isNotEmpty
+                          ||
+                      homeCubit.exercisePlanResult != null && homeCubit.searchController.text.isNotEmpty
+                      )
                         Expanded(
                           child: ListView.builder(
                             itemBuilder: (context, index) {
-                              return InkWell(
+                              return plans != null ?
+                              InkWell(
+                                onTap: ()
+                                {
+                                  navigateTo(context, PlanDetails(
+                                    exercisePlanId: homeCubit.exercisePlanResult![index].exercisePlanId,
+                                    ownerUserId: homeCubit.exercisePlanResult![index].userId,
+                                  ));
+                                },
+                                child: buildPlansItems(
+                                    context,
+                                    planTitle: homeCubit.exercisePlanResult![index].exercisePlanName,
+                                    visibilityIcon: homeCubit.exercisePlanResult![index].exercisePlanVisibility == 'public' ?
+                                    Icons.visibility_outlined : Icons.visibility_off_outlined,
+                                    visibilityIconColor: homeCubit.exercisePlanResult![index].exercisePlanVisibility == 'public' ?
+                                    ColorsManager.green : ColorsManager.error,
+                                ),
+                              ) :
+                              InkWell(
                                 onTap: () {
                                   if(clientsScreen == null) {
                                     navigateTo(context, SearchResultScreen(
@@ -229,7 +267,9 @@ class SearchScreen extends StatelessWidget {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            itemCount: homeCubit.results!.length,
+                            itemCount: plans != null ?
+                            homeCubit.exercisePlanResult!.length:
+                            homeCubit.results!.length,
                           ),
                         ),
                     ],

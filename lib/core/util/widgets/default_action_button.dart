@@ -5,7 +5,8 @@ Widget defaultActionButton(
   required VoidCallback onPressed,
   required IconData icon,
   required Color backgroundColor,
-  double? radius
+  double? radius,
+  Color? iconColor = Colors.white,
 }
     ){
   return  CircleAvatar(
@@ -15,7 +16,7 @@ Widget defaultActionButton(
         onPressed: onPressed,
         icon: Icon(
           icon,
-          color: Colors.white,
+          color: iconColor,
         )),
   );
 }

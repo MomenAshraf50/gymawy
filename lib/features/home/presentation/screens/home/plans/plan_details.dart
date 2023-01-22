@@ -13,8 +13,9 @@ import '../../../controller/home_cubit.dart';
 import '../exercises/exercise_type.dart';
 
 class PlanDetails extends StatelessWidget {
-  PlanDetails({Key? key, this.exercisePlanId}) : super(key: key);
+  PlanDetails({Key? key, this.exercisePlanId , this.ownerUserId}) : super(key: key);
   int? exercisePlanId;
+  int? ownerUserId;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +60,7 @@ class PlanDetails extends StatelessWidget {
                     ),
                   ),
                   verticalSpace(4.h),
+                  if(userId == ownerUserId)
                   myButton(
                     text: AppString.delete,
                     textOnly: true,
