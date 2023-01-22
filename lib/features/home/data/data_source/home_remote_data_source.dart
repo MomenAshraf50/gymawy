@@ -460,6 +460,10 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     final Response f = await dioHelper.get(
       url: addExercisePlanEndPoint,
       token: token,
+      query: constPlanSearchVariable != null ?
+      {
+        'search': params.searchPlan,
+      }: null ,
     );
     return List<AddExercisePlanModel>.from(
         (f.data['results'] as List).map((e) => AddExercisePlanModel.fromJson(e)));

@@ -19,9 +19,12 @@ class GetExercisePlanUseCase extends UseCase<List<AddExercisePlanEntity>,GetExer
 }
 
 class GetExercisePlanParams extends Equatable{
+  final String? searchPlan;
 
-  const GetExercisePlanParams();
+  const GetExercisePlanParams({this.searchPlan});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+    searchPlan
+  ];
 }

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/meal_schedule.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/plan_details.dart';
+import 'package:gymawy/features/home/presentation/screens/search/search_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_items.dart';
 import 'package:gymawy/features/home/presentation/widgets/filter_dialog.dart';
 import '../../../../../../core/util/resources/colors_manager.dart';
@@ -29,7 +31,21 @@ class PlansScreen extends StatelessWidget {
               child: Column(
                 children: [
                   defaultAppBar(
-                      title: AppString.plans, context: context, actions: [
+                      title: AppString.plans,
+                      context: context,
+                      actions: [
+                    defaultActionButton(
+                        onPressed: ()
+                        {
+                          navigateTo(context, SearchScreen(
+                            plans: true,
+                          ));
+                        },
+                        icon: Icons.search,
+                        backgroundColor: ColorsManager.white,
+                        iconColor: ColorsManager.black,
+                    ) ,
+                    horizontalSpace(5.w),
                     defaultActionButton(
                         onPressed: () {
                           showDialog(
@@ -75,6 +91,7 @@ class PlansScreen extends StatelessWidget {
                                 onTap: () {
                                    navigateTo(context, PlanDetails(
                                        exercisePlanId: homeCubit.exercisePlanResult![index].exercisePlanId,
+                                       ownerUserId: homeCubit.exercisePlanResult![index].userId,
                                    ));
                                    debugPrintFullText('$index');
                                 },

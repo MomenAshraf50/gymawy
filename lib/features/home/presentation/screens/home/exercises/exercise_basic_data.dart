@@ -48,7 +48,9 @@ class ExerciseBasicData extends StatelessWidget {
                   defaultAppBar(
                       title: exerciseEntity.exerciseName,
                       context: context,
+
                       actions: [
+                        if(exerciseEntity.exerciseId == userId)
                         defaultActionButton(
                             backgroundColor: ColorsManager.mainColor,
                             icon: Icons.edit,
@@ -56,7 +58,9 @@ class ExerciseBasicData extends StatelessWidget {
                               navigateTo(context, AddExerciseScreen(exerciseEntity: exerciseEntity,));
                             }
                         ),
+                        if(exerciseEntity.exerciseId == userId)
                         horizontalSpace(2.w),
+                        if(exerciseEntity.exerciseId == userId)
                         defaultActionButton(
                             backgroundColor: Colors.red,
                             icon: Icons.delete,
