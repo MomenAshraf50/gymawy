@@ -77,7 +77,7 @@ abstract class HomeBaseDataSource {
     required String exercisePlanVisibility,
   });
 
-  Future<List<GetExercisePlanModel>> getExercisePlan(GetExercisePlanParams params);
+  Future<List<AddExercisePlanModel>> getExercisePlan(GetExercisePlanParams params);
 
   Future<AddExercisePlanModel> updateExercisePlan(AddExercisePlanParams params);
 
@@ -166,11 +166,12 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     required String search,
   }) async {
     final Response f = await dioHelper.get(
-      url: isCoachFilter == false ? registerEndPoint : registerCoachEndPoint,
+      url: isCoachFilter == false || constClientVariable != null ? registerEndPoint : registerCoachEndPoint,
       token: token,
-      query: {
+      query: constClientVariable == null ?
+      {
         'search': search,
-      },
+      }: null ,
     );
     return List<SearchModel>.from(
         (f.data['results'] as List).map((e) => SearchModel.fromJson(e)));
@@ -454,13 +455,13 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   }
 
   @override
-  Future<List<GetExercisePlanModel>> getExercisePlan(GetExercisePlanParams params) async {
+  Future<List<AddExercisePlanModel>> getExercisePlan(GetExercisePlanParams params) async {
     final Response f = await dioHelper.get(
       url: addExercisePlanEndPoint,
       token: token,
     );
-    return List<GetExercisePlanModel>.from(
-        (f.data['results'] as List).map((e) => GetExercisePlanModel.fromJson(e)));
+    return List<AddExercisePlanModel>.from(
+        (f.data['results'] as List).map((e) => AddExercisePlanModel.fromJson(e)));
     // return List<AddExerciseModel>.from(
     //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
   }

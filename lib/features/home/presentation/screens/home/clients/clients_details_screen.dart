@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/add_exercise_screen.dart';
@@ -12,7 +13,26 @@ import '../../../../../../core/util/resources/assets.gen.dart';
 import '../../../widgets/build_client_details_screen_items.dart';
 import '../../../widgets/build_day_progress.dart';
 class ClientDetailsScreen extends StatelessWidget {
-  ClientDetailsScreen({Key? key}) : super(key: key);
+  ClientDetailsScreen({
+    Key? key,
+    required this.name,
+    required this.address,
+    required this.age,
+    required this.bodyFat,
+    required this.goal,
+    required this.img,
+    required this.tall,
+    required this.weight
+  }) : super(key: key);
+
+  String? img;
+  String? name;
+  String? address;
+  String? age;
+  String? goal;
+  String? tall;
+  String? weight;
+  String? bodyFat;
 
   List<String> icons=
   [
@@ -36,23 +56,23 @@ class ClientDetailsScreen extends StatelessWidget {
     AppString.bodyFat,
   ];
 
-  List<String> titleResult =
-  [
-    '3',
-    'Beginner',
-    'Mass Gain',
-    '2',
-    '4',
-    '90',
-    '90',
-  ];
-
 
 
   @override
   Widget build(BuildContext context) {
+    List<String> titleResult =
+    [
+      '3',
+      'Beginner',
+      goal!,
+      '2',
+      tall!,
+      weight!,
+      bodyFat!,
+    ];
     return Scaffold(
-      body: SafeArea(
+      body: goal != null ?
+      SafeArea(
         child: Padding(
           padding: designApp,
           child: Column(
@@ -69,29 +89,33 @@ class ClientDetailsScreen extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 50.rSp,
-                            backgroundImage: const NetworkImage(AppString.networkImage),
+                            backgroundImage: NetworkImage(
+                                //AppString.networkImage
+                              img!
+                            ),
                           ),
                           horizontalSpace(5.w),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               myText(
-                                title: AppString.userNameProfile,
+                                title: name!,
+                                //AppString.userNameProfile,
                                 style: Style.medium,
                                 fontSize: 14.rSp,
                                 fontWeight: FontWeight.w600,
                               ),
-                              myText(
-                                title: AppString.followersNumber,
-                                style: Style.medium,
-                                fontSize: 14.rSp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              myText(
-                                title: AppString.mail,
-                                style: Style.extraSmall,
-                                fontSize: 12.rSp,
-                              ),
+                              // myText(
+                              //   title: AppString.followersNumber,
+                              //   style: Style.medium,
+                              //   fontSize: 14.rSp,
+                              //   fontWeight: FontWeight.w600,
+                              // ),
+                              // myText(
+                              //   title: AppString.mail,
+                              //   style: Style.extraSmall,
+                              //   fontSize: 12.rSp,
+                              // ),
                               Row(
                                 children: [
                                   Icon(
@@ -99,14 +123,18 @@ class ClientDetailsScreen extends StatelessWidget {
                                       size: 15.rSp,
                                   ),
                                   myText(
-                                    title: AppString.address,
+                                    title:
+                                    //AppString.address,
+                                    address!,
                                     style: Style.extraSmall,
                                     fontSize: 12.rSp,
                                   ),
                                 ],
                               ),
                               myText(
-                                title: AppString.age,
+                                title:
+                                //AppString.age,
+                                age!,
                                 style: Style.extraSmall,
                                 fontSize: 12.rSp,
                               ),
@@ -180,7 +208,8 @@ class ClientDetailsScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      )
+      : const LoadingPage(),
     );
   }
 }

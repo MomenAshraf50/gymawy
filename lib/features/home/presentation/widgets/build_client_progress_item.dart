@@ -9,6 +9,8 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 Widget buildClientProgressItem(
 {
   required bool isProgress,
+  required ImageProvider image,
+  required String name,
 }
     ){
   return Card(
@@ -19,11 +21,14 @@ Widget buildClientProgressItem(
         children: [
           CircleAvatar(
             radius: 25.rSp,
-            backgroundImage: const NetworkImage(AppString.networkImage),
+            backgroundImage:
+              image,
+            //const NetworkImage(AppString.networkImage),
           ),
           horizontalSpace(3.w),
           myText(
-            title: AppString.userNameProfile,
+            title: name,
+            //AppString.userNameProfile,
             style: Style.small,
             fontSize: 16.rSp,
           ),
