@@ -166,9 +166,10 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     required String search,
   }) async {
     final Response f = await dioHelper.get(
-      url: isCoachFilter == false || constClientVariable != null ? registerEndPoint : registerCoachEndPoint,
+      url: isCoachFilter == false || constClientVariable != null || constClientSearchVariable != null ?
+      registerEndPoint : registerCoachEndPoint ,
       token: token,
-      query: constClientVariable == null ?
+      query: constClientVariable == null || constClientSearchVariable != null ?
       {
         'search': search,
       }: null ,

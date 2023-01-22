@@ -89,19 +89,16 @@ class ExerciseBasicData extends StatelessWidget {
                           child: VideoPlayer(
                             homeCubit.videoPlayerController,
                           ),
-                        )
-                            : Image.network(exerciseEntity.exercisePic),
+                        ) : Image.network(exerciseEntity.exercisePic),
+                        if (homeCubit.videoPlayerController.value.isInitialized == true)
                         FloatingActionButton(
                           onPressed: () {
                             homeCubit.pauseAndPlayVideo();
                           },
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            homeCubit
-                                .videoPlayerController.value.isPlaying
-                                ? Icons.pause
-                                : Icons.play_arrow,
-                          ),
+                          backgroundColor: homeCubit.videoPlayerController.value.isPlaying == false ?
+                          Colors.white : Colors.transparent,
+                          child: homeCubit.videoPlayerController.value.isPlaying == false ?
+                          const Icon( Icons.play_arrow,) : null,
                         )
                       ],
                     ),

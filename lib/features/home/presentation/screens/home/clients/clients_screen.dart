@@ -4,6 +4,7 @@ import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
+import 'package:gymawy/features/home/presentation/screens/search/search_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_client_progress_item.dart';
 import '../../../controller/home_cubit.dart';
 import 'clients_details_screen.dart';
@@ -33,7 +34,7 @@ class ClientsScreen extends StatelessWidget {
             child: SafeArea(
               child: Padding(
                 padding: designApp,
-                child: homeCubit.results != null ?
+                child:
                 Column(
                   children: [
                     defaultAppBar(
@@ -46,8 +47,20 @@ class ClientsScreen extends StatelessWidget {
                         constClientVariable = null;
                         debugPrintFullText( 'is ===========================$constClientVariable');
                       },
+                      actions: [
+                        IconButton(
+                            onPressed: ()
+                            {
+                              navigateTo(context, SearchScreen(
+                                clientsScreen: true,
+                              ));
+                            },
+                            icon: const Icon(Icons.search)
+                        )
+                      ]
                     ),
                     verticalSpace(4.h),
+                    if(homeCubit.results != null)
                     Expanded(
                         child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
@@ -74,8 +87,7 @@ class ClientsScreen extends StatelessWidget {
                           itemCount: homeCubit.results!.length,
                         ))
                   ],
-                ) :
-                Container(),
+                )
               ),
             ),
           );

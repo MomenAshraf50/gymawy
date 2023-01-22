@@ -24,8 +24,7 @@ class PlansScreen extends StatelessWidget {
       child:BlocBuilder<HomeCubit,HomeStates>(
         builder: (context, state) {
           return Scaffold(
-            body: homeCubit.exercisePlanResult != null?
-            Padding(
+            body: Padding(
               padding: designApp,
               child: Column(
                 children: [
@@ -58,6 +57,7 @@ class PlansScreen extends StatelessWidget {
                         backgroundColor: Colors.green,
                         icon: Icons.add)
                   ]),
+                  if(homeCubit.exercisePlanResult != null)
                   BlocBuilder<HomeCubit,HomeStates>(
                     builder: (context, state) {
                       return Expanded(
@@ -95,7 +95,7 @@ class PlansScreen extends StatelessWidget {
                   )
                 ],
               ),
-            ) : Container(),
+            ),
           );
         },
       )
