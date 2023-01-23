@@ -40,93 +40,96 @@ class ExerciseBasicData extends StatelessWidget {
       builder: (context, state) {
         return SafeArea(
           child: Scaffold(
-            body: Padding(
-              padding: designApp,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  defaultAppBar(
-                      title: exerciseEntity.exerciseName,
-                      context: context,
+            body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: designApp,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    defaultAppBar(
+                        title: exerciseEntity.exerciseName,
+                        context: context,
 
-                      actions: [
-                        if(exerciseEntity.exerciseId == userId)
-                        defaultActionButton(
-                            backgroundColor: ColorsManager.mainColor,
-                            icon: Icons.edit,
-                            onPressed: (){
-                              navigateTo(context, AddExerciseScreen(exerciseEntity: exerciseEntity,));
-                            }
-                        ),
-                        if(exerciseEntity.exerciseId == userId)
-                        horizontalSpace(2.w),
-                        if(exerciseEntity.exerciseId == userId)
-                        defaultActionButton(
-                            backgroundColor: Colors.red,
-                            icon: Icons.delete,
-                            onPressed: (){
-                              showDialog(context: context, builder: (context){
-                                return DefaultDialog(
-                                  message: 'Are you sure to delete this exercise',
-                                  pushButtonText: 'Delete',
-                                  pushButtonVoidCallback: (){
-                                    homeCubit.deleteExercise(DeleteExerciseParams(exerciseEntity.exerciseId));
-                                  },
-                                );
-                              });
-                            }
-                        )
-                      ]
-                  ),
-                  verticalSpace(5.h),
-                  SizedBox(
-                    height: 40.h,
-                    width: double.infinity,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        homeCubit.videoPlayerController.value.isInitialized ? AspectRatio(
-                          aspectRatio: homeCubit
-                              .videoPlayerController
-                              .value
-                              .aspectRatio,
-                          child: VideoPlayer(
-                            homeCubit.videoPlayerController,
+                        actions: [
+                          if(exerciseEntity.userId == userId)
+                          defaultActionButton(
+                              backgroundColor: ColorsManager.mainColor,
+                              icon: Icons.edit,
+                              onPressed: (){
+                                navigateTo(context, AddExerciseScreen(exerciseEntity: exerciseEntity,));
+                              }
                           ),
-                        ) : Image.network(exerciseEntity.exercisePic),
-                        if (homeCubit.videoPlayerController.value.isInitialized == true)
-                        FloatingActionButton(
-                          onPressed: () {
-                            homeCubit.pauseAndPlayVideo();
-                          },
-                          backgroundColor: homeCubit.videoPlayerController.value.isPlaying == false ?
-                          Colors.white : Colors.transparent,
-                          child: homeCubit.videoPlayerController.value.isPlaying == false ?
-                          const Icon( Icons.play_arrow,) : null,
-                        )
-                      ],
+                          if(exerciseEntity.userId == userId)
+                          horizontalSpace(2.w),
+                          if(exerciseEntity.userId == userId)
+                          defaultActionButton(
+                              backgroundColor: Colors.red,
+                              icon: Icons.delete,
+                              onPressed: (){
+                                showDialog(context: context, builder: (context){
+                                  return DefaultDialog(
+                                    message: 'Are you sure to delete this exercise',
+                                    pushButtonText: 'Delete',
+                                    pushButtonVoidCallback: (){
+                                      homeCubit.deleteExercise(DeleteExerciseParams(exerciseEntity.exerciseId));
+                                    },
+                                  );
+                                });
+                              }
+                          )
+                        ]
                     ),
-                  ),
-                  verticalSpace(5.h),
-                  myText(
-                    title: 'Exercise Category: ${exerciseEntity.exerciseCategory}',
-                    style: Style.medium,
-                    fontSize: 16.rSp,
-                  ),
-                  verticalSpace(3.h),
-                  myText(
-                    title: 'Exercise Added by coach: ${exerciseEntity.userName}',
-                    style: Style.medium,
-                    fontSize: 16.rSp,
-                  ),
-                  verticalSpace(3.h),
-                  myText(
-                    title: 'Visibility: ${exerciseEntity.exerciseVisibility}',
-                    style: Style.medium,
-                    fontSize: 16.rSp,
-                  ),
+                    verticalSpace(5.h),
+                    SizedBox(
+                      height: 40.h,
+                      width: double.infinity,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          homeCubit.videoPlayerController.value.isInitialized ? AspectRatio(
+                            aspectRatio: homeCubit
+                                .videoPlayerController
+                                .value
+                                .aspectRatio,
+                            child: VideoPlayer(
+                              homeCubit.videoPlayerController,
+                            ),
+                          ) : Image.network(exerciseEntity.exercisePic),
+                          if (homeCubit.videoPlayerController.value.isInitialized == true)
+                          FloatingActionButton(
+                            onPressed: () {
+                              homeCubit.pauseAndPlayVideo();
+                            },
+                            backgroundColor: homeCubit.videoPlayerController.value.isPlaying == false ?
+                            Colors.white : Colors.transparent,
+                            child: homeCubit.videoPlayerController.value.isPlaying == false ?
+                            const Icon( Icons.play_arrow,) : null,
+                          )
+                        ],
+                      ),
+                    ),
+                    verticalSpace(5.h),
+                    myText(
+                      title: 'Exercise Category: ${exerciseEntity.exerciseCategory}',
+                      style: Style.medium,
+                      fontSize: 16.rSp,
+                    ),
+                    verticalSpace(3.h),
+                    myText(
+                      title: 'Exercise Added by coach: ${exerciseEntity.userName}',
+                      style: Style.medium,
+                      fontSize: 16.rSp,
+                    ),
+                    verticalSpace(3.h),
+                    myText(
+                      title: 'Visibility: ${exerciseEntity.exerciseVisibility}',
+                      style: Style.medium,
+                      fontSize: 16.rSp,
+                    ),
 
-                ],
+                  ],
+                ),
               ),
             ),
           ),
