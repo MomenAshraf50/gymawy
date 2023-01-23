@@ -336,6 +336,7 @@ String? errorMessage;
 String? constClientVariable;
 bool? constClientSearchVariable;
 bool? constPlanSearchVariable;
+bool? constExerciseSearchVariable;
 
 
 

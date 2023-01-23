@@ -19,9 +19,14 @@ class GetExerciseUseCase extends UseCase<List<AddExerciseEntity>,GetExercisePara
 }
 
 class GetExerciseParams extends Equatable{
+  final String? searchExercise;
 
-  const GetExerciseParams();
+  const GetExerciseParams({
+    this.searchExercise
+});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+    searchExercise
+  ];
 }

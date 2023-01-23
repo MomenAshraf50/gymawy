@@ -647,10 +647,14 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   List<AddExerciseEntity>? exerciseResult;
-  void getExercise() async {
+  void getExercise({
+    String? searchExercise
+}) async {
     emit(GetExerciseLoadingState());
 
-    final result = await _getExerciseUseCase(const GetExerciseParams());
+    final result = await _getExerciseUseCase(GetExerciseParams(
+        searchExercise: searchExercise
+    ));
 
     result.fold((failure) {
       emit(GetExerciseErrorState(mapFailureToMessage(failure)));

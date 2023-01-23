@@ -29,7 +29,10 @@ class AddPlan extends StatelessWidget {
     HomeCubit homeCubit = HomeCubit.get(context);
     // debugPrintFullText(exercisePlanName!);
      debugPrintFullText('ssssssssssss${homeCubit.visibilityExerciseValue!}');
+     debugPrintFullText('ssssssssssss$exercisePlanVisibility');
     // debugPrintFullText('$exercisePlanId');
+    homeCubit.visibilityExerciseValue = exercisePlanVisibility;
+    debugPrintFullText('ssssssssssss${homeCubit.visibilityExerciseValue!}');
 
     return SafeArea(
       child: Scaffold(
@@ -107,7 +110,7 @@ class AddPlan extends StatelessWidget {
                                 fontSize: 12.rSp,
                               ),
                               const Spacer(),
-                              if(exercisePlanVisibility == null || exercisePlanVisibility == 'private')
+                              if(exercisePlanVisibility == null || exercisePlanVisibility== 'private')
                                 InkWell(
                                   child: SvgPicture.asset(
                                       homeCubit.isVisibilityExerciseIcon == false
@@ -122,8 +125,8 @@ class AddPlan extends StatelessWidget {
                                 InkWell(
                                   child: SvgPicture.asset(
                                       homeCubit.isVisibilityExerciseIcon == false
-                                          ? Assets.images.svg.visibility_false
-                                          : Assets.images.svg.visibility_true
+                                          ? Assets.images.svg.visibility_true
+                                          : Assets.images.svg.visibility_false
                                   ),
                                   onTap: () {
                                     homeCubit.visibilityExercise();
@@ -159,8 +162,6 @@ class AddPlan extends StatelessWidget {
                                   exercisePlanId: exercisePlanId!,
                                 );
                               }
-                              // navigateAndFinish(context,const PlansScreen());
-                              // Navigator.pop(context);
                             },
 
                           ),

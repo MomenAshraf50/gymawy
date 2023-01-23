@@ -4,7 +4,6 @@ import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
-import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/meal_schedule.dart';
@@ -46,7 +45,8 @@ class PlansScreen extends StatelessWidget {
                         iconColor: ColorsManager.black,
                     ) ,
                     horizontalSpace(5.w),
-                    defaultActionButton(
+                      if(isCoachLogin == true)
+                       defaultActionButton(
                         onPressed: () {
                           showDialog(
                             context: context,
@@ -92,16 +92,10 @@ class PlansScreen extends StatelessWidget {
                                    navigateTo(context, PlanDetails(
                                        exercisePlanId: homeCubit.exercisePlanResult![index].exercisePlanId,
                                        ownerUserId: homeCubit.exercisePlanResult![index].userId,
+                                       exercisePlanVisibility: homeCubit.exercisePlanResult![index].exercisePlanVisibility,
+                                       exercisePlanName: homeCubit.exercisePlanResult![index].exercisePlanName,
                                    ));
                                    debugPrintFullText('$index');
-                                },
-                                onLongPress: ()
-                                {
-                                  navigateTo(context, AddPlan(
-                                    exercisePlanId: homeCubit.exercisePlanResult![index].exercisePlanId,
-                                    exercisePlanName: homeCubit.exercisePlanResult![index].exercisePlanName,
-                                    exercisePlanVisibility: homeCubit.exercisePlanResult![index].exercisePlanVisibility,
-                                  ));
                                 },
                               ),
                           itemCount: homeCubit.exercisePlanResult!.length,

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
+import 'package:gymawy/features/home/presentation/screens/search/search_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_exercise_item.dart';
+import '../../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../../core/util/widgets/default_action_button.dart';
 import '../../../controller/home_cubit.dart';
 import 'add_exercise.dart';
@@ -29,6 +32,18 @@ class ExercisesScreen extends StatelessWidget {
                     title: AppString.exercises,
                     context: context,
                     actions: [
+                      defaultActionButton(
+                        onPressed: ()
+                        {
+                          navigateTo(context, SearchScreen(
+                            exercises: true,
+                          ));
+                        },
+                        icon: Icons.search,
+                        backgroundColor: ColorsManager.white,
+                        iconColor: ColorsManager.black,
+                      ) ,
+                      horizontalSpace(5.w),
                       if(isCoachLogin == true)
                         defaultActionButton(
                             icon: Icons.add,
@@ -42,7 +57,8 @@ class ExercisesScreen extends StatelessWidget {
                   if(homeCubit.exerciseResult != null)
                   Expanded(
                     child: ListView.builder(
-                      itemBuilder: (context, index) => InkWell(
+                      itemBuilder: (context, index) =>
+                          InkWell(
                         child: buildExercisesItems(
                           exerciseImage: homeCubit.exerciseResult![index].exercisePic,
                           exerciseName: homeCubit.exerciseResult![index].exerciseName,

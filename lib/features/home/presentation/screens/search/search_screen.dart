@@ -16,19 +16,25 @@ import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/myTextFill.dart';
 import '../../controller/home_cubit.dart';
+import '../../widgets/build_exercise_item.dart';
+import '../home/exercises/exercise_basic_data.dart';
 
 class SearchScreen extends StatelessWidget {
-  SearchScreen({Key? key
-  ,this.clientsScreen,
-    this.plans
+  SearchScreen({
+    Key? key,
+    this.clientsScreen,
+    this.plans,
+    this.exercises
   }) : super(key: key);
   bool? clientsScreen;
   bool? plans;
+  bool? exercises;
 
   @override
   Widget build(BuildContext context) {
     constClientSearchVariable = clientsScreen;
     constPlanSearchVariable = plans;
+    constExerciseSearchVariable = exercises;
     HomeCubit homeCubit = HomeCubit.get(context);
 
     return SafeArea(
@@ -43,6 +49,8 @@ class SearchScreen extends StatelessWidget {
                 constClientSearchVariable = null;
                 plans = null;
                 constPlanSearchVariable = null;
+                exercises = null;
+                constExerciseSearchVariable = null;
                 homeCubit.searchController.text = '';
                 return false;
               },
@@ -51,10 +59,12 @@ class SearchScreen extends StatelessWidget {
                   padding: designApp,
                   child: Column(
                     children: [
-                      if(clientsScreen != null || plans != null)
+                      if(clientsScreen != null || plans != null || exercises != null)
                       defaultAppBar(
-                          title: clientsScreen != null ?
-                          'Search for clients' : plans != null ? 'Search for plans' : '',
+                          title:
+                          clientsScreen != null ? 'Search for clients' :
+                          plans != null ? 'Search for plans' :
+                          exercises != null ? 'Search for exercises':'',
                           context: context,
                         onPressed: ()
                         {
@@ -63,6 +73,8 @@ class SearchScreen extends StatelessWidget {
                           constClientSearchVariable = null;
                           plans = null;
                           constPlanSearchVariable = null;
+                          exercises = null;
+                          constExerciseSearchVariable = null;
                           homeCubit.searchController.text = '';
                         }
                       ),
@@ -75,18 +87,20 @@ class SearchScreen extends StatelessWidget {
                               controller: homeCubit.searchController,
                               hint: clientsScreen != null ?
                               'Search for clients' : plans != null ? 'Search for plans':
-                              AppString.search,
+                              exercises != null ? 'Search for exercises' :AppString.search,
                               iconPrefix: Icons.search,
                               onChanged: (value)
                               {
-                                plans != null ? homeCubit.getExercisePlan(
-                                  searchPlan: homeCubit.searchController.text)
-                                    : homeCubit.search(search: homeCubit.searchController.text);
+                                plans != null ?
+                                homeCubit.getExercisePlan(searchPlan: homeCubit.searchController.text) :
+                                exercises != null ?
+                                homeCubit.getExercise(searchExercise: homeCubit.searchController.text) :
+                                homeCubit.search(search: homeCubit.searchController.text);
                               },
                             ),
                           ),
                           horizontalSpace(2.w),
-                          if(clientsScreen == null && plans == null)
+                          if(clientsScreen == null && plans == null && exercises == null)
                           Padding(
                             padding: EdgeInsets.only(bottom: 2.h),
                             child: InkWell(
@@ -104,11 +118,9 @@ class SearchScreen extends StatelessWidget {
                                         return FilterDialog(
                                           firstFilterTitle: AppString.coaches,
                                           secondFilterTitle: AppString.clients,
-                                          onTapFirstChoice: (){
-                                            homeCubit.changeToFirstChoiceRadioButton();
+                                          onTapFirstChoice: (){homeCubit.changeToFirstChoiceRadioButton();
                                           },
-                                          onTapSecondChoice: (){
-                                            homeCubit.changeToSecondChoiceRadioButton();
+                                          onTapSecondChoice: (){homeCubit.changeToSecondChoiceRadioButton();
                                           },
                                         );
                                       },
@@ -129,7 +141,8 @@ class SearchScreen extends StatelessWidget {
                         Expanded(
                           child: ListView.builder(
                             itemBuilder: (context, index) {
-                              return plans != null ?
+                              return
+                              plans != null ?
                               InkWell(
                                 onTap: ()
                                 {
@@ -147,6 +160,20 @@ class SearchScreen extends StatelessWidget {
                                     ColorsManager.green : ColorsManager.error,
                                 ),
                               ) :
+                              exercises != null ?
+                              InkWell(
+                                child: buildExercisesItems(
+                                  exerciseImage: homeCubit.exerciseResult![index].exercisePic,
+                                  exerciseName: homeCubit.exerciseResult![index].exerciseName,
+                                  exerciseCategory: homeCubit.exerciseResult![index].exerciseCategory,
+                                ),
+                                onTap: () {
+                                  navigateTo(context, ExerciseBasicData(
+                                    exerciseEntity: homeCubit.exerciseResult![index],
+                                  ));
+                                  debugPrintFullText('$index');
+                                },
+                              ):
                               InkWell(
                                 onTap: () {
                                   if(clientsScreen == null) {
@@ -164,7 +191,6 @@ class SearchScreen extends StatelessWidget {
                                     youtubeLink: homeCubit.results![index].youtubeLink,
                                   ));
                                   }
-
                                   if(clientsScreen != null) {
                                     navigateTo(context, ClientDetailsScreen(
                                         name: homeCubit.results![index].userName,
@@ -211,39 +237,11 @@ class SearchScreen extends StatelessWidget {
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 14.rSp,
                                               ),
-                                              // verticalSpace(0.5.h),
-                                              // myText(
-                                              //   title: AppString.resultSearchType,
-                                              //   style: Style.extraSmall,
-                                              //   fontWeight: FontWeight.w400,
-                                              //   fontSize: 14.rSp,
-                                              // ),
                                               verticalSpace(0.5.h),
                                               Row(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 children: [
-                                                  // Icon(
-                                                  //   Icons.star,
-                                                  //   color: Colors.yellow,
-                                                  //   size: 20.rSp,
-                                                  // ),
-                                                  // Icon(
-                                                  //   Icons.star,
-                                                  //   color: Colors.yellow,
-                                                  //   size: 20.rSp,
-                                                  // ),
-                                                  // Icon(
-                                                  //   Icons.star,
-                                                  //   color: Colors.yellow,
-                                                  //   size: 20.rSp,
-                                                  // ),
-                                                  // Icon(
-                                                  //   Icons.star,
-                                                  //   color: Colors.yellow,
-                                                  //   size: 20.rSp,
-                                                  // ),
-                                                  // horizontalSpace(4.w),
                                                   Icon(
                                                     Icons.location_on,
                                                     size: 15.rSp,
@@ -267,8 +265,11 @@ class SearchScreen extends StatelessWidget {
                               );
                             },
                             physics: const BouncingScrollPhysics(),
-                            itemCount: plans != null ?
+                            itemCount:
+                            plans != null ?
                             homeCubit.exercisePlanResult!.length:
+                            exercises != null ?
+                            homeCubit.exerciseResult!.length:
                             homeCubit.results!.length,
                           ),
                         ),
