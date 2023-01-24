@@ -10,6 +10,7 @@ import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
+import '../../../../../core/util/widgets/default dialog.dart';
 import '../../../../../core/util/widgets/loadingPage.dart';
 import '../../../../../core/util/widgets/myButton.dart';
 import '../../../../../core/util/widgets/myElevatedButton.dart';
@@ -18,7 +19,8 @@ import '../../controller/register_cubit.dart';
 import '../../controller/register_states.dart';
 
 class AddressScreen extends StatelessWidget {
-  const AddressScreen({Key? key,
+  const AddressScreen({
+    Key? key,
 
   }) : super(key: key);
 
@@ -49,7 +51,6 @@ class AddressScreen extends StatelessWidget {
           return BlocBuilder<RegisterCubit,RegisterStates>(
             builder: (context, state) {
               return Padding(
-                // Padding(
                 padding: designApp,
                 child: SingleChildScrollView(
                   child: Column(
@@ -61,7 +62,28 @@ class AddressScreen extends StatelessWidget {
                             icon: const Icon(Icons.add_location_alt_outlined),
                             onPressed: ()
                             {
-                              navigateTo(context,  SetYourLocation());
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return DefaultDialog(
+                                    message: '$currentCountry - $currentCity - $currentGovernment ',
+                                    pushButtonText: 'Okay',
+                                    height: 22.h,
+                                    pushButtonVoidCallback: (){
+                                      countryRegister = currentCountry;
+                                      governmentRegister = currentGovernment;
+                                      cityRegister = currentCity;
+                                      currentCountry != null && currentGovernment != null && currentCity != null?
+                                      registerCubit.nextPage(true, context) : null;
+                                    },
+                                    pickLocation: true,
+                                    onPressedIcon: ()
+                                    {
+                                      navigateTo(context,  const SetYourLocation());
+                                    },
+                                  );
+                                },
+                              );
                             }
                         ),
                       ),
@@ -110,7 +132,6 @@ class AddressScreen extends StatelessWidget {
                           },
                         ),
                       verticalSpace(5.h),
-
                       myButton(
                           elevation: 0.0,
                           color: ColorsManager.mainColor,

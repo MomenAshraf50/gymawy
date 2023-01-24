@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gymawy/core/util/resources/bloc_observer_manager.dart';
@@ -33,17 +34,15 @@ void main() async
   debugPrintFullText(currentLat.toString());
   debugPrintFullText(currentLng.toString());
 
+  List<Placemark> placeMarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+  debugPrintFullText(placeMarks.toString());
+  Placemark placeMark = placeMarks[0];
+  currentCountry = '${placeMark.country}';
+  currentCity = '${placeMark.subAdministrativeArea}';
+  currentGovernment = '${placeMark.administrativeArea}';
+
   await di.init();
    bool isRtl = false;
-  // await sl<CacheHelper>().get('isRtl').then((value) {
-  //   debugPrint('rtl ------------- $value');
-  //   if (value != null) {
-  //     isRtl = value;
-  //   }
-  //
-  //   isArabic = isRtl;
-  // });
-  //token = null;
   token = await sl<CacheHelper>().get('token');
   userId = await sl<CacheHelper>().get('userId');
   isCoachLogin = await sl<CacheHelper>().get('isCoach');

@@ -5,6 +5,7 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 
 import 'myButton.dart';
+import 'my_icon_button.dart';
 
 class DefaultDialog extends Dialog {
   final String message;
@@ -12,6 +13,9 @@ class DefaultDialog extends Dialog {
   final VoidCallback pushButtonVoidCallback;
   final double height;
   final Color buttonColor;
+  final VoidCallback? onPressedIcon;
+  final bool? pickLocation;
+
 
   const DefaultDialog({
     required this.message,
@@ -20,6 +24,8 @@ class DefaultDialog extends Dialog {
     this.height = 160.0,
     this.buttonColor= ColorsManager.mainColor,
     Key? key,
+    this.onPressedIcon,
+    this.pickLocation
   }) : super(key: key);
 
   @override
@@ -36,8 +42,24 @@ class DefaultDialog extends Dialog {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              myText(
-                  title: message, align: TextAlign.center, style: Style.medium),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: myText(
+                        title: message, align: TextAlign.center, style: Style.medium
+                    ),
+                  ),
+                  if(pickLocation != null)
+                  Expanded(
+                    flex: 1,
+                    child: DefaultIconButton(
+                        icon: const Icon(Icons.add_location_alt_outlined),
+                        onPressed: onPressedIcon
+                    ),
+                  ),
+                ],
+              ),
               const Spacer(),
               Expanded(
                 child: myButton(

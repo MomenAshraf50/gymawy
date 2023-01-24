@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/address_screen.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/complete_profile_screen.dart';
@@ -14,6 +17,7 @@ import 'package:gymawy/features/register/presentation/screens/register_screens/s
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../core/network/remote/location_service.dart';
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../../core/util/resources/goal_data_static.dart';
@@ -339,7 +343,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
       gander: gander,
       country: country,
       governorate: governorate,
-      city: '',
+      city: city,
       password: password,
       confirmPassword: confirmPassword,
       age: age!,
@@ -413,82 +417,167 @@ class RegisterCubit extends Cubit<RegisterStates>{
       countryController.text = '';
     });
   }
-  // RegisterCoach? registerCoachModel;
-  // void registerCoach({
-  //   required String email,
-  //   required String password,
-  //   required String bio,
-  //   required String city,
-  //   required String confirmPassword,
-  //   required String country,
-  //   required String firstName,
-  //   required String fullName,
-  //   required String gander,
-  //   required String governorate,
-  //   required String lastName,
-  //   required String phoneNumber,
-  //   required File profilePicture,
-  //   required String userName,
-  //   required String facebookLink,
-  //   required String instagramLink,
-  //   required String youtubeLink,
-  //   required String tiktokLink,
-  //   required int fixedPrice,
-  //   context
-  // }) async {
-  //   emit(RegisterLoadingState());
+
+
+  late GoogleMapController googleMapController;
+  //final LatLng center = LatLng(currentLat!, currentLng!);
+  Completer<GoogleMapController> mapController = Completer();
+  final searchLocation = TextEditingController();
+
+  void onMapCreated(GoogleMapController controller) {
+    googleMapController = controller;
+  }
+
+  // void getPlaceId(
+  // {
+  //   String? input
+  // })
+  // {
+  //   LocationService().getPlaceId(
+  //       input!
+  //   );
+  //   emit(GetLocationIdState());
+  // }
+
+  void goToLocation(
+      double lat,
+      double lng,
+      Map<String,dynamic> boundsNe,
+      Map<String,dynamic> boundsSw,
+      BuildContext context,
+      )async{
+    currentLat = lat;
+    currentLng = lng;
+
+    debugPrintFullText('laaaaaaaaaaaaaaaaat is $currentLat');
+    debugPrintFullText('lnnnnnnnnnnnnnnnnng is $currentLng');
+
+
+    final GoogleMapController locationMapController = await mapController.future;
+    locationMapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(currentLat!, currentLng!),
+          zoom: 15,
+        ),
+      ),
+    );
+
+    locationMapController.animateCamera(
+        CameraUpdate.newLatLngBounds(
+            LatLngBounds(
+              southwest: LatLng(boundsSw['lat'],boundsSw['lng'],),
+              northeast: LatLng(boundsNe['lat'],boundsNe['lng'],),
+            ),
+            10.rSp
+        )
+    );
+
+    setMarker(LatLng(currentLat!, currentLng!));
+
+    emit(GoToLocationState());
+  }
+
+  Set<Marker> markers = <Marker>{};
+  void setMarker (LatLng point)
+  {
+    markers.add(
+      Marker(
+        markerId: const MarkerId('marker'),
+        position: point,
+        icon: BitmapDescriptor.defaultMarker,
+        //LatLng(latLocationSearch!,lngLocationSearch!),
+      ),
+    );
+    emit(SetMarkerState());
+  }
+
+
+  getPlace(
+      double? lat ,
+      double? lng ,
+      )
+  async {
+    List<Placemark> placeMarks = await placemarkFromCoordinates(
+      lat!,
+      lng!,
+    );
+    debugPrintFullText(placeMarks.toString());
+    Placemark placeMark = placeMarks[0];
+    currentCountry = '${placeMark.country}';
+    currentCity = '${placeMark.subAdministrativeArea}';
+    currentGovernment = '${placeMark.administrativeArea}';
+  }
+
+
+  // void goToLocation(
+  //     double lat,
+  //     double lng,
+  //     Map<String,dynamic> boundsNe,
+  //     Map<String,dynamic> boundsSw,
+  //     BuildContext context,
+  //     )async{
+  //   // double lat = location['geometry']['location']['lat'];
+  //   // double lng = location['geometry']['location']['lng'];
+  //   currentLat = lat;
+  //   currentLng = lng;
   //
-  //   final result = await _registerCoachUseCase(RegisterCoachParameters(
-  //       email,
-  //       password,
-  //       bio,
-  //       city,
-  //       confirmPassword,
-  //       country,
-  //       firstName,
-  //       fullName,
-  //       gander,
-  //       governorate,
-  //       lastName,
-  //       phoneNumber,
-  //       profilePicture,
-  //       userName,
-  //       facebookLink,
-  //       fixedPrice,
-  //       instagramLink,
-  //       youtubeLink,
-  //       tiktokLink
-  //   ));
+  //   debugPrintFullText('laaaaaaaaaaaaaaaaat is $currentLat');
+  //   debugPrintFullText('lnnnnnnnnnnnnnnnnng is $currentLng');
   //
-  //   result.fold((failure) {
-  //     emit(RegisterCoachErrorState(
-  //         failure: failure.toString()
-  //     ));
-  //     debugPrintFullText('Error is ----------------------------- ${failure.toString()}');
-  //   }, (data) {
-  //     registerCoachModel = data;
-  //     emit(RegisterCoachSuccessState(
-  //         token: registerModel!.token
-  //     ));
-  //     imageFile = null;
-  //     emailController.text = '';
-  //     currentTallController.text = '';
-  //     currentWeightController.text = '';
-  //     dataOfBirth.text = '';
-  //     pricePerMonth.text = '';
-  //     currencyController.text = '';
-  //     genderController.text = '';
-  //     confirmPasswordController.text = '';
-  //     passwordController.text = '';
-  //     phoneController.text = '';
-  //     userAgeController.text = '';
-  //     fullNameController.text = '';
-  //     userLastNameController.text = '';
-  //     userFirstNameController.text = '';
-  //     userNameController.text = '';
-  //   });
+  //
+  //   final GoogleMapController locationMapController = await mapController.future;
+  //   locationMapController.animateCamera(
+  //     CameraUpdate.newCameraPosition(
+  //       CameraPosition(
+  //         target: LatLng(lat, lng),
+  //         zoom: 15,
+  //       ),
+  //     ),
+  //   );
+  //
+  //   locationMapController.animateCamera(
+  //       CameraUpdate.newLatLngBounds(
+  //           LatLngBounds(
+  //             southwest: LatLng(boundsSw['lat'],boundsSw['lng'],),
+  //             northeast: LatLng(boundsNe['lat'],boundsNe['lng'],),
+  //           ),
+  //         10.rSp
+  //       )
+  //   );
+  //
+  //
+  //   setMarker(LatLng(currentLat!, currentLng!));
+  //
+  //   emit(GoToLocationState());
+  // }
+  //
+  // Set<Marker> markers = <Marker>{};
+  // void setMarker (LatLng point)
+  // {
+  //   markers.add(
+  //     Marker(
+  //       markerId: const MarkerId('marker'),
+  //       position: point,
+  //       icon: BitmapDescriptor.defaultMarker,
+  //     ),
+  //   );
+  //   emit(SetMarkerState());
   // }
 
 
+
+
+
+// String? city;
+    // String? country;
+    // String? government;
+    // void getAddressFromLatLng()
+    // async {
+    //
+    //   country = '${placeMark.country}';
+    //   city = '${placeMark.administrativeArea}';
+    //   city = '${placeMark.name}';
+    // }
 
 }

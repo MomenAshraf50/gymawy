@@ -42,6 +42,11 @@ bool? isCoachLogin = false;
 double? currentLat = 0;
 double? currentLng = 0;
 
+String? currentCity = '';
+String? currentCountry = '';
+String? currentGovernment = '';
+
+
 
 enum Style {
   extraSmall,
@@ -310,6 +315,7 @@ String? genderRegister = '';
 String? bodyFatRegister = '';
 String? countryRegister = '';
 String? governmentRegister = '';
+String? cityRegister = '';
 String? userNameRegister = '';
 String? firstNameRegister = '';
 String? lastNameRegister = '';
@@ -337,6 +343,7 @@ String? constClientVariable;
 bool? constClientSearchVariable;
 bool? constPlanSearchVariable;
 bool? constExerciseSearchVariable;
+String testCity = 'cairo';
 
 
 
