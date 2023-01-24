@@ -147,7 +147,7 @@ class GoalScreen extends StatelessWidget {
                         currentTall: currentTallRegister!,
                         age: ageRegister!,
                         bio: '',
-                        city: '',
+                        city: cityRegister!,
                         confirmPassword: confirmPasswordRegister!,
                         country: countryRegister!,
                         firstName: firstNameRegister!,

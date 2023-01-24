@@ -19,6 +19,7 @@ class RegisterGetCitiesState extends RegisterStates{}
 class RegisterPageFatControllerState extends RegisterStates{}
 class RegisterGetFatTextState extends RegisterStates{}
 
+
 class RegisterLoadingState extends RegisterStates {}
 
 class RegisterSuccessState extends RegisterStates {
@@ -30,6 +31,10 @@ class RegisterErrorState extends RegisterStates {
   final String failure;
   RegisterErrorState({required this.failure});
 }
+
+class SetMarkerState extends RegisterStates{}
+class GoToLocationState extends RegisterStates{}
+class GetLocationIdState extends RegisterStates{}
 
 // class RegisterCoachLoadingState extends RegisterStates {}
 //

@@ -107,7 +107,7 @@ class SocialMediaScreen extends StatelessWidget {
                       email: emailRegister!,
                       password: passwordRegister!,
                       bio: '',
-                      city: '',
+                      city: cityRegister!,
                       confirmPassword: confirmPasswordRegister!,
                       country: countryRegister!,
                       firstName: firstNameRegister!,
