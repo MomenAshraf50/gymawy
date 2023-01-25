@@ -45,7 +45,8 @@ void main() async
    bool isRtl = false;
   token = await sl<CacheHelper>().get('token');
   userId = await sl<CacheHelper>().get('userId');
-  isCoachLogin = await sl<CacheHelper>().get('isCoach');
+  isCoachLogin = await sl<CacheHelper>().get('email');
+  email = await sl<CacheHelper>().get('isCoach');
   debugPrintFullText('My Current Token => $token');
   debugPrintFullText('My Current ID => $userId');
   debugPrintFullText('My Current type => $isCoachLogin');
@@ -62,6 +63,7 @@ void main() async
     token: token,
     id: userId,
     isCoach: isCoachLogin,
+    email:email,
   ));
 
 }
@@ -73,6 +75,7 @@ class MyApp extends StatelessWidget {
   String? token;
   bool? isCoach;
   int? id;
+  String? email;
 
    MyApp({
     Key? key,
@@ -80,6 +83,7 @@ class MyApp extends StatelessWidget {
     required this.translation,
     required this.widget,
     required this.token,
+    required this.email,
     required this.isCoach,
     required this.id,
 

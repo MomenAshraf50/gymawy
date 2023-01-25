@@ -97,6 +97,7 @@ dependencies:
   file_previewer: ^0.0.5
   file_picker: ^4.6.0
   flutter_cached_pdfview: ^0.4.1
+  mailer: ^5.1.1
 
 dev_dependencies:
   flutter_test:

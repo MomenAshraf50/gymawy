@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
@@ -21,15 +23,47 @@ class SetYourLocation extends StatelessWidget {
     RegisterCubit registerCubit = RegisterCubit.get(context);
     debugPrintFullText('ssssssssssssssssssssssssss = $currentLat');
     debugPrintFullText('ssssssssssssssssssssssssss = $currentLng');
-
-    return BlocBuilder<RegisterCubit,RegisterStates>(
+    return BlocConsumer<RegisterCubit,RegisterStates>(
+      listener: (context, state) {
+      },
       builder: (context, state) {
         return Scaffold(
           body: Column(
             children: [
               defaultAppBar(
                   title: 'Pick your location',
-                  context: context
+                  context: context,
+                  actions: [
+                    defaultActionButton(
+                        onPressed: ()
+                        {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return DefaultDialog(
+                                message:
+                                '$currentCountry- $currentGovernment  - $currentCity ',
+                                pushButtonText: 'Okay',
+                                height: 22.h,
+                                pushButtonVoidCallback: (){
+                                  countryRegister = currentCountry;
+                                  governmentRegister = currentGovernment;
+                                  cityRegister = currentCity;
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  countryRegister != null && governmentRegister != null && cityRegister != null?
+                                  registerCubit.nextPage(true, context) : null;
+                                },
+                              );
+                            },
+                          );
+                        },
+                        icon: Icons.my_location,
+                        backgroundColor: ColorsManager.white,
+                        iconColor: ColorsManager.black
+                    ),
+                  ]
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -49,48 +83,15 @@ class SetYourLocation extends StatelessWidget {
                     icon: const Icon(Icons.search),
                     onPressed: ()
                   async  {
-                      var directions = await LocationService().getDirections(
-                        registerCubit.searchLocation.text,
+                    var directions = await LocationService().getDirections(registerCubit.searchLocation.text);
+                    registerCubit.goToLocation(
+                        directions['start_location']['lat'],
+                        directions['start_location']['lng'],
+                        directions['bounds_ne'],
+                        directions['bounds_sw'],
+                        context,
                       );
-                      // registerCubit.goToLocation(
-                      //   directions['start_location']['lat'],
-                      //   directions['start_location']['lng'],
-                      //   directions['bounds_ne'],
-                      //   directions['bounds_sw'],
-                      //   context,
-                      // );
-                       // resultLat =  directions['start_location']['lat'];
-                       // resultLng =  directions['start_location']['lat'];
-                    debugPrintFullText('ssssssssssssssssssssssssss = $currentLat');
-                    debugPrintFullText('ssssssssssssssssssssssssss = $currentLng');
-
-                     registerCubit.getPlace(
-                         directions['start_location']['lat'],
-                         directions['start_location']['lng'],
-                     );
-
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return DefaultDialog(
-                            message:
-                            '$currentCountry- $currentGovernment  - $currentCity ',
-                            pushButtonText: 'Okay',
-                            height: 22.h,
-                            pushButtonVoidCallback: (){
-                              countryRegister = currentCountry;
-                              governmentRegister = currentGovernment;
-                              cityRegister = currentCity;
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              countryRegister != null && governmentRegister != null && cityRegister != null?
-                              registerCubit.nextPage(true, context) : null;
-                            },
-                          );
-                        },
-                      );
-
+                    registerCubit.getPlace(directions['start_location']['lat'],directions['start_location']['lng']);
                     },
                   ),
                 ),
@@ -99,13 +100,13 @@ class SetYourLocation extends StatelessWidget {
                 child: BlocBuilder<HomeCubit,HomeStates>(
                   builder: (context, state) {
                     return GoogleMap(
-                      onMapCreated: registerCubit.onMapCreated,
-                      initialCameraPosition: CameraPosition(
-                        target: LatLng(currentLat!, currentLng!),
-                       // registerCubit.center,
-                        zoom: 12.0,
-                      ),
+                      initialCameraPosition: registerCubit.homePosition,
                       mapType: MapType.terrain,
+                      onMapCreated: (GoogleMapController controller)
+                      {
+                        registerCubit.mapController.complete(controller);
+                      },
+                      //registerCubit.onMapCreated,
                     );
                   },
                 ),

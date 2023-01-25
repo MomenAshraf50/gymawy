@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Timer(const Duration(seconds: 2),() {
-        navigateAndFinish(context, token != null ? MainScreen() : LoginScreen());
+        navigateAndFinish(context, token != null ? const MainScreen() : LoginScreen());
       });
     });
 

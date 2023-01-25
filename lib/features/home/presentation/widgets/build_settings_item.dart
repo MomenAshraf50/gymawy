@@ -6,6 +6,7 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/screens/settings/notifications_screen.dart';
+import 'package:gymawy/features/home/presentation/screens/settings/support_screen.dart';
 
 import '../../../../core/util/resources/colors_manager.dart';
 import '../controller/home_cubit.dart';
@@ -16,8 +17,8 @@ Widget buildSettingsItem({required String text,required String iconPath,required
     onTap: () {
       if (text == 'Notifications') {
         navigateTo(context, const NotificationsScreen());
-      } else if (text == 'Location') {
       } else if (text == 'Support') {
+        navigateTo(context, const SupportScreen());
       } else if (text == 'Share') {
       } else {
         homeCubit.signOut(context);

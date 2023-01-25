@@ -43,6 +43,7 @@ class LoginScreen extends StatelessWidget {
           sl<CacheHelper>().put('token', state.token);
           sl<CacheHelper>().put('userId', state.id);
           sl<CacheHelper>().put('isCoach', state.isCoach);
+          sl<CacheHelper>().put('email', state.email);
 
           userId = state.id;
           token = state.token;

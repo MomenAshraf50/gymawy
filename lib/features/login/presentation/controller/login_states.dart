@@ -9,8 +9,9 @@ class LoginSuccessState extends LoginStates {
   final String token;
   final int id;
   final bool isCoach;
+  final String email;
 
-  LoginSuccessState({required this.token,required this.id, required this.isCoach});
+  LoginSuccessState({required this.token,required this.id, required this.isCoach, required this.email});
 }
 
 class LoginErrorState extends LoginStates {

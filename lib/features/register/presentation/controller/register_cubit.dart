@@ -17,7 +17,6 @@ import 'package:gymawy/features/register/presentation/screens/register_screens/s
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/error/failures.dart';
-import '../../../../core/network/remote/location_service.dart';
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../../core/util/resources/goal_data_static.dart';
@@ -191,22 +190,17 @@ class RegisterCubit extends Cubit<RegisterStates>{
     imageFile = await pickImageFromGallery(context);
     emit(RegisterImageSelectedState());
   }
-
   bool isAccept = false;
-
   void changeRadioButton(){
     isAccept = !isAccept;
     emit(RegisterChangeRadioButtonState());
 }
-
   TextEditingController countryController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   List<String> listCountry = [];
   List<String> listCity = [];
   dynamic myData;
   bool changeCity = false;
-
-
   Future<void> readJson(context) async {
     var snapshot = await DefaultAssetBundle.of(context)
         .loadString('assets/json/new_json.json');
@@ -216,7 +210,6 @@ class RegisterCubit extends Cubit<RegisterStates>{
     });
     emit(RegisterGetCountryState());
   }
-
   Future<void> getCities(String txt) async {
     listCity.clear();
     await myData[txt].forEach((element) {
@@ -225,9 +218,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
     cityController.text = '';
     emit(RegisterGetCitiesState());
   }
-
   double fatValue = 0;
-
   List<String> listFat = [
     Assets.images.fat.fat1,
     Assets.images.fat.fat2,
@@ -235,12 +226,10 @@ class RegisterCubit extends Cubit<RegisterStates>{
     Assets.images.fat.fat4,
     Assets.images.fat.fat5,
   ];
-
   void changeFatValue(double fat){
     fatValue = fat;
     emit(RegisterGetFatTextState());
   }
-
   PageController pageFatController = PageController(viewportFraction: 1/2,);
   Future<void> changeFatPage(index) async {
     await pageFatController.animateToPage(
@@ -249,7 +238,6 @@ class RegisterCubit extends Cubit<RegisterStates>{
         curve: Curves.ease);
     emit(RegisterPageFatControllerState());
   }
-
   myText getText(int val) {
     switch (val) {
       case 0:
@@ -270,11 +258,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
       default:
         return const myText(title:'', style: Style.medium);
     }
-
   }
-
   int selected = 0;
-
   List<GoalDataStatic> listGoal = [
     GoalDataStatic(
       body: AppString.lean_tone_title,
@@ -292,16 +277,10 @@ class RegisterCubit extends Cubit<RegisterStates>{
       img: Assets.images.lotti.jumpRope,
     ),
   ];
-
-
-
   TextEditingController facebookController = TextEditingController();
   TextEditingController instagramController  = TextEditingController();
   TextEditingController youtubeController  = TextEditingController();
   TextEditingController tiktokController  = TextEditingController();
-
-
-  //RegisterModel? registerModel;
   void registerClient({
     required String email,
     required String password,
@@ -417,86 +396,48 @@ class RegisterCubit extends Cubit<RegisterStates>{
       countryController.text = '';
     });
   }
-
-
   late GoogleMapController googleMapController;
-  //final LatLng center = LatLng(currentLat!, currentLng!);
   Completer<GoogleMapController> mapController = Completer();
   final searchLocation = TextEditingController();
-
   void onMapCreated(GoogleMapController controller) {
     googleMapController = controller;
   }
-
-  // void getPlaceId(
-  // {
-  //   String? input
-  // })
-  // {
-  //   LocationService().getPlaceId(
-  //       input!
-  //   );
-  //   emit(GetLocationIdState());
-  // }
+  CameraPosition homePosition =  CameraPosition(
+    target: LatLng(currentLat!, currentLng!),
+    zoom: 10,
+  );
 
   void goToLocation(
       double lat,
       double lng,
       Map<String,dynamic> boundsNe,
       Map<String,dynamic> boundsSw,
+      //String? search,
       BuildContext context,
-      )async{
+      )async {
     currentLat = lat;
     currentLng = lng;
-
-    debugPrintFullText('laaaaaaaaaaaaaaaaat is $currentLat');
-    debugPrintFullText('lnnnnnnnnnnnnnnnnng is $currentLng');
-
-
     final GoogleMapController locationMapController = await mapController.future;
     locationMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
-          target: LatLng(currentLat!, currentLng!),
-          zoom: 15,
+          target: LatLng(lat, lng),
+          zoom: 10,
         ),
       ),
     );
-
     locationMapController.animateCamera(
         CameraUpdate.newLatLngBounds(
             LatLngBounds(
-              southwest: LatLng(boundsSw['lat'],boundsSw['lng'],),
-              northeast: LatLng(boundsNe['lat'],boundsNe['lng'],),
+              southwest: LatLng(lat,lng,),
+              northeast: LatLng(lat,lng,),
             ),
             10.rSp
         )
     );
-
-    setMarker(LatLng(currentLat!, currentLng!));
-
     emit(GoToLocationState());
   }
-
-  Set<Marker> markers = <Marker>{};
-  void setMarker (LatLng point)
-  {
-    markers.add(
-      Marker(
-        markerId: const MarkerId('marker'),
-        position: point,
-        icon: BitmapDescriptor.defaultMarker,
-        //LatLng(latLocationSearch!,lngLocationSearch!),
-      ),
-    );
-    emit(SetMarkerState());
-  }
-
-
-  getPlace(
-      double? lat ,
-      double? lng ,
-      )
+  void getPlace(double? lat , double? lng)
   async {
     List<Placemark> placeMarks = await placemarkFromCoordinates(
       lat!,
@@ -507,77 +448,6 @@ class RegisterCubit extends Cubit<RegisterStates>{
     currentCountry = '${placeMark.country}';
     currentCity = '${placeMark.subAdministrativeArea}';
     currentGovernment = '${placeMark.administrativeArea}';
+    emit(GetPlaceState());
   }
-
-
-  // void goToLocation(
-  //     double lat,
-  //     double lng,
-  //     Map<String,dynamic> boundsNe,
-  //     Map<String,dynamic> boundsSw,
-  //     BuildContext context,
-  //     )async{
-  //   // double lat = location['geometry']['location']['lat'];
-  //   // double lng = location['geometry']['location']['lng'];
-  //   currentLat = lat;
-  //   currentLng = lng;
-  //
-  //   debugPrintFullText('laaaaaaaaaaaaaaaaat is $currentLat');
-  //   debugPrintFullText('lnnnnnnnnnnnnnnnnng is $currentLng');
-  //
-  //
-  //   final GoogleMapController locationMapController = await mapController.future;
-  //   locationMapController.animateCamera(
-  //     CameraUpdate.newCameraPosition(
-  //       CameraPosition(
-  //         target: LatLng(lat, lng),
-  //         zoom: 15,
-  //       ),
-  //     ),
-  //   );
-  //
-  //   locationMapController.animateCamera(
-  //       CameraUpdate.newLatLngBounds(
-  //           LatLngBounds(
-  //             southwest: LatLng(boundsSw['lat'],boundsSw['lng'],),
-  //             northeast: LatLng(boundsNe['lat'],boundsNe['lng'],),
-  //           ),
-  //         10.rSp
-  //       )
-  //   );
-  //
-  //
-  //   setMarker(LatLng(currentLat!, currentLng!));
-  //
-  //   emit(GoToLocationState());
-  // }
-  //
-  // Set<Marker> markers = <Marker>{};
-  // void setMarker (LatLng point)
-  // {
-  //   markers.add(
-  //     Marker(
-  //       markerId: const MarkerId('marker'),
-  //       position: point,
-  //       icon: BitmapDescriptor.defaultMarker,
-  //     ),
-  //   );
-  //   emit(SetMarkerState());
-  // }
-
-
-
-
-
-// String? city;
-    // String? country;
-    // String? government;
-    // void getAddressFromLatLng()
-    // async {
-    //
-    //   country = '${placeMark.country}';
-    //   city = '${placeMark.administrativeArea}';
-    //   city = '${placeMark.name}';
-    // }
-
 }
