@@ -37,6 +37,7 @@ class LoginCubit extends Cubit<LoginStates> {
         id: data.userId,
         token: data.token,
         isCoach: data.isTrainer,
+        email: data.email,
       ));
     });
   }

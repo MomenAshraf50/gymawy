@@ -35,6 +35,7 @@ class RegisterErrorState extends RegisterStates {
 class SetMarkerState extends RegisterStates{}
 class GoToLocationState extends RegisterStates{}
 class GetLocationIdState extends RegisterStates{}
+class GetPlaceState extends RegisterStates{}
 
 // class RegisterCoachLoadingState extends RegisterStates {}
 //

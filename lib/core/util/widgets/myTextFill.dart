@@ -25,6 +25,7 @@ class myTextFill extends StatelessWidget {
   final ValueChanged<String>? onSubmit;
   final TextStyle? hintStyle;
   final Color? textFormFillColor;
+  final int? maxLines;
 
   const myTextFill({
     required this.controller,
@@ -44,7 +45,8 @@ class myTextFill extends StatelessWidget {
     this.textInputAction = TextInputAction.next,
     this.hintStyle,
     this.textFormFillColor = Colors.black12,
-    this.showSuffix = false
+    this.showSuffix = false,
+    this.maxLines = 1,
   });
 
   @override
@@ -61,7 +63,6 @@ class myTextFill extends StatelessWidget {
               decoration: BoxDecoration(
                 color: textFormFillColor,
                 borderRadius: BorderRadius.circular(10),
-                // border: Border.all(width: 1, color: ColorManager().darkColor),
               ),
               child: TextFormField(
                 keyboardType: type,
@@ -72,7 +73,7 @@ class myTextFill extends StatelessWidget {
                   fontFamily: 'english',
                   fontSize: 14.rSp
                 ),
-                maxLines: 1,
+                maxLines: maxLines,
                 onChanged: onChanged,
                 validator: validate,
                 controller: controller,
@@ -96,14 +97,6 @@ class myTextFill extends StatelessWidget {
                   hintText: hint,
                   hintStyle: hintStyle,
                 ),
-
-                // label: Text(
-                //   widget.label,
-                //   style: TextStyle(
-                //     color: ColorManager().darkColor,
-                //     fontSize: 14,
-                //   ),
-                // ),
               ),
             ));
       },

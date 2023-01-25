@@ -214,6 +214,11 @@ class HomeCubit extends Cubit<HomeStates> {
   TextEditingController nameOfPlanController = TextEditingController();
 
   TextEditingController certificateNameController = TextEditingController();
+
+
+  TextEditingController supportTextController = TextEditingController();
+
+
   String? year;
   String? month;
   String? day;

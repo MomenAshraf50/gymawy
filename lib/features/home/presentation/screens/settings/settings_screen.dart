@@ -14,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
 
   List<SettingsItem> settingsItems = [
     SettingsItem(AppString.notifications, Assets.images.svg.notifications_icon),
-    SettingsItem(AppString.settingsLocation, Assets.images.svg.location_icon),
+    // SettingsItem(AppString.settingsLocation, Assets.images.svg.location_icon),
     SettingsItem(AppString.support, Assets.images.svg.support_icon),
     SettingsItem(AppString.share, Assets.images.svg.share_icon),
     SettingsItem(AppString.logOut, Assets.images.svg.logout_icon),

@@ -37,6 +37,7 @@ Widget svgImage({required String path,Color? color}){
 }
 
 String? token = '';
+String? email = '';
 int? userId = 0;
 bool? isCoachLogin = false;
 double? currentLat = 0;
