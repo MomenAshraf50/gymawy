@@ -45,8 +45,8 @@ void main() async
    bool isRtl = false;
   token = await sl<CacheHelper>().get('token');
   userId = await sl<CacheHelper>().get('userId');
-  isCoachLogin = await sl<CacheHelper>().get('email');
-  email = await sl<CacheHelper>().get('isCoach');
+  isCoachLogin = await sl<CacheHelper>().get('isCoach');
+  email = await sl<CacheHelper>().get('email');
   debugPrintFullText('My Current Token => $token');
   debugPrintFullText('My Current ID => $userId');
   debugPrintFullText('My Current type => $isCoachLogin');
