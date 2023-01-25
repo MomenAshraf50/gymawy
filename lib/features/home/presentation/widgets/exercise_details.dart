@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
-import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
@@ -11,6 +9,10 @@ Widget exerciseDetails({
   required String exerciseImage,
   required String exerciseName,
   required String exerciseCategory,
+  int? sets,
+  int? rest,
+  int? reps,
+  bool? isExercisePlanDetails,
 }){
   return Row(
     children: [
@@ -48,56 +50,56 @@ Widget exerciseDetails({
               maxLines: 1,
               letterSpacing: 0.1,
             ),
-            verticalSpace(1.h),
+            verticalSpace(0.5.h),
                 myText(
                   title: exerciseCategory,
                   letterSpacing: 0.1,
                   style: Style.extraSmall,
                 ),
-            verticalSpace(1.h),
-
-            // Row(
-            //   children: [
-            //     Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: const [
-            //         myText(
-            //           letterSpacing: 0.1,
-            //           title: AppString.sets,
-            //           style: Style.extraSmall,
-            //         ),
-            //         myText(
-            //           letterSpacing: 0.1,
-            //           title: AppString.reps,
-            //           style: Style.extraSmall,
-            //         ),
-            //         myText(
-            //           letterSpacing: 0.1,
-            //           title: AppString.rest,
-            //           style: Style.extraSmall,
-            //         ),
-            //       ],
-            //     ),
-            //     horizontalSpace(2.w),
-            //     Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: const [
-            //         myText(
-            //           title: '3',
-            //           style: Style.extraSmall,
-            //         ),
-            //         myText(
-            //           title: '12-10-8',
-            //           style: Style.extraSmall,
-            //         ),
-            //         myText(
-            //           title: '30 sec',
-            //           style: Style.extraSmall,
-            //         ),
-            //       ],
-            //     ),
-            //   ],
-            // ),
+            verticalSpace(0.5.h),
+            if(isExercisePlanDetails == true)
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    myText(
+                      letterSpacing: 0.1,
+                      title: AppString.sets,
+                      style: Style.extraSmall,
+                    ),
+                    myText(
+                      letterSpacing: 0.1,
+                      title: AppString.reps,
+                      style: Style.extraSmall,
+                    ),
+                    myText(
+                      letterSpacing: 0.1,
+                      title: AppString.rest,
+                      style: Style.extraSmall,
+                    ),
+                  ],
+                ),
+                horizontalSpace(2.w),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children:  [
+                    myText(
+                      title: '$sets',
+                      style: Style.extraSmall,
+                    ),
+                    myText(
+                      title: '$reps',
+                      style: Style.extraSmall,
+                    ),
+                    myText(
+                      title: '$rest Sec',
+                      style: Style.extraSmall,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),
