@@ -363,7 +363,7 @@ class HomeClientScreen extends StatelessWidget {
                                   if (index == 0) {
                                     navigateTo(context, const PlansScreen());
                                   } else if (index == 1) {
-                                    navigateTo(context, const ExercisesScreen());
+                                    navigateTo(context, ExercisesScreen(isAddExercise: false,));
                                   } else if (index == 2) {
                                     navigateTo(context, ClientsScreen(
                                       clientVariable: 'test',

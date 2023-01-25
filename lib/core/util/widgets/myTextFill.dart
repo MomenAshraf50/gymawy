@@ -51,55 +51,50 @@ class myTextFill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppBloc, AppState>(
-      builder: (context, state) {
-        AppBloc appBloc = AppBloc.get(context);
-        return Material(
-            color: Colors.white,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.only(left: 14, right: 14, top: 4),
-              margin: margin,
-              decoration: BoxDecoration(
-                color: textFormFillColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextFormField(
-                keyboardType: type,
-                textInputAction: textInputAction,
-                readOnly: disabled,
-                obscureText:isPassword,
-                style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                  fontFamily: 'english',
-                  fontSize: 14.rSp
+    return Material(
+        color: Colors.white,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          padding: const EdgeInsets.only(left: 14, right: 14, top: 4),
+          margin: margin,
+          decoration: BoxDecoration(
+            color: textFormFillColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: TextFormField(
+            keyboardType: type,
+            textInputAction: textInputAction,
+            readOnly: disabled,
+            obscureText:isPassword,
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                fontFamily: 'english',
+                fontSize: 14.rSp
+            ),
+            maxLines: maxLines,
+            onChanged: onChanged,
+            validator: validate,
+            controller: controller,
+            autocorrect: true,
+            cursorColor: ColorsManager.mainColor,
+            decoration: InputDecoration(
+              suffixIcon: suffixIcon,
+              prefixIcon: svgImg != null
+                  ? Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: SvgPicture.asset(
+                  svgImg!,
+                  height: 24,
+                  width: 24,
+                  // fit: BoxFit.scaleDown,
                 ),
-                maxLines: maxLines,
-                onChanged: onChanged,
-                validator: validate,
-                controller: controller,
-                autocorrect: true,
-                cursorColor: ColorsManager.mainColor,
-                decoration: InputDecoration(
-                  suffixIcon: suffixIcon,
-                  prefixIcon: svgImg != null
-                      ? Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: SvgPicture.asset(
-                      svgImg!,
-                      height: 24,
-                      width: 24,
-                      // fit: BoxFit.scaleDown,
-                    ),
-                  )
-                      : null,
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  border: InputBorder.none,
-                  hintText: hint,
-                  hintStyle: hintStyle,
-                ),
-              ),
-            ));
-      },
-    );
+              )
+                  : null,
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              border: InputBorder.none,
+              hintText: hint,
+              hintStyle: hintStyle,
+            ),
+          ),
+        ));
   }
 }

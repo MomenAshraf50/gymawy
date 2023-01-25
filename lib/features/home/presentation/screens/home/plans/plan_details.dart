@@ -7,6 +7,7 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
+import 'package:gymawy/features/home/presentation/screens/home/exercises/exercises_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_type.dart';
 import '../../../../../../core/util/widgets/default dialog.dart';
 import '../../../../domain/usecase/delete_exersice_plan_usecase.dart';
@@ -68,6 +69,16 @@ class PlanDetails extends StatelessWidget {
                           backgroundColor: ColorsManager.white,
                           iconColor: ColorsManager.black,
                       ),
+                      defaultActionButton(
+                        onPressed: ()
+                        {
+                          navigateTo(context, ExercisesScreen(isAddExercise: true,planId: exercisePlanId,));
+                        },
+                        icon: Icons.add,
+                        backgroundColor: Colors.green,
+                        iconColor: ColorsManager.white,
+                      ),
+
                     ],
                   ),
                   verticalSpace(2.h),

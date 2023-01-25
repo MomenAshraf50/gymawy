@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:gymawy/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:gymawy/features/home/data/repository/home_repository.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
+import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
@@ -66,6 +67,7 @@ Future<void> init() async {
         getExercisePlanUseCase: sl(),
         updateExercisePlanUseCase: sl(),
         deleteExercisePlanUseCase: sl(),
+    addExerciseDetailsUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -107,6 +109,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetExercisePlanUseCase(sl()));
   sl.registerLazySingleton(() => UpdateExercisePlanUseCase(sl()));
   sl.registerLazySingleton(() => DeleteExercisePlanUseCase(sl()));
+  sl.registerLazySingleton(() => AddExerciseDetailsUseCase(sl()));
 
 
   //Data sources

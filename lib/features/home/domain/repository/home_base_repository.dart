@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
@@ -81,6 +82,8 @@ abstract class HomeBaseRepository {
   Future<Either<Failure,AddExercisePlanEntity>> updateExercisePlan(AddExercisePlanParams params);
 
   Future<Either<Failure,void>> deleteExercisePlan(DeleteExercisePlanParams params);
+
+  Future<Either<Failure,ExerciseDetailsEntity>> addExerciseDetails(ExerciseDetailsParams params);
 
 
 }

@@ -7,7 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/error/failures.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
@@ -62,6 +64,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final GetExercisePlanUseCase _getExercisePlanUseCase;
   final UpdateExercisePlanUseCase _updateExercisePlanUseCase;
   final DeleteExercisePlanUseCase _deleteExercisePlanUseCase;
+  final AddExerciseDetailsUseCase _addExerciseDetailsUseCase;
 
 
   HomeCubit({
@@ -82,6 +85,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required GetExercisePlanUseCase getExercisePlanUseCase,
     required UpdateExercisePlanUseCase updateExercisePlanUseCase,
     required DeleteExercisePlanUseCase deleteExercisePlanUseCase,
+    required AddExerciseDetailsUseCase addExerciseDetailsUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -100,6 +104,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _getExercisePlanUseCase = getExercisePlanUseCase,
         _updateExercisePlanUseCase = updateExercisePlanUseCase,
         _deleteExercisePlanUseCase = deleteExercisePlanUseCase,
+        _addExerciseDetailsUseCase = addExerciseDetailsUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -550,8 +555,26 @@ class HomeCubit extends Cubit<HomeStates> {
   }
   String selectedValue = 'Abs';
 
+  String selectedDay = 'D1';
+
+  List<DropdownMenuItem<String>>? daysValue = const[
+    DropdownMenuItem(value: "D1", child: myText(title: "Day 1", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D2", child: myText(title: "Day 2", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D3", child: myText(title: "Day 3", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D4", child: myText(title: "Day 4", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D5", child: myText(title: "Day 5", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D6", child: myText(title: "Day 6", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D7", child: myText(title: "Day 7", style: Style.extraSmall)),
+  ];
+
+
   void changeDropDownSelectedValue(String value){
     selectedValue = value;
+    emit(ChangeDropDownSelectedValueState());
+  }
+
+  void changeDropDownSelectedDay(String value){
+    selectedDay = value;
     emit(ChangeDropDownSelectedValueState());
   }
 
@@ -771,6 +794,21 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(DeleteExercisePlanSuccessState());
     });
 
+  }
+
+  ExerciseDetailsEntity? exerciseDetailsEntity;
+
+  void addExerciseDetails(ExerciseDetailsParams params)async{
+    emit(AddExerciseDetailsLoadingState());
+
+    final result = await _addExerciseDetailsUseCase(params);
+
+    result.fold((failure){
+      emit(AddExerciseDetailsErrorState(mapFailureToMessage(failure)));
+    }, (data){
+      exerciseDetailsEntity = data;
+      emit(AddExerciseDetailsSuccessState());
+    });
   }
 
 

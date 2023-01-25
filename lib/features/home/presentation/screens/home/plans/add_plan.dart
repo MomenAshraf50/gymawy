@@ -28,11 +28,11 @@ class AddPlan extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
     // debugPrintFullText(exercisePlanName!);
-     debugPrintFullText('ssssssssssss${homeCubit.visibilityExerciseValue!}');
-     debugPrintFullText('ssssssssssss$exercisePlanVisibility');
+    //  debugPrintFullText('ssssssssssss${homeCubit.visibilityExerciseValue!}');
+    //  debugPrintFullText('ssssssssssss$exercisePlanVisibility');
     // debugPrintFullText('$exercisePlanId');
     homeCubit.visibilityExerciseValue = exercisePlanVisibility;
-    debugPrintFullText('ssssssssssss${homeCubit.visibilityExerciseValue!}');
+    // debugPrintFullText('ssssssssssss${homeCubit.visibilityExerciseValue!}');
 
     return SafeArea(
       child: Scaffold(
