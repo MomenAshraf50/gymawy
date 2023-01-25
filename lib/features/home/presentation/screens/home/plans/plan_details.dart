@@ -89,21 +89,24 @@ class PlanDetails extends StatelessWidget {
                   verticalSpace(2.h),
                   Expanded(
                     child: ListView.builder(
-                      itemBuilder: (context, index) => InkWell(
-                        onTap: ()
-                        {
-                          navigateTo(context, ExerciseType(
-                            video: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseVid,
-                            pic: homeCubit.exerciseDetailsResult![index].exerciseModel.exercisePic,
-                            cat: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseCategory,
-                            userName: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseMaker,
-                            sets: homeCubit.exerciseDetailsResult![index].sets,
-                            rest: homeCubit.exerciseDetailsResult![index].rest.toInt(),
-                            reps: homeCubit.exerciseDetailsResult![index].reps,
-                          ));
-                          debugPrintFullText('$index');
-                        },
-                        child: exerciseDetails(
+                      itemBuilder: (context, index)
+                      {
+                        return homeCubit.exerciseDetailsResult![index].planId == exercisePlanId?
+                          InkWell(
+                          onTap: ()
+                          {
+                            navigateTo(context, ExerciseType(
+                              video: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseVid,
+                              pic: homeCubit.exerciseDetailsResult![index].exerciseModel.exercisePic,
+                              cat: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseCategory,
+                              userName: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseMaker,
+                              sets: homeCubit.exerciseDetailsResult![index].sets,
+                              rest: homeCubit.exerciseDetailsResult![index].rest.toInt(),
+                              reps: homeCubit.exerciseDetailsResult![index].reps,
+                            ));
+                            debugPrintFullText('$index');
+                          },
+                          child: exerciseDetails(
                             onPressed: () {
 
                             },
@@ -114,8 +117,9 @@ class PlanDetails extends StatelessWidget {
                             rest: homeCubit.exerciseDetailsResult![index].rest.toInt(),
                             sets: homeCubit.exerciseDetailsResult![index].sets,
                             isExercisePlanDetails: true,
-                        ),
-                      ),
+                          ),
+                        ) :Container();
+                      },
                       itemCount: homeCubit.exerciseDetailsResult!.length,
                       physics: const BouncingScrollPhysics(),
                     ),
