@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gymawy/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
+import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
@@ -38,6 +39,7 @@ typedef CallDeleteExercise = Future<void> Function();
 typedef CallAddExercisePlan = Future<AddExercisePlanEntity> Function();
 typedef CallGetExercisePlan = Future<List<AddExercisePlanEntity>> Function();
 typedef CallDeleteExercisePlan = Future<void> Function();
+typedef CallAddExerciseDetails = Future<ExerciseDetailsEntity> Function();
 
 
 
@@ -379,6 +381,26 @@ class HomeRepository extends HomeBaseRepository {
   Future<Either<Failure, void>> deleteExercisePlan(DeleteExercisePlanParams params) async{
     return await fetchDeleteExercisePlan((){
       return remoteDataSource.deleteExercisePlan(params);
+    });
+  }
+
+  Future<Either<Failure,ExerciseDetailsEntity>> fetchAddExerciseDetails(
+      CallAddExerciseDetails mainMethod,
+      ) async {
+    try {
+      final exerciseDetails = await mainMethod();
+      return Right(exerciseDetails);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ExerciseDetailsEntity>> addExerciseDetails(ExerciseDetailsParams params) async{
+    return await fetchAddExerciseDetails((){
+      return remoteDataSource.addExerciseDetails(params);
     });
   }
 
