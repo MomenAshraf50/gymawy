@@ -25,6 +25,7 @@ import '../../features/home/domain/usecase/add_exercise_plan_usecase.dart';
 import '../../features/home/domain/usecase/certification_usecase.dart';
 import '../../features/home/domain/usecase/delete_certification_usecase.dart';
 import '../../features/home/domain/usecase/delete_exersice_plan_usecase.dart';
+import '../../features/home/domain/usecase/get_exercise_plan_details.dart';
 import '../../features/home/domain/usecase/get_exercise_plan_usecase.dart';
 import '../../features/home/domain/usecase/get_exercise_usecase.dart';
 import '../../features/home/domain/usecase/update_exercise_plan_usecase.dart';
@@ -67,7 +68,8 @@ Future<void> init() async {
         getExercisePlanUseCase: sl(),
         updateExercisePlanUseCase: sl(),
         deleteExercisePlanUseCase: sl(),
-    addExerciseDetailsUseCase: sl(),
+        addExerciseDetailsUseCase: sl(),
+        getExercisePlanDetailsUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -110,6 +112,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UpdateExercisePlanUseCase(sl()));
   sl.registerLazySingleton(() => DeleteExercisePlanUseCase(sl()));
   sl.registerLazySingleton(() => AddExerciseDetailsUseCase(sl()));
+  sl.registerLazySingleton(() => GetExercisePlanDetailsUseCase(sl()));
 
 
   //Data sources

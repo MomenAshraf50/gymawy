@@ -33,6 +33,7 @@ import '../../domain/usecase/add_exercise_plan_usecase.dart';
 import '../../domain/usecase/certification_usecase.dart';
 import '../../domain/usecase/delete_certification_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
+import '../../domain/usecase/get_exercise_plan_details.dart';
 import '../../domain/usecase/get_exercise_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_usecase.dart';
 import '../../domain/usecase/profile_usecase.dart';
@@ -65,6 +66,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final UpdateExercisePlanUseCase _updateExercisePlanUseCase;
   final DeleteExercisePlanUseCase _deleteExercisePlanUseCase;
   final AddExerciseDetailsUseCase _addExerciseDetailsUseCase;
+  final GetExercisePlanDetailsUseCase _getExercisePlanDetailsUseCase;
 
 
   HomeCubit({
@@ -86,6 +88,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required UpdateExercisePlanUseCase updateExercisePlanUseCase,
     required DeleteExercisePlanUseCase deleteExercisePlanUseCase,
     required AddExerciseDetailsUseCase addExerciseDetailsUseCase,
+    required GetExercisePlanDetailsUseCase getExercisePlanDetailsUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -105,6 +108,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _updateExercisePlanUseCase = updateExercisePlanUseCase,
         _deleteExercisePlanUseCase = deleteExercisePlanUseCase,
         _addExerciseDetailsUseCase = addExerciseDetailsUseCase,
+        _getExercisePlanDetailsUseCase = getExercisePlanDetailsUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -808,6 +812,22 @@ class HomeCubit extends Cubit<HomeStates> {
     }, (data){
       exerciseDetailsEntity = data;
       emit(AddExerciseDetailsSuccessState());
+    });
+  }
+
+
+  List<ExerciseDetailsEntity>? exerciseDetailsResult;
+  void getExercisePlanDetails() async {
+    emit(GetExerciseDetailsLoadingState());
+
+    final result = await _getExercisePlanDetailsUseCase(const GetExercisePlanDetailsParams());
+
+    result.fold((failure) {
+      emit(GetExerciseDetailsErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(GetExerciseDetailsSuccessState(data));
+      exerciseDetailsResult = data;
+
     });
   }
 

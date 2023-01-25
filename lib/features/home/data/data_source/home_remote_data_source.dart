@@ -23,9 +23,9 @@ import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import '../../domain/usecase/add_exercise_plan_usecase.dart';
 import '../../domain/usecase/add_exercise_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
+import '../../domain/usecase/get_exercise_plan_details.dart';
 import '../../domain/usecase/get_exercise_plan_usecase.dart';
 import '../models/add_exercise_plan_model.dart';
-import '../models/get_exercise_plan_model.dart';
 
 abstract class HomeBaseDataSource {
   Future<UpdateModel> updateProfile({required UpdateProfileParams params});
@@ -88,6 +88,7 @@ abstract class HomeBaseDataSource {
 
   Future<ExerciseDetailsModel> addExerciseDetails(ExerciseDetailsParams params);
 
+  Future<List<ExerciseDetailsModel>> getExerciseDetails(GetExercisePlanDetailsParams params);
 
 }
 
@@ -541,5 +542,18 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     return ExerciseDetailsModel.fromJson(f.data);
   }
 
+
+  @override
+  Future<List<ExerciseDetailsModel>> getExerciseDetails(GetExercisePlanDetailsParams params) async {
+    final Response f = await dioHelper.get(
+      url: addExerciseDetailsEndPoint,
+      token: token,
+    );
+    return List<ExerciseDetailsModel>.from(
+        (f.data['results'] as List).map((e) =>
+            ExerciseDetailsModel.fromJson(e)));
+    // return List<AddExerciseModel>.from(
+    //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
+  }
 
 }

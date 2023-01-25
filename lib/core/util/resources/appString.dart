@@ -85,6 +85,7 @@ class AppString {
   static const sets = 'Sets';
   static const reps = 'Reps';
   static const rest = 'Rest';
+  static const restInSeconds = 'Rest in seconds';
   static const benchPress = 'Bench Press';
   static const equipment = 'Equipment Required';
   static const barbell = 'Barbell, Bench, Plate, Lock';

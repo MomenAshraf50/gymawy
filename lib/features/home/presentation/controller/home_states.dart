@@ -4,6 +4,7 @@ import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import '../../domain/entities/add_exercise_entity.dart';
 import '../../domain/entities/add_exercise_plan_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
+import '../../domain/entities/exercise_details_entity.dart';
 import '../../domain/entities/search_entity.dart';
 
 abstract class HomeStates{}
@@ -209,3 +210,14 @@ class AddExerciseDetailsErrorState extends HomeStates{
   AddExerciseDetailsErrorState(this.failure);
 }
 
+class GetExerciseDetailsLoadingState extends HomeStates{}
+class GetExerciseDetailsSuccessState extends HomeStates{
+  final List<ExerciseDetailsEntity> exercisePlanDetailList;
+
+  GetExerciseDetailsSuccessState(this.exercisePlanDetailList);
+}
+class GetExerciseDetailsErrorState extends HomeStates{
+  final String failure;
+
+  GetExerciseDetailsErrorState(this.failure);
+}

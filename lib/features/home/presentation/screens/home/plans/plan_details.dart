@@ -9,6 +9,7 @@ import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/exercises/exercises_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_type.dart';
+import 'package:gymawy/features/home/presentation/widgets/exercise_details.dart';
 import '../../../../../../core/util/widgets/default dialog.dart';
 import '../../../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../../controller/home_cubit.dart';
@@ -31,6 +32,7 @@ class PlanDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
+    homeCubit.getExercisePlanDetails();
 
     return SafeArea(
       child: Scaffold(
@@ -50,12 +52,14 @@ class PlanDetails extends StatelessWidget {
           builder: (context, state) {
             return Padding(
               padding: designApp,
-              child: Column(
+              child: homeCubit.exerciseDetailsResult != null ?
+              Column(
                 children: [
                   defaultAppBar(
                     title: AppString.planType,
                     context: context,
                     actions: [
+                      if(userId == ownerUserId)
                       defaultActionButton(
                           onPressed: ()
                           {
@@ -69,7 +73,8 @@ class PlanDetails extends StatelessWidget {
                           backgroundColor: ColorsManager.white,
                           iconColor: ColorsManager.black,
                       ),
-                      defaultActionButton(
+                      if(userId == ownerUserId)
+                        defaultActionButton(
                         onPressed: ()
                         {
                           navigateTo(context, ExercisesScreen(isAddExercise: true,planId: exercisePlanId,));
@@ -85,13 +90,33 @@ class PlanDetails extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) => InkWell(
-                        child: buildPlansTypeItems(),
-                        onTap: () {
-                          navigateTo(context, const ExerciseType());
+                        onTap: ()
+                        {
+                          navigateTo(context, ExerciseType(
+                            video: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseVid,
+                            pic: homeCubit.exerciseDetailsResult![index].exerciseModel.exercisePic,
+                            cat: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseCategory,
+                            userName: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseMaker,
+                            sets: homeCubit.exerciseDetailsResult![index].sets,
+                            rest: homeCubit.exerciseDetailsResult![index].rest.toInt(),
+                            reps: homeCubit.exerciseDetailsResult![index].reps,
+                          ));
                           debugPrintFullText('$index');
                         },
+                        child: exerciseDetails(
+                            onPressed: () {
+
+                            },
+                            exerciseImage: homeCubit.exerciseDetailsResult![index].exerciseModel.exercisePic,
+                            exerciseName: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseName,
+                            exerciseCategory: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseCategory,
+                            reps: homeCubit.exerciseDetailsResult![index].reps,
+                            rest: homeCubit.exerciseDetailsResult![index].rest.toInt(),
+                            sets: homeCubit.exerciseDetailsResult![index].sets,
+                            isExercisePlanDetails: true,
+                        ),
                       ),
-                      itemCount: 10,
+                      itemCount: homeCubit.exerciseDetailsResult!.length,
                       physics: const BouncingScrollPhysics(),
                     ),
                   ),
@@ -118,7 +143,8 @@ class PlanDetails extends StatelessWidget {
                     },
                   ),
                 ],
-              ),
+              ) :
+              Container(),
             );
           },
         ),

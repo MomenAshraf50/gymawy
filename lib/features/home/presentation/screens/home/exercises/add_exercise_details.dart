@@ -77,7 +77,7 @@ class AddExerciseDetails extends StatelessWidget {
                       ),
                       myTextFill(
                         controller: restController,
-                        hint: AppString.rest,
+                        hint: AppString.restInSeconds,
                         type: TextInputType.number,
                         validate: (value){
                           if(value!.isEmpty){

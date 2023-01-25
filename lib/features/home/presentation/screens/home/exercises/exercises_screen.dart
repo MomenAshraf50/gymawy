@@ -37,6 +37,7 @@ class ExercisesScreen extends StatelessWidget {
                     title: AppString.exercises,
                     context: context,
                     actions: [
+                      if(isAddExercise == false)
                       defaultActionButton(
                         onPressed: () {
                           navigateTo(
@@ -68,8 +69,7 @@ class ExercisesScreen extends StatelessWidget {
                                   navigateTo(
                                       context,
                                       AddExerciseDetails(
-                                        exerciseId: homeCubit
-                                            .exerciseResult![index].exerciseId,
+                                        exerciseId: homeCubit.exerciseResult![index].exerciseId,
                                         planId: planId!,
                                       ));
                                 }
