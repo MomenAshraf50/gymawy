@@ -20,6 +20,7 @@ Widget buildSettingsItem({required String text,required String iconPath,required
       } else if (text == 'Support') {
         navigateTo(context, const SupportScreen());
       } else if (text == 'Share') {
+        homeCubit.share();
       } else {
         homeCubit.signOut(context);
       }

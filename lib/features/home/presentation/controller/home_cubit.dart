@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:file_previewer/file_previewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:gymawy/core/error/failures.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
@@ -847,6 +848,15 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(DeleteExercisePlanDetailsSuccessState());
     });
 
+  }
+
+  Future<void> share() async {
+    await FlutterShare.share(
+        title: 'Share Gymmawy',
+        text: 'Share Gymmawy',
+        linkUrl: 'https://flutter.dev/',
+        chooserTitle: 'Share link via'
+    );
   }
 
 
