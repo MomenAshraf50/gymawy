@@ -6,6 +6,10 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:video_player/video_player.dart';
+import '../../../../../../core/util/resources/colors_manager.dart';
+import '../../../../../../core/util/widgets/default dialog.dart';
+import '../../../../../../core/util/widgets/default_action_button.dart';
+import '../../../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../../controller/home_cubit.dart';
 
 class ExerciseType extends StatelessWidget {
@@ -13,20 +17,24 @@ class ExerciseType extends StatelessWidget {
     Key? key ,
     required this.video,
     required this.pic,
-    required this.userName,
+    required this.makerName,
     required this.cat,
     required this.rest,
     required this.sets,
     required this.reps,
+    required this.name,
+    required this.id,
   }) : super(key: key);
 
   String video;
   String pic;
-  String userName;
+  String makerName;
+  String name;
   String cat;
   int rest;
   int sets;
   int reps;
+  int id;
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +42,46 @@ class ExerciseType extends StatelessWidget {
     homeCubit.initializeVideoPlayerController(video: video);
     return SafeArea(
       child: Scaffold(
-        body: BlocBuilder<HomeCubit,HomeStates>(
+        body: BlocConsumer<HomeCubit,HomeStates>(
+          listener:(context, state) {
+            if(state is DeleteExercisePlanDetailsSuccessState){
+              Navigator.pop(context);
+              Navigator.pop(context);
+              homeCubit.getExercisePlanDetails();
+            }
+          },
           builder: (context, state) {
             return Padding(
               padding: designApp,
               child: Column(
                 children: [
-                  defaultAppBar(title: AppString.exercise, context: context),
+                  defaultAppBar(
+                      title: name,
+                      context: context,
+                      // actions: [
+                      //   if(makerName != userName)
+                      //   defaultActionButton(
+                      //     onPressed: ()
+                      //     {
+                      //       showDialog(context: context, builder: (context){
+                      //         return DefaultDialog(
+                      //           message: 'Are you sure to delete this plan',
+                      //           pushButtonText: 'yes',
+                      //           buttonColor: ColorsManager.error,
+                      //           pushButtonVoidCallback: (){
+                      //             homeCubit.deleteExercisePlanDetails(DeleteExercisePlanDetailsParams(
+                      //                 id
+                      //             ));
+                      //           },
+                      //         );
+                      //       });
+                      //     },
+                      //     icon: Icons.delete,
+                      //     backgroundColor: ColorsManager.white,
+                      //     iconColor: ColorsManager.redPrimary,
+                      //   ),
+                      // ]
+                  ),
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
@@ -85,7 +126,7 @@ class ExerciseType extends StatelessWidget {
                           ),
                           verticalSpace(3.h),
                           myText(
-                            title: 'Exercise Added by coach: $userName',
+                            title: 'Exercise Added by coach: $makerName',
                             style: Style.medium,
                             fontSize: 16.rSp,
                           ),

@@ -221,3 +221,12 @@ class GetExerciseDetailsErrorState extends HomeStates{
 
   GetExerciseDetailsErrorState(this.failure);
 }
+
+
+class DeleteExercisePlanDetailsLoadingState extends HomeStates{}
+class DeleteExercisePlanDetailsSuccessState extends HomeStates{}
+class DeleteExercisePlanDetailsErrorState extends HomeStates{
+  final String failure;
+
+  DeleteExercisePlanDetailsErrorState(this.failure);
+}

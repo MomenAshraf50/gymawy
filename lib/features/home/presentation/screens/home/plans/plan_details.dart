@@ -95,10 +95,12 @@ class PlanDetails extends StatelessWidget {
                           onTap: ()
                           {
                             navigateTo(context, ExerciseType(
+                              id: homeCubit.exerciseDetailsResult![index].exerciseDetailId,
                               video: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseVid,
                               pic: homeCubit.exerciseDetailsResult![index].exerciseModel.exercisePic,
                               cat: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseCategory,
-                              userName: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseMaker,
+                              makerName: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseMaker,
+                              name: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseName,
                               sets: homeCubit.exerciseDetailsResult![index].sets,
                               rest: homeCubit.exerciseDetailsResult![index].rest.toInt(),
                               reps: homeCubit.exerciseDetailsResult![index].reps,
@@ -106,9 +108,6 @@ class PlanDetails extends StatelessWidget {
                             debugPrintFullText('$index');
                           },
                           child: exerciseDetails(
-                            onPressed: () {
-
-                            },
                             exerciseImage: homeCubit.exerciseDetailsResult![index].exerciseModel.exercisePic,
                             exerciseName: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseName,
                             exerciseCategory: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseCategory,

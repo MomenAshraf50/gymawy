@@ -22,6 +22,7 @@ import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart'
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import '../../domain/usecase/add_exercise_plan_usecase.dart';
 import '../../domain/usecase/add_exercise_usecase.dart';
+import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
 import '../../domain/usecase/get_exercise_plan_usecase.dart';
@@ -89,6 +90,9 @@ abstract class HomeBaseDataSource {
   Future<ExerciseDetailsModel> addExerciseDetails(ExerciseDetailsParams params);
 
   Future<List<ExerciseDetailsModel>> getExerciseDetails(GetExercisePlanDetailsParams params);
+
+  Future<void> deleteExercisePlanDetails(DeleteExercisePlanDetailsParams params);
+
 
 }
 
@@ -554,6 +558,15 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             ExerciseDetailsModel.fromJson(e)));
     // return List<AddExerciseModel>.from(
     //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
+  }
+
+
+  @override
+  Future<void> deleteExercisePlanDetails(params) async {
+    await dioHelper.delete(
+      url: '$addExerciseDetailsEndPoint${params.exercisePlanDetailsId}/',
+      token: token,
+    );
   }
 
 }
