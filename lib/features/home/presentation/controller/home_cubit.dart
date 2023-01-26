@@ -32,6 +32,7 @@ import '../../domain/entities/search_entity.dart';
 import '../../domain/usecase/add_exercise_plan_usecase.dart';
 import '../../domain/usecase/certification_usecase.dart';
 import '../../domain/usecase/delete_certification_usecase.dart';
+import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
 import '../../domain/usecase/get_exercise_plan_usecase.dart';
@@ -67,6 +68,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final DeleteExercisePlanUseCase _deleteExercisePlanUseCase;
   final AddExerciseDetailsUseCase _addExerciseDetailsUseCase;
   final GetExercisePlanDetailsUseCase _getExercisePlanDetailsUseCase;
+  final DeleteExercisePlanDetailsUseCase _deleteExercisePlanDetailsUseCase;
 
 
   HomeCubit({
@@ -89,6 +91,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required DeleteExercisePlanUseCase deleteExercisePlanUseCase,
     required AddExerciseDetailsUseCase addExerciseDetailsUseCase,
     required GetExercisePlanDetailsUseCase getExercisePlanDetailsUseCase,
+    required DeleteExercisePlanDetailsUseCase deleteExercisePlanDetailsUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -109,6 +112,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _deleteExercisePlanUseCase = deleteExercisePlanUseCase,
         _addExerciseDetailsUseCase = addExerciseDetailsUseCase,
         _getExercisePlanDetailsUseCase = getExercisePlanDetailsUseCase,
+        _deleteExercisePlanDetailsUseCase = deleteExercisePlanDetailsUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -829,6 +833,20 @@ class HomeCubit extends Cubit<HomeStates> {
       exerciseDetailsResult = data;
 
     });
+  }
+
+
+  void deleteExercisePlanDetails(DeleteExercisePlanDetailsParams params) async{
+    emit(DeleteExercisePlanDetailsLoadingState());
+
+    final result = await _deleteExercisePlanDetailsUseCase(params);
+
+    result.fold((failure){
+      emit(DeleteExercisePlanDetailsErrorState(mapFailureToMessage(failure)));
+    }, (r){
+      emit(DeleteExercisePlanDetailsSuccessState());
+    });
+
   }
 
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gymawy/core/di/injection.dart';
+import 'package:gymawy/core/network/local/cache_helper.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/features/home/presentation/screens/home/client_progress/client_progress_screen.dart';
@@ -30,7 +32,12 @@ class HomeClientScreen extends StatelessWidget {
     HomeCubit homeCubit = HomeCubit.get(context);
 
     return SafeArea(
-      child: BlocBuilder<HomeCubit,HomeStates>(
+      child: BlocConsumer<HomeCubit,HomeStates>(
+        listener: (context, state) {
+          if(homeCubit.profileResults != null){
+            sl<CacheHelper>().put('userName', homeCubit.profileResults!.userName);
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             body: homeCubit.profileResults == null ?

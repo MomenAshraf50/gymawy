@@ -24,6 +24,7 @@ import '../../../../core/error/failures.dart';
 import '../../domain/entities/add_exercise_plan_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/usecase/add_exercise_plan_usecase.dart';
+import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
 import '../../domain/usecase/get_exercise_plan_usecase.dart';
@@ -42,6 +43,8 @@ typedef CallGetExercisePlan = Future<List<AddExercisePlanEntity>> Function();
 typedef CallDeleteExercisePlan = Future<void> Function();
 typedef CallAddExerciseDetails = Future<ExerciseDetailsEntity> Function();
 typedef CallGetExerciseDetails = Future<List<ExerciseDetailsEntity>> Function();
+typedef CallDeleteExercisePlanDetails = Future<void> Function();
+
 
 
 
@@ -426,6 +429,27 @@ class HomeRepository extends HomeBaseRepository {
     });
   }
 
+
+
+  Future<Either<Failure,void>> fetchDeleteExercisePlanDetails(
+      CallDeleteExercisePlanDetails mainMethod,
+      ) async {
+    try {
+      final deleteExercisePlan = await mainMethod();
+      return Right(deleteExercisePlan);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteExercisePlanDetails(DeleteExercisePlanDetailsParams params) async{
+    return await fetchDeleteExercisePlanDetails((){
+      return remoteDataSource.deleteExercisePlanDetails(params);
+    });
+  }
 
 
 }

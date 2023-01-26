@@ -5,7 +5,7 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 
 Widget exerciseDetails({
-  required VoidCallback onPressed,
+  VoidCallback? onPressed,
   required String exerciseImage,
   required String exerciseName,
   required String exerciseCategory,
