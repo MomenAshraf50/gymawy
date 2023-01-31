@@ -18,21 +18,31 @@ import 'add_plan.dart';
 
 class PlanDetails extends StatelessWidget {
   PlanDetails({Key? key,
-    this.exercisePlanId ,
+    this.planId ,
     this.ownerUserId,
-    this.exercisePlanVisibility,
-    this.exercisePlanName
+    this.planVisibility,
+    this.planName,
+    this.isNutrition
   }) : super(key: key);
 
-  int? exercisePlanId;
+  int? planId;
   int? ownerUserId;
-  String? exercisePlanName;
-  String? exercisePlanVisibility;
+  String? planName;
+  String? planVisibility;
+  bool? isNutrition;
 
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
-    homeCubit.getExercisePlanDetails();
+    debugPrintFullText('$planId');
+    debugPrintFullText('$ownerUserId');
+    debugPrintFullText('$planVisibility');
+    debugPrintFullText('$planName');
+
+    if(isNutrition == false)
+    {
+      homeCubit.getExercisePlanDetails();
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -43,7 +53,7 @@ class PlanDetails extends StatelessWidget {
               Navigator.pop(context);
               Navigator.pop(context);
               homeCubit.getPlan(
-                isNutrition: false
+                isNutrition: isNutrition!
               );
               designToastDialog(
                   context: context,
@@ -54,11 +64,10 @@ class PlanDetails extends StatelessWidget {
           builder: (context, state) {
             return Padding(
               padding: designApp,
-              child: homeCubit.exerciseDetailsResult != null ?
-              Column(
+              child: Column(
                 children: [
                   defaultAppBar(
-                    title: AppString.planType,
+                    title: planName!,
                     context: context,
                     actions: [
                       if(userId == ownerUserId)
@@ -66,10 +75,10 @@ class PlanDetails extends StatelessWidget {
                           onPressed: ()
                           {
                             navigateTo(context, AddPlan(
-                              isNutrition: false,
-                              exercisePlanId: exercisePlanId,
-                              exercisePlanName: exercisePlanName,
-                              exercisePlanVisibility: exercisePlanVisibility,
+                              isNutrition: isNutrition!,
+                              planId: planId,
+                              planName: planName,
+                              planVisibility: planVisibility,
                             ));
                           },
                           icon: Icons.edit,
@@ -80,7 +89,7 @@ class PlanDetails extends StatelessWidget {
                         defaultActionButton(
                         onPressed: ()
                         {
-                          navigateTo(context, ExercisesScreen(isAddExercise: true,planId: exercisePlanId,));
+                          navigateTo(context, ExercisesScreen(isAddExercise: true,planId: planId,));
                         },
                         icon: Icons.add,
                         backgroundColor: Colors.green,
@@ -90,10 +99,11 @@ class PlanDetails extends StatelessWidget {
                     ],
                   ),
                   verticalSpace(2.h),
+                  homeCubit.exerciseDetailsResult != null && isNutrition == false?
                   Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
-                        return homeCubit.exerciseDetailsResult![index].planId == exercisePlanId?
+                        return homeCubit.exerciseDetailsResult![index].planId == planId?
                           InkWell(
                           onTap: ()
                           {
@@ -125,8 +135,10 @@ class PlanDetails extends StatelessWidget {
                       itemCount: homeCubit.exerciseDetailsResult!.length,
                       physics: const BouncingScrollPhysics(),
                     ),
-                  ),
+                  ) :
+                  Container(),
                   verticalSpace(4.h),
+                  const Spacer(),
                   if(userId == ownerUserId)
                   myButton(
                     text: AppString.delete,
@@ -142,15 +154,14 @@ class PlanDetails extends StatelessWidget {
                           pushButtonText: 'yes',
                           buttonColor: ColorsManager.error,
                           pushButtonVoidCallback: (){
-                            homeCubit.deleteExercisePlan(DeleteExercisePlanParams(exercisePlanId!));
+                            homeCubit.deletePlan(DeletePlanParams(planId! , isNutrition!));
                           },
                         );
                       });
                     },
                   ),
                 ],
-              ) :
-              Container(),
+              ),
             );
           },
         ),

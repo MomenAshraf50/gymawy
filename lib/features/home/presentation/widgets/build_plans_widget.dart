@@ -8,7 +8,10 @@ import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/plan_details.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_items.dart';
 
-Widget buildPlanWidget(context){
+Widget buildPlanWidget({
+  context,
+  required bool isNutrition,
+}){
   HomeCubit homeCubit = HomeCubit.get(context);
   return Padding(
     padding: designApp,
@@ -22,18 +25,11 @@ Widget buildPlanWidget(context){
                       InkWell(
                         child: buildPlansItems(
                           context,
-                          planTitle: homeCubit
-                              .planResult![index].planName,
-                          visibilityIcon: homeCubit
-                              .planResult![index]
-                              .planVisibility ==
-                              'public'
+                          planTitle: homeCubit.planResult![index].planName,
+                          visibilityIcon: homeCubit.planResult![index].planVisibility == 'public'
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
-                          visibilityIconColor: homeCubit
-                              .planResult![index]
-                              .planVisibility ==
-                              'public'
+                          visibilityIconColor: homeCubit.planResult![index].planVisibility == 'public'
                               ? ColorsManager.green
                               : ColorsManager.error,
                         ),
@@ -41,21 +37,14 @@ Widget buildPlanWidget(context){
                           navigateTo(
                               context,
                               PlanDetails(
-                                exercisePlanId: homeCubit
-                                    .planResult![index]
-                                    .exercisePlanId,
-                                ownerUserId: homeCubit
-                                    .planResult![index]
-                                    .userId,
-                                exercisePlanVisibility:
-                                homeCubit
-                                    .planResult![index]
-                                    .planVisibility,
-                                exercisePlanName: homeCubit
-                                    .planResult![index]
-                                    .planName,
+                                planId: isNutrition == true ? homeCubit.planResult![index].nutritionPlanId :homeCubit.planResult![index].exercisePlanId,
+                                ownerUserId: homeCubit.planResult![index].userId,
+                                planVisibility: homeCubit.planResult![index].planVisibility,
+                                planName: homeCubit.planResult![index].planName,
+                                isNutrition: isNutrition,
                               ));
                           debugPrintFullText('$index');
+                          debugPrintFullText('$isNutrition');
                         },
                       ),
                   itemCount: homeCubit.planResult!.length,

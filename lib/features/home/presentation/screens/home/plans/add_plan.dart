@@ -17,11 +17,11 @@ import '../../../../../../core/util/widgets/hideKeyboard.dart';
 
 
 class AddPlan extends StatelessWidget {
-   AddPlan({Key? key, this.exercisePlanId,this.exercisePlanVisibility,this.exercisePlanName,required this.isNutrition}) : super(key: key);
+   AddPlan({Key? key, this.planId,this.planVisibility,this.planName,required this.isNutrition}) : super(key: key);
   var formKey = GlobalKey<FormState>();
-  int? exercisePlanId;
-  String? exercisePlanName;
-  String? exercisePlanVisibility;
+  int? planId;
+  String? planName;
+  String? planVisibility;
   bool isNutrition;
 
 
@@ -32,7 +32,7 @@ class AddPlan extends StatelessWidget {
     //  debugPrintFullText('ssssssssssss${homeCubit.visibilityExerciseValue!}');
     //  debugPrintFullText('ssssssssssss$exercisePlanVisibility');
     // debugPrintFullText('$exercisePlanId');
-    homeCubit.visibilityExerciseValue = exercisePlanVisibility;
+    homeCubit.visibilityExerciseValue = planVisibility;
     // debugPrintFullText('ssssssssssss${homeCubit.visibilityExerciseValue!}');
 
     return SafeArea(
@@ -43,12 +43,13 @@ class AddPlan extends StatelessWidget {
             padding: designApp,
             child: BlocConsumer<HomeCubit, HomeStates>(
               listener: (context, state) {
-                if(exercisePlanName != null) {
-                  homeCubit.nameOfPlanController.text == exercisePlanName;
+                if(planName != null) {
+                  homeCubit.nameOfPlanController.text == planName;
                   // homeCubit.visibilityExerciseValue = exercisePlanVisibility;
                 }
                 if(state is UpdateExercisePlanSuccessState)
                 {
+                  Navigator.pop(context);
                   Navigator.pop(context);
                   homeCubit.getPlan(
                     isNutrition: isNutrition,
@@ -79,7 +80,7 @@ class AddPlan extends StatelessWidget {
                     child: Column(
                       children: [
                         defaultAppBar(
-                            title: isNutrition? 'Add Nutrition Plan':AppString.addPlan,
+                            title: isNutrition == true? 'Add Nutrition Plan':AppString.addPlan,
                             context: context,
                             onPressed: ()
                             {
@@ -90,7 +91,7 @@ class AddPlan extends StatelessWidget {
                         verticalSpace(20.h),
                         myTextFill(
                           controller: homeCubit.nameOfPlanController,
-                          hint: exercisePlanName ??
+                          hint: planName ??
                               AppString.nameOfPlan,
                           validate: (String? value) {
                             if (value!.isEmpty) {
@@ -114,7 +115,7 @@ class AddPlan extends StatelessWidget {
                                 fontSize: 12.rSp,
                               ),
                               const Spacer(),
-                              if(exercisePlanVisibility == null || exercisePlanVisibility== 'private')
+                              if(planVisibility == null || planVisibility== 'private')
                                 InkWell(
                                   child: SvgPicture.asset(
                                       homeCubit.isVisibilityExerciseIcon == false
@@ -125,7 +126,7 @@ class AddPlan extends StatelessWidget {
                                     homeCubit.visibilityExercise();
                                   },
                                 ),
-                              if(exercisePlanVisibility != null && exercisePlanVisibility == 'public')
+                              if(planVisibility != null && planVisibility == 'public')
                                 InkWell(
                                   child: SvgPicture.asset(
                                       homeCubit.isVisibilityExerciseIcon == false
@@ -149,22 +150,23 @@ class AddPlan extends StatelessWidget {
                               debugPrintFullText('plan name ======================${homeCubit.nameOfPlanController.text}' );
                               debugPrintFullText('plan visibility ======================${homeCubit.visibilityExerciseValue!}' );
 
-                              if(exercisePlanId == null)
+                              if(planId == null)
                               {
                                 if(formKey.currentState!.validate())
                                 {
                                   homeCubit.addPlan(
-                                    isNutrition: isNutrition,
-                                      exercisePlanName: homeCubit.nameOfPlanController.text,
-                                      exercisePlanVisibility: homeCubit.visibilityExerciseValue!
+                                      isNutrition: isNutrition,
+                                      planName: homeCubit.nameOfPlanController.text,
+                                      planVisibility: homeCubit.visibilityExerciseValue!
                                   );
                                 }
                               }
                               else {
-                                homeCubit.updateExercisePlan(
-                                  exercisePlanName: homeCubit.nameOfPlanController.text,
-                                  exercisePlanVisibility: homeCubit.visibilityExerciseValue!,
-                                  exercisePlanId: exercisePlanId!,
+                                homeCubit.updatePlan(
+                                  planName: homeCubit.nameOfPlanController.text,
+                                  planVisibility: homeCubit.visibilityExerciseValue!,
+                                  planId: planId!,
+                                  isNutrition: isNutrition,
                                 );
                               }
                             },

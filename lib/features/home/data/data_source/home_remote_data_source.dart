@@ -83,9 +83,9 @@ abstract class HomeBaseDataSource {
 
   Future<List<AddExercisePlanModel>> getPlan(GetPlanParams params);
 
-  Future<AddExercisePlanModel> updateExercisePlan(AddPlanParams params);
+  Future<AddExercisePlanModel> updatePlan(AddPlanParams params);
 
-  Future<void> deleteExercisePlan(DeleteExercisePlanParams params);
+  Future<void> deletePlan(DeletePlanParams params);
 
   Future<ExerciseDetailsModel> addExerciseDetails(ExerciseDetailsParams params);
 
@@ -500,21 +500,22 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   }
 
   @override
-  Future<AddExercisePlanModel> updateExercisePlan(AddPlanParams params) async {
+  Future<AddExercisePlanModel> updatePlan(AddPlanParams params) async {
     final Response f = await dioHelper.put(
-        url: '$addExercisePlanEndPoint${params.exercisePlanId}/',
+        url: params.isNutrition == true? '$addNutritionPlanEndPoint${params.exercisePlanId}/' : '$addExercisePlanEndPoint${params.exercisePlanId}/',
         token: token,
         data: FormData.fromMap({
           'plan_name': params.planName,
           'visibility': params.planVisibility,
         }));
-    return AddExercisePlanModel.fromExerciseJson(f.data);
+    return params.isNutrition == true?
+     AddExercisePlanModel.fromNutritionJson(f.data) : AddExercisePlanModel.fromExerciseJson(f.data);
   }
 
   @override
-  Future<void> deleteExercisePlan(params) async {
+  Future<void> deletePlan(params) async {
     await dioHelper.delete(
-      url: '$addExercisePlanEndPoint${params.exercisePlanId}/',
+      url: params.isNutrition == true ?'$addNutritionPlanEndPoint${params.exercisePlanId}/' : '$addExercisePlanEndPoint${params.exercisePlanId}/',
       token: token,
     );
   }

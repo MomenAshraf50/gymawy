@@ -20,10 +20,11 @@ import '../../widgets/build_exercise_item.dart';
 import '../home/exercises/exercise_basic_data.dart';
 
 class SearchScreen extends StatelessWidget {
-  SearchScreen({Key? key, this.clientsScreen, this.plans, this.exercises})
+  SearchScreen({Key? key, this.clientsScreen, this.plans, this.exercises, this.isNutrition})
       : super(key: key);
   bool? clientsScreen;
   bool? plans;
+  bool? isNutrition;
   bool? exercises;
 
   @override
@@ -33,6 +34,7 @@ class SearchScreen extends StatelessWidget {
     constExerciseSearchVariable = exercises;
     HomeCubit homeCubit = HomeCubit.get(context);
 
+    debugPrintFullText(isNutrition.toString());
     return SafeArea(
       child: BlocBuilder<HomeCubit, HomeStates>(
         builder: (context, state) {
@@ -94,9 +96,8 @@ class SearchScreen extends StatelessWidget {
                               onChanged: (value) {
                                 plans != null
                                     ? homeCubit.getPlan(
-                                        searchPlan:
-                                            homeCubit.searchController.text,
-                                        isNutrition: false,
+                                        searchPlan: homeCubit.searchController.text,
+                                        isNutrition: isNutrition!,
                                       )
                                     : exercises != null
                                         ? homeCubit.getExercise(
@@ -162,11 +163,11 @@ class SearchScreen extends StatelessWidget {
                                         navigateTo(
                                             context,
                                             PlanDetails(
-                                              exercisePlanId: homeCubit
-                                                  .planResult![index]
-                                                  .exercisePlanId,
-                                              ownerUserId: homeCubit
-                                                  .planResult![index].userId,
+                                              planId:isNutrition == true ? homeCubit.planResult![index].nutritionPlanId : homeCubit.planResult![index].exercisePlanId,
+                                              ownerUserId: homeCubit.planResult![index].userId,
+                                              isNutrition: isNutrition,
+                                              planName: homeCubit.planResult![index].planName,
+                                              planVisibility: homeCubit.planResult![index].planVisibility,
                                             ));
                                       },
                                       child: buildPlansItems(

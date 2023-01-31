@@ -4,7 +4,7 @@ import 'package:gymawy/core/error/failures.dart';
 import 'package:gymawy/core/usecase/use_case.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
 
-class DeleteExercisePlanUseCase extends UseCase<void,DeleteExercisePlanParams> {
+class DeleteExercisePlanUseCase extends UseCase<void,DeletePlanParams> {
 
   HomeBaseRepository homeBaseRepository;
 
@@ -12,18 +12,19 @@ class DeleteExercisePlanUseCase extends UseCase<void,DeleteExercisePlanParams> {
   DeleteExercisePlanUseCase(this.homeBaseRepository);
 
   @override
-  Future<Either<Failure, void>> call(DeleteExercisePlanParams params) {
+  Future<Either<Failure, void>> call(DeletePlanParams params) {
     return homeBaseRepository.deleteExercisePlan(params);
   }
 }
 
-class DeleteExercisePlanParams extends Equatable{
+class DeletePlanParams extends Equatable{
 
   int exercisePlanId;
+  bool isNutrition;
 
 
-  DeleteExercisePlanParams(this.exercisePlanId);
+  DeletePlanParams(this.exercisePlanId, this.isNutrition);
 
   @override
-  List<Object?> get props => [exercisePlanId];
+  List<Object?> get props => [exercisePlanId,isNutrition];
 }

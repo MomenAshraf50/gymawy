@@ -367,7 +367,7 @@ class HomeRepository extends HomeBaseRepository {
   @override
   Future<Either<Failure, AddPlanEntity>> updateExercisePlan(AddPlanParams params) async{
     return await fetchPlan((){
-      return remoteDataSource.updateExercisePlan(params);
+      return remoteDataSource.updatePlan(params);
     });
   }
 
@@ -385,9 +385,9 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteExercisePlan(DeleteExercisePlanParams params) async{
+  Future<Either<Failure, void>> deleteExercisePlan(DeletePlanParams params) async{
     return await fetchDeleteExercisePlan((){
-      return remoteDataSource.deleteExercisePlan(params);
+      return remoteDataSource.deletePlan(params);
     });
   }
 
