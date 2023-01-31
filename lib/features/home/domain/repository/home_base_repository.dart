@@ -17,11 +17,11 @@ import '../entities/add_exercise_entity.dart';
 import '../entities/add_exercise_plan_entity.dart';
 import '../entities/certificate_entity.dart';
 import '../entities/profile_entity.dart';
-import '../usecase/add_exercise_plan_usecase.dart';
+import '../usecase/add_plan_usecase.dart';
 import '../usecase/delete_exercise_details_usecase.dart';
 import '../usecase/delete_exersice_plan_usecase.dart';
 import '../usecase/get_exercise_plan_details.dart';
-import '../usecase/get_exercise_plan_usecase.dart';
+import '../usecase/get_plan_usecase.dart';
 import '../usecase/get_exercise_usecase.dart';
 
 abstract class HomeBaseRepository {
@@ -72,14 +72,15 @@ abstract class HomeBaseRepository {
 
   Future<Either<Failure,void>> deleteExercise(DeleteExerciseParams params);
 
-  Future<Either<Failure, AddExercisePlanEntity>> addExercisePlan({
+  Future<Either<Failure, AddPlanEntity>> addPlan({
+    required bool isNutrition,
     required String exercisePlanName,
     required String exercisePlanVisibility,
   });
 
-  Future<Either<Failure,List<AddExercisePlanEntity>>> getExercisePlan(GetExercisePlanParams params);
+  Future<Either<Failure,List<AddPlanEntity>>> getPlan(GetPlanParams params);
 
-  Future<Either<Failure,AddExercisePlanEntity>> updateExercisePlan(AddExercisePlanParams params);
+  Future<Either<Failure,AddPlanEntity>> updateExercisePlan(AddPlanParams params);
 
   Future<Either<Failure,void>> deleteExercisePlan(DeleteExercisePlanParams params);
 

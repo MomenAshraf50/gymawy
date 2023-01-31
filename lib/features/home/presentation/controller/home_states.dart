@@ -162,7 +162,7 @@ class ChangeDropDownSelectedValueState extends HomeStates {}
 
 class AddExercisePlanLoadingState extends HomeStates{}
 class AddExercisePlanSuccessState extends HomeStates{
-  final AddExercisePlanEntity addExercisePlanEntity;
+  final AddPlanEntity addExercisePlanEntity;
   AddExercisePlanSuccessState(this.addExercisePlanEntity);
 }
 class AddExercisePlanErrorState extends HomeStates{
@@ -172,7 +172,7 @@ class AddExercisePlanErrorState extends HomeStates{
 
 class GetExercisePlanLoadingState extends HomeStates{}
 class GetExercisePlanSuccessState extends HomeStates{
-  final List<AddExercisePlanEntity> exercisePlanList;
+  final List<AddPlanEntity> exercisePlanList;
 
   GetExercisePlanSuccessState(this.exercisePlanList);
 }
@@ -184,7 +184,7 @@ class GetExercisePlanErrorState extends HomeStates{
 
 class UpdateExercisePlanLoadingState extends HomeStates{}
 class UpdateExercisePlanSuccessState extends HomeStates{
-  final AddExercisePlanEntity updateExercisePlan;
+  final AddPlanEntity updateExercisePlan;
 
   UpdateExercisePlanSuccessState(this.updateExercisePlan);
 }

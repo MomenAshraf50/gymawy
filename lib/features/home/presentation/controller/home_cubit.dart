@@ -30,13 +30,13 @@ import '../../domain/entities/add_exercise_entity.dart';
 import '../../domain/entities/add_exercise_plan_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/search_entity.dart';
-import '../../domain/usecase/add_exercise_plan_usecase.dart';
+import '../../domain/usecase/add_plan_usecase.dart';
 import '../../domain/usecase/certification_usecase.dart';
 import '../../domain/usecase/delete_certification_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
-import '../../domain/usecase/get_exercise_plan_usecase.dart';
+import '../../domain/usecase/get_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_usecase.dart';
 import '../../domain/usecase/profile_usecase.dart';
 import '../../domain/usecase/search_usecase.dart';
@@ -64,7 +64,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final UpdateExerciseUseCase _updateExerciseUseCase;
   final DeleteExerciseUseCase _deleteExerciseUseCase;
   final AddExercisePlanUseCase _addExercisePlanUseCase;
-  final GetExercisePlanUseCase _getExercisePlanUseCase;
+  final GetPlanUseCase _getExercisePlanUseCase;
   final UpdateExercisePlanUseCase _updateExercisePlanUseCase;
   final DeleteExercisePlanUseCase _deleteExercisePlanUseCase;
   final AddExerciseDetailsUseCase _addExerciseDetailsUseCase;
@@ -87,7 +87,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required UpdateExerciseUseCase updateExerciseUseCase,
     required DeleteExerciseUseCase deleteExerciseUseCase,
     required AddExercisePlanUseCase addExercisePlanUseCase,
-    required GetExercisePlanUseCase getExercisePlanUseCase,
+    required GetPlanUseCase getExercisePlanUseCase,
     required UpdateExercisePlanUseCase updateExercisePlanUseCase,
     required DeleteExercisePlanUseCase deleteExercisePlanUseCase,
     required AddExerciseDetailsUseCase addExerciseDetailsUseCase,
@@ -133,6 +133,8 @@ class HomeCubit extends Cubit<HomeStates> {
     const ProfileCoachScreen(),
   ];
 
+  int initialTabIndex = 0;
+
   //
   // List<Widget> widgets =
   //     isCoachLogin == false ?  [
@@ -159,6 +161,10 @@ class HomeCubit extends Cubit<HomeStates> {
     Suggestions(
       title: AppString.exercise,
       img: Assets.images.svg.exercise,
+    ),
+    Suggestions(
+      title: AppString.nutrition,
+      img: Assets.images.svg.meal,
     ),
     Suggestions(
       title: AppString.clients,
@@ -728,17 +734,19 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
 
-  void addExercisePlan(
+  void addPlan(
       {
+        required bool isNutrition,
         required String exercisePlanName,
         required String exercisePlanVisibility,
       }
       ) async {
     emit(AddExercisePlanLoadingState());
 
-    final result = await _addExercisePlanUseCase(AddExercisePlanParams(
-        exercisePlanName: exercisePlanName,
-        exercisePlanVisibility: exercisePlanVisibility,
+    final result = await _addExercisePlanUseCase(AddPlanParams(
+        isNutrition: isNutrition,
+        planName: exercisePlanName,
+        planVisibility: exercisePlanVisibility,
     ));
 
     result.fold((failure) {
@@ -749,23 +757,26 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  List<AddExercisePlanEntity>? exercisePlanResult;
-  void getExercisePlan(
+  List<AddPlanEntity>? planResult;
+  void getPlan(
     {
         String? searchPlan,
+      required bool isNutrition,
     }
       ) async {
+    planResult = null;
     emit(GetExercisePlanLoadingState());
 
-    final result = await _getExercisePlanUseCase(GetExercisePlanParams(
-      searchPlan: searchPlan
+    final result = await _getExercisePlanUseCase(GetPlanParams(
+      searchPlan: searchPlan,
+      isNutrition: isNutrition,
     ));
 
     result.fold((failure) {
       emit(GetExercisePlanErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(GetExercisePlanSuccessState(data));
-      exercisePlanResult = data;
+      planResult = data;
 
     });
   }
@@ -779,9 +790,10 @@ class HomeCubit extends Cubit<HomeStates> {
       ) async {
     emit(UpdateExercisePlanLoadingState());
 
-    final result = await _updateExercisePlanUseCase(AddExercisePlanParams(
-      exercisePlanName: exercisePlanName,
-      exercisePlanVisibility: exercisePlanVisibility,
+    final result = await _updateExercisePlanUseCase(AddPlanParams(
+      isNutrition: false,
+      planName: exercisePlanName,
+      planVisibility: exercisePlanVisibility,
       exercisePlanId: exercisePlanId,
     ));
 

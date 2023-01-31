@@ -192,6 +192,7 @@ class AppString {
   static const mealName = 'Batates';
   static const update = 'Update';
   static const day = 'Day';
+  static const nutrition = 'Nutrition';
 
 
 

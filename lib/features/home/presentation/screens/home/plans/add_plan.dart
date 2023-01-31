@@ -17,11 +17,12 @@ import '../../../../../../core/util/widgets/hideKeyboard.dart';
 
 
 class AddPlan extends StatelessWidget {
-   AddPlan({Key? key, this.exercisePlanId,this.exercisePlanVisibility,this.exercisePlanName}) : super(key: key);
+   AddPlan({Key? key, this.exercisePlanId,this.exercisePlanVisibility,this.exercisePlanName,required this.isNutrition}) : super(key: key);
   var formKey = GlobalKey<FormState>();
   int? exercisePlanId;
   String? exercisePlanName;
   String? exercisePlanVisibility;
+  bool isNutrition;
 
 
   @override
@@ -49,7 +50,9 @@ class AddPlan extends StatelessWidget {
                 if(state is UpdateExercisePlanSuccessState)
                 {
                   Navigator.pop(context);
-                  homeCubit.getExercisePlan();
+                  homeCubit.getPlan(
+                    isNutrition: isNutrition,
+                  );
                   designToastDialog(
                       context: context,
                       toast: TOAST.success,
@@ -58,8 +61,9 @@ class AddPlan extends StatelessWidget {
                 if(state is AddExercisePlanSuccessState)
                 {
                   Navigator.pop(context);
-                  Navigator.pop(context);
-                  homeCubit.getExercisePlan();
+                  homeCubit.getPlan(
+                    isNutrition: isNutrition
+                  );
                   designToastDialog(
                       context: context,
                       toast: TOAST.success,
@@ -75,7 +79,7 @@ class AddPlan extends StatelessWidget {
                     child: Column(
                       children: [
                         defaultAppBar(
-                            title: AppString.addPlan,
+                            title: isNutrition? 'Add Nutrition Plan':AppString.addPlan,
                             context: context,
                             onPressed: ()
                             {
@@ -149,13 +153,14 @@ class AddPlan extends StatelessWidget {
                               {
                                 if(formKey.currentState!.validate())
                                 {
-                                  homeCubit.addExercisePlan(
+                                  homeCubit.addPlan(
+                                    isNutrition: isNutrition,
                                       exercisePlanName: homeCubit.nameOfPlanController.text,
                                       exercisePlanVisibility: homeCubit.visibilityExerciseValue!
                                   );
                                 }
-                              } if (exercisePlanId != null)
-                              {
+                              }
+                              else {
                                 homeCubit.updateExercisePlan(
                                   exercisePlanName: homeCubit.nameOfPlanController.text,
                                   exercisePlanVisibility: homeCubit.visibilityExerciseValue!,

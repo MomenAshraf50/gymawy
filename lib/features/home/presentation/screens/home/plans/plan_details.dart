@@ -42,7 +42,9 @@ class PlanDetails extends StatelessWidget {
             {
               Navigator.pop(context);
               Navigator.pop(context);
-              homeCubit.getExercisePlan();
+              homeCubit.getPlan(
+                isNutrition: false
+              );
               designToastDialog(
                   context: context,
                   toast: TOAST.success,
@@ -64,6 +66,7 @@ class PlanDetails extends StatelessWidget {
                           onPressed: ()
                           {
                             navigateTo(context, AddPlan(
+                              isNutrition: false,
                               exercisePlanId: exercisePlanId,
                               exercisePlanName: exercisePlanName,
                               exercisePlanVisibility: exercisePlanVisibility,

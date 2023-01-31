@@ -368,7 +368,7 @@ class HomeClientScreen extends StatelessWidget {
                                 ),
                                 onTap: () {
                                   if (index == 0) {
-                                    navigateTo(context, const PlansScreen());
+                                    navigateTo(context,  PlansScreen());
                                   } else if (index == 1) {
                                     navigateTo(context, ExercisesScreen(isAddExercise: false,));
                                   } else if (index == 2) {

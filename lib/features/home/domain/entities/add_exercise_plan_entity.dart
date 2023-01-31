@@ -1,18 +1,20 @@
 import 'package:equatable/equatable.dart';
 
-class AddExercisePlanEntity extends Equatable {
-  int exercisePlanId;
+class AddPlanEntity extends Equatable {
+  int? exercisePlanId;
+  int? nutritionPlanId;
   int? userId;
-  String exercisePlanName;
-  String exercisePlanVisibility;
+  String planName;
+  String planVisibility;
   String? userName;
 
-  AddExercisePlanEntity({
-    required this.exercisePlanId,
+  AddPlanEntity({
+    this.exercisePlanId,
+    this.nutritionPlanId,
     this.userId,
     this.userName,
-    required this.exercisePlanName,
-    required this.exercisePlanVisibility,
+    required this.planName,
+    required this.planVisibility,
   });
 
   @override
@@ -20,8 +22,8 @@ class AddExercisePlanEntity extends Equatable {
     exercisePlanId,
     userId,
     userName,
-    exercisePlanName,
-    exercisePlanVisibility,
+    planName,
+    planVisibility,
 
   ];
 }
