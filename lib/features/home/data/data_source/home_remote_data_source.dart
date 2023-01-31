@@ -20,12 +20,12 @@ import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.da
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
-import '../../domain/usecase/add_exercise_plan_usecase.dart';
+import '../../domain/usecase/add_plan_usecase.dart';
 import '../../domain/usecase/add_exercise_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
-import '../../domain/usecase/get_exercise_plan_usecase.dart';
+import '../../domain/usecase/get_plan_usecase.dart';
 import '../models/add_exercise_plan_model.dart';
 
 abstract class HomeBaseDataSource {
@@ -75,25 +75,25 @@ abstract class HomeBaseDataSource {
 
   Future<void> deleteExercise(DeleteExerciseParams params);
 
-  Future<AddExercisePlanModel> addExercisePlan({
-    required String exercisePlanName,
-    required String exercisePlanVisibility,
+  Future<AddExercisePlanModel> addPlan({
+    required bool isNutrition,
+    required String planName,
+    required String planVisibility,
   });
 
-  Future<List<AddExercisePlanModel>> getExercisePlan(
-      GetExercisePlanParams params);
+  Future<List<AddExercisePlanModel>> getPlan(GetPlanParams params);
 
-  Future<AddExercisePlanModel> updateExercisePlan(AddExercisePlanParams params);
+  Future<AddExercisePlanModel> updateExercisePlan(AddPlanParams params);
 
   Future<void> deleteExercisePlan(DeleteExercisePlanParams params);
 
   Future<ExerciseDetailsModel> addExerciseDetails(ExerciseDetailsParams params);
 
-  Future<List<ExerciseDetailsModel>> getExerciseDetails(GetExercisePlanDetailsParams params);
+  Future<List<ExerciseDetailsModel>> getExerciseDetails(
+      GetExercisePlanDetailsParams params);
 
-  Future<void> deleteExercisePlanDetails(DeleteExercisePlanDetailsParams params);
-
-
+  Future<void> deleteExercisePlanDetails(
+      DeleteExercisePlanDetailsParams params);
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -111,30 +111,30 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       token: token,
       data: isCoachLogin!
           ? {
-        'username': params.userName,
-        'first_name': params.firstName,
-        'last_name': params.lastName,
-        'bio': params.bio,
-        'name': params.fullName,
-        'fixed_price_month': params.fixedPrice,
-        'phone_number': params.phone,
-        'password': params.password,
-        'email': params.email,
-      }
+              'username': params.userName,
+              'first_name': params.firstName,
+              'last_name': params.lastName,
+              'bio': params.bio,
+              'name': params.fullName,
+              'fixed_price_month': params.fixedPrice,
+              'phone_number': params.phone,
+              'password': params.password,
+              'email': params.email,
+            }
           : {
-        'username': params.userName,
-        'first_name': params.firstName,
-        'last_name': params.lastName,
-        'bio': params.bio,
-        'name': params.fullName,
-        'phone_number': params.phone,
-        'password': params.password,
-        'email': params.email,
-        'current_weight': params.currentWeight,
-        'body_fat': params.bodyFat,
-        'goal': params.goal,
-        'current_tall': params.currentTall,
-      },
+              'username': params.userName,
+              'first_name': params.firstName,
+              'last_name': params.lastName,
+              'bio': params.bio,
+              'name': params.fullName,
+              'phone_number': params.phone,
+              'password': params.password,
+              'email': params.email,
+              'current_weight': params.currentWeight,
+              'body_fat': params.bodyFat,
+              'goal': params.goal,
+              'current_tall': params.currentTall,
+            },
     );
     return UpdateModel.fromJson(f.data);
   }
@@ -176,14 +176,17 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     required String search,
   }) async {
     final Response f = await dioHelper.get(
-      url: isCoachFilter == false || constClientVariable != null ||
-          constClientSearchVariable != null ?
-      registerEndPoint : registerCoachEndPoint,
+      url: isCoachFilter == false ||
+              constClientVariable != null ||
+              constClientSearchVariable != null
+          ? registerEndPoint
+          : registerCoachEndPoint,
       token: token,
-      query: constClientVariable == null || constClientSearchVariable != null ?
-      {
-        'search': search,
-      } : null,
+      query: constClientVariable == null || constClientSearchVariable != null
+          ? {
+              'search': search,
+            }
+          : null,
     );
     return List<SearchModel>.from(
         (f.data['results'] as List).map((e) => SearchModel.fromJson(e)));
@@ -196,11 +199,11 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     final Response f = await dioHelper.get(
       token: token,
       url:
-      //'$registerCoachEndPoint$id/',
-      //'$registerEndPoint$id/',
-      isCoachLogin == false
-          ? '$registerEndPoint$id/'
-          : '$registerCoachEndPoint$id/',
+          //'$registerCoachEndPoint$id/',
+          //'$registerEndPoint$id/',
+          isCoachLogin == false
+              ? '$registerEndPoint$id/'
+              : '$registerCoachEndPoint$id/',
     );
     return ProfileModel.fromJson(f.data);
   }
@@ -223,10 +226,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
         'certificate_file': await MultipartFile.fromFile(
             certificateFile.files.first.path!,
             filename:
-            Uri
-                .file(certificateFile.files.first.path!)
-                .pathSegments
-                .last),
+                Uri.file(certificateFile.files.first.path!).pathSegments.last),
         'date': certificateDate,
       }),
       isMultipart: true,
@@ -269,8 +269,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
         data: {
           'certificate_file': await MultipartFile.fromFile(
               params.certificate!.files.first.path!,
-              filename: Uri
-                  .file(params.certificate!.files.first.path!)
+              filename: Uri.file(params.certificate!.files.first.path!)
                   .pathSegments
                   .last),
           'certificate_name': params.certificateName,
@@ -309,18 +308,12 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
           'category': exerciseCategory,
           'exercise_pic': await MultipartFile.fromFile(
             exercisePic.path,
-            filename: Uri
-                .file(exercisePic.path)
-                .pathSegments
-                .last,
+            filename: Uri.file(exercisePic.path).pathSegments.last,
           ),
           'exercise_vid': await MultipartFile.fromFile(
               exerciseVideo.files.first.path!,
               filename:
-              Uri
-                  .file(exerciseVideo.files.first.path!)
-                  .pathSegments
-                  .last),
+                  Uri.file(exerciseVideo.files.first.path!).pathSegments.last),
           'visibility': exerciseVisibility,
         }),
         isMultipart: true,
@@ -343,10 +336,11 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     final Response f = await dioHelper.get(
       url: addExerciseEndPoint,
       token: token,
-      query: constExerciseSearchVariable != null ?
-      {
-        'search': params.searchExercise,
-      } : null,
+      query: constExerciseSearchVariable != null
+          ? {
+              'search': params.searchExercise,
+            }
+          : null,
     );
     return List<AddExerciseModel>.from(
         (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e)));
@@ -367,8 +361,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             'exercise_name': params.exerciseName,
             'category': params.exerciseCategory,
             'visibility': params.exerciseVisibility,
-          })
-      );
+          }));
       return AddExerciseModel.fromJson(f.data);
     } else if (params.isVideo == true && params.isImage == true) {
       final Response f = await dioHelper.put(
@@ -379,15 +372,11 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             'category': params.exerciseCategory,
             'exercise_pic': await MultipartFile.fromFile(
               params.exercisePic!.path,
-              filename: Uri
-                  .file(params.exercisePic!.path)
-                  .pathSegments
-                  .last,
+              filename: Uri.file(params.exercisePic!.path).pathSegments.last,
             ),
             'exercise_vid': await MultipartFile.fromFile(
                 params.exerciseVideo!.files.first.path!,
-                filename: Uri
-                    .file(params.exerciseVideo!.files.first.path!)
+                filename: Uri.file(params.exerciseVideo!.files.first.path!)
                     .pathSegments
                     .last),
             'visibility': params.exerciseVisibility,
@@ -413,8 +402,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             'category': params.exerciseCategory,
             'exercise_vid': await MultipartFile.fromFile(
                 params.exerciseVideo!.files.first.path!,
-                filename: Uri
-                    .file(params.exerciseVideo!.files.first.path!)
+                filename: Uri.file(params.exerciseVideo!.files.first.path!)
                     .pathSegments
                     .last),
             'visibility': params.exerciseVisibility,
@@ -440,10 +428,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             'category': params.exerciseCategory,
             'exercise_pic': await MultipartFile.fromFile(
               params.exercisePic!.path,
-              filename: Uri
-                  .file(params.exercisePic!.path)
-                  .pathSegments
-                  .last,
+              filename: Uri.file(params.exercisePic!.path).pathSegments.last,
             ),
             'visibility': params.exerciseVisibility,
           }),
@@ -470,54 +455,60 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     );
   }
 
-
   @override
-  Future<AddExercisePlanModel> addExercisePlan({
-    required String exercisePlanName,
-    required String exercisePlanVisibility,
+  Future<AddExercisePlanModel> addPlan({
+    required String planName,
+    required String planVisibility,
+    required bool isNutrition,
   }) async {
     final Response f = await dioHelper.post(
-      url: addExercisePlanEndPoint,
+      url: isNutrition ? addNutritionPlanEndPoint : addExercisePlanEndPoint,
       token: token,
-      data: FormData.fromMap({
-        'plan_name': exercisePlanName,
-        'visibility': exercisePlanVisibility,
-      },),
+      data: FormData.fromMap(
+        {
+          'plan_name': planName,
+          'visibility': planVisibility,
+        },
+      ),
     );
 
-    return AddExercisePlanModel.fromJson(f.data);
+    return isNutrition
+        ? AddExercisePlanModel.fromNutritionJson(f.data)
+        : AddExercisePlanModel.fromExerciseJson(f.data);
   }
 
   @override
-  Future<List<AddExercisePlanModel>> getExercisePlan(
-      GetExercisePlanParams params) async {
+  Future<List<AddExercisePlanModel>> getPlan(GetPlanParams params) async {
     final Response f = await dioHelper.get(
-      url: addExercisePlanEndPoint,
+      url: params.isNutrition
+          ? addNutritionPlanEndPoint
+          : addExercisePlanEndPoint,
       token: token,
-      query: constPlanSearchVariable != null ?
-      {
-        'search': params.searchPlan,
-      } : null,
+      query: constPlanSearchVariable != null
+          ? {
+              'search': params.searchPlan,
+            }
+          : null,
     );
-    return List<AddExercisePlanModel>.from(
-        (f.data['results'] as List).map((e) =>
-            AddExercisePlanModel.fromJson(e)));
+    return params.isNutrition
+        ? List<AddExercisePlanModel>.from((f.data['results'] as List)
+            .map((e) => AddExercisePlanModel.fromNutritionJson(e)))
+        : List<AddExercisePlanModel>.from((f.data['results'] as List)
+            .map((e) => AddExercisePlanModel.fromExerciseJson(e)));
     // return List<AddExerciseModel>.from(
     //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
   }
 
   @override
-  Future<AddExercisePlanModel> updateExercisePlan(
-      AddExercisePlanParams params) async {
+  Future<AddExercisePlanModel> updateExercisePlan(AddPlanParams params) async {
     final Response f = await dioHelper.put(
         url: '$addExercisePlanEndPoint${params.exercisePlanId}/',
         token: token,
         data: FormData.fromMap({
-          'plan_name': params.exercisePlanName,
-          'visibility': params.exercisePlanVisibility,
-        })
-    );
-    return AddExercisePlanModel.fromJson(f.data);
+          'plan_name': params.planName,
+          'visibility': params.planVisibility,
+        }));
+    return AddExercisePlanModel.fromExerciseJson(f.data);
   }
 
   @override
@@ -531,35 +522,30 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   @override
   Future<ExerciseDetailsModel> addExerciseDetails(
       ExerciseDetailsParams params) async {
-    final Response f = await dioHelper.post(
-      url: addExerciseDetailsEndPoint,
-      token: token,
-      data: {
-        'exercise': params.exerciseId,
-        'exercise_plan': params.planId,
-        'sets': params.sets,
-        'reps': params.reps,
-        'rest': params.rest,
-        'day': params.day,
-      }
-    );
+    final Response f = await dioHelper
+        .post(url: addExerciseDetailsEndPoint, token: token, data: {
+      'exercise': params.exerciseId,
+      'exercise_plan': params.planId,
+      'sets': params.sets,
+      'reps': params.reps,
+      'rest': params.rest,
+      'day': params.day,
+    });
     return ExerciseDetailsModel.fromJson(f.data);
   }
 
-
   @override
-  Future<List<ExerciseDetailsModel>> getExerciseDetails(GetExercisePlanDetailsParams params) async {
+  Future<List<ExerciseDetailsModel>> getExerciseDetails(
+      GetExercisePlanDetailsParams params) async {
     final Response f = await dioHelper.get(
       url: addExerciseDetailsEndPoint,
       token: token,
     );
-    return List<ExerciseDetailsModel>.from(
-        (f.data['results'] as List).map((e) =>
-            ExerciseDetailsModel.fromJson(e)));
+    return List<ExerciseDetailsModel>.from((f.data['results'] as List)
+        .map((e) => ExerciseDetailsModel.fromJson(e)));
     // return List<AddExerciseModel>.from(
     //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
   }
-
 
   @override
   Future<void> deleteExercisePlanDetails(params) async {
@@ -568,5 +554,4 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       token: token,
     );
   }
-
 }
