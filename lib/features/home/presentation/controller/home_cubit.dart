@@ -737,16 +737,16 @@ class HomeCubit extends Cubit<HomeStates> {
   void addPlan(
       {
         required bool isNutrition,
-        required String exercisePlanName,
-        required String exercisePlanVisibility,
+        required String planName,
+        required String planVisibility,
       }
       ) async {
     emit(AddExercisePlanLoadingState());
 
     final result = await _addExercisePlanUseCase(AddPlanParams(
         isNutrition: isNutrition,
-        planName: exercisePlanName,
-        planVisibility: exercisePlanVisibility,
+        planName: planName,
+        planVisibility: planVisibility,
     ));
 
     result.fold((failure) {
@@ -760,7 +760,7 @@ class HomeCubit extends Cubit<HomeStates> {
   List<AddPlanEntity>? planResult;
   void getPlan(
     {
-        String? searchPlan,
+      String? searchPlan,
       required bool isNutrition,
     }
       ) async {
@@ -781,20 +781,21 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void updateExercisePlan(
+  void updatePlan(
       {
-        required String exercisePlanName,
-        required String exercisePlanVisibility,
-        required int exercisePlanId,
+        required String planName,
+        required String planVisibility,
+        required int planId,
+        required bool isNutrition
       }
       ) async {
     emit(UpdateExercisePlanLoadingState());
 
     final result = await _updateExercisePlanUseCase(AddPlanParams(
-      isNutrition: false,
-      planName: exercisePlanName,
-      planVisibility: exercisePlanVisibility,
-      exercisePlanId: exercisePlanId,
+      isNutrition: isNutrition,
+      planName: planName,
+      planVisibility: planVisibility,
+      exercisePlanId: planId,
     ));
 
     result.fold((failure) {
@@ -804,7 +805,7 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void deleteExercisePlan(DeleteExercisePlanParams params) async{
+  void deletePlan(DeletePlanParams params) async{
     emit(DeleteExercisePlanLoadingState());
 
     final result = await _deleteExercisePlanUseCase(params);

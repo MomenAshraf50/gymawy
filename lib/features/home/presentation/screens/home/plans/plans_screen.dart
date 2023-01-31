@@ -53,6 +53,7 @@ class PlansScreen extends StatelessWidget {
                               context,
                               SearchScreen(
                                 plans: true,
+                                isNutrition: tabIndex == 0 ? true: false,
                               ));
                         },
                         icon: Icons.search,
@@ -104,8 +105,14 @@ class PlansScreen extends StatelessWidget {
             body: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  buildPlanWidget(context),
-                  buildPlanWidget(context),
+                  buildPlanWidget(
+                      context:context,
+                      isNutrition: true
+                  ),
+                  buildPlanWidget(
+                      context:context,
+                      isNutrition: false
+                  ),
                 ]),
           ),
         );

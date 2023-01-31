@@ -82,7 +82,7 @@ abstract class HomeBaseRepository {
 
   Future<Either<Failure,AddPlanEntity>> updateExercisePlan(AddPlanParams params);
 
-  Future<Either<Failure,void>> deleteExercisePlan(DeleteExercisePlanParams params);
+  Future<Either<Failure,void>> deleteExercisePlan(DeletePlanParams params);
 
   Future<Either<Failure,ExerciseDetailsEntity>> addExerciseDetails(ExerciseDetailsParams params);
 

@@ -342,7 +342,7 @@ class HomeClientScreen extends StatelessWidget {
                                       padding: EdgeInsets.all(10.rSp),
                                       child: Column(
                                         children: [
-                                          index == 3 || index == 4
+                                          index == 4 || index == 5
                                               ? Lottie.asset(
                                               Assets.images.lotti.dumbble,
                                               height: 11.h)
@@ -368,18 +368,19 @@ class HomeClientScreen extends StatelessWidget {
                                 ),
                                 onTap: () {
                                   if (index == 0) {
-                                    navigateTo(context,  PlansScreen());
+                                    navigateTo(context,  const PlansScreen());
                                   } else if (index == 1) {
                                     navigateTo(context, ExercisesScreen(isAddExercise: false,));
                                   } else if (index == 2) {
-                                    navigateTo(context, ClientsScreen(
-                                      clientVariable: 'test',
-                                    ));
+
                                   } else if (index == 3){
+                                    navigateTo(context, ClientsScreen(clientVariable: 'test',));
+                                  }else if (index == 4){
                                     navigateTo(context, const ProgressScreen());
-                                  }else{
+                                  } else {
                                     navigateTo(context, const WorkoutTrackerScreen());
                                   }
+
                                 },
                               );
                             },
