@@ -6,6 +6,7 @@ import 'package:gymawy/core/network/remote/api_endpoints.dart';
 import 'package:gymawy/core/network/remote/dio_helper.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/features/home/data/models/add_exercise_model.dart';
+import 'package:gymawy/features/home/data/models/add_nutrition_model.dart';
 import 'package:gymawy/features/home/data/models/certificate_model.dart';
 import 'package:gymawy/features/home/data/models/exercise_details_model.dart';
 import 'package:gymawy/features/home/data/models/profile_model.dart';
@@ -94,6 +95,21 @@ abstract class HomeBaseDataSource {
 
   Future<void> deleteExercisePlanDetails(
       DeleteExercisePlanDetailsParams params);
+
+  Future<AddNutritionModel> addNutrition({
+    required double fat,
+    required double carb,
+    required double protein,
+    required double calories,
+    required String? howToPrepare,
+    required Map component,
+    required File nutritionPic,
+    required String nutritionCategory,
+    required String nutritionName,
+    required String nutritionVisibility,
+  });
+
+
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -507,7 +523,8 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
         data: FormData.fromMap({
           'plan_name': params.planName,
           'visibility': params.planVisibility,
-        }));
+        })
+    );
     return params.isNutrition == true?
      AddExercisePlanModel.fromNutritionJson(f.data) : AddExercisePlanModel.fromExerciseJson(f.data);
   }
@@ -555,4 +572,56 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       token: token,
     );
   }
+
+
+  @override
+  Future<AddNutritionModel> addNutrition({
+    required double fat,
+    required double carb,
+    required double protein,
+    required double calories,
+    required String? howToPrepare,
+    required Map component,
+    required File nutritionPic,
+    required String nutritionCategory,
+    required String nutritionName,
+    required String nutritionVisibility,
+  }) async {
+    final Response f = await dioHelper
+        .post(
+        url: addExerciseDetailsEndPoint,
+        token: token,
+        data: howToPrepare == null ?
+        FormData.fromMap({
+          'nutrition_name': nutritionName,
+          'nutrition_category': nutritionCategory,
+          'component': component,
+          'calories': calories,
+          'protein': protein,
+          'carb': carb,
+          'fat': fat,
+          'visibility': nutritionVisibility,
+          'nutrition_pic': await MultipartFile.fromFile(
+            nutritionPic.path,
+            filename: Uri.file(nutritionPic.path).pathSegments.last,),
+        }) :
+        FormData.fromMap({
+          'nutrition_name': nutritionName,
+          'nutrition_category': nutritionCategory,
+          'component': component,
+          'calories': calories,
+          'how_to_prepare': howToPrepare,
+          'protein': protein,
+          'carb': carb,
+          'fat': fat,
+          'visibility': nutritionVisibility,
+          'nutrition_pic': await MultipartFile.fromFile(
+            nutritionPic.path,
+            filename: Uri.file(nutritionPic.path).pathSegments.last,),
+        })
+    );
+    return AddNutritionModel.fromJson(f.data);
+  }
+
+
 }

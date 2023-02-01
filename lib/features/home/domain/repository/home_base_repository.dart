@@ -12,9 +12,11 @@ import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
+import 'package:gymawy/features/home/presentation/screens/home/nutrition/add_nutrition.dart';
 import '../../../../core/error/failures.dart';
 import '../entities/add_exercise_entity.dart';
 import '../entities/add_exercise_plan_entity.dart';
+import '../entities/add_nutrition_entity.dart';
 import '../entities/certificate_entity.dart';
 import '../entities/profile_entity.dart';
 import '../usecase/add_plan_usecase.dart';
@@ -89,5 +91,19 @@ abstract class HomeBaseRepository {
   Future<Either<Failure,List<ExerciseDetailsEntity>>> getExercisePlanDetails(GetExercisePlanDetailsParams params);
 
   Future<Either<Failure,void>> deleteExercisePlanDetails(DeleteExercisePlanDetailsParams params);
+
+  Future<Either<Failure, AddNutritionEntity>> addNutrition({
+        required double fat,
+        required double carb,
+        required double protein,
+        required double calories,
+        required String? howToPrepare,
+        required Map component,
+        required File nutritionPic,
+        required String nutritionCategory,
+        required String nutritionName,
+        required String nutritionVisibility,
+
+  });
 
 }

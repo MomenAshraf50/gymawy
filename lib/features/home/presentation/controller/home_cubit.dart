@@ -30,6 +30,7 @@ import '../../domain/entities/add_exercise_entity.dart';
 import '../../domain/entities/add_exercise_plan_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/search_entity.dart';
+import '../../domain/usecase/add_nutrition_usecase.dart';
 import '../../domain/usecase/add_plan_usecase.dart';
 import '../../domain/usecase/certification_usecase.dart';
 import '../../domain/usecase/delete_certification_usecase.dart';
@@ -70,6 +71,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final AddExerciseDetailsUseCase _addExerciseDetailsUseCase;
   final GetExercisePlanDetailsUseCase _getExercisePlanDetailsUseCase;
   final DeleteExercisePlanDetailsUseCase _deleteExercisePlanDetailsUseCase;
+  final AddNutritionUseCase _addNutritionUseCase;
 
 
   HomeCubit({
@@ -93,6 +95,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required AddExerciseDetailsUseCase addExerciseDetailsUseCase,
     required GetExercisePlanDetailsUseCase getExercisePlanDetailsUseCase,
     required DeleteExercisePlanDetailsUseCase deleteExercisePlanDetailsUseCase,
+    required AddNutritionUseCase addNutritionUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -114,6 +117,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _addExerciseDetailsUseCase = addExerciseDetailsUseCase,
         _getExercisePlanDetailsUseCase = getExercisePlanDetailsUseCase,
         _deleteExercisePlanDetailsUseCase = deleteExercisePlanDetailsUseCase,
+        _addNutritionUseCase = addNutritionUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -582,6 +586,19 @@ class HomeCubit extends Cubit<HomeStates> {
     DropdownMenuItem(value: "D7", child: myText(title: "Day 7", style: Style.extraSmall)),
   ];
 
+  String selectedNutritionValue = 'Carbohydrates';
+
+  List<DropdownMenuItem<String>>? selectedNutritionCat = const[
+    DropdownMenuItem(value: "Carbohydrates", child: myText(title: "Carbohydrates", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Proteins", child: myText(title: "Proteins", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Fats", child: myText(title: "Fats", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Minerals", child: myText(title: "Minerals", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Dietary fibre", child: myText(title: "Dietary fibre", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Fruit", child: myText(title: "Fruit", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Salad vegetables", child: myText(title: "Salad vegetables", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Cooked vegetables", child: myText(title: "Cooked vegetables", style: Style.extraSmall)),
+  ];
+
 
   void changeDropDownSelectedValue(String value){
     selectedValue = value;
@@ -590,6 +607,11 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void changeDropDownSelectedDay(String value){
     selectedDay = value;
+    emit(ChangeDropDownSelectedValueState());
+  }
+
+  void changeDropDownSelectedNutritionCValue(String value){
+    selectedNutritionValue = value;
     emit(ChangeDropDownSelectedValueState());
   }
 
@@ -871,6 +893,51 @@ class HomeCubit extends Cubit<HomeStates> {
         chooserTitle: 'Share link via'
     );
   }
+
+
+  void addNutrition(
+      {
+        required double calories,
+        required double carb,
+        required double fat,
+        required double protein,
+        required String nutritionName,
+        required String nutritionCategory,
+        required String nutritionVisibility,
+        required File nutritionPic,
+        String? howToPrepare,
+        required Map component,
+      }
+      ) async {
+    emit(AddNutritionLoadingState());
+
+    final result = await _addNutritionUseCase(AddNutritionParams(
+      calories: calories,
+      carb: carb,
+      fat: fat,
+      protein:protein ,
+      nutritionName: nutritionName,
+      nutritionPic: nutritionPic,
+      nutritionCategory: nutritionCategory,
+      nutritionVisibility: nutritionVisibility,
+      component: component,
+      howToPrepare: howToPrepare,
+    ));
+
+    result.fold((failure) {
+      emit(AddNutritionErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(AddNutritionSuccessState(data));
+
+    });
+  }
+
+
+
+
+
+
+
 
 
 }

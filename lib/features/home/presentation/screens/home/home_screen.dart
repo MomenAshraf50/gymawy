@@ -23,6 +23,7 @@ import '../../controller/home_states.dart';
 import '../search/search_result_screen.dart';
 import '../settings/notifications_screen.dart';
 import 'clients/clients_screen.dart';
+import 'nutrition/nutrition_screen.dart';
 
 class HomeClientScreen extends StatelessWidget {
   const HomeClientScreen({Key? key}) : super(key: key);
@@ -372,7 +373,7 @@ class HomeClientScreen extends StatelessWidget {
                                   } else if (index == 1) {
                                     navigateTo(context, ExercisesScreen(isAddExercise: false,));
                                   } else if (index == 2) {
-
+                                    navigateTo(context, const NutritionScreen());
                                   } else if (index == 3){
                                     navigateTo(context, ClientsScreen(clientVariable: 'test',));
                                   }else if (index == 4){
