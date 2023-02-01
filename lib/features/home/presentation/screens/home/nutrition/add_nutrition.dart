@@ -21,7 +21,6 @@ class AddNutrition extends StatelessWidget {
 
   var formKey = GlobalKey<FormState>();
 
-
   // String mealType ;
   @override
   Widget build(BuildContext context) {
@@ -34,19 +33,16 @@ class AddNutrition extends StatelessWidget {
     TextEditingController howToPrepareController = TextEditingController();
     TextEditingController quantityController = TextEditingController();
     HomeCubit homeCubit = HomeCubit.get(context);
-    final Map<String,String> componentNutrition = {
-
-    };
+    final Map<String, String> componentNutrition = {};
     return Scaffold(
-      body:BlocConsumer<HomeCubit,HomeStates>(
+      body: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, state) {
-          if(state is AddNutritionSuccessState)
-          {
+          if (state is AddNutritionSuccessState) {
             Navigator.pop(context);
             designToastDialog(
-                context: context,
-                toast: TOAST.success,
-                text: 'Nutrition Added Successfully',
+              context: context,
+              toast: TOAST.success,
+              text: 'Nutrition Added Successfully',
             );
           }
         },
@@ -58,10 +54,7 @@ class AddNutrition extends StatelessWidget {
                 key: formKey,
                 child: Column(
                   children: [
-                    defaultAppBar(
-                        title: 'Add Nutrition',
-                        context: context
-                    ),
+                    defaultAppBar(title: 'Add Nutrition', context: context),
                     verticalSpace(5.h),
                     Expanded(
                       child: SingleChildScrollView(
@@ -75,24 +68,23 @@ class AddNutrition extends StatelessWidget {
                                 height: 140.rSp,
                                 width: 180.rSp,
                                 child: homeCubit.mealImageFile == null
-                                    ? SvgPicture.asset(Assets.images.svg.addMeal)
+                                    ? SvgPicture.asset(
+                                        Assets.images.svg.addMeal)
                                     : CircleAvatar(
-                                  backgroundImage:
-                                  FileImage(homeCubit.mealImageFile!),
-                                ),
+                                        backgroundImage:
+                                            FileImage(homeCubit.mealImageFile!),
+                                      ),
                               ),
                             ),
-
                             DropdownButton(
                               isExpanded: true,
                               value: homeCubit.selectedNutritionValue,
                               items: homeCubit.selectedNutritionCat,
                               onChanged: (value) {
-                                homeCubit.changeDropDownSelectedNutritionCValue(value!);
+                                homeCubit.changeDropDownSelectedNutritionCValue(
+                                    value!);
                               },
                             ),
-
-
                             myTextFill(
                               controller: mealNameController,
                               hint: AppString.nameOfMeal,
@@ -109,12 +101,6 @@ class AddNutrition extends StatelessWidget {
                                   child: myTextFill(
                                     controller: componentController,
                                     hint: 'Component',
-                                    validate: (String? value) {
-                                      if (value!.isEmpty) {
-                                        return 'isEmpty';
-                                      }
-                                      return null;
-                                    },
                                   ),
                                 ),
                                 horizontalSpace(3.w),
@@ -122,33 +108,27 @@ class AddNutrition extends StatelessWidget {
                                   child: myTextFill(
                                     controller: quantityController,
                                     hint: 'Quantity',
-                                    validate: (String? value) {
-                                      if (value!.isEmpty) {
-                                        return 'isEmpty';
-                                      }
-                                      return null;
-                                    },
                                   ),
                                 ),
                                 horizontalSpace(1.w),
                                 Padding(
                                   padding: EdgeInsets.only(bottom: 2.h),
                                   child: defaultActionButton(
-                                      onPressed: ()
-                                      {
-                                        componentNutrition[componentController.text] = quantityController.text;
-                                        debugPrintFullText(componentNutrition.toString());
+                                      onPressed: () {
+                                        componentNutrition[componentController
+                                            .text] = quantityController.text;
+                                        debugPrintFullText(
+                                            componentNutrition.toString());
                                         componentController.clear();
                                         quantityController.clear();
                                         designToastDialog(
                                             context: context,
                                             toast: TOAST.success,
-                                            text: 'Component Added Successfully Add more if you want'
-                                        );
+                                            text:
+                                                'Component Added Successfully Add more if you want');
                                       },
                                       icon: Icons.add,
-                                      backgroundColor: Colors.green
-                                  ),
+                                      backgroundColor: Colors.green),
                                 )
                               ],
                             ),
@@ -162,7 +142,6 @@ class AddNutrition extends StatelessWidget {
                                   child: myTextFill(
                                     controller: caloriesController,
                                     type: TextInputType.phone,
-
                                     hint: AppString.calories,
                                     validate: (String? value) {
                                       if (value!.isEmpty) {
@@ -234,35 +213,59 @@ class AddNutrition extends StatelessWidget {
                                   child: SvgPicture.asset(
                                       homeCubit.isVisibilityExerciseIcon!
                                           ? Assets.images.svg.visibility_true
-                                          : Assets.images.svg.visibility_false
-                                  ),
+                                          : Assets.images.svg.visibility_false),
                                   onTap: () {
                                     homeCubit.visibilityExercise();
                                   },
                                 ),
                               ],
                             ),
-
                             verticalSpace(6.h),
                             myButton(
                               text: AppString.done,
-                              onPressed: ()
-                              {
-                                if(formKey.currentState!.validate())
-                                {
+                              onPressed: () {
+                                if (formKey.currentState!.validate() &&
+                                    componentNutrition.isNotEmpty) {
                                   homeCubit.addNutrition(
-                                    calories: double.parse(caloriesController.text),
-                                    carb: double.parse(carbohydrateController.text),
-                                    fat: double.parse(fatController.text),
-                                    protein: double.parse(proteinController.text),
+                                    calories:
+                                    int.parse(caloriesController.text),
+                                    carb:
+                                    int.parse(carbohydrateController.text),
+                                    fat: int.parse(fatController.text),
+                                    protein: int.parse(proteinController.text),
                                     nutritionName: mealNameController.text,
-                                    nutritionCategory:homeCubit.selectedNutritionValue ,
-                                    nutritionVisibility: homeCubit.visibilityExerciseValue.toString(),
+                                    nutritionCategory:
+                                    homeCubit.selectedNutritionValue,
+                                    nutritionVisibility: homeCubit
+                                        .visibilityExerciseValue
+                                        .toString(),
                                     nutritionPic: homeCubit.mealImageFile!,
                                     component: componentNutrition,
                                     howToPrepare: howToPrepareController.text,
                                   );
                                 }
+
+                                debugPrintFullText(homeCubit.mealImageFile!.toString());
+                                debugPrintFullText(homeCubit.selectedNutritionValue);
+                                debugPrintFullText(mealNameController.text);
+                                debugPrintFullText('component$componentNutrition');
+                                debugPrintFullText('howto${howToPrepareController.text}');
+                                debugPrintFullText('cal${caloriesController.text}');
+                                debugPrintFullText('fat${fatController.text}');
+                                debugPrintFullText('carb${carbohydrateController.text}');
+                                debugPrintFullText('protein${proteinController.text}');
+                                debugPrintFullText('${homeCubit.visibilityExerciseValue}');
+
+
+
+
+
+
+
+
+
+
+
                               },
                             )
                           ],

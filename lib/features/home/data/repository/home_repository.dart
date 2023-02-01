@@ -472,10 +472,10 @@ class HomeRepository extends HomeBaseRepository {
 
   @override
   Future<Either<Failure, AddNutritionEntity>> addNutrition({
-        required double fat,
-        required double carb,
-        required double protein,
-        required double calories,
+        required int fat,
+        required int carb,
+        required int protein,
+        required int calories,
         required String? howToPrepare,
         required Map component,
         required File nutritionPic,
