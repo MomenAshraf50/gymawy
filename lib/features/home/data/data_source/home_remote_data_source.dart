@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
@@ -97,10 +98,10 @@ abstract class HomeBaseDataSource {
       DeleteExercisePlanDetailsParams params);
 
   Future<AddNutritionModel> addNutrition({
-    required double fat,
-    required double carb,
-    required double protein,
-    required double calories,
+    required int fat,
+    required int carb,
+    required int protein,
+    required int calories,
     required String? howToPrepare,
     required Map component,
     required File nutritionPic,
@@ -367,7 +368,6 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
 
   @override
   Future<AddExerciseModel> updateExercise(AddExerciseParams params) async {
-    final Response f;
 
     if (params.isVideo == false && params.isImage == false) {
       final Response f = await dioHelper.put(
@@ -576,10 +576,10 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
 
   @override
   Future<AddNutritionModel> addNutrition({
-    required double fat,
-    required double carb,
-    required double protein,
-    required double calories,
+    required int fat,
+    required int carb,
+    required int protein,
+    required int calories,
     required String? howToPrepare,
     required Map component,
     required File nutritionPic,
@@ -589,37 +589,22 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   }) async {
     final Response f = await dioHelper
         .post(
-        url: addExerciseDetailsEndPoint,
+        url: addNutritionEndPoint,
         token: token,
-        data: howToPrepare == null ?
-        FormData.fromMap({
+        data: FormData.fromMap({
           'nutrition_name': nutritionName,
           'nutrition_category': nutritionCategory,
-          'component': component,
+          'component': json.encode(component),
           'calories': calories,
           'protein': protein,
-          'carb': carb,
-          'fat': fat,
-          'visibility': nutritionVisibility,
-          'nutrition_pic': await MultipartFile.fromFile(
-            nutritionPic.path,
-            filename: Uri.file(nutritionPic.path).pathSegments.last,),
-        }) :
-        FormData.fromMap({
-          'nutrition_name': nutritionName,
-          'nutrition_category': nutritionCategory,
-          'component': component,
-          'calories': calories,
           'how_to_prepare': howToPrepare,
-          'protein': protein,
           'carb': carb,
           'fat': fat,
           'visibility': nutritionVisibility,
           'nutrition_pic': await MultipartFile.fromFile(
             nutritionPic.path,
             filename: Uri.file(nutritionPic.path).pathSegments.last,),
-        })
-    );
+        }));
     return AddNutritionModel.fromJson(f.data);
   }
 

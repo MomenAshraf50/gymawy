@@ -897,10 +897,10 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void addNutrition(
       {
-        required double calories,
-        required double carb,
-        required double fat,
-        required double protein,
+        required int calories,
+        required int carb,
+        required int fat,
+        required int protein,
         required String nutritionName,
         required String nutritionCategory,
         required String nutritionVisibility,

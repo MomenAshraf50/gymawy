@@ -31,10 +31,10 @@ class AddNutritionUseCase implements UseCase<AddNutritionEntity, AddNutritionPar
 }
 
 class AddNutritionParams extends Equatable {
-  final double fat;
-  final double carb;
-  final double protein;
-  final double calories;
+  final int fat;
+  final int carb;
+  final int protein;
+  final int calories;
   final String? howToPrepare;
   final Map component;
   final File nutritionPic;
