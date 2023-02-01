@@ -242,3 +242,5 @@ class AddNutritionErrorState extends HomeStates{
   final String failure;
   AddNutritionErrorState(this.failure);
 }
+
+class componentsStates extends HomeStates{}

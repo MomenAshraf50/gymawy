@@ -895,6 +895,16 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
 
+  List<String>? component;
+  List<String>? quantity;
+
+  void components(Map<String,String> componentNutrition)
+  {
+    component = componentNutrition.keys.toList();
+    quantity = componentNutrition.values.toList();
+    emit(componentsStates());
+  }
+
   void addNutrition(
       {
         required int calories,

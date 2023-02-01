@@ -44,6 +44,16 @@ class AddNutrition extends StatelessWidget {
               toast: TOAST.success,
               text: 'Nutrition Added Successfully',
             );
+            mealNameController.clear();
+            componentController.clear();
+            caloriesController.clear();
+            fatController.clear();
+            proteinController.clear();
+            carbohydrateController.clear();
+            howToPrepareController.clear();
+            quantityController.clear();
+            componentNutrition.clear();
+            homeCubit.mealImageFile == null;
           }
         },
         builder: (context, state) {
@@ -95,7 +105,7 @@ class AddNutrition extends StatelessWidget {
                                 return null;
                               },
                             ),
-                            Row(
+                            Row (
                               children: [
                                 Expanded(
                                   child: myTextFill(
@@ -117,21 +127,69 @@ class AddNutrition extends StatelessWidget {
                                       onPressed: () {
                                         componentNutrition[componentController
                                             .text] = quantityController.text;
-                                        debugPrintFullText(
-                                            componentNutrition.toString());
+                                        debugPrintFullText(componentNutrition.toString());
                                         componentController.clear();
                                         quantityController.clear();
-                                        designToastDialog(
-                                            context: context,
-                                            toast: TOAST.success,
-                                            text:
-                                                'Component Added Successfully Add more if you want');
+                                        // designToastDialog(
+                                        //     context: context,
+                                        //     toast: TOAST.success,
+                                        //     text:
+                                        //         'Component Added Successfully Add more if you want');
+
+                                        // componentNutrition.forEach((key, value)
+                                        // {
+                                        //   debugPrintFullText(key);
+                                        //   debugPrintFullText(value);
+                                        //  // homeCubit.component = key;
+                                        // }
+                                        // );
+                                        homeCubit.components(componentNutrition);
+                                        debugPrintFullText(homeCubit.component.toString());
+                                        debugPrintFullText(homeCubit.quantity.toString());
                                       },
                                       icon: Icons.add,
                                       backgroundColor: Colors.green),
                                 )
                               ],
                             ),
+                            if(homeCubit.component != null)
+                            ExpansionTile(
+                               title: const myText(
+                                   title: 'See your component',
+                                   style: Style.medium
+                               ),
+                               children: [
+                                 ListView.builder(
+                                   shrinkWrap: true,
+                                   itemBuilder: (context, index) {
+                                     return Padding(
+                                       padding: EdgeInsets.symmetric(vertical: 1.h),
+                                       child: Row(
+                                         children: [
+                                           Expanded(child:
+                                           myText(
+                                               align: TextAlign.center,
+                                               title: homeCubit.component![index],
+                                               style: Style.small
+                                           )),
+                                           horizontalSpace(3.w),
+                                           Expanded(child:
+                                           myText(
+                                               align: TextAlign.center,
+                                               title: homeCubit.quantity![index],
+                                               style: Style.small
+                                           )),
+                                         ],
+                                       ),
+                                     );
+                                   },
+                                   itemCount: homeCubit.component!.length,
+                                 )
+                               ],
+
+                           ),
+
+                            verticalSpace(3.h),
                             myTextFill(
                               controller: howToPrepareController,
                               hint: 'How to prepare',
