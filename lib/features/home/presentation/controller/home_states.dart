@@ -1,3 +1,4 @@
+import 'package:gymawy/features/home/domain/entities/add_nutrition_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 
@@ -229,4 +230,15 @@ class DeleteExercisePlanDetailsErrorState extends HomeStates{
   final String failure;
 
   DeleteExercisePlanDetailsErrorState(this.failure);
+}
+
+
+class AddNutritionLoadingState extends HomeStates{}
+class AddNutritionSuccessState extends HomeStates{
+  final AddNutritionEntity addNutritionEntity;
+  AddNutritionSuccessState(this.addNutritionEntity);
+}
+class AddNutritionErrorState extends HomeStates{
+  final String failure;
+  AddNutritionErrorState(this.failure);
 }

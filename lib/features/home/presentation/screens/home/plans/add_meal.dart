@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/features/home/presentation/screens/home/plans/add_meal_details.dart';
+import 'package:gymawy/features/home/presentation/screens/home/nutrition/add_nutrition.dart';
 import '../../../../../../core/util/resources/appString.dart';
 import '../../../../../../core/util/resources/constants_manager.dart';
 
@@ -44,11 +44,11 @@ class AddMeal extends StatelessWidget {
                               text: mealsName[index],
                               onPressed: ()
                               {
-                                navigateTo(
-                                    context, AddMealDetails(
-                                    mealType: mealsName[index]
-                                )
-                                );
+                                // navigateTo(
+                                //     context, AddMealDetails(
+                                //     mealType: mealsName[index]
+                                // )
+                                // );
                               },
                           ),
                         );

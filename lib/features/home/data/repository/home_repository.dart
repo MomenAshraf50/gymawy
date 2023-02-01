@@ -22,6 +22,7 @@ import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart'
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/add_exercise_plan_entity.dart';
+import '../../domain/entities/add_nutrition_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/usecase/add_plan_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
@@ -44,6 +45,8 @@ typedef CallDeleteExercisePlan = Future<void> Function();
 typedef CallAddExerciseDetails = Future<ExerciseDetailsEntity> Function();
 typedef CallGetExerciseDetails = Future<List<ExerciseDetailsEntity>> Function();
 typedef CallDeleteExercisePlanDetails = Future<void> Function();
+typedef CallAddNutrition = Future<AddNutritionEntity> Function();
+
 
 
 
@@ -452,6 +455,51 @@ class HomeRepository extends HomeBaseRepository {
       return remoteDataSource.deleteExercisePlanDetails(params);
     });
   }
+
+
+  Future<Either<Failure, AddNutritionEntity>> fetchAddNutrition(
+      CallAddNutrition mainMethod,
+      ) async {
+    try {
+      final addNutritionData = await mainMethod();
+      return Right(addNutritionData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AddNutritionEntity>> addNutrition({
+        required double fat,
+        required double carb,
+        required double protein,
+        required double calories,
+        required String? howToPrepare,
+        required Map component,
+        required File nutritionPic,
+        required String nutritionCategory,
+        required String nutritionName,
+        required String nutritionVisibility,
+  }) async {
+    return await fetchAddNutrition(() {
+      return remoteDataSource.addNutrition(
+        fat: fat,
+        carb: carb,
+        protein: protein,
+        calories: calories,
+        howToPrepare: howToPrepare,
+        component: component,
+        nutritionPic: nutritionPic,
+        nutritionCategory: nutritionCategory,
+        nutritionName: nutritionName,
+        nutritionVisibility: nutritionVisibility,
+      );
+    });
+  }
+
+
 
 
 }
