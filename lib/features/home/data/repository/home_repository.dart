@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -13,6 +12,7 @@ import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/get_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
@@ -37,7 +37,7 @@ typedef CallProfile = Future<ProfileEntity> Function();
 typedef CallCertification = Future<CertificateEntity> Function();
 typedef CallGetCertification = Future<List<CertificateEntity>> Function();
 typedef CallDeleteCertification = Future<void> Function();
-typedef CallExercise= Future<AddExerciseEntity> Function();
+typedef CallExercise = Future<AddExerciseEntity> Function();
 typedef CallGetExercise = Future<List<AddExerciseEntity>> Function();
 typedef CallDeleteExercise = Future<void> Function();
 typedef CallAddExercisePlan = Future<AddPlanEntity> Function();
@@ -48,11 +48,7 @@ typedef CallGetExerciseDetails = Future<List<ExerciseDetailsEntity>> Function();
 typedef CallDeleteExercisePlanDetails = Future<void> Function();
 typedef CallAddNutrition = Future<AddNutritionEntity> Function();
 typedef CallGetNutrition = Future<List<AddNutritionEntity>> Function();
-
-
-
-
-
+typedef CallDeleteNutrition = Future<List<AddNutritionEntity>> Function();
 
 class HomeRepository extends HomeBaseRepository {
   final HomeBaseDataSource remoteDataSource;
@@ -63,7 +59,6 @@ class HomeRepository extends HomeBaseRepository {
 
   Future<Either<Failure, UpdateEntity>> fetchData(
     Call mainMethod,
-
   ) async {
     try {
       final coachData = await mainMethod();
@@ -85,7 +80,7 @@ class HomeRepository extends HomeBaseRepository {
 
   @override
   Future<Either<Failure, UpdateEntity>> updateProfilePicture(
-      {required UpdateProfilePictureParams params}) async{
+      {required UpdateProfilePictureParams params}) async {
     return await fetchData(() {
       return remoteDataSource.updateProfilePicture(params: params);
     });
@@ -93,16 +88,15 @@ class HomeRepository extends HomeBaseRepository {
 
   @override
   Future<Either<Failure, UpdateEntity>> updateCoachSocialLinks(
-      {required UpdateCoachSocialLinksParams params}) async{
+      {required UpdateCoachSocialLinksParams params}) async {
     return await fetchData(() {
       return remoteDataSource.updateCoachSocialLinks(params: params);
     });
   }
 
-
   Future<Either<Failure, List<SearchEntity>>> fetchSearch(
-      CallSearch mainMethod,
-      ) async {
+    CallSearch mainMethod,
+  ) async {
     try {
       final searchData = await mainMethod();
       return Right(searchData);
@@ -118,18 +112,13 @@ class HomeRepository extends HomeBaseRepository {
     required String search,
   }) async {
     return await fetchSearch(() {
-      return remoteDataSource.search(
-          search: search
-      );
+      return remoteDataSource.search(search: search);
     });
   }
 
-
-
-
   Future<Either<Failure, ProfileEntity>> fetchProfile(
-      CallProfile mainMethod,
-      ) async {
+    CallProfile mainMethod,
+  ) async {
     try {
       final profileData = await mainMethod();
       return Right(profileData);
@@ -145,17 +134,13 @@ class HomeRepository extends HomeBaseRepository {
     required String id,
   }) async {
     return await fetchProfile(() {
-      return remoteDataSource.profile(
-          id: id
-      );
+      return remoteDataSource.profile(id: id);
     });
   }
 
-
-
   Future<Either<Failure, CertificateEntity>> fetchCertificate(
-      CallCertification mainMethod,
-      ) async {
+    CallCertification mainMethod,
+  ) async {
     try {
       final certificateData = await mainMethod();
       return Right(certificateData);
@@ -175,17 +160,17 @@ class HomeRepository extends HomeBaseRepository {
   }) async {
     return await fetchCertificate(() {
       return remoteDataSource.certificate(
-          id: id,
-          certificateName:certificateName,
-          certificateFile:certificateFile,
-          certificateDate:certificateDate,
+        id: id,
+        certificateName: certificateName,
+        certificateFile: certificateFile,
+        certificateDate: certificateDate,
       );
     });
   }
 
-  Future<Either<Failure,List<CertificateEntity>>> fetchGetCertificate(
-      CallGetCertification mainMethod,
-      ) async {
+  Future<Either<Failure, List<CertificateEntity>>> fetchGetCertificate(
+    CallGetCertification mainMethod,
+  ) async {
     try {
       final certificateData = await mainMethod();
       return Right(certificateData);
@@ -197,15 +182,16 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, List<CertificateEntity>>> getCertificate(GetCertificateParams params)async {
-    return await fetchGetCertificate((){
+  Future<Either<Failure, List<CertificateEntity>>> getCertificate(
+      GetCertificateParams params) async {
+    return await fetchGetCertificate(() {
       return remoteDataSource.getCertificate(params);
     });
   }
 
-  Future<Either<Failure,void>> fetchDeleteCertificate(
-      CallDeleteCertification mainMethod,
-      ) async {
+  Future<Either<Failure, void>> fetchDeleteCertificate(
+    CallDeleteCertification mainMethod,
+  ) async {
     try {
       final deleteCertificateData = await mainMethod();
       return Right(deleteCertificateData);
@@ -217,27 +203,25 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteCertificate(
-      {
+  Future<Either<Failure, void>> deleteCertificate({
     required String certificateId,
-  })async {
-    return await fetchDeleteCertificate((){
-      return remoteDataSource.deleteCertificate(
-        certificateId: certificateId
-      );
+  }) async {
+    return await fetchDeleteCertificate(() {
+      return remoteDataSource.deleteCertificate(certificateId: certificateId);
     });
   }
 
   @override
-  Future<Either<Failure, CertificateEntity>> updateCertificate(UpdateCertificateParams params) {
-    return fetchCertificate((){
+  Future<Either<Failure, CertificateEntity>> updateCertificate(
+      UpdateCertificateParams params) {
+    return fetchCertificate(() {
       return remoteDataSource.updateCertificate(params);
     });
   }
 
   Future<Either<Failure, AddExerciseEntity>> fetchExercise(
-      CallExercise mainMethod,
-      ) async {
+    CallExercise mainMethod,
+  ) async {
     try {
       final addExerciseData = await mainMethod();
       return Right(addExerciseData);
@@ -256,8 +240,6 @@ class HomeRepository extends HomeBaseRepository {
     required File exercisePic,
     required FilePickerResult exerciseVideo,
     required BuildContext context,
-
-
   }) async {
     return await fetchExercise(() {
       return remoteDataSource.addExercise(
@@ -271,10 +253,9 @@ class HomeRepository extends HomeBaseRepository {
     });
   }
 
-
-  Future<Either<Failure,List<AddExerciseEntity>>> fetchGetExercise(
-      CallGetExercise mainMethod,
-      ) async {
+  Future<Either<Failure, List<AddExerciseEntity>>> fetchGetExercise(
+    CallGetExercise mainMethod,
+  ) async {
     try {
       final exerciseData = await mainMethod();
       return Right(exerciseData);
@@ -286,23 +267,24 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, List<AddExerciseEntity>>> getExercise(GetExerciseParams params)async {
-    return await fetchGetExercise((){
+  Future<Either<Failure, List<AddExerciseEntity>>> getExercise(
+      GetExerciseParams params) async {
+    return await fetchGetExercise(() {
       return remoteDataSource.getExercise(params);
     });
   }
 
   @override
-  Future<Either<Failure, AddExerciseEntity>> updateExercise(AddExerciseParams params) async{
-    return await fetchExercise((){
+  Future<Either<Failure, AddExerciseEntity>> updateExercise(
+      AddExerciseParams params) async {
+    return await fetchExercise(() {
       return remoteDataSource.updateExercise(params);
     });
   }
 
-
-  Future<Either<Failure,void>> fetchDeleteExercise(
-      CallDeleteCertification mainMethod,
-      ) async {
+  Future<Either<Failure, void>> fetchDeleteExercise(
+    CallDeleteCertification mainMethod,
+  ) async {
     try {
       final deleteExercise = await mainMethod();
       return Right(deleteExercise);
@@ -314,16 +296,16 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteExercise(DeleteExerciseParams params) async{
-    return await fetchDeleteExercise((){
+  Future<Either<Failure, void>> deleteExercise(
+      DeleteExerciseParams params) async {
+    return await fetchDeleteExercise(() {
       return remoteDataSource.deleteExercise(params);
     });
   }
 
-
   Future<Either<Failure, AddPlanEntity>> fetchPlan(
-      CallAddExercisePlan mainMethod,
-      ) async {
+    CallAddExercisePlan mainMethod,
+  ) async {
     try {
       final addExercisePlanData = await mainMethod();
       return Right(addExercisePlanData);
@@ -349,9 +331,9 @@ class HomeRepository extends HomeBaseRepository {
     });
   }
 
-  Future<Either<Failure,List<AddPlanEntity>>> fetchGetPlan(
-      CallGetExercisePlan mainMethod,
-      ) async {
+  Future<Either<Failure, List<AddPlanEntity>>> fetchGetPlan(
+    CallGetExercisePlan mainMethod,
+  ) async {
     try {
       final planData = await mainMethod();
       return Right(planData);
@@ -363,22 +345,24 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, List<AddPlanEntity>>> getPlan(GetPlanParams params)async {
-    return await fetchGetPlan((){
+  Future<Either<Failure, List<AddPlanEntity>>> getPlan(
+      GetPlanParams params) async {
+    return await fetchGetPlan(() {
       return remoteDataSource.getPlan(params);
     });
   }
 
   @override
-  Future<Either<Failure, AddPlanEntity>> updateExercisePlan(AddPlanParams params) async{
-    return await fetchPlan((){
+  Future<Either<Failure, AddPlanEntity>> updateExercisePlan(
+      AddPlanParams params) async {
+    return await fetchPlan(() {
       return remoteDataSource.updatePlan(params);
     });
   }
 
-  Future<Either<Failure,void>> fetchDeleteExercisePlan(
-      CallDeleteExercisePlan mainMethod,
-      ) async {
+  Future<Either<Failure, void>> fetchDeleteExercisePlan(
+    CallDeleteExercisePlan mainMethod,
+  ) async {
     try {
       final deleteExercisePlan = await mainMethod();
       return Right(deleteExercisePlan);
@@ -390,15 +374,16 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteExercisePlan(DeletePlanParams params) async{
-    return await fetchDeleteExercisePlan((){
+  Future<Either<Failure, void>> deleteExercisePlan(
+      DeletePlanParams params) async {
+    return await fetchDeleteExercisePlan(() {
       return remoteDataSource.deletePlan(params);
     });
   }
 
-  Future<Either<Failure,ExerciseDetailsEntity>> fetchAddExerciseDetails(
-      CallAddExerciseDetails mainMethod,
-      ) async {
+  Future<Either<Failure, ExerciseDetailsEntity>> fetchAddExerciseDetails(
+    CallAddExerciseDetails mainMethod,
+  ) async {
     try {
       final exerciseDetails = await mainMethod();
       return Right(exerciseDetails);
@@ -410,15 +395,16 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, ExerciseDetailsEntity>> addExerciseDetails(ExerciseDetailsParams params) async{
-    return await fetchAddExerciseDetails((){
+  Future<Either<Failure, ExerciseDetailsEntity>> addExerciseDetails(
+      ExerciseDetailsParams params) async {
+    return await fetchAddExerciseDetails(() {
       return remoteDataSource.addExerciseDetails(params);
     });
   }
 
-  Future<Either<Failure,List<ExerciseDetailsEntity>>> fetchGetExerciseDetails(
-      CallGetExerciseDetails mainMethod,
-      ) async {
+  Future<Either<Failure, List<ExerciseDetailsEntity>>> fetchGetExerciseDetails(
+    CallGetExerciseDetails mainMethod,
+  ) async {
     try {
       final exerciseDetails = await mainMethod();
       return Right(exerciseDetails);
@@ -430,17 +416,16 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, List<ExerciseDetailsEntity>>> getExercisePlanDetails(GetExercisePlanDetailsParams params) async{
-    return await fetchGetExerciseDetails((){
+  Future<Either<Failure, List<ExerciseDetailsEntity>>> getExercisePlanDetails(
+      GetExercisePlanDetailsParams params) async {
+    return await fetchGetExerciseDetails(() {
       return remoteDataSource.getExerciseDetails(params);
     });
   }
 
-
-
-  Future<Either<Failure,void>> fetchDeleteExercisePlanDetails(
-      CallDeleteExercisePlanDetails mainMethod,
-      ) async {
+  Future<Either<Failure, void>> fetchDeleteExercisePlanDetails(
+    CallDeleteExercisePlanDetails mainMethod,
+  ) async {
     try {
       final deleteExercisePlan = await mainMethod();
       return Right(deleteExercisePlan);
@@ -452,16 +437,16 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteExercisePlanDetails(DeleteExercisePlanDetailsParams params) async{
-    return await fetchDeleteExercisePlanDetails((){
+  Future<Either<Failure, void>> deleteExercisePlanDetails(
+      DeleteExercisePlanDetailsParams params) async {
+    return await fetchDeleteExercisePlanDetails(() {
       return remoteDataSource.deleteExercisePlanDetails(params);
     });
   }
 
-
   Future<Either<Failure, AddNutritionEntity>> fetchAddNutrition(
-      CallAddNutrition mainMethod,
-      ) async {
+    CallAddNutrition mainMethod,
+  ) async {
     try {
       final addNutritionData = await mainMethod();
       return Right(addNutritionData);
@@ -474,19 +459,23 @@ class HomeRepository extends HomeBaseRepository {
 
   @override
   Future<Either<Failure, AddNutritionEntity>> addNutrition({
-        required int fat,
-        required int carb,
-        required int protein,
-        required int calories,
-        required String? howToPrepare,
-        required Map component,
-        required File nutritionPic,
-        required String nutritionCategory,
-        required String nutritionName,
-        required String nutritionVisibility,
+    int? nutritionId,
+    required bool update,
+    required double fat,
+    required double carb,
+    required double protein,
+    required double calories,
+    required String? howToPrepare,
+    required Map component,
+    File? nutritionPic,
+    required String nutritionCategory,
+    required String nutritionName,
+    required String nutritionVisibility,
   }) async {
     return await fetchAddNutrition(() {
       return remoteDataSource.addNutrition(
+        nutritionId: nutritionId,
+        update: update,
         fat: fat,
         carb: carb,
         protein: protein,
@@ -501,11 +490,9 @@ class HomeRepository extends HomeBaseRepository {
     });
   }
 
-
-
   Future<Either<Failure, List<AddNutritionEntity>>> fetchGetNutrition(
-      CallGetNutrition mainMethod,
-      ) async {
+    CallGetNutrition mainMethod,
+  ) async {
     try {
       final getNutritionData = await mainMethod();
       return Right(getNutritionData);
@@ -517,12 +504,31 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, List<AddNutritionEntity>>> getNutrition(GetNutritionParams params) async {
+  Future<Either<Failure, List<AddNutritionEntity>>> getNutrition(
+      GetNutritionParams params) async {
     return await fetchGetNutrition(() {
       return remoteDataSource.getNutrition(params);
     });
   }
 
+  Future<Either<Failure, void>> fetchDeleteNutrition(
+    CallDeleteExercisePlan mainMethod,
+  ) async {
+    try {
+      final deleteNutrition = await mainMethod();
+      return Right(deleteNutrition);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
 
-
+  @override
+  Future<Either<Failure, void>> deleteNutrition(
+      DeleteNutritionParams params) async {
+    return await fetchDeleteNutrition(() {
+      return remoteDataSource.deleteNutrition(params);
+    });
+  }
 }

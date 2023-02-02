@@ -15,6 +15,7 @@ import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/data/models/update_coach_model.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/get_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_nutrition_usecase.dart';
@@ -99,22 +100,23 @@ abstract class HomeBaseDataSource {
       DeleteExercisePlanDetailsParams params);
 
   Future<AddNutritionModel> addNutrition({
-    required int fat,
-    required int carb,
-    required int protein,
-    required int calories,
+    int? nutritionId,
+    required bool update,
+    required double fat,
+    required double carb,
+    required double protein,
+    required double calories,
     required String? howToPrepare,
     required Map component,
-    required File nutritionPic,
+    File? nutritionPic,
     required String nutritionCategory,
     required String nutritionName,
     required String nutritionVisibility,
   });
 
+  Future<List<AddNutritionModel>> getNutrition(GetNutritionParams params);
 
-  Future<List<AddNutritionModel>> getNutrition(
-      GetNutritionParams params);
-
+  Future<void> deleteNutrition(DeleteNutritionParams params);
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -372,7 +374,6 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
 
   @override
   Future<AddExerciseModel> updateExercise(AddExerciseParams params) async {
-
     if (params.isVideo == false && params.isImage == false) {
       final Response f = await dioHelper.put(
           url: '$addExerciseEndPoint${params.exerciseId}/',
@@ -522,21 +523,25 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   @override
   Future<AddExercisePlanModel> updatePlan(AddPlanParams params) async {
     final Response f = await dioHelper.put(
-        url: params.isNutrition == true? '$addNutritionPlanEndPoint${params.exercisePlanId}/' : '$addExercisePlanEndPoint${params.exercisePlanId}/',
+        url: params.isNutrition == true
+            ? '$addNutritionPlanEndPoint${params.exercisePlanId}/'
+            : '$addExercisePlanEndPoint${params.exercisePlanId}/',
         token: token,
         data: FormData.fromMap({
           'plan_name': params.planName,
           'visibility': params.planVisibility,
-        })
-    );
-    return params.isNutrition == true?
-     AddExercisePlanModel.fromNutritionJson(f.data) : AddExercisePlanModel.fromExerciseJson(f.data);
+        }));
+    return params.isNutrition == true
+        ? AddExercisePlanModel.fromNutritionJson(f.data)
+        : AddExercisePlanModel.fromExerciseJson(f.data);
   }
 
   @override
   Future<void> deletePlan(params) async {
     await dioHelper.delete(
-      url: params.isNutrition == true ?'$addNutritionPlanEndPoint${params.exercisePlanId}/' : '$addExercisePlanEndPoint${params.exercisePlanId}/',
+      url: params.isNutrition == true
+          ? '$addNutritionPlanEndPoint${params.exercisePlanId}/'
+          : '$addExercisePlanEndPoint${params.exercisePlanId}/',
       token: token,
     );
   }
@@ -577,41 +582,60 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     );
   }
 
-
   @override
   Future<AddNutritionModel> addNutrition({
-    required int fat,
-    required int carb,
-    required int protein,
-    required int calories,
+    int? nutritionId,
+    required bool update,
+    required double fat,
+    required double carb,
+    required double protein,
+    required double calories,
     required String? howToPrepare,
     required Map component,
-    required File nutritionPic,
+    File? nutritionPic,
     required String nutritionCategory,
     required String nutritionName,
     required String nutritionVisibility,
   }) async {
-    final Response f = await dioHelper
-        .post(
-        url: addNutritionEndPoint,
-        token: token,
-        data: FormData.fromMap({
-          'nutrition_name': nutritionName,
-          'nutrition_category': nutritionCategory,
-          'component': json.encode(component),
-          'calories': calories,
-          'protein': protein,
-          'how_to_prepare': howToPrepare,
-          'carb': carb,
-          'fat': fat,
-          'visibility': nutritionVisibility,
-          'nutrition_pic': await MultipartFile.fromFile(
-            nutritionPic.path,
-            filename: Uri.file(nutritionPic.path).pathSegments.last,),
-        }));
+    final Response f = update
+        ? await dioHelper.put(
+            url: '$addNutritionEndPoint$nutritionId/',
+            token: token,
+            data: FormData.fromMap({
+              'nutrition_name': nutritionName,
+              'nutrition_category': nutritionCategory,
+              'component': json.encode(component),
+              'calories': calories,
+              'protein': protein,
+              'how_to_prepare': howToPrepare,
+              'carb': carb,
+              'fat': fat,
+              'visibility': nutritionVisibility,
+              'nutrition_pic': nutritionPic == null? null :await MultipartFile.fromFile(
+                nutritionPic.path,
+                filename: Uri.file(nutritionPic.path).pathSegments.last,
+              ),
+            }))
+        : await dioHelper.post(
+            url: addNutritionEndPoint,
+            token: token,
+            data: FormData.fromMap({
+              'nutrition_name': nutritionName,
+              'nutrition_category': nutritionCategory,
+              'component': json.encode(component),
+              'calories': calories,
+              'protein': protein,
+              'how_to_prepare': howToPrepare,
+              'carb': carb,
+              'fat': fat,
+              'visibility': nutritionVisibility,
+              'nutrition_pic': await MultipartFile.fromFile(
+                nutritionPic!.path,
+                filename: Uri.file(nutritionPic.path).pathSegments.last,
+              ),
+            }));
     return AddNutritionModel.fromJson(f.data);
   }
-
 
   @override
   Future<List<AddNutritionModel>> getNutrition(
@@ -620,16 +644,22 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       url: addNutritionEndPoint,
       token: token,
       query: constPlanSearchVariable != null
-        ? {
-        'search': params.searchNutrition,
-        }
+          ? {
+              'search': params.searchNutrition,
+            }
           : null,
     );
-    return List<AddNutritionModel>.from((f.data['results'] as List)
-        .map((e) => AddNutritionModel.fromJson(e)));
+    return List<AddNutritionModel>.from(
+        (f.data['results'] as List).map((e) => AddNutritionModel.fromJson(e)));
     // return List<AddExerciseModel>.from(
     //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
   }
 
-
+  @override
+  Future<void> deleteNutrition(DeleteNutritionParams params) async {
+    await dioHelper.delete(
+      url: '$addNutritionEndPoint${params.nutritionId}/',
+      token: token,
+    );
+  }
 }

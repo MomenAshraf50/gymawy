@@ -31,7 +31,7 @@ class AddNutritionModel extends AddNutritionEntity {
       nutritionProtein:  json['protein'] ?? 0.0,
       nutritionVisibility:  json['visibility'] ?? 'public',
       nutritionComponent: json['component'] ?? {'':''},
-      nutritionHowToPrepare: json['how_to_prepare'] ?? 'UnKnown',
+      nutritionHowToPrepare: json['how_to_prepare'],
 
     );
   }

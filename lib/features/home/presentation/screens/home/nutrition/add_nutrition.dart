@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/default%20dialog.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/features/home/domain/entities/add_nutrition_entity.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import '../../../../../../core/util/resources/appString.dart';
 import '../../../../../../core/util/resources/assets.gen.dart';
@@ -17,9 +19,10 @@ import '../../../controller/home_cubit.dart';
 class AddNutrition extends StatelessWidget {
   AddNutrition({
     Key? key,
+    this.nutritionEntity,
     // required this.mealType
   }) : super(key: key);
-
+  AddNutritionEntity? nutritionEntity;
   var formKey = GlobalKey<FormState>();
 
   // String mealType ;
@@ -34,16 +37,33 @@ class AddNutrition extends StatelessWidget {
     TextEditingController howToPrepareController = TextEditingController();
     TextEditingController quantityController = TextEditingController();
     HomeCubit homeCubit = HomeCubit.get(context);
-    final Map<String, String> componentNutrition = {};
+    Map componentNutrition = {};
+
+    if (nutritionEntity != null) {
+      componentNutrition = nutritionEntity!.nutritionComponent!;
+      mealNameController.text = nutritionEntity!.nutritionName!;
+      caloriesController.text = nutritionEntity!.nutritionCalories!.toString();
+      fatController.text = nutritionEntity!.nutritionFat!.toString();
+      proteinController.text = nutritionEntity!.nutritionProtein!.toString();
+      carbohydrateController.text = nutritionEntity!.nutritionCarb!.toString();
+      homeCubit.components(componentNutrition);
+      if (nutritionEntity!.nutritionHowToPrepare != null) {
+        howToPrepareController.text = nutritionEntity!.nutritionHowToPrepare!;
+      }
+    }
+
     return Scaffold(
       body: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, state) {
           if (state is AddNutritionSuccessState) {
             Navigator.pop(context);
+            if(nutritionEntity != null){
+              Navigator.pop(context);
+            }
             designToastDialog(
               context: context,
               toast: TOAST.success,
-              text: 'Nutrition Added Successfully',
+              text: nutritionEntity == null?'Nutrition Added Successfully':'Nutrition Updated Successfully',
             );
             mealNameController.clear();
             componentController.clear();
@@ -54,7 +74,8 @@ class AddNutrition extends StatelessWidget {
             howToPrepareController.clear();
             quantityController.clear();
             componentNutrition.clear();
-            homeCubit.mealImageFile == null;
+            homeCubit.mealImageFile = null;
+            homeCubit.getNutrition();
           }
         },
         builder: (context, state) {
@@ -81,11 +102,11 @@ class AddNutrition extends StatelessWidget {
                                 width: 180.rSp,
                                 child: homeCubit.mealImageFile == null
                                     ? SvgPicture.asset(
-                                        Assets.images.svg.addMeal)
+                                    Assets.images.svg.addMeal)
                                     : CircleAvatar(
-                                        backgroundImage:
-                                            FileImage(homeCubit.mealImageFile!),
-                                      ),
+                                  backgroundImage:
+                                  FileImage(homeCubit.mealImageFile!),
+                                ),
                               ),
                             ),
                             DropdownButton(
@@ -107,7 +128,7 @@ class AddNutrition extends StatelessWidget {
                                 return null;
                               },
                             ),
-                            Row (
+                            Row(
                               children: [
                                 Expanded(
                                   child: myTextFill(
@@ -129,7 +150,8 @@ class AddNutrition extends StatelessWidget {
                                       onPressed: () {
                                         componentNutrition[componentController
                                             .text] = quantityController.text;
-                                        debugPrintFullText(componentNutrition.toString());
+                                        debugPrintFullText(
+                                            componentNutrition.toString());
                                         componentController.clear();
                                         quantityController.clear();
                                         // designToastDialog(
@@ -145,64 +167,71 @@ class AddNutrition extends StatelessWidget {
                                         //  // homeCubit.component = key;
                                         // }
                                         // );
-                                        homeCubit.components(componentNutrition);
-                                        debugPrintFullText(homeCubit.component.toString());
-                                        debugPrintFullText(homeCubit.quantity.toString());
+                                        homeCubit
+                                            .components(componentNutrition);
+                                        debugPrintFullText(
+                                            homeCubit.component.toString());
+                                        debugPrintFullText(
+                                            homeCubit.quantity.toString());
                                       },
                                       icon: Icons.add,
                                       backgroundColor: Colors.green),
                                 )
                               ],
                             ),
-                            if(homeCubit.component != null && componentNutrition.isNotEmpty)
-                            ExpansionTile(
-                               title: const myText(
-                                   title: 'See your components',
-                                   style: Style.medium
-                               ),
-                               children: [
-                                 ListView.builder(
-                                   shrinkWrap: true,
-                                   itemBuilder: (context, index) {
-                                     return Padding(
-                                       padding: EdgeInsets.symmetric(vertical: 1.h),
-                                       child: Row(
-                                         children: [
-                                           Expanded(child:
-                                           myText(
-                                               align: TextAlign.center,
-                                               title: homeCubit.component![index],
-                                               style: Style.small
-                                           )),
-                                           horizontalSpace(3.w),
-                                           Expanded(child:
-                                           myText(
-                                               align: TextAlign.center,
-                                               title: homeCubit.quantity![index],
-                                               style: Style.small
-                                           )),
-                                           horizontalSpace(3.w),
-                                           defaultActionButton(
-                                               onPressed: ()
-                                               {
-                                                  componentNutrition.remove(homeCubit.component![index]);
-                                                  homeCubit.components(componentNutrition);
-                                                  debugPrintFullText(componentNutrition.toString());
-                                               },
-                                               icon: Icons.remove_circle_outline_outlined,
-                                               backgroundColor: ColorsManager.white,
-                                               iconColor: ColorsManager.error
-                                           ),
-                                         ],
-                                       ),
-                                     );
-                                   },
-                                   itemCount: homeCubit.component!.length,
-                                 )
-                               ],
-
-                           ),
-
+                            if (homeCubit.component != null &&
+                                componentNutrition.isNotEmpty)
+                              ExpansionTile(
+                                title: const myText(
+                                    title: 'See your components',
+                                    style: Style.medium),
+                                children: [
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding:
+                                        EdgeInsets.symmetric(vertical: 1.h),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                child: myText(
+                                                    align: TextAlign.center,
+                                                    title: homeCubit
+                                                        .component![index],
+                                                    style: Style.small)),
+                                            horizontalSpace(3.w),
+                                            Expanded(
+                                                child: myText(
+                                                    align: TextAlign.center,
+                                                    title: homeCubit
+                                                        .quantity![index],
+                                                    style: Style.small)),
+                                            horizontalSpace(3.w),
+                                            defaultActionButton(
+                                                onPressed: () {
+                                                  componentNutrition.remove(
+                                                      homeCubit
+                                                          .component![index]);
+                                                  homeCubit.components(
+                                                      componentNutrition);
+                                                  debugPrintFullText(
+                                                      componentNutrition
+                                                          .toString());
+                                                },
+                                                icon: Icons
+                                                    .remove_circle_outline_outlined,
+                                                backgroundColor:
+                                                ColorsManager.white,
+                                                iconColor: ColorsManager.error),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    itemCount: homeCubit.component!.length,
+                                  )
+                                ],
+                              ),
                             verticalSpace(3.h),
                             myTextFill(
                               controller: howToPrepareController,
@@ -281,63 +310,127 @@ class AddNutrition extends StatelessWidget {
                                   fontSize: 12.rSp,
                                 ),
                                 const Spacer(),
-                                InkWell(
-                                  child: SvgPicture.asset(
-                                      homeCubit.isVisibilityExerciseIcon!
-                                          ? Assets.images.svg.visibility_true
-                                          : Assets.images.svg.visibility_false),
-                                  onTap: () {
-                                    homeCubit.visibilityExercise();
-                                  },
-                                ),
+                                if(nutritionEntity == null ||
+                                    nutritionEntity!.nutritionVisibility ==
+                                        'private')
+                                  InkWell(
+                                    child: SvgPicture.asset(
+                                        homeCubit.isVisibilityExerciseIcon ==
+                                            false
+                                            ? Assets.images.svg.visibility_false
+                                            : Assets.images.svg.visibility_true
+                                    ),
+                                    onTap: () {
+                                      homeCubit.visibilityExercise();
+                                    },
+                                  ),
+                                if(nutritionEntity != null &&
+                                    nutritionEntity!.nutritionVisibility ==
+                                        'public')
+                                  InkWell(
+                                    child: SvgPicture.asset(
+                                        homeCubit.isVisibilityExerciseIcon ==
+                                            false
+                                            ? Assets.images.svg.visibility_true
+                                            : Assets.images.svg.visibility_false
+                                    ),
+                                    onTap: () {
+                                      homeCubit.visibilityExercise();
+                                    },
+                                  ),
                               ],
                             ),
                             verticalSpace(6.h),
                             myButton(
                               text: AppString.done,
                               onPressed: () {
-                                if (formKey.currentState!.validate() &&
-                                    componentNutrition.isNotEmpty) {
-                                  homeCubit.addNutrition(
-                                    calories:
-                                    int.parse(caloriesController.text),
-                                    carb:
-                                    int.parse(carbohydrateController.text),
-                                    fat: int.parse(fatController.text),
-                                    protein: int.parse(proteinController.text),
-                                    nutritionName: mealNameController.text,
-                                    nutritionCategory:
-                                    homeCubit.selectedNutritionValue,
-                                    nutritionVisibility: homeCubit
-                                        .visibilityExerciseValue
-                                        .toString(),
-                                    nutritionPic: homeCubit.mealImageFile!,
-                                    component: componentNutrition,
-                                    howToPrepare: howToPrepareController.text,
+                                if (componentNutrition.isNotEmpty) {
+                                  if (formKey.currentState!.validate()) {
+                                    if(nutritionEntity == null){
+                                      homeCubit.addNutrition(
+                                        update: false,
+                                        calories:
+                                        double.parse(caloriesController.text),
+                                        carb: double.parse(
+                                            carbohydrateController.text),
+                                        fat: double.parse(fatController.text),
+                                        protein:
+                                        double.parse(proteinController.text),
+                                        nutritionName: mealNameController.text,
+                                        nutritionCategory:
+                                        homeCubit.selectedNutritionValue,
+                                        nutritionVisibility: homeCubit
+                                            .visibilityExerciseValue
+                                            .toString(),
+                                        nutritionPic: homeCubit.mealImageFile!,
+                                        component: componentNutrition,
+                                        howToPrepare: howToPrepareController.text,
+                                      );
+                                    }else{
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return DefaultDialog(
+                                              message:
+                                              'Are you sure to update this Nutrition',
+                                              pushButtonText: 'yes',
+                                              buttonColor:
+                                              ColorsManager.warning,
+                                              pushButtonVoidCallback: () {
+                                                homeCubit.addNutrition(
+                                                  update: true,
+                                                  nutritionId: nutritionEntity!.nutritionId,
+                                                  calories:
+                                                  double.parse(caloriesController.text),
+                                                  carb: double.parse(
+                                                      carbohydrateController.text),
+                                                  fat: double.parse(fatController.text),
+                                                  protein:
+                                                  double.parse(proteinController.text),
+                                                  nutritionName: mealNameController.text,
+                                                  nutritionCategory:
+                                                  homeCubit.selectedNutritionValue,
+                                                  nutritionVisibility: homeCubit
+                                                      .visibilityExerciseValue
+                                                      .toString(),
+                                                  nutritionPic: homeCubit.mealImageFile,
+                                                  component: componentNutrition,
+                                                  howToPrepare: howToPrepareController.text,
+                                                );
+                                              },
+                                            );
+                                          });
+
+                                    }
+                                  }
+                                } else {
+                                  designToastDialog(
+                                    context: context,
+                                    toast: TOAST.error,
+                                    text: 'Please Add Nutrition Component',
                                   );
                                 }
 
-                                debugPrintFullText(homeCubit.mealImageFile!.toString());
-                                debugPrintFullText(homeCubit.selectedNutritionValue);
+                                debugPrintFullText(
+                                    nutritionEntity!.nutritionId.toString());
+                                debugPrintFullText(
+                                    homeCubit.mealImageFile.toString());
+                                debugPrintFullText(
+                                    homeCubit.selectedNutritionValue);
                                 debugPrintFullText(mealNameController.text);
-                                debugPrintFullText('component$componentNutrition');
-                                debugPrintFullText('howto${howToPrepareController.text}');
-                                debugPrintFullText('cal${caloriesController.text}');
+                                debugPrintFullText(
+                                    'component$componentNutrition');
+                                debugPrintFullText(
+                                    'howto${howToPrepareController.text}');
+                                debugPrintFullText(
+                                    'cal${caloriesController.text}');
                                 debugPrintFullText('fat${fatController.text}');
-                                debugPrintFullText('carb${carbohydrateController.text}');
-                                debugPrintFullText('protein${proteinController.text}');
-                                debugPrintFullText('${homeCubit.visibilityExerciseValue}');
-
-
-
-
-
-
-
-
-
-
-
+                                debugPrintFullText(
+                                    'carb${carbohydrateController.text}');
+                                debugPrintFullText(
+                                    'protein${proteinController.text}');
+                                debugPrintFullText(
+                                    '${homeCubit.visibilityExerciseValue}');
                               },
                             )
                           ],
