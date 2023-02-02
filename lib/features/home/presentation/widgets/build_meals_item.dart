@@ -3,7 +3,7 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/resources/meals.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/features/home/presentation/screens/home/plans/meal_details.dart';
+import 'package:gymawy/features/home/presentation/screens/home/nutrition/nutrition_basic_data.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_meals_details_item.dart';
 
 Widget buildMealsItem(Meals meals) => Card(
@@ -32,7 +32,7 @@ Widget buildMealsItem(Meals meals) => Card(
         ListView.builder(
           itemBuilder: (context, index) => InkWell(
             onTap: (){
-              navigateTo(context, const MealsDetailsScreen());
+              navigateTo(context, NutritionBasicData());
             },
             child: buildMealsDetailsItem(
               meals.mealDetails[index],

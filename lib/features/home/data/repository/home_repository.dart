@@ -28,6 +28,7 @@ import '../../domain/usecase/add_plan_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
+import '../../domain/usecase/get_nutrition_usecase.dart';
 import '../../domain/usecase/get_plan_usecase.dart';
 
 typedef Call = Future<UpdateEntity> Function();
@@ -46,6 +47,7 @@ typedef CallAddExerciseDetails = Future<ExerciseDetailsEntity> Function();
 typedef CallGetExerciseDetails = Future<List<ExerciseDetailsEntity>> Function();
 typedef CallDeleteExercisePlanDetails = Future<void> Function();
 typedef CallAddNutrition = Future<AddNutritionEntity> Function();
+typedef CallGetNutrition = Future<List<AddNutritionEntity>> Function();
 
 
 
@@ -499,6 +501,27 @@ class HomeRepository extends HomeBaseRepository {
     });
   }
 
+
+
+  Future<Either<Failure, List<AddNutritionEntity>>> fetchGetNutrition(
+      CallGetNutrition mainMethod,
+      ) async {
+    try {
+      final getNutritionData = await mainMethod();
+      return Right(getNutritionData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<AddNutritionEntity>>> getNutrition(GetNutritionParams params) async {
+    return await fetchGetNutrition(() {
+      return remoteDataSource.getNutrition(params);
+    });
+  }
 
 
 
