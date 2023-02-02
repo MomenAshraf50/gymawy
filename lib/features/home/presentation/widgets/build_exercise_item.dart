@@ -31,9 +31,6 @@ Widget buildExercisesItems({
           child: Column(
             children: [
               exerciseDetails(
-                  onPressed: () {
-                //navigateTo(context, const ExerciseType());
-              },
                 exerciseCategory: exerciseCategory,
                 exerciseImage: exerciseImage,
                 exerciseName: exerciseName,

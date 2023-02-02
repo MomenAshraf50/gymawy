@@ -53,19 +53,7 @@ class NutritionScreen extends StatelessWidget {
                     itemBuilder: (context, index) => InkWell(
                       onTap: () {
                         navigateTo(context, NutritionBasicData(
-                          nutritionId: homeCubit.nutritionResult![index].nutritionId!,
-                          userName: homeCubit.nutritionResult![index].userName!,
-                          pic: homeCubit.nutritionResult![index].nutritionPic!,
-                          calories: (homeCubit.nutritionResult![index].nutritionCalories!).toInt().toString(),
-                          carb: (homeCubit.nutritionResult![index].nutritionCarb!).toInt().toString(),
-                          category: homeCubit.nutritionResult![index].nutritionCategory!,
-                          fat: (homeCubit.nutritionResult![index].nutritionFat!).toInt().toString(),
-                          howToPrepare: homeCubit.nutritionResult![index].nutritionHowToPrepare!,
-                          protein: (homeCubit.nutritionResult![index].nutritionProtein!).toInt().toString(),
-                          nutritionName: homeCubit.nutritionResult![index].nutritionName!,
-                          userId: homeCubit.nutritionResult![index].userId!,
-                          visibility: homeCubit.nutritionResult![index].nutritionVisibility!,
-                          component: homeCubit.nutritionResult![index].nutritionComponent!,
+                          nutritionEntity: homeCubit.nutritionResult![index],
                         ));
                       },
                       child: buildExercisesItems(

@@ -32,7 +32,7 @@ Widget buildMealsItem(Meals meals) => Card(
         ListView.builder(
           itemBuilder: (context, index) => InkWell(
             onTap: (){
-              navigateTo(context, NutritionBasicData());
+              //navigateTo(context, NutritionBasicData(nutritionEntity: meals,));
             },
             child: buildMealsDetailsItem(
               meals.mealDetails[index],

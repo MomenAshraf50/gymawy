@@ -7,6 +7,7 @@ import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
@@ -52,13 +53,15 @@ abstract class HomeBaseRepository {
     required String certificateDate,
   });
 
-  Future<Either<Failure,List<CertificateEntity>>> getCertificate(GetCertificateParams params);
+  Future<Either<Failure, List<CertificateEntity>>> getCertificate(
+      GetCertificateParams params);
 
   Future<Either<Failure, void>> deleteCertificate({
     required String certificateId,
   });
 
-  Future<Either<Failure,CertificateEntity>> updateCertificate(UpdateCertificateParams params);
+  Future<Either<Failure, CertificateEntity>> updateCertificate(
+      UpdateCertificateParams params);
 
   Future<Either<Failure, AddExerciseEntity>> addExercise({
     required String exerciseName,
@@ -69,11 +72,13 @@ abstract class HomeBaseRepository {
     required BuildContext context,
   });
 
-  Future<Either<Failure,List<AddExerciseEntity>>> getExercise(GetExerciseParams params);
+  Future<Either<Failure, List<AddExerciseEntity>>> getExercise(
+      GetExerciseParams params);
 
-  Future<Either<Failure,AddExerciseEntity>> updateExercise(AddExerciseParams params);
+  Future<Either<Failure, AddExerciseEntity>> updateExercise(
+      AddExerciseParams params);
 
-  Future<Either<Failure,void>> deleteExercise(DeleteExerciseParams params);
+  Future<Either<Failure, void>> deleteExercise(DeleteExerciseParams params);
 
   Future<Either<Failure, AddPlanEntity>> addPlan({
     required bool isNutrition,
@@ -81,33 +86,39 @@ abstract class HomeBaseRepository {
     required String exercisePlanVisibility,
   });
 
-  Future<Either<Failure,List<AddPlanEntity>>> getPlan(GetPlanParams params);
+  Future<Either<Failure, List<AddPlanEntity>>> getPlan(GetPlanParams params);
 
-  Future<Either<Failure,AddPlanEntity>> updateExercisePlan(AddPlanParams params);
+  Future<Either<Failure, AddPlanEntity>> updateExercisePlan(
+      AddPlanParams params);
 
-  Future<Either<Failure,void>> deleteExercisePlan(DeletePlanParams params);
+  Future<Either<Failure, void>> deleteExercisePlan(DeletePlanParams params);
 
-  Future<Either<Failure,ExerciseDetailsEntity>> addExerciseDetails(ExerciseDetailsParams params);
+  Future<Either<Failure, ExerciseDetailsEntity>> addExerciseDetails(
+      ExerciseDetailsParams params);
 
-  Future<Either<Failure,List<ExerciseDetailsEntity>>> getExercisePlanDetails(GetExercisePlanDetailsParams params);
+  Future<Either<Failure, List<ExerciseDetailsEntity>>> getExercisePlanDetails(
+      GetExercisePlanDetailsParams params);
 
-  Future<Either<Failure,void>> deleteExercisePlanDetails(DeleteExercisePlanDetailsParams params);
+  Future<Either<Failure, void>> deleteExercisePlanDetails(
+      DeleteExercisePlanDetailsParams params);
 
   Future<Either<Failure, AddNutritionEntity>> addNutrition({
-        required int fat,
-        required int carb,
-        required int protein,
-        required int calories,
-        required String? howToPrepare,
-        required Map component,
-        required File nutritionPic,
-        required String nutritionCategory,
-        required String nutritionName,
-        required String nutritionVisibility,
-
+    int? nutritionId,
+    required bool update,
+    required double fat,
+    required double carb,
+    required double protein,
+    required double calories,
+    required String? howToPrepare,
+    required Map component,
+    File? nutritionPic,
+    required String nutritionCategory,
+    required String nutritionName,
+    required String nutritionVisibility,
   });
 
-  Future<Either<Failure,List<AddNutritionEntity>>> getNutrition(GetNutritionParams params);
+  Future<Either<Failure, List<AddNutritionEntity>>> getNutrition(
+      GetNutritionParams params);
 
-
+  Future<Either<Failure, void>> deleteNutrition(DeleteNutritionParams params);
 }

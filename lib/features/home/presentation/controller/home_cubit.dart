@@ -13,6 +13,7 @@ import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
@@ -75,6 +76,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final DeleteExercisePlanDetailsUseCase _deleteExercisePlanDetailsUseCase;
   final AddNutritionUseCase _addNutritionUseCase;
   final GetNutritionUseCase _getNutritionUseCase;
+  final DeleteNutritionUseCase _deleteNutritionUseCase;
 
 
   HomeCubit({
@@ -100,6 +102,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required DeleteExercisePlanDetailsUseCase deleteExercisePlanDetailsUseCase,
     required AddNutritionUseCase addNutritionUseCase,
     required GetNutritionUseCase getNutritionUseCase,
+    required DeleteNutritionUseCase deleteNutritionUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -123,6 +126,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _deleteExercisePlanDetailsUseCase = deleteExercisePlanDetailsUseCase,
         _addNutritionUseCase = addNutritionUseCase,
         _getNutritionUseCase = getNutritionUseCase,
+        _deleteNutritionUseCase = deleteNutritionUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -900,10 +904,10 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
 
-  List<String>? component;
-  List<String>? quantity;
+  List? component;
+  List? quantity;
 
-  void components(Map<String,String> componentNutrition)
+  void components(Map componentNutrition)
   {
     component = componentNutrition.keys.toList();
     quantity = componentNutrition.values.toList();
@@ -912,14 +916,16 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void addNutrition(
       {
-        required int calories,
-        required int carb,
-        required int fat,
-        required int protein,
+        int? nutritionId,
+        required bool update,
+        required double calories,
+        required double carb,
+        required double fat,
+        required double protein,
         required String nutritionName,
         required String nutritionCategory,
         required String nutritionVisibility,
-        required File nutritionPic,
+        File? nutritionPic,
         String? howToPrepare,
         required Map component,
       }
@@ -927,6 +933,8 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(AddNutritionLoadingState());
 
     final result = await _addNutritionUseCase(AddNutritionParams(
+      nutritionId: nutritionId,
+      update: update,
       calories: calories,
       carb: carb,
       fat: fat,
@@ -967,6 +975,18 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(GetNutritionSuccessState(data));
       nutritionResult = data;
 
+    });
+  }
+
+  void deleteNutrition(DeleteNutritionParams params)async {
+    emit(DeleteNutritionLoadingState());
+
+    final result = await _deleteNutritionUseCase(params);
+
+    result.fold((failure){
+      emit(DeleteNutritionErrorState(mapFailureToMessage(failure)));
+    }, (data){
+      emit(DeleteNutritionSuccessState());
     });
   }
 
