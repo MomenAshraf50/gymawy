@@ -8,6 +8,7 @@ import 'package:gymawy/core/util/widgets/myTextFill.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import '../../../../../../core/util/resources/appString.dart';
 import '../../../../../../core/util/resources/assets.gen.dart';
+import '../../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../../core/util/widgets/myButton.dart';
 import '../../../../../../core/util/widgets/myText.dart';
@@ -68,6 +69,7 @@ class AddNutrition extends StatelessWidget {
                     verticalSpace(5.h),
                     Expanded(
                       child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
                         child: Column(
                           children: [
                             InkWell(
@@ -152,10 +154,10 @@ class AddNutrition extends StatelessWidget {
                                 )
                               ],
                             ),
-                            if(homeCubit.component != null)
+                            if(homeCubit.component != null && componentNutrition.isNotEmpty)
                             ExpansionTile(
                                title: const myText(
-                                   title: 'See your component',
+                                   title: 'See your components',
                                    style: Style.medium
                                ),
                                children: [
@@ -179,6 +181,18 @@ class AddNutrition extends StatelessWidget {
                                                title: homeCubit.quantity![index],
                                                style: Style.small
                                            )),
+                                           horizontalSpace(3.w),
+                                           defaultActionButton(
+                                               onPressed: ()
+                                               {
+                                                  componentNutrition.remove(homeCubit.component![index]);
+                                                  homeCubit.components(componentNutrition);
+                                                  debugPrintFullText(componentNutrition.toString());
+                                               },
+                                               icon: Icons.remove_circle_outline_outlined,
+                                               backgroundColor: ColorsManager.white,
+                                               iconColor: ColorsManager.error
+                                           ),
                                          ],
                                        ),
                                      );

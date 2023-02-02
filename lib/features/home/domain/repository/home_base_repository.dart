@@ -23,6 +23,7 @@ import '../usecase/add_plan_usecase.dart';
 import '../usecase/delete_exercise_details_usecase.dart';
 import '../usecase/delete_exersice_plan_usecase.dart';
 import '../usecase/get_exercise_plan_details.dart';
+import '../usecase/get_nutrition_usecase.dart';
 import '../usecase/get_plan_usecase.dart';
 import '../usecase/get_exercise_usecase.dart';
 
@@ -105,5 +106,8 @@ abstract class HomeBaseRepository {
         required String nutritionVisibility,
 
   });
+
+  Future<Either<Failure,List<AddNutritionEntity>>> getNutrition(GetNutritionParams params);
+
 
 }

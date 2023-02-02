@@ -17,6 +17,7 @@ import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dar
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/get_exercise_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
@@ -110,6 +111,9 @@ abstract class HomeBaseDataSource {
     required String nutritionVisibility,
   });
 
+
+  Future<List<AddNutritionModel>> getNutrition(
+      GetNutritionParams params);
 
 }
 
@@ -606,6 +610,25 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             filename: Uri.file(nutritionPic.path).pathSegments.last,),
         }));
     return AddNutritionModel.fromJson(f.data);
+  }
+
+
+  @override
+  Future<List<AddNutritionModel>> getNutrition(
+      GetNutritionParams params) async {
+    final Response f = await dioHelper.get(
+      url: addNutritionEndPoint,
+      token: token,
+      query: constPlanSearchVariable != null
+        ? {
+        'search': params.searchNutrition,
+        }
+          : null,
+    );
+    return List<AddNutritionModel>.from((f.data['results'] as List)
+        .map((e) => AddNutritionModel.fromJson(e)));
+    // return List<AddExerciseModel>.from(
+    //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
   }
 
 

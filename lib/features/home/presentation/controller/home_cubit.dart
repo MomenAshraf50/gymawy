@@ -28,6 +28,7 @@ import '../../../../core/util/resources/assets.gen.dart';
 import '../../../login/presentation/screens/login_screen.dart';
 import '../../domain/entities/add_exercise_entity.dart';
 import '../../domain/entities/add_exercise_plan_entity.dart';
+import '../../domain/entities/add_nutrition_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/search_entity.dart';
 import '../../domain/usecase/add_nutrition_usecase.dart';
@@ -37,6 +38,7 @@ import '../../domain/usecase/delete_certification_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
+import '../../domain/usecase/get_nutrition_usecase.dart';
 import '../../domain/usecase/get_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_usecase.dart';
 import '../../domain/usecase/profile_usecase.dart';
@@ -72,6 +74,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final GetExercisePlanDetailsUseCase _getExercisePlanDetailsUseCase;
   final DeleteExercisePlanDetailsUseCase _deleteExercisePlanDetailsUseCase;
   final AddNutritionUseCase _addNutritionUseCase;
+  final GetNutritionUseCase _getNutritionUseCase;
 
 
   HomeCubit({
@@ -96,6 +99,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required GetExercisePlanDetailsUseCase getExercisePlanDetailsUseCase,
     required DeleteExercisePlanDetailsUseCase deleteExercisePlanDetailsUseCase,
     required AddNutritionUseCase addNutritionUseCase,
+    required GetNutritionUseCase getNutritionUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -118,6 +122,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _getExercisePlanDetailsUseCase = getExercisePlanDetailsUseCase,
         _deleteExercisePlanDetailsUseCase = deleteExercisePlanDetailsUseCase,
         _addNutritionUseCase = addNutritionUseCase,
+        _getNutritionUseCase = getNutritionUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -902,7 +907,7 @@ class HomeCubit extends Cubit<HomeStates> {
   {
     component = componentNutrition.keys.toList();
     quantity = componentNutrition.values.toList();
-    emit(componentsStates());
+    emit(ComponentsStates());
   }
 
   void addNutrition(
@@ -946,6 +951,24 @@ class HomeCubit extends Cubit<HomeStates> {
 
 
 
+  List<AddNutritionEntity>? nutritionResult;
+  void getNutrition({
+  String? search
+    }) async {
+    emit(GetNutritionLoadingState());
+
+    final result = await _getNutritionUseCase(GetNutritionParams(
+      searchNutrition: search,
+    ));
+
+    result.fold((failure) {
+      emit(GetNutritionErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(GetNutritionSuccessState(data));
+      nutritionResult = data;
+
+    });
+  }
 
 
 

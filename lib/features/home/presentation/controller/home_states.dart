@@ -243,4 +243,16 @@ class AddNutritionErrorState extends HomeStates{
   AddNutritionErrorState(this.failure);
 }
 
-class componentsStates extends HomeStates{}
+class ComponentsStates extends HomeStates{}
+
+class GetNutritionLoadingState extends HomeStates{}
+class GetNutritionSuccessState extends HomeStates{
+  final List<AddNutritionEntity> getNutrition;
+
+  GetNutritionSuccessState(this.getNutrition);
+}
+class GetNutritionErrorState extends HomeStates{
+  final String failure;
+
+  GetNutritionErrorState(this.failure);
+}
