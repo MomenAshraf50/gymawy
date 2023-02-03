@@ -6,6 +6,7 @@ import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/clients_details_screen.dart';
+import 'package:gymawy/features/home/presentation/screens/home/nutrition/nutrition_basic_data.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/plan_details.dart';
 import 'package:gymawy/features/home/presentation/screens/search/search_result_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_items.dart';
@@ -20,21 +21,23 @@ import '../../widgets/build_exercise_item.dart';
 import '../home/exercises/exercise_basic_data.dart';
 
 class SearchScreen extends StatelessWidget {
-  SearchScreen({Key? key, this.clientsScreen, this.plans, this.exercises, this.isNutrition})
+  SearchScreen({Key? key, this.clientsScreen, this.plans, this.exercises, this.isNutritionPlan , this.isNutrition})
       : super(key: key);
   bool? clientsScreen;
   bool? plans;
-  bool? isNutrition;
+  bool? isNutritionPlan;
   bool? exercises;
+  bool? isNutrition;
 
   @override
   Widget build(BuildContext context) {
     constClientSearchVariable = clientsScreen;
     constPlanSearchVariable = plans;
     constExerciseSearchVariable = exercises;
+    constNutritionSearchVariable = isNutrition;
     HomeCubit homeCubit = HomeCubit.get(context);
 
-    debugPrintFullText(isNutrition.toString());
+    debugPrintFullText(isNutritionPlan.toString());
     return SafeArea(
       child: BlocBuilder<HomeCubit, HomeStates>(
         builder: (context, state) {
@@ -48,7 +51,10 @@ class SearchScreen extends StatelessWidget {
                 constPlanSearchVariable = null;
                 exercises = null;
                 constExerciseSearchVariable = null;
-                homeCubit.searchController.text = '';
+                isNutrition = null;
+                constNutritionSearchVariable = null;
+                isNutritionPlan = null;
+                homeCubit.searchController.clear();
                 return false;
               },
               child: HideKeyboardPage(
@@ -56,17 +62,22 @@ class SearchScreen extends StatelessWidget {
                   padding: designApp,
                   child: Column(
                     children: [
-                      if (clientsScreen != null ||
-                          plans != null ||
-                          exercises != null)
+                      if (
+                      clientsScreen != null ||
+                      plans != null ||
+                      exercises != null  ||
+                      isNutritionPlan != null  ||
+                      isNutrition != null
+                      )
                         defaultAppBar(
                             title: clientsScreen != null
                                 ? 'Search for clients'
-                                : plans != null
+                                : plans != null || isNutritionPlan != null
                                     ? 'Search for plans'
                                     : exercises != null
                                         ? 'Search for exercises'
-                                        : '',
+                                        : isNutrition != null ?
+                                           'Search for Nutrition' : '',
                             context: context,
                             onPressed: () {
                               Navigator.pop(context);
@@ -76,7 +87,10 @@ class SearchScreen extends StatelessWidget {
                               constPlanSearchVariable = null;
                               exercises = null;
                               constExerciseSearchVariable = null;
-                              homeCubit.searchController.text = '';
+                              isNutrition = null;
+                              constNutritionSearchVariable = null;
+                              isNutritionPlan = null;
+                              homeCubit.searchController.clear();
                             }),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,32 +101,33 @@ class SearchScreen extends StatelessWidget {
                               controller: homeCubit.searchController,
                               hint: clientsScreen != null
                                   ? 'Search for clients'
-                                  : plans != null
+                                  : plans != null || isNutritionPlan != null
                                       ? 'Search for plans'
                                       : exercises != null
                                           ? 'Search for exercises'
-                                          : AppString.search,
+                                          : isNutrition != null
+                                            ? 'Search for nutrition'
+                                               :AppString.search,
                               iconPrefix: Icons.search,
                               onChanged: (value) {
                                 plans != null
-                                    ? homeCubit.getPlan(
-                                        searchPlan: homeCubit.searchController.text,
-                                        isNutrition: isNutrition!,
-                                      )
+                                    ? homeCubit.getPlan(searchPlan: homeCubit.searchController.text, isNutrition: isNutritionPlan!,)
                                     : exercises != null
-                                        ? homeCubit.getExercise(
-                                            searchExercise:
-                                                homeCubit.searchController.text)
-                                        : homeCubit.search(
-                                            search: homeCubit
-                                                .searchController.text);
+                                        ? homeCubit.getExercise(searchExercise: homeCubit.searchController.text)
+                                        : isNutrition != null
+                                           ? homeCubit.getNutrition(search: homeCubit.searchController.text)
+                                           : homeCubit.search(search: homeCubit.searchController.text);
                               },
                             ),
                           ),
                           horizontalSpace(2.w),
-                          if (clientsScreen == null &&
-                              plans == null &&
-                              exercises == null)
+                          if (
+                          clientsScreen == null &&
+                          plans == null &&
+                           exercises == null &&
+                           isNutrition == null &&
+                           isNutritionPlan == null
+                          )
                             Padding(
                               padding: EdgeInsets.only(bottom: 2.h),
                               child: InkWell(
@@ -132,12 +147,10 @@ class SearchScreen extends StatelessWidget {
                                             secondFilterTitle:
                                                 AppString.clients,
                                             onTapFirstChoice: () {
-                                              homeCubit
-                                                  .changeToFirstChoiceRadioButton();
+                                              homeCubit.changeToFirstChoiceRadioButton();
                                             },
                                             onTapSecondChoice: () {
-                                              homeCubit
-                                                  .changeToSecondChoiceRadioButton();
+                                              homeCubit.changeToSecondChoiceRadioButton();
                                             },
                                           );
                                         },
@@ -150,22 +163,23 @@ class SearchScreen extends StatelessWidget {
                         ],
                       ),
                       verticalSpace(1.h),
-                      if (homeCubit.results != null &&
-                              homeCubit.searchController.text.isNotEmpty ||
-                          homeCubit.planResult != null &&
-                              homeCubit.searchController.text.isNotEmpty)
+                      if (
+                      homeCubit.results != null && homeCubit.searchController.text.isNotEmpty ||
+                      homeCubit.planResult != null && homeCubit.searchController.text.isNotEmpty ||
+                      homeCubit.nutritionResult != null && homeCubit.searchController.text.isNotEmpty
+                      )
                         Expanded(
                           child: ListView.builder(
                             itemBuilder: (context, index) {
-                              return plans != null
+                              return plans != null || isNutritionPlan != null
                                   ? InkWell(
                                       onTap: () {
                                         navigateTo(
                                             context,
                                             PlanDetails(
-                                              planId:isNutrition == true ? homeCubit.planResult![index].nutritionPlanId : homeCubit.planResult![index].exercisePlanId,
+                                              planId:isNutritionPlan == true ? homeCubit.planResult![index].nutritionPlanId : homeCubit.planResult![index].exercisePlanId,
                                               ownerUserId: homeCubit.planResult![index].userId,
-                                              isNutrition: isNutrition,
+                                              isNutrition: isNutritionPlan,
                                               planName: homeCubit.planResult![index].planName,
                                               planVisibility: homeCubit.planResult![index].planVisibility,
                                             ));
@@ -211,160 +225,174 @@ class SearchScreen extends StatelessWidget {
                                             debugPrintFullText('$index');
                                           },
                                         )
-                                      : InkWell(
-                                          onTap: () {
-                                            if (clientsScreen == null) {
-                                              navigateTo(
-                                                  context,
-                                                  SearchResultScreen(
-                                                    userId: homeCubit
-                                                        .results![index].userId,
-                                                    name: homeCubit
-                                                        .results![index]
-                                                        .userName,
-                                                    pic: homeCubit
-                                                        .results![index]
-                                                        .profilePicture,
-                                                    location: homeCubit
-                                                        .results![index]
-                                                        .location,
-                                                    bio: homeCubit
-                                                        .results![index].bio,
-                                                    verification: homeCubit
-                                                        .results![index]
-                                                        .verification,
-                                                    facebookLink: homeCubit
-                                                        .results![index]
-                                                        .facebookLink,
-                                                    fixedPrice: homeCubit
-                                                        .results![index]
-                                                        .fixedPrice,
-                                                    instagramLink: homeCubit
-                                                        .results![index]
-                                                        .instagramLink,
-                                                    tiktokLink: homeCubit
-                                                        .results![index]
-                                                        .tiktokLink,
-                                                    youtubeLink: homeCubit
-                                                        .results![index]
-                                                        .youtubeLink,
-                                                  ));
-                                            }
-                                            if (clientsScreen != null) {
-                                              navigateTo(
-                                                  context,
-                                                  ClientDetailsScreen(
-                                                    name: homeCubit
-                                                        .results![index]
-                                                        .userName,
-                                                    address: homeCubit
-                                                        .results![index]
-                                                        .location,
-                                                    age:
-                                                        '${homeCubit.results![index].age}',
-                                                    bodyFat:
-                                                        '${homeCubit.results![index].bodyFat}',
-                                                    goal: homeCubit
-                                                        .results![index].goal,
-                                                    img: homeCubit
-                                                        .results![index]
-                                                        .profilePicture,
-                                                    tall:
-                                                        '${homeCubit.results![index].currentTall}',
-                                                    weight:
-                                                        '${homeCubit.results![index].currentWeight}',
-                                                  ));
-                                            }
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 1.h),
-                                            child: Container(
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                    255, 251, 239, 233),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.rSp),
+                                      : isNutrition != null
+                                            ?InkWell(
+                                              child: buildExercisesItems(
+                                                exerciseImage: homeCubit.nutritionResult![index].nutritionPic!,
+                                                exerciseName: homeCubit.nutritionResult![index].nutritionName!,
+                                                exerciseCategory: homeCubit.nutritionResult![index].nutritionCategory!,
                                               ),
-                                              child: Padding(
-                                                padding:
-                                                    EdgeInsets.all(10.0.rSp),
-                                                child: Row(
-                                                  children: [
-                                                    CircleAvatar(
-                                                      radius: 33.rSp,
-                                                      backgroundImage:
-                                                          NetworkImage(
-                                                        homeCubit
-                                                            .results![index]
-                                                            .profilePicture!,
-                                                      ),
-                                                    ),
-                                                    horizontalSpace(2.w),
-                                                    Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        myText(
-                                                          title: homeCubit
-                                                              .results![index]
-                                                              .userName!,
-                                                          //AppString.resultSearchName,
-                                                          style:
-                                                              Style.extraSmall,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontSize: 14.rSp,
-                                                        ),
-                                                        verticalSpace(0.5.h),
-                                                        Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Icon(
-                                                              Icons.location_on,
-                                                              size: 15.rSp,
-                                                            ),
-                                                            myText(
-                                                              title: homeCubit
-                                                                  .results![
-                                                                      index]
-                                                                  .location!,
-                                                              //AppString.resultSearchLocation,
-                                                              style: Style
-                                                                  .extraSmall,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              fontSize: 14.rSp,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
+                                              onTap: () {
+                                                navigateTo(context, NutritionBasicData(nutritionEntity: homeCubit.nutritionResult![index]));
+                                                debugPrintFullText('$index');
+                                              },
+                                            )
+                                            :InkWell(
+                                onTap: () {
+                                  if (clientsScreen == null) {
+                                    navigateTo(
+                                        context,
+                                        SearchResultScreen(
+                                          userId: homeCubit
+                                              .results![index].userId,
+                                          name: homeCubit
+                                              .results![index]
+                                              .userName,
+                                          pic: homeCubit
+                                              .results![index]
+                                              .profilePicture,
+                                          location: homeCubit
+                                              .results![index]
+                                              .location,
+                                          bio: homeCubit
+                                              .results![index].bio,
+                                          verification: homeCubit
+                                              .results![index]
+                                              .verification,
+                                          facebookLink: homeCubit
+                                              .results![index]
+                                              .facebookLink,
+                                          fixedPrice: homeCubit
+                                              .results![index]
+                                              .fixedPrice,
+                                          instagramLink: homeCubit
+                                              .results![index]
+                                              .instagramLink,
+                                          tiktokLink: homeCubit
+                                              .results![index]
+                                              .tiktokLink,
+                                          youtubeLink: homeCubit
+                                              .results![index]
+                                              .youtubeLink,
+                                        ));
+                                  }
+                                  if (clientsScreen != null) {
+                                    navigateTo(
+                                        context,
+                                        ClientDetailsScreen(
+                                          name: homeCubit
+                                              .results![index]
+                                              .userName,
+                                          address: homeCubit
+                                              .results![index]
+                                              .location,
+                                          age:
+                                          '${homeCubit.results![index].age}',
+                                          bodyFat:
+                                          '${homeCubit.results![index].bodyFat}',
+                                          goal: homeCubit
+                                              .results![index].goal,
+                                          img: homeCubit
+                                              .results![index]
+                                              .profilePicture,
+                                          tall:
+                                          '${homeCubit.results![index].currentTall}',
+                                          weight:
+                                          '${homeCubit.results![index].currentWeight}',
+                                        ));
+                                  }
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 1.h),
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 251, 239, 233),
+                                      borderRadius:
+                                      BorderRadius.circular(
+                                          10.rSp),
+                                    ),
+                                    child: Padding(
+                                      padding:
+                                      EdgeInsets.all(10.0.rSp),
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 33.rSp,
+                                            backgroundImage:
+                                            NetworkImage(
+                                              homeCubit
+                                                  .results![index]
+                                                  .profilePicture!,
                                             ),
                                           ),
-                                        );
+                                          horizontalSpace(2.w),
+                                          Column(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment
+                                                .start,
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment
+                                                .start,
+                                            children: [
+                                              myText(
+                                                title: homeCubit
+                                                    .results![index]
+                                                    .userName!,
+                                                //AppString.resultSearchName,
+                                                style:
+                                                Style.extraSmall,
+                                                fontWeight:
+                                                FontWeight.w400,
+                                                fontSize: 14.rSp,
+                                              ),
+                                              verticalSpace(0.5.h),
+                                              Row(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .start,
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .start,
+                                                children: [
+                                                  Icon(
+                                                    Icons.location_on,
+                                                    size: 15.rSp,
+                                                  ),
+                                                  myText(
+                                                    title: homeCubit
+                                                        .results![
+                                                    index]
+                                                        .location!,
+                                                    //AppString.resultSearchLocation,
+                                                    style: Style
+                                                        .extraSmall,
+                                                    fontWeight:
+                                                    FontWeight
+                                                        .w400,
+                                                    fontSize: 14.rSp,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
                             },
                             physics: const BouncingScrollPhysics(),
-                            itemCount: plans != null
+                            itemCount: plans != null || isNutritionPlan != null
                                 ? homeCubit.planResult!.length
                                 : exercises != null
                                     ? homeCubit.exerciseResult!.length
-                                    : homeCubit.results!.length,
+                                    : isNutrition != null
+                                        ?homeCubit.nutritionResult!.length
+                                        :homeCubit.results!.length,
                           ),
                         ),
                     ],

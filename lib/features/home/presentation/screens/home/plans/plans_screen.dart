@@ -53,7 +53,7 @@ class PlansScreen extends StatelessWidget {
                               context,
                               SearchScreen(
                                 plans: true,
-                                isNutrition: tabIndex == 0 ? true: false,
+                                isNutritionPlan: tabIndex == 0 ? true: false,
                               ));
                         },
                         icon: Icons.search,

@@ -345,6 +345,7 @@ String? constClientVariable;
 bool? constClientSearchVariable;
 bool? constPlanSearchVariable;
 bool? constExerciseSearchVariable;
+bool? constNutritionSearchVariable;
 String testCity = 'cairo';
 
 
