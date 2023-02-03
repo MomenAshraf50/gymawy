@@ -643,7 +643,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     final Response f = await dioHelper.get(
       url: addNutritionEndPoint,
       token: token,
-      query: constPlanSearchVariable != null
+      query: constNutritionSearchVariable != null
           ? {
               'search': params.searchNutrition,
             }

@@ -7,6 +7,7 @@ import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/nutrition/add_nutrition.dart';
 import 'package:gymawy/features/home/presentation/screens/home/nutrition/nutrition_basic_data.dart';
+import 'package:gymawy/features/home/presentation/screens/search/search_screen.dart';
 import '../../../../../../core/util/resources/appString.dart';
 import '../../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../../core/util/widgets/default_action_button.dart';
@@ -31,13 +32,14 @@ class NutritionScreen extends StatelessWidget {
                   title: AppString.nutrition,
                   context: context,
                   actions: [
-                    // defaultActionButton(
-                    //   onPressed: () {
-                    //   },
-                    //   icon: Icons.search,
-                    //   backgroundColor: ColorsManager.white,
-                    //   iconColor: ColorsManager.black,
-                    // ),
+                    defaultActionButton(
+                      onPressed: () {
+                        navigateTo(context, SearchScreen(isNutrition: true,));
+                      },
+                      icon: Icons.search,
+                      backgroundColor: ColorsManager.white,
+                      iconColor: ColorsManager.black,
+                    ),
                     horizontalSpace(5.w),
                     defaultActionButton(
                         icon: Icons.add,
