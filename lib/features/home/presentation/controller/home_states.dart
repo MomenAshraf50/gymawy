@@ -264,3 +264,11 @@ class DeleteNutritionErrorState extends HomeStates{
 
   DeleteNutritionErrorState(this.failure);
 }
+
+class AddNutritionDetailsLoadingState extends HomeStates{}
+class AddNutritionDetailsSuccessState extends HomeStates{}
+class AddNutritionDetailsErrorState extends HomeStates{
+  final String failure;
+
+  AddNutritionDetailsErrorState(this.failure);
+}

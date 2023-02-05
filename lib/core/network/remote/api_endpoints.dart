@@ -10,6 +10,7 @@ const String addExercisePlanEndPoint = 'exercisePlan/';
 const String addNutritionPlanEndPoint = 'nutritionPlan/';
 const String addNutritionEndPoint = 'nutritions/';
 const String addExerciseDetailsEndPoint = 'exerciseDetail/';
+const String addNutritionDetailsEndPoint = 'nutritionDetail/';
 String updateCoachEndPoint = 'trainers/$userId/';
 String updateClientsEndPoint = 'clients/$userId/';
 

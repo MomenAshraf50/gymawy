@@ -17,9 +17,11 @@ import 'package:gymawy/features/home/presentation/screens/home/nutrition/add_nut
 import '../../../../core/error/failures.dart';
 import '../entities/add_exercise_entity.dart';
 import '../entities/add_exercise_plan_entity.dart';
+import '../entities/add_nutrition_details_entity.dart';
 import '../entities/add_nutrition_entity.dart';
 import '../entities/certificate_entity.dart';
 import '../entities/profile_entity.dart';
+import '../usecase/add_nutrition_details_usecase.dart';
 import '../usecase/add_plan_usecase.dart';
 import '../usecase/delete_exercise_details_usecase.dart';
 import '../usecase/delete_exersice_plan_usecase.dart';
@@ -121,4 +123,8 @@ abstract class HomeBaseRepository {
       GetNutritionParams params);
 
   Future<Either<Failure, void>> deleteNutrition(DeleteNutritionParams params);
+
+  Future<Either<Failure, NutritionDetailsEntity>> addNutritionDetails(
+      NutritionDetailsParams params);
+
 }

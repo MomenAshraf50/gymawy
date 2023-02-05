@@ -24,6 +24,7 @@ import 'package:gymawy/features/login/domain/usecase/log_in_usecase.dart';
 import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../features/home/domain/usecase/add_nutrition_details_usecase.dart';
 import '../../features/home/domain/usecase/add_plan_usecase.dart';
 import '../../features/home/domain/usecase/certification_usecase.dart';
 import '../../features/home/domain/usecase/delete_certification_usecase.dart';
@@ -77,7 +78,8 @@ Future<void> init() async {
         deleteExercisePlanDetailsUseCase: sl(),
         addNutritionUseCase: sl(),
         getNutritionUseCase: sl(),
-    deleteNutritionUseCase: sl(),
+        deleteNutritionUseCase: sl(),
+        addNutritionDetailsUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -125,6 +127,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AddNutritionUseCase(sl()));
   sl.registerLazySingleton(() => GetNutritionUseCase(sl()));
   sl.registerLazySingleton(() => DeleteNutritionUseCase(sl()));
+  sl.registerLazySingleton(() => AddNutritionDetailsUseCase(sl()));
+
 
 
   //Data sources

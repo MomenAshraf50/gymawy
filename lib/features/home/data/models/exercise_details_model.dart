@@ -1,4 +1,3 @@
-import 'package:gymawy/features/home/data/models/add_exercise_model.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 
 class ExerciseDetailsModel extends ExerciseDetailsEntity {

@@ -32,6 +32,7 @@ import '../../domain/entities/add_exercise_plan_entity.dart';
 import '../../domain/entities/add_nutrition_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/search_entity.dart';
+import '../../domain/usecase/add_nutrition_details_usecase.dart';
 import '../../domain/usecase/add_nutrition_usecase.dart';
 import '../../domain/usecase/add_plan_usecase.dart';
 import '../../domain/usecase/certification_usecase.dart';
@@ -77,6 +78,8 @@ class HomeCubit extends Cubit<HomeStates> {
   final AddNutritionUseCase _addNutritionUseCase;
   final GetNutritionUseCase _getNutritionUseCase;
   final DeleteNutritionUseCase _deleteNutritionUseCase;
+  final AddNutritionDetailsUseCase _addNutritionDetailsUseCase;
+
 
 
   HomeCubit({
@@ -103,6 +106,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required AddNutritionUseCase addNutritionUseCase,
     required GetNutritionUseCase getNutritionUseCase,
     required DeleteNutritionUseCase deleteNutritionUseCase,
+    required AddNutritionDetailsUseCase addNutritionDetailsUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -127,6 +131,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _addNutritionUseCase = addNutritionUseCase,
         _getNutritionUseCase = getNutritionUseCase,
         _deleteNutritionUseCase = deleteNutritionUseCase,
+        _addNutritionDetailsUseCase = addNutritionDetailsUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -608,9 +613,23 @@ class HomeCubit extends Cubit<HomeStates> {
     DropdownMenuItem(value: "Cooked vegetables", child: myText(title: "Cooked vegetables", style: Style.extraSmall)),
   ];
 
+  String selectedMealValue = 'Breakfast';
+
+  List<DropdownMenuItem<String>>? selectedMeal = const[
+    DropdownMenuItem(value: "Breakfast", child: myText(title: "Breakfast", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Snack", child: myText(title: "Snack", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Lunch", child: myText(title: "Lunch", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Dinner", child: myText(title: "Dinner", style: Style.extraSmall)),
+  ];
+
 
   void changeDropDownSelectedValue(String value){
     selectedValue = value;
+    emit(ChangeDropDownSelectedValueState());
+  }
+
+  void changeDropDownSelectedMeal(String value){
+    selectedMealValue = value;
     emit(ChangeDropDownSelectedValueState());
   }
 
@@ -991,7 +1010,17 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
 
+  void addNutritionDetails(NutritionDetailsParams params)async{
+    emit(AddNutritionDetailsLoadingState());
 
+    final result = await _addNutritionDetailsUseCase(params);
+
+    result.fold((failure){
+      emit(AddNutritionDetailsErrorState(mapFailureToMessage(failure)));
+    }, (data){
+      emit(AddNutritionDetailsSuccessState());
+    });
+  }
 
 }
 
