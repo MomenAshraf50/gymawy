@@ -24,6 +24,7 @@ import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.da
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
+import '../../domain/usecase/add_nutrition_details_usecase.dart';
 import '../../domain/usecase/add_plan_usecase.dart';
 import '../../domain/usecase/add_exercise_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
@@ -31,6 +32,7 @@ import '../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
 import '../../domain/usecase/get_plan_usecase.dart';
 import '../models/add_exercise_plan_model.dart';
+import '../models/add_nutrition_details_model.dart';
 
 abstract class HomeBaseDataSource {
   Future<UpdateModel> updateProfile({required UpdateProfileParams params});
@@ -117,6 +119,11 @@ abstract class HomeBaseDataSource {
   Future<List<AddNutritionModel>> getNutrition(GetNutritionParams params);
 
   Future<void> deleteNutrition(DeleteNutritionParams params);
+
+  Future<NutritionDetailsModel> addNutritionDetails(NutritionDetailsParams params);
+
+
+
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -662,4 +669,24 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       token: token,
     );
   }
+
+  @override
+  Future<NutritionDetailsModel> addNutritionDetails(
+      NutritionDetailsParams params) async {
+    final Response f = await dioHelper.post(
+        url: addNutritionDetailsEndPoint,
+        token: token,
+              data: {
+            'nutrition': params.nutritionId,
+            'nutrition_plan': params.planId,
+            'day': params.day,
+            'meal': params.meal,
+            'meal_time': params.time,
+          });
+    return NutritionDetailsModel.fromJson(f.data);
+  }
+
+
+
+
 }

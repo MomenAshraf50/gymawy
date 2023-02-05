@@ -6,6 +6,7 @@ import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/nutrition/add_nutrition.dart';
+import 'package:gymawy/features/home/presentation/screens/home/nutrition/add_nutrition_details.dart';
 import 'package:gymawy/features/home/presentation/screens/home/nutrition/nutrition_basic_data.dart';
 import 'package:gymawy/features/home/presentation/screens/search/search_screen.dart';
 import '../../../../../../core/util/resources/appString.dart';
@@ -14,7 +15,9 @@ import '../../../../../../core/util/widgets/default_action_button.dart';
 import '../../../widgets/build_exercise_item.dart';
 
 class NutritionScreen extends StatelessWidget {
-  const NutritionScreen({Key? key}) : super(key: key);
+  NutritionScreen({Key? key , this.planId , this.isAddNutrition}) : super(key: key);
+  bool? isAddNutrition;
+  int? planId;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,7 @@ class NutritionScreen extends StatelessWidget {
                   title: AppString.nutrition,
                   context: context,
                   actions: [
+                    if(isAddNutrition != true)
                     defaultActionButton(
                       onPressed: () {
                         navigateTo(context, SearchScreen(isNutrition: true,));
@@ -54,9 +58,18 @@ class NutritionScreen extends StatelessWidget {
                   child: ListView.builder(
                     itemBuilder: (context, index) => InkWell(
                       onTap: () {
-                        navigateTo(context, NutritionBasicData(
+                        if(isAddNutrition != true) {
+                          navigateTo(context, NutritionBasicData(
                           nutritionEntity: homeCubit.nutritionResult![index],
                         ));
+                        }
+
+                        if(isAddNutrition == true) {
+                          navigateTo(context, AddNutritionDetails(
+                              nutritionResult: homeCubit.nutritionResult![index],
+                              planId: planId,
+                          ));
+                        }
                       },
                       child: buildExercisesItems(
                         exerciseImage: homeCubit.nutritionResult![index].nutritionPic!,

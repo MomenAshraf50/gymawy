@@ -8,6 +8,7 @@ import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/exercises/exercises_screen.dart';
+import 'package:gymawy/features/home/presentation/screens/home/nutrition/nutrition_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_type.dart';
 import 'package:gymawy/features/home/presentation/widgets/exercise_details.dart';
 import '../../../../../../core/util/widgets/default dialog.dart';
@@ -89,7 +90,9 @@ class PlanDetails extends StatelessWidget {
                         defaultActionButton(
                         onPressed: ()
                         {
-                          navigateTo(context, ExercisesScreen(isAddExercise: true,planId: planId,));
+                          isNutrition == false?
+                          navigateTo(context, ExercisesScreen(isAddExercise: true,planId: planId,)) :
+                          navigateTo(context, NutritionScreen(isAddNutrition: true,planId: planId,)) ;
                         },
                         icon: Icons.add,
                         backgroundColor: Colors.green,

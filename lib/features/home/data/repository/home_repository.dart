@@ -22,8 +22,10 @@ import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart'
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/add_exercise_plan_entity.dart';
+import '../../domain/entities/add_nutrition_details_entity.dart';
 import '../../domain/entities/add_nutrition_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
+import '../../domain/usecase/add_nutrition_details_usecase.dart';
 import '../../domain/usecase/add_plan_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
@@ -49,6 +51,8 @@ typedef CallDeleteExercisePlanDetails = Future<void> Function();
 typedef CallAddNutrition = Future<AddNutritionEntity> Function();
 typedef CallGetNutrition = Future<List<AddNutritionEntity>> Function();
 typedef CallDeleteNutrition = Future<List<AddNutritionEntity>> Function();
+typedef CallAddNutritionDetails = Future<NutritionDetailsEntity> Function();
+
 
 class HomeRepository extends HomeBaseRepository {
   final HomeBaseDataSource remoteDataSource;
@@ -531,4 +535,29 @@ class HomeRepository extends HomeBaseRepository {
       return remoteDataSource.deleteNutrition(params);
     });
   }
+
+
+  Future<Either<Failure, NutritionDetailsEntity>> fetchAddNutritionDetails(
+      CallAddNutritionDetails mainMethod,
+      ) async {
+    try {
+      final nutritionDetails = await mainMethod();
+      return Right(nutritionDetails);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, NutritionDetailsEntity>> addNutritionDetails(
+      NutritionDetailsParams params) async {
+    return await fetchAddNutritionDetails(() {
+      return remoteDataSource.addNutritionDetails(params);
+    });
+  }
+
+
+
 }
