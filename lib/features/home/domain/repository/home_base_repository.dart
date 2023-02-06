@@ -26,6 +26,7 @@ import '../usecase/add_plan_usecase.dart';
 import '../usecase/delete_exercise_details_usecase.dart';
 import '../usecase/delete_exersice_plan_usecase.dart';
 import '../usecase/get_exercise_plan_details.dart';
+import '../usecase/get_nutrition_details.dart';
 import '../usecase/get_nutrition_usecase.dart';
 import '../usecase/get_plan_usecase.dart';
 import '../usecase/get_exercise_usecase.dart';
@@ -126,5 +127,11 @@ abstract class HomeBaseRepository {
 
   Future<Either<Failure, NutritionDetailsEntity>> addNutritionDetails(
       NutritionDetailsParams params);
+
+  Future<Either<Failure, List<NutritionDetailsEntity>>> getNutritionPlanDetails(
+      GetNutritionPlanDetailsParams params);
+
+
+
 
 }

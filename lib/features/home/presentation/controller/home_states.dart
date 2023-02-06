@@ -4,6 +4,7 @@ import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 
 import '../../domain/entities/add_exercise_entity.dart';
 import '../../domain/entities/add_exercise_plan_entity.dart';
+import '../../domain/entities/add_nutrition_details_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/exercise_details_entity.dart';
 import '../../domain/entities/search_entity.dart';
@@ -272,3 +273,16 @@ class AddNutritionDetailsErrorState extends HomeStates{
 
   AddNutritionDetailsErrorState(this.failure);
 }
+
+class GetNutritionDetailsLoadingState extends HomeStates{}
+class GetNutritionDetailsSuccessState extends HomeStates{
+  final List<NutritionDetailsEntity> nutritionPlanDetailList;
+
+  GetNutritionDetailsSuccessState(this.nutritionPlanDetailList);
+}
+class GetNutritionDetailsErrorState extends HomeStates{
+  final String failure;
+
+  GetNutritionDetailsErrorState(this.failure);
+}
+

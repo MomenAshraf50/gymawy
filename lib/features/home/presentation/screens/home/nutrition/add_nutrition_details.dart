@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
@@ -36,6 +34,7 @@ class AddNutritionDetails extends StatelessWidget {
             Navigator.pop(context);
             Navigator.pop(context);
             designToastDialog(context: context, toast: TOAST.success, text: 'Nutrition details added successfully');
+            homeCubit.getNutritionPlanDetails();
           }
           
         },

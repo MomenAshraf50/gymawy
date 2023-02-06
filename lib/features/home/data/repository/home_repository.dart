@@ -30,6 +30,7 @@ import '../../domain/usecase/add_plan_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
+import '../../domain/usecase/get_nutrition_details.dart';
 import '../../domain/usecase/get_nutrition_usecase.dart';
 import '../../domain/usecase/get_plan_usecase.dart';
 
@@ -52,6 +53,8 @@ typedef CallAddNutrition = Future<AddNutritionEntity> Function();
 typedef CallGetNutrition = Future<List<AddNutritionEntity>> Function();
 typedef CallDeleteNutrition = Future<List<AddNutritionEntity>> Function();
 typedef CallAddNutritionDetails = Future<NutritionDetailsEntity> Function();
+typedef CallGetNutritionDetails = Future<List<NutritionDetailsEntity>> Function();
+
 
 
 class HomeRepository extends HomeBaseRepository {
@@ -557,6 +560,31 @@ class HomeRepository extends HomeBaseRepository {
       return remoteDataSource.addNutritionDetails(params);
     });
   }
+
+  Future<Either<Failure, List<NutritionDetailsEntity>>> fetchGetNutritionDetails(
+      CallGetNutritionDetails mainMethod,
+      ) async {
+    try {
+      final nutritionDetails = await mainMethod();
+      return Right(nutritionDetails);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<NutritionDetailsEntity>>> getNutritionPlanDetails(
+      GetNutritionPlanDetailsParams params) async {
+    return await fetchGetNutritionDetails(() {
+      return remoteDataSource.getNutritionDetails(params);
+    });
+  }
+
+
+
+
 
 
 

@@ -10,19 +10,25 @@ import 'package:gymawy/core/util/widgets/default%20dialog.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/features/home/data/models/add_nutrition_details_model.dart';
 import 'package:gymawy/features/home/domain/entities/add_nutrition_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/nutrition/add_nutrition.dart';
+import '../../../../domain/entities/add_nutrition_details_entity.dart';
 
 class NutritionBasicData extends StatelessWidget {
   NutritionBasicData({
     Key? key,
-    required this.nutritionEntity,
+    this.nutritionEntity,
+    this.nutritionDetailEntity,
+    this.details,
   }) : super(key: key);
 
-  AddNutritionEntity nutritionEntity;
+  AddNutritionEntity? nutritionEntity;
+  NutritionDetailsEntity? nutritionDetailEntity;
+  bool? details;
 
   @override
   Widget build(BuildContext context) {
@@ -57,21 +63,23 @@ class NutritionBasicData extends StatelessWidget {
                     child: Column(
                       children: [
                         defaultAppBar(
-                            title: nutritionEntity.nutritionName!,
+                            title: details==true ?  nutritionDetailEntity!.nutritionModel.nutritionName : nutritionEntity!.nutritionName!,
                             fontColor: ColorsManager.white,
                             context: context,
                             color: Colors.transparent,
                             actions: [
-                              if (userId == nutritionEntity.userId)
+                              if (userId == nutritionEntity!.userId)
                                 Padding(
                                   padding: EdgeInsets.only(right: 3.w),
                                   child: defaultActionButton(
                                       onPressed: () {
-                                        navigateTo(
+                                        if(details==false) {
+                                          navigateTo(
                                             context,
                                             AddNutrition(
                                               nutritionEntity: nutritionEntity,
                                             ));
+                                        }
                                       },
                                       icon: Icons.edit,
                                       backgroundColor: ColorsManager.white,
@@ -84,7 +92,9 @@ class NutritionBasicData extends StatelessWidget {
                                 20.rSp, 70.rSp, 20.rSp, 20.rSp),
                             child: Center(
                                 child: Image.network(
-                                    nutritionEntity.nutritionPic!)),
+                                    nutritionEntity!.nutritionPic!
+                                )
+                            ),
                           ),
                         ),
                         Expanded(
@@ -106,7 +116,7 @@ class NutritionBasicData extends StatelessWidget {
                                   children: [
                                     verticalSpace(2.h),
                                     myText(
-                                      title: nutritionEntity.nutritionCategory!,
+                                      title: nutritionEntity!.nutritionCategory!,
                                       style: Style.small,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -132,7 +142,7 @@ class NutritionBasicData extends StatelessWidget {
                                               horizontalSpace(0.5.w),
                                               myText(
                                                 title:
-                                                    '${nutritionEntity.nutritionCalories}k Cal',
+                                                    '${nutritionEntity!.nutritionCalories}k Cal',
                                                 style: Style.extraSmall,
                                                 fontSize: 10.rSp,
                                               ),
@@ -147,7 +157,7 @@ class NutritionBasicData extends StatelessWidget {
                                               horizontalSpace(0.5.w),
                                               myText(
                                                 title:
-                                                    '${nutritionEntity.nutritionFat}g fats',
+                                                    '${nutritionEntity!.nutritionFat}g fats',
                                                 style: Style.extraSmall,
                                                 fontSize: 10.rSp,
                                               ),
@@ -162,7 +172,7 @@ class NutritionBasicData extends StatelessWidget {
                                               horizontalSpace(0.5.w),
                                               myText(
                                                 title:
-                                                    '${nutritionEntity.nutritionProtein}g proteins',
+                                                    '${nutritionEntity!.nutritionProtein}g proteins',
                                                 style: Style.extraSmall,
                                                 fontSize: 10.rSp,
                                               ),
@@ -177,7 +187,7 @@ class NutritionBasicData extends StatelessWidget {
                                             horizontalSpace(0.5.w),
                                             myText(
                                               title:
-                                                  '${nutritionEntity.nutritionCarb}g carb',
+                                                  '${nutritionEntity!.nutritionCarb}g carb',
                                               style: Style.extraSmall,
                                               fontSize: 10.rSp,
                                             ),
@@ -210,14 +220,14 @@ class NutritionBasicData extends StatelessWidget {
                                                   Expanded(
                                                       child: myText(
                                                           title: nutritionEntity
-                                                              .nutritionComponent!
+                                                              !.nutritionComponent!
                                                               .keys
                                                               .toList()[index],
                                                           style: Style.small)),
                                                   Expanded(
                                                       child: myText(
                                                           title: nutritionEntity
-                                                              .nutritionComponent!
+                                                              !.nutritionComponent!
                                                               .values
                                                               .toList()[index],
                                                           style: Style.small)),
@@ -226,31 +236,31 @@ class NutritionBasicData extends StatelessWidget {
                                             );
                                           },
                                           itemCount: nutritionEntity
-                                              .nutritionComponent!.values
+                                              !.nutritionComponent!.values
                                               .toList()
                                               .length,
                                         )
                                       ],
                                     ),
-                                    if (nutritionEntity.nutritionHowToPrepare !=
+                                    if (nutritionEntity!.nutritionHowToPrepare !=
                                         null)
                                       const myText(
                                         title: 'How to prepare',
                                         style: Style.small,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                    if (nutritionEntity.nutritionHowToPrepare !=
+                                    if (nutritionEntity!.nutritionHowToPrepare !=
                                         null)
                                       verticalSpace(2.h),
-                                    if (nutritionEntity.nutritionHowToPrepare !=
+                                    if (nutritionEntity!.nutritionHowToPrepare !=
                                         null)
                                       myText(
                                         title: nutritionEntity
-                                            .nutritionHowToPrepare!,
+                                            !.nutritionHowToPrepare!,
                                         style: Style.extraSmall,
                                       ),
                                     verticalSpace(4.h),
-                                    if (userId! == nutritionEntity.userId)
+                                    if (userId! == nutritionEntity!.userId)
                                       myButton(
                                         text: AppString.delete,
                                         onPressed: () {
@@ -267,7 +277,7 @@ class NutritionBasicData extends StatelessWidget {
                                                     homeCubit.deleteNutrition(
                                                         DeleteNutritionParams(
                                                             nutritionEntity
-                                                                .nutritionId!));
+                                                               ! .nutritionId!));
                                                   },
                                                 );
                                               });

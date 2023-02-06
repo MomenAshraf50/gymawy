@@ -8,10 +8,12 @@ import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/exercises/exercises_screen.dart';
+import 'package:gymawy/features/home/presentation/screens/home/nutrition/nutrition_basic_data.dart';
 import 'package:gymawy/features/home/presentation/screens/home/nutrition/nutrition_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plan_type.dart';
 import 'package:gymawy/features/home/presentation/widgets/exercise_details.dart';
 import '../../../../../../core/util/widgets/default dialog.dart';
+import '../../../../domain/entities/add_nutrition_details_entity.dart';
 import '../../../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../../controller/home_cubit.dart';
 import '../exercises/exercise_type.dart';
@@ -32,6 +34,11 @@ class PlanDetails extends StatelessWidget {
   String? planVisibility;
   bool? isNutrition;
 
+  List<NutritionDetailsEntity>? nutritionResults;
+
+
+
+
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
@@ -39,11 +46,18 @@ class PlanDetails extends StatelessWidget {
     debugPrintFullText('$ownerUserId');
     debugPrintFullText('$planVisibility');
     debugPrintFullText('$planName');
+    debugPrintFullText('$isNutrition');
 
     if(isNutrition == false)
     {
       homeCubit.getExercisePlanDetails();
     }
+
+    if(isNutrition == true)
+    {
+      homeCubit.getNutritionPlanDetails();
+    }
+
 
     return SafeArea(
       child: Scaffold(
@@ -60,6 +74,11 @@ class PlanDetails extends StatelessWidget {
                   context: context,
                   toast: TOAST.success,
                   text: 'Exercise Plan Deleted Successfully');
+            }
+
+            if(state is GetNutritionDetailsSuccessState)
+            {
+              nutritionResults = state.nutritionPlanDetailList;
             }
           },
           builder: (context, state) {
@@ -102,7 +121,7 @@ class PlanDetails extends StatelessWidget {
                     ],
                   ),
                   verticalSpace(2.h),
-                  homeCubit.exerciseDetailsResult != null && isNutrition == false?
+                  if(homeCubit.exerciseDetailsResult != null && isNutrition == false)
                   Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
@@ -138,10 +157,38 @@ class PlanDetails extends StatelessWidget {
                       itemCount: homeCubit.exerciseDetailsResult!.length,
                       physics: const BouncingScrollPhysics(),
                     ),
-                  ) :
-                  Container(),
+                  ),
+                  if(homeCubit.nutritionResults != null && isNutrition == true)
+                  Expanded(
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return homeCubit.nutritionResults![index].planId == planId?
+                        InkWell(
+                          onTap: ()
+                          {
+                            navigateTo(context, NutritionBasicData(
+                              nutritionDetailEntity: nutritionResults![index],
+                              details: true,
+
+                            ));
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 3.h),
+                            child: exerciseDetails(
+                              exerciseImage: homeCubit.nutritionResults![index].nutritionModel.nutritionPic,
+                              exerciseName: homeCubit.nutritionResults![index].nutritionModel.nutritionName,
+                              exerciseCategory: homeCubit.nutritionResults![index].nutritionModel.nutritionCategory,
+                              isExercisePlanDetails: false,
+                            ),
+                          ),
+                        ) :
+                        Container();
+                      },
+                      itemCount: homeCubit.nutritionResults!.length,
+                      physics: const BouncingScrollPhysics(),
+                    ),
+                  ) ,
                   verticalSpace(4.h),
-                  const Spacer(),
                   if(userId == ownerUserId)
                   myButton(
                     text: AppString.delete,
