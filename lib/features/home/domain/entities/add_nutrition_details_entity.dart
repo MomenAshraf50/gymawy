@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
-import 'package:gymawy/features/home/data/models/add_exercise_model.dart';
+import 'package:gymawy/features/home/data/models/add_nutrition_model.dart';
+import 'package:gymawy/features/home/domain/entities/add_nutrition_entity.dart';
 
-import '../../data/models/add_nutrition_details_model.dart';
 
 class NutritionDetailsEntity extends Equatable {
   int nutritionDetailId;
-  NutritionModel nutritionModel;
+  AddNutritionEntity nutritionModel;
   String meal;
   String mealTime;
   String day;

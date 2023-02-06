@@ -21,7 +21,9 @@ class GetExercisePlanDetailsUseCase extends UseCase<List<ExerciseDetailsEntity>,
 
 class GetExercisePlanDetailsParams extends Equatable{
 
-  const GetExercisePlanDetailsParams();
+  int exercisePlanId;
+
+  GetExercisePlanDetailsParams(this.exercisePlanId);
 
   @override
   List<Object?> get props => [

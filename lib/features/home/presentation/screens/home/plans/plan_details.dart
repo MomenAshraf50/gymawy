@@ -20,13 +20,14 @@ import '../exercises/exercise_type.dart';
 import 'add_plan.dart';
 
 class PlanDetails extends StatelessWidget {
-  PlanDetails({Key? key,
-    this.planId ,
-    this.ownerUserId,
-    this.planVisibility,
-    this.planName,
-    this.isNutrition
-  }) : super(key: key);
+  PlanDetails(
+      {Key? key,
+      this.planId,
+      this.ownerUserId,
+      this.planVisibility,
+      this.planName,
+      this.isNutrition})
+      : super(key: key);
 
   int? planId;
   int? ownerUserId;
@@ -35,9 +36,6 @@ class PlanDetails extends StatelessWidget {
   bool? isNutrition;
 
   List<NutritionDetailsEntity>? nutritionResults;
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,36 +46,29 @@ class PlanDetails extends StatelessWidget {
     debugPrintFullText('$planName');
     debugPrintFullText('$isNutrition');
 
-    if(isNutrition == false)
-    {
-      homeCubit.getExercisePlanDetails();
+    if (isNutrition == false) {
+      homeCubit.getExercisePlanDetails(planId!);
     }
 
-    if(isNutrition == true)
-    {
-      homeCubit.getNutritionPlanDetails();
+    if (isNutrition == true) {
+      homeCubit.getNutritionPlanDetails(planId!);
     }
-
 
     return SafeArea(
       child: Scaffold(
-        body: BlocConsumer<HomeCubit,HomeStates>(
+        body: BlocConsumer<HomeCubit, HomeStates>(
           listener: (context, state) {
-            if(state is DeleteExercisePlanSuccessState)
-            {
+            if (state is DeleteExercisePlanSuccessState) {
               Navigator.pop(context);
               Navigator.pop(context);
-              homeCubit.getPlan(
-                isNutrition: isNutrition!
-              );
+              homeCubit.getPlan(isNutrition: isNutrition!);
               designToastDialog(
                   context: context,
                   toast: TOAST.success,
                   text: 'Exercise Plan Deleted Successfully');
             }
 
-            if(state is GetNutritionDetailsSuccessState)
-            {
+            if (state is GetNutritionDetailsSuccessState) {
               nutritionResults = state.nutritionPlanDetailList;
             }
           },
@@ -90,126 +81,182 @@ class PlanDetails extends StatelessWidget {
                     title: planName!,
                     context: context,
                     actions: [
-                      if(userId == ownerUserId)
-                      defaultActionButton(
-                          onPressed: ()
-                          {
-                            navigateTo(context, AddPlan(
-                              isNutrition: isNutrition!,
-                              planId: planId,
-                              planName: planName,
-                              planVisibility: planVisibility,
-                            ));
+                      if (userId == ownerUserId)
+                        defaultActionButton(
+                          onPressed: () {
+                            navigateTo(
+                                context,
+                                AddPlan(
+                                  isNutrition: isNutrition!,
+                                  planId: planId,
+                                  planName: planName,
+                                  planVisibility: planVisibility,
+                                ));
                           },
                           icon: Icons.edit,
                           backgroundColor: ColorsManager.white,
                           iconColor: ColorsManager.black,
-                      ),
-                      if(userId == ownerUserId)
+                        ),
+                      if (userId == ownerUserId)
                         defaultActionButton(
-                        onPressed: ()
-                        {
-                          isNutrition == false?
-                          navigateTo(context, ExercisesScreen(isAddExercise: true,planId: planId,)) :
-                          navigateTo(context, NutritionScreen(isAddNutrition: true,planId: planId,)) ;
-                        },
-                        icon: Icons.add,
-                        backgroundColor: Colors.green,
-                        iconColor: ColorsManager.white,
-                      ),
-
+                          onPressed: () {
+                            isNutrition == false
+                                ? navigateTo(
+                                    context,
+                                    ExercisesScreen(
+                                      isAddExercise: true,
+                                      planId: planId,
+                                    ))
+                                : navigateTo(
+                                    context,
+                                    NutritionScreen(
+                                      isAddNutrition: true,
+                                      planId: planId,
+                                    ));
+                          },
+                          icon: Icons.add,
+                          backgroundColor: Colors.green,
+                          iconColor: ColorsManager.white,
+                        ),
                     ],
                   ),
                   verticalSpace(2.h),
-                  if(homeCubit.exerciseDetailsResult != null && isNutrition == false)
-                  Expanded(
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return homeCubit.exerciseDetailsResult![index].planId == planId?
-                          InkWell(
-                          onTap: ()
-                          {
-                            navigateTo(context, ExerciseType(
-                              id: homeCubit.exerciseDetailsResult![index].exerciseDetailId,
-                              video: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseVid,
-                              pic: homeCubit.exerciseDetailsResult![index].exerciseModel.exercisePic,
-                              cat: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseCategory,
-                              makerName: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseMaker,
-                              name: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseName,
-                              sets: homeCubit.exerciseDetailsResult![index].sets,
-                              rest: homeCubit.exerciseDetailsResult![index].rest.toInt(),
-                              reps: homeCubit.exerciseDetailsResult![index].reps,
-                            ));
-                            debugPrintFullText('$index');
-                          },
-                          child: exerciseDetails(
-                            exerciseImage: homeCubit.exerciseDetailsResult![index].exerciseModel.exercisePic,
-                            exerciseName: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseName,
-                            exerciseCategory: homeCubit.exerciseDetailsResult![index].exerciseModel.exerciseCategory,
-                            reps: homeCubit.exerciseDetailsResult![index].reps,
-                            rest: homeCubit.exerciseDetailsResult![index].rest.toInt(),
-                            sets: homeCubit.exerciseDetailsResult![index].sets,
-                            isExercisePlanDetails: true,
-                          ),
-                        ) :
-                          Container();
-                      },
-                      itemCount: homeCubit.exerciseDetailsResult!.length,
-                      physics: const BouncingScrollPhysics(),
+                  if (homeCubit.exerciseDetailsResult != null &&
+                      isNutrition == false)
+                    Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                                  onLongPress: () {},
+                                  onTap: () {
+                                    navigateTo(
+                                        context,
+                                        ExerciseType(
+                                          id: homeCubit
+                                              .exerciseDetailsResult![index]
+                                              .exerciseDetailId,
+                                          video: homeCubit
+                                              .exerciseDetailsResult![index]
+                                              .exerciseModel
+                                              .exerciseVid,
+                                          pic: homeCubit
+                                              .exerciseDetailsResult![index]
+                                              .exerciseModel
+                                              .exercisePic,
+                                          cat: homeCubit
+                                              .exerciseDetailsResult![index]
+                                              .exerciseModel
+                                              .exerciseCategory,
+                                          makerName: homeCubit
+                                              .exerciseDetailsResult![index]
+                                              .exerciseModel
+                                              .exerciseMaker,
+                                          name: homeCubit
+                                              .exerciseDetailsResult![index]
+                                              .exerciseModel
+                                              .exerciseName,
+                                          sets: homeCubit
+                                              .exerciseDetailsResult![index]
+                                              .sets,
+                                          rest: homeCubit
+                                              .exerciseDetailsResult![index]
+                                              .rest
+                                              .toInt(),
+                                          reps: homeCubit
+                                              .exerciseDetailsResult![index]
+                                              .reps,
+                                        ));
+                                    debugPrintFullText('$index');
+                                  },
+                                  child: exerciseDetails(
+                                    exerciseImage: homeCubit
+                                        .exerciseDetailsResult![index]
+                                        .exerciseModel
+                                        .exercisePic,
+                                    exerciseName: homeCubit
+                                        .exerciseDetailsResult![index]
+                                        .exerciseModel
+                                        .exerciseName,
+                                    exerciseCategory: homeCubit
+                                        .exerciseDetailsResult![index]
+                                        .exerciseModel
+                                        .exerciseCategory,
+                                    reps: homeCubit
+                                        .exerciseDetailsResult![index].reps,
+                                    rest: homeCubit
+                                        .exerciseDetailsResult![index].rest
+                                        .toInt(),
+                                    sets: homeCubit
+                                        .exerciseDetailsResult![index].sets,
+                                    isExercisePlanDetails: true,
+                                  ),
+                                );
+                        },
+                        itemCount: homeCubit.exerciseDetailsResult!.length,
+                        physics: const BouncingScrollPhysics(),
+                      ),
                     ),
-                  ),
-                  if(homeCubit.nutritionResults != null && isNutrition == true)
-                  Expanded(
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return homeCubit.nutritionResults![index].planId == planId?
-                        InkWell(
-                          onTap: ()
-                          {
-                            navigateTo(context, NutritionBasicData(
-                              nutritionDetailEntity: nutritionResults![index],
-                              details: true,
-
-                            ));
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 3.h),
-                            child: exerciseDetails(
-                              exerciseImage: homeCubit.nutritionResults![index].nutritionModel.nutritionPic,
-                              exerciseName: homeCubit.nutritionResults![index].nutritionModel.nutritionName,
-                              exerciseCategory: homeCubit.nutritionResults![index].nutritionModel.nutritionCategory,
-                              isExercisePlanDetails: false,
-                            ),
-                          ),
-                        ) :
-                        Container();
-                      },
-                      itemCount: homeCubit.nutritionResults!.length,
-                      physics: const BouncingScrollPhysics(),
+                  if (nutritionResults != null && isNutrition == true)
+                    Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                                  onTap: () {
+                                    navigateTo(
+                                        context,
+                                        NutritionBasicData(
+                                          nutritionEntity:
+                                              nutritionResults![index]
+                                                  .nutritionModel,
+                                          details: true,
+                                        ));
+                                  },
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 3.h),
+                                    child: exerciseDetails(
+                                      exerciseImage: nutritionResults![index]
+                                          .nutritionModel
+                                          .nutritionPic!,
+                                      exerciseName: nutritionResults![index]
+                                          .nutritionModel
+                                          .nutritionName!,
+                                      exerciseCategory: nutritionResults![index]
+                                          .nutritionModel
+                                          .nutritionCategory!,
+                                      isExercisePlanDetails: false,
+                                    ),
+                                  ),
+                                );
+                        },
+                        itemCount: nutritionResults!.length,
+                        physics: const BouncingScrollPhysics(),
+                      ),
                     ),
-                  ) ,
                   verticalSpace(4.h),
-                  if(userId == ownerUserId)
-                  myButton(
-                    text: AppString.delete,
-                    textOnly: true,
-                    color: const Color.fromARGB(255, 255, 0, 0),
-                    width: double.infinity,
-                    radius: 40.h,
-                    onPressed: ()
-                    {
-                      showDialog(context: context, builder: (context){
-                        return DefaultDialog(
-                          message: 'Are you sure to delete this plan',
-                          pushButtonText: 'yes',
-                          buttonColor: ColorsManager.error,
-                          pushButtonVoidCallback: (){
-                            homeCubit.deletePlan(DeletePlanParams(planId! , isNutrition!));
-                          },
-                        );
-                      });
-                    },
-                  ),
+                  if (userId == ownerUserId)
+                    myButton(
+                      text: AppString.delete,
+                      textOnly: true,
+                      color: const Color.fromARGB(255, 255, 0, 0),
+                      width: double.infinity,
+                      radius: 40.h,
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return DefaultDialog(
+                                message: 'Are you sure to delete this plan',
+                                pushButtonText: 'yes',
+                                buttonColor: ColorsManager.error,
+                                pushButtonVoidCallback: () {
+                                  homeCubit.deletePlan(
+                                      DeletePlanParams(planId!, isNutrition!));
+                                },
+                              );
+                            });
+                      },
+                    ),
                 ],
               ),
             );

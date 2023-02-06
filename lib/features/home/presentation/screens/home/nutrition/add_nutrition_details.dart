@@ -34,7 +34,7 @@ class AddNutritionDetails extends StatelessWidget {
             Navigator.pop(context);
             Navigator.pop(context);
             designToastDialog(context: context, toast: TOAST.success, text: 'Nutrition details added successfully');
-            homeCubit.getNutritionPlanDetails();
+            homeCubit.getNutritionPlanDetails(planId!);
           }
           
         },
