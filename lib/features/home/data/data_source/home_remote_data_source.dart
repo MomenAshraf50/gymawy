@@ -30,6 +30,7 @@ import '../../domain/usecase/add_exercise_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
+import '../../domain/usecase/get_nutrition_details.dart';
 import '../../domain/usecase/get_plan_usecase.dart';
 import '../models/add_exercise_plan_model.dart';
 import '../models/add_nutrition_details_model.dart';
@@ -121,6 +122,10 @@ abstract class HomeBaseDataSource {
   Future<void> deleteNutrition(DeleteNutritionParams params);
 
   Future<NutritionDetailsModel> addNutritionDetails(NutritionDetailsParams params);
+
+  Future<List<NutritionDetailsModel>> getNutritionDetails(
+      GetNutritionPlanDetailsParams params);
+
 
 
 
@@ -685,6 +690,21 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
           });
     return NutritionDetailsModel.fromJson(f.data);
   }
+
+  @override
+  Future<List<NutritionDetailsModel>> getNutritionDetails(
+      GetNutritionPlanDetailsParams params) async {
+    final Response f = await dioHelper.get(
+      url: addNutritionDetailsEndPoint,
+      token: token,
+    );
+    return List<NutritionDetailsModel>.from((f.data['results'] as List)
+        .map((e) => NutritionDetailsModel.fromJson(e)));
+    // return List<AddExerciseModel>.from(
+    //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
+  }
+
+
 
 
 
