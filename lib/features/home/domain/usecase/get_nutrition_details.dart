@@ -20,9 +20,12 @@ class GetNutritionPlanDetailsUseCase extends UseCase<List<NutritionDetailsEntity
 
 class GetNutritionPlanDetailsParams extends Equatable{
 
-  const GetNutritionPlanDetailsParams();
+  int nutritionPlanId;
+
+  GetNutritionPlanDetailsParams(this.nutritionPlanId);
 
   @override
   List<Object?> get props => [
+    nutritionPlanId
   ];
 }

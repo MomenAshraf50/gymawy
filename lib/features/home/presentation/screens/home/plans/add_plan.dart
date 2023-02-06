@@ -32,7 +32,10 @@ class AddPlan extends StatelessWidget {
     //  debugPrintFullText('ssssssssssss${homeCubit.visibilityExerciseValue!}');
     //  debugPrintFullText('ssssssssssss$exercisePlanVisibility');
     // debugPrintFullText('$exercisePlanId');
-    homeCubit.visibilityExerciseValue = planVisibility;
+    if(planVisibility != null && planName!= null){
+      homeCubit.nameOfPlanController.text = planName!;
+      homeCubit.visibilityExerciseValue = planVisibility!;
+    }
     // debugPrintFullText('ssssssssssss${homeCubit.visibilityExerciseValue!}');
 
     return SafeArea(
@@ -43,10 +46,7 @@ class AddPlan extends StatelessWidget {
             padding: designApp,
             child: BlocConsumer<HomeCubit, HomeStates>(
               listener: (context, state) {
-                if(planName != null) {
-                  homeCubit.nameOfPlanController.text == planName;
-                  // homeCubit.visibilityExerciseValue = exercisePlanVisibility;
-                }
+
                 if(state is UpdateExercisePlanSuccessState)
                 {
                   Navigator.pop(context);
@@ -148,7 +148,7 @@ class AddPlan extends StatelessWidget {
                             text: AppString.done,
                             onPressed: () {
                               debugPrintFullText('plan name ======================${homeCubit.nameOfPlanController.text}' );
-                              debugPrintFullText('plan visibility ======================${homeCubit.visibilityExerciseValue!}' );
+                              debugPrintFullText('plan visibility ======================${homeCubit.visibilityExerciseValue}' );
 
                               if(planId == null)
                               {

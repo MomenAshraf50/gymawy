@@ -578,6 +578,9 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       GetExercisePlanDetailsParams params) async {
     final Response f = await dioHelper.get(
       url: addExerciseDetailsEndPoint,
+      query: {
+        'exercise_plan': params.exercisePlanId
+      },
       token: token,
     );
     return List<ExerciseDetailsModel>.from((f.data['results'] as List)
@@ -696,6 +699,9 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       GetNutritionPlanDetailsParams params) async {
     final Response f = await dioHelper.get(
       url: addNutritionDetailsEndPoint,
+      query: {
+        'nutrition_plan': params.nutritionPlanId
+      },
       token: token,
     );
     return List<NutritionDetailsModel>.from((f.data['results'] as List)

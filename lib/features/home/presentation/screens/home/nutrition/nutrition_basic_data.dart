@@ -22,12 +22,10 @@ class NutritionBasicData extends StatelessWidget {
   NutritionBasicData({
     Key? key,
     this.nutritionEntity,
-    this.nutritionDetailEntity,
     this.details,
   }) : super(key: key);
 
   AddNutritionEntity? nutritionEntity;
-  NutritionDetailsEntity? nutritionDetailEntity;
   bool? details;
 
   @override
@@ -63,7 +61,7 @@ class NutritionBasicData extends StatelessWidget {
                     child: Column(
                       children: [
                         defaultAppBar(
-                            title: details==true ?  nutritionDetailEntity!.nutritionModel.nutritionName : nutritionEntity!.nutritionName!,
+                            title: nutritionEntity!.nutritionName!,
                             fontColor: ColorsManager.white,
                             context: context,
                             color: Colors.transparent,
@@ -122,7 +120,7 @@ class NutritionBasicData extends StatelessWidget {
                                     ),
                                     verticalSpace(0.5.h),
                                     myText(
-                                      title: 'by $userName',
+                                      title: 'by ${nutritionEntity!.userName}',
                                       style: Style.extraSmall,
                                     ),
                                     verticalSpace(2.h),

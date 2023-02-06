@@ -554,7 +554,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
 
   bool? isVisibilityExerciseIcon = false;
-  String? visibilityExerciseValue = 'private';
+  String visibilityExerciseValue = 'private';
 
   void visibilityExercise() {
     isVisibilityExerciseIcon = !isVisibilityExerciseIcon!;
@@ -891,10 +891,11 @@ class HomeCubit extends Cubit<HomeStates> {
 
 
   List<ExerciseDetailsEntity>? exerciseDetailsResult;
-  void getExercisePlanDetails() async {
+  void getExercisePlanDetails(int exercisePlanId) async {
     emit(GetExerciseDetailsLoadingState());
+    exerciseDetailsResult = [];
 
-    final result = await _getExercisePlanDetailsUseCase(const GetExercisePlanDetailsParams());
+    final result = await _getExercisePlanDetailsUseCase( GetExercisePlanDetailsParams(exercisePlanId));
 
     result.fold((failure) {
       emit(GetExerciseDetailsErrorState(mapFailureToMessage(failure)));
@@ -1027,17 +1028,15 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  List<NutritionDetailsEntity>? nutritionResults;
-  void getNutritionPlanDetails() async {
+  void getNutritionPlanDetails(int nutritionPlanId) async {
     emit(GetNutritionDetailsLoadingState());
 
-    final result = await _getNutritionPlanDetailsUseCase(const GetNutritionPlanDetailsParams());
+    final result = await _getNutritionPlanDetailsUseCase(GetNutritionPlanDetailsParams(nutritionPlanId));
 
     result.fold((failure) {
       emit(GetNutritionDetailsErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(GetNutritionDetailsSuccessState(data));
-      nutritionResults = data;
     });
   }
 

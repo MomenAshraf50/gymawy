@@ -47,7 +47,7 @@ class ExerciseType extends StatelessWidget {
             if(state is DeleteExercisePlanDetailsSuccessState){
               Navigator.pop(context);
               Navigator.pop(context);
-              homeCubit.getExercisePlanDetails();
+              homeCubit.getExercisePlanDetails(id);
             }
           },
           builder: (context, state) {
