@@ -121,14 +121,11 @@ abstract class HomeBaseDataSource {
 
   Future<void> deleteNutrition(DeleteNutritionParams params);
 
-  Future<NutritionDetailsModel> addNutritionDetails(NutritionDetailsParams params);
+  Future<NutritionDetailsModel> addNutritionDetails(
+      NutritionDetailsParams params);
 
   Future<List<NutritionDetailsModel>> getNutritionDetails(
       GetNutritionPlanDetailsParams params);
-
-
-
-
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -561,15 +558,25 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   @override
   Future<ExerciseDetailsModel> addExerciseDetails(
       ExerciseDetailsParams params) async {
-    final Response f = await dioHelper
-        .post(url: addExerciseDetailsEndPoint, token: token, data: {
-      'exercise': params.exerciseId,
-      'exercise_plan': params.planId,
-      'sets': params.sets,
-      'reps': params.reps,
-      'rest': params.rest,
-      'day': params.day,
-    });
+    final Response f = params.update
+        ? await dioHelper.put(
+            url: '$addExerciseDetailsEndPoint${params.exerciseDetailId}/',
+            token: token,
+            data: {
+                'sets': params.sets,
+                'reps': params.reps,
+                'rest': params.rest,
+                'day': params.day,
+              })
+        : await dioHelper
+            .post(url: addExerciseDetailsEndPoint, token: token, data: {
+            'exercise': params.exerciseId,
+            'exercise_plan': params.planId,
+            'sets': params.sets,
+            'reps': params.reps,
+            'rest': params.rest,
+            'day': params.day,
+          });
     return ExerciseDetailsModel.fromJson(f.data);
   }
 
@@ -578,9 +585,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       GetExercisePlanDetailsParams params) async {
     final Response f = await dioHelper.get(
       url: addExerciseDetailsEndPoint,
-      query: {
-        'exercise_plan': params.exercisePlanId
-      },
+      query: {'exercise_plan': params.exercisePlanId},
       token: token,
     );
     return List<ExerciseDetailsModel>.from((f.data['results'] as List)
@@ -592,7 +597,9 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   @override
   Future<void> deleteExercisePlanDetails(params) async {
     await dioHelper.delete(
-      url: params.isNutrition == false ? '$addExerciseDetailsEndPoint${params.exercisePlanDetailsId}/' : '$addNutritionDetailsEndPoint${params.exercisePlanDetailsId}/',
+      url: params.isNutrition == false
+          ? '$addExerciseDetailsEndPoint${params.exercisePlanDetailsId}/'
+          : '$addNutritionDetailsEndPoint${params.exercisePlanDetailsId}/',
       token: token,
     );
   }
@@ -626,10 +633,12 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
               'carb': carb,
               'fat': fat,
               'visibility': nutritionVisibility,
-              'nutrition_pic': nutritionPic == null? null :await MultipartFile.fromFile(
-                nutritionPic.path,
-                filename: Uri.file(nutritionPic.path).pathSegments.last,
-              ),
+              'nutrition_pic': nutritionPic == null
+                  ? null
+                  : await MultipartFile.fromFile(
+                      nutritionPic.path,
+                      filename: Uri.file(nutritionPic.path).pathSegments.last,
+                    ),
             }))
         : await dioHelper.post(
             url: addNutritionEndPoint,
@@ -681,10 +690,17 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   @override
   Future<NutritionDetailsModel> addNutritionDetails(
       NutritionDetailsParams params) async {
-    final Response f = await dioHelper.post(
-        url: addNutritionDetailsEndPoint,
-        token: token,
-              data: {
+    final Response f = params.update
+        ? await dioHelper.put(
+            url: '$addNutritionDetailsEndPoint${params.nutritionDetailId}/',
+            token: token,
+            data: {
+                'day': params.day,
+                'meal': params.meal,
+                'meal_time': params.time,
+              })
+        : await dioHelper
+            .post(url: addNutritionDetailsEndPoint, token: token, data: {
             'nutrition': params.nutritionId,
             'nutrition_plan': params.planId,
             'day': params.day,
@@ -699,9 +715,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       GetNutritionPlanDetailsParams params) async {
     final Response f = await dioHelper.get(
       url: addNutritionDetailsEndPoint,
-      query: {
-        'nutrition_plan': params.nutritionPlanId
-      },
+      query: {'nutrition_plan': params.nutritionPlanId},
       token: token,
     );
     return List<NutritionDetailsModel>.from((f.data['results'] as List)
@@ -709,10 +723,4 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     // return List<AddExerciseModel>.from(
     //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
   }
-
-
-
-
-
-
 }

@@ -49,7 +49,7 @@ class TwoOptionsDialog extends Dialog {
                     child: myButton(
                       onPressed: popButtonVoidCallback,
                       text: popButtonText,
-                      fontSize: 20.rSp,
+                      fontSize: 16.rSp,
                       color: color!,
                     ),
                   ),
@@ -58,7 +58,7 @@ class TwoOptionsDialog extends Dialog {
                     child: myButton(
                       onPressed: pushButtonVoidCallback,
                       text: pushButtonText,
-                      fontSize: 20.rSp,
+                      fontSize: 16.rSp,
                       color: colorEdit!,
                     ),
                   ),

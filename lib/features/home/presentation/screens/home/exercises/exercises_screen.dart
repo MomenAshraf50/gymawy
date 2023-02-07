@@ -71,6 +71,7 @@ class ExercisesScreen extends StatelessWidget {
                                       AddExerciseDetails(
                                         exerciseId: homeCubit.exerciseResult![index].exerciseId,
                                         planId: planId!,
+                                        update: false,
                                       ));
                                 }
                               : () {

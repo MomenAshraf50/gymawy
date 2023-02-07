@@ -48,6 +48,9 @@ class AppBloc extends Cubit<AppState> {
 
     lightTheme = ThemeData(
       scaffoldBackgroundColor: ColorsManager.white,
+      timePickerTheme: TimePickerThemeData(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      ),
       appBarTheme: AppBarTheme(
         backgroundColor: ColorsManager.white,
         elevation: 0.0,
