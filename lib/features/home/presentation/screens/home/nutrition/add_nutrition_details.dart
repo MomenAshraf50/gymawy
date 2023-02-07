@@ -117,10 +117,16 @@ class AddNutritionDetails extends StatelessWidget {
                         IconButton(
                             onPressed: () {
                               showTimePicker(
+                                builder: (context, child) =>
+                                    MediaQuery(
+                                        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true,boldText: true,textScaleFactor: 1.1.rSp ),
+                                        child: child!,
+                                    ),
                                 context: context,
                                 initialTime: TimeOfDay.now(),
                                 initialEntryMode: TimePickerEntryMode.input,
                                 helpText: 'Enter meal time',
+
                               ).then((value) {
                                 timePicked = value;
                               });
