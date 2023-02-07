@@ -19,7 +19,8 @@ Widget buildPlanWidget({
       children: [
         BlocBuilder<HomeCubit, HomeStates>(
             builder: (context, state) {
-              return homeCubit.planResult != null? Expanded(
+              return homeCubit.planResult != null?
+              Expanded(
                 child: ListView.builder(
                   itemBuilder: (context, index) =>
                       InkWell(
