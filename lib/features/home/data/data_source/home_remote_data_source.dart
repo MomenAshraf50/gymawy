@@ -592,7 +592,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   @override
   Future<void> deleteExercisePlanDetails(params) async {
     await dioHelper.delete(
-      url: '$addExerciseDetailsEndPoint${params.exercisePlanDetailsId}/',
+      url: params.isNutrition == false ? '$addExerciseDetailsEndPoint${params.exercisePlanDetailsId}/' : '$addNutritionDetailsEndPoint${params.exercisePlanDetailsId}/',
       token: token,
     );
   }

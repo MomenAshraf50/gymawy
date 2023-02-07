@@ -37,6 +37,10 @@ class AddExerciseDetails extends StatelessWidget {
               context: context,
               toast: TOAST.success,
               text: 'Exercise Details Added Successfully');
+
+          homeCubit.getExercisePlanDetails(planId);
+
+
         }
       },
       builder: (context, state) {

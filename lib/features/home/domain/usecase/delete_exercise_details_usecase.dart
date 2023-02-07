@@ -20,9 +20,10 @@ class DeleteExercisePlanDetailsUseCase extends UseCase<void,DeleteExercisePlanDe
 class DeleteExercisePlanDetailsParams extends Equatable{
 
   int exercisePlanDetailsId;
+  bool isNutrition;
 
 
-  DeleteExercisePlanDetailsParams(this.exercisePlanDetailsId);
+  DeleteExercisePlanDetailsParams(this.exercisePlanDetailsId, this.isNutrition);
 
   @override
   List<Object?> get props => [exercisePlanDetailsId];
