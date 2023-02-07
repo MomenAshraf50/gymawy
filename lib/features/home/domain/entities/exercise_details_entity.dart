@@ -36,20 +36,24 @@ class ExerciseDetailsEntity extends Equatable {
 }
 
 class ExerciseDetailsParams extends Equatable {
+  int? exerciseDetailId;
+  bool update;
   int sets;
   int reps;
-  int rest;
+  double rest;
   String day;
-  int exerciseId;
-  int planId;
+  int? exerciseId;
+  int? planId;
 
   ExerciseDetailsParams({
+    this.exerciseDetailId,
+    required this.update,
     required this.sets,
     required this.reps,
     required this.rest,
     required this.day,
-    required this.exerciseId,
-    required this.planId,
+    this.exerciseId,
+    this.planId,
   });
 
   @override

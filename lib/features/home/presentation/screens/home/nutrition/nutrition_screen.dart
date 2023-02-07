@@ -68,6 +68,7 @@ class NutritionScreen extends StatelessWidget {
                           navigateTo(context, AddNutritionDetails(
                               nutritionResult: homeCubit.nutritionResult![index],
                               planId: planId,
+                            update: false,
                           ));
                         }
                       },

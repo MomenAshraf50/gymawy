@@ -119,6 +119,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             themeMode:ThemeMode.light,
             theme: AppBloc.get(context).lightTheme,
+
             // initialRoute: Routes.splash,
             // routes: Routes.routes,
             home: widget,

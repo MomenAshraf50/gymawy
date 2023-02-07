@@ -39,7 +39,7 @@ Widget buildPlanWidget({
                               context,
                               PlanDetails(
                                 planId: isNutrition == true ? homeCubit.planResult![index].nutritionPlanId :homeCubit.planResult![index].exercisePlanId,
-                                ownerUserId: homeCubit.planResult![index].userId,
+                                ownerUserId: homeCubit.planResult![index].userId!,
                                 planVisibility: homeCubit.planResult![index].planVisibility,
                                 planName: homeCubit.planResult![index].planName,
                                 isNutrition: isNutrition,

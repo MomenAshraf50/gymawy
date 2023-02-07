@@ -178,7 +178,7 @@ class SearchScreen extends StatelessWidget {
                                             context,
                                             PlanDetails(
                                               planId:isNutritionPlan == true ? homeCubit.planResult![index].nutritionPlanId : homeCubit.planResult![index].exercisePlanId,
-                                              ownerUserId: homeCubit.planResult![index].userId,
+                                              ownerUserId: homeCubit.planResult![index].userId!,
                                               isNutrition: isNutritionPlan,
                                               planName: homeCubit.planResult![index].planName,
                                               planVisibility: homeCubit.planResult![index].planVisibility,

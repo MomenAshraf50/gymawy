@@ -6,10 +6,6 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:video_player/video_player.dart';
-import '../../../../../../core/util/resources/colors_manager.dart';
-import '../../../../../../core/util/widgets/default dialog.dart';
-import '../../../../../../core/util/widgets/default_action_button.dart';
-import '../../../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../../controller/home_cubit.dart';
 
 class ExerciseType extends StatelessWidget {
@@ -58,29 +54,6 @@ class ExerciseType extends StatelessWidget {
                   defaultAppBar(
                       title: name,
                       context: context,
-                      // actions: [
-                      //   if(makerName != userName)
-                      //   defaultActionButton(
-                      //     onPressed: ()
-                      //     {
-                      //       showDialog(context: context, builder: (context){
-                      //         return DefaultDialog(
-                      //           message: 'Are you sure to delete this plan',
-                      //           pushButtonText: 'yes',
-                      //           buttonColor: ColorsManager.error,
-                      //           pushButtonVoidCallback: (){
-                      //             homeCubit.deleteExercisePlanDetails(DeleteExercisePlanDetailsParams(
-                      //                 id
-                      //             ));
-                      //           },
-                      //         );
-                      //       });
-                      //     },
-                      //     icon: Icons.delete,
-                      //     backgroundColor: ColorsManager.white,
-                      //     iconColor: ColorsManager.redPrimary,
-                      //   ),
-                      // ]
                   ),
                   Expanded(
                     child: SingleChildScrollView(
