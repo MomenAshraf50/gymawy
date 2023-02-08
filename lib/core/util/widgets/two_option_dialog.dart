@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
+import '../resources/colors_manager.dart';
 import 'myButton.dart';
 
 class TwoOptionsDialog extends Dialog {
@@ -21,8 +22,8 @@ class TwoOptionsDialog extends Dialog {
     required this.pushButtonVoidCallback,
     required this.popButtonVoidCallback,
     this.height = 160.0,
-    this.color,
-    this.colorEdit,
+    this.color = ColorsManager.mainColor,
+    this.colorEdit = ColorsManager.mainColor,
     Key? key,
   }) : super(key: key);
 
