@@ -159,6 +159,7 @@ class SearchResultScreen extends StatelessWidget {
                                                     homeCubit.subscriptionRequest(
                                                         SubscriptionRequestParams(
                                                       coachId: userId!,
+                                                      isUpdate: false,
                                                     ));
                                                   }),
                                             ),

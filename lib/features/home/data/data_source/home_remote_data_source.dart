@@ -54,6 +54,7 @@ abstract class HomeBaseDataSource {
 
   Future<ProfileModel> profile({
     required String id,
+    bool? isCoach,
   });
 
   Future<CertificateModel> certificate({
@@ -237,13 +238,14 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   @override
   Future<ProfileModel> profile({
     required String id,
+    bool? isCoach,
   }) async {
     final Response f = await dioHelper.get(
       token: token,
       url:
           //'$registerCoachEndPoint$id/',
           //'$registerEndPoint$id/',
-          isCoachLogin == false
+          isCoachLogin == false || isCoach == false
               ? '$registerEndPoint$id/'
               : '$registerCoachEndPoint$id/',
     );
@@ -737,12 +739,24 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   @override
   Future<SubscriptionRequestModel> subscriptionRequest(
       SubscriptionRequestParams params) async {
-    final Response f =
-        await dioHelper.post(url: subscriptionEndPoint, token: token, data: {
-      'trainer': params.coachId,
-      if (params.startDate != null) 'start_date': params.startDate,
-      if (params.endDate != null) 'end_date': params.endDate,
-    });
+    final Response f = params.isUpdate == true?
+    await dioHelper.put(
+        url: '$subscriptionEndPoint${params.subscriptionRequest}/',
+        token: token,
+        data: {
+          'state': params.status,
+        }):
+        await dioHelper.post(
+            url: subscriptionEndPoint,
+            token: token,
+            data: {
+              'trainer': params.coachId,
+               if (params.startDate != null)
+              'start_date': params.startDate,
+              if (params.endDate != null)
+              'end_date': params.endDate,
+    }
+    );
 
     return SubscriptionRequestModel.fromJson(f.data);
   }

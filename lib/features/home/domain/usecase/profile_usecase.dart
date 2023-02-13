@@ -15,16 +15,19 @@ class ProfileUseCase implements UseCase<ProfileEntity, ProfileParams> {
       ProfileParams params) async {
     return await repository.profile(
       id: params.id,
+      isCoach: params.isCoach
     );
   }
 }
 
 class ProfileParams extends Equatable {
   final String id;
+  final bool? isCoach;
 
 
   const ProfileParams({
     required this.id,
+    this.isCoach
   });
 
   @override
