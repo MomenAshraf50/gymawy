@@ -53,19 +53,22 @@ class ClientDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
 
-    homeCubit.profile(id: "$clientId");
-    List<String> titleResult =
-    [
-      //'3',
-      //'Beginner',
-      homeCubit.profileResults!.goal!,
-      //'2',
-      "${homeCubit.profileResults!.currentTall!}",
-      "${homeCubit.profileResults!.currentWeight!}",
-      '${homeCubit.profileResults!.bodyFat}',
-    ];
+    homeCubit.profile(
+        id: "$clientId",
+        isCoach: false
+    );
     return BlocBuilder<HomeCubit, HomeStates>(
       builder: (context, state) {
+        List<String> titleResult =
+        [
+          //'3',
+          //'Beginner',
+          homeCubit.profileResults!.goal!,
+          //'2',
+          "${homeCubit.profileResults!.currentTall!}",
+          "${homeCubit.profileResults!.currentWeight!}",
+          '${homeCubit.profileResults!.bodyFat}',
+        ];
         return Scaffold(
           body: SafeArea(
             child: Padding(
@@ -73,7 +76,9 @@ class ClientDetailsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   defaultAppBar(
-                      title: AppString.clientDetails, context: context),
+                      title: AppString.clientDetails,
+                      context: context
+                  ),
                   verticalSpace(2.h),
                   Expanded(
                     child: SingleChildScrollView(

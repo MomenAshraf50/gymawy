@@ -11,6 +11,7 @@ class SubscriptionRequestModel extends SubscriptionRequestEntity {
     required super.endDate,
     required super.clientId,
     required super.coachId,
+    required super.clientPic
   });
 
   factory SubscriptionRequestModel.fromJson(Map<String,dynamic> json){
@@ -24,6 +25,7 @@ class SubscriptionRequestModel extends SubscriptionRequestEntity {
         requestState:json['state'],
       startDate: json['start_date'],
       subscriptionRequestId: json['SubscriptionRequest_id'],
+      clientPic: json['client_profile_pic']
     );
   }
 }

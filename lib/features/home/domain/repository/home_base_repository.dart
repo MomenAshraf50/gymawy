@@ -51,6 +51,7 @@ abstract class HomeBaseRepository {
 
   Future<Either<Failure, ProfileEntity>> profile({
     required String id,
+    bool? isCoach,
   });
 
   Future<Either<Failure, CertificateEntity>> certificate({

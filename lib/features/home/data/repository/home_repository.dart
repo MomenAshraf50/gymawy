@@ -145,9 +145,13 @@ class HomeRepository extends HomeBaseRepository {
   @override
   Future<Either<Failure, ProfileEntity>> profile({
     required String id,
+    bool? isCoach,
   }) async {
     return await fetchProfile(() {
-      return remoteDataSource.profile(id: id);
+      return remoteDataSource.profile(
+          id: id,
+          isCoach: isCoach,
+      );
     });
   }
 

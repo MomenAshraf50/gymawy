@@ -22,14 +22,17 @@ class SubscriptionRequestUseCase extends UseCase<SubscriptionRequestEntity,Subsc
 
 class SubscriptionRequestParams extends Equatable {
 
-  int coachId;
+  int? coachId;
   String? startDate;
   String? endDate;
+  bool isUpdate;
+  int? subscriptionRequest;
+  String? status;
 
 
   SubscriptionRequestParams(
-      {required this.coachId, this.startDate, this.endDate,});
+      {this.coachId, this.startDate, this.endDate,required this.isUpdate , this.subscriptionRequest, this.status});
 
   @override
-  List<Object?> get props => [coachId, startDate, endDate,];
+  List<Object?> get props => [coachId, startDate, endDate, isUpdate, subscriptionRequest,status];
 }

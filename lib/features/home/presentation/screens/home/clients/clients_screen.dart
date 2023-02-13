@@ -7,6 +7,7 @@ import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
+import 'package:gymawy/features/home/presentation/screens/home/clients/pending_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/search/search_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_client_progress_item.dart';
 import '../../../controller/home_cubit.dart';
@@ -60,13 +61,16 @@ class ClientsScreen extends StatelessWidget {
                                 actions: [
                                   IconButton(
                                       onPressed: () {
-                                        navigateTo(
-                                            context,
-                                            SearchScreen(
-                                              clientsScreen: true,
-                                            ));
+                                        // navigateTo(
+                                        //     context,
+                                        //     SearchScreen(
+                                        //       clientsScreen: true,
+                                        //     ));
+                                        navigateTo(context, const PendingScreen());
                                       },
-                                      icon: const Icon(Icons.search))
+                                      // icon: const Icon(Icons.search)
+                                    icon: const Icon(Icons.pending_outlined),
+                                  )
                                 ]),
                             verticalSpace(4.h),
                             if (subscriptionRequestEntity.isNotEmpty)
@@ -83,7 +87,7 @@ class ClientsScreen extends StatelessWidget {
                                   },
                                   child: buildClientProgressItem(
                                     isProgress: false,
-                                    image: NetworkImage('https://pixlr.com/images/index/remove-bg.webp'),
+                                    image: NetworkImage(subscriptionRequestEntity[index].clientPic),
                                     name: subscriptionRequestEntity[index].clientUsername,
                                   ),
                                 ),

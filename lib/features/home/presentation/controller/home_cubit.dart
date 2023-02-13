@@ -451,11 +451,12 @@ class HomeCubit extends Cubit<HomeStates> {
 
   ProfileEntity? profileResults;
 
-  void profile({required String id, context}) async {
+  void profile({required String id,bool? isCoach , context}) async {
     emit(ProfileLoadingState());
 
     final result = await _profileUseCase(ProfileParams(
       id: id,
+      isCoach: isCoach
     ));
 
     result.fold((failure) {

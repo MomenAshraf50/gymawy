@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 class SubscriptionRequestEntity extends Equatable {
   int subscriptionRequestId;
   String clientUsername;
+  String clientPic;
   String coachUsername;
   String requestState;
   String dateCreated;
@@ -21,6 +22,7 @@ class SubscriptionRequestEntity extends Equatable {
     required this.endDate,
     required this.clientId,
     required this.coachId,
+    required this.clientPic
   });
 
   @override
@@ -33,6 +35,7 @@ class SubscriptionRequestEntity extends Equatable {
     startDate,
     endDate,
     dateCreated,
-    requestState
+    requestState,
+    clientPic
   ];
 }
