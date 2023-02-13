@@ -9,6 +9,7 @@ import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
 import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 

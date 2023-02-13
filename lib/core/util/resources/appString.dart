@@ -193,6 +193,8 @@ class AppString {
   static const update = 'Update';
   static const day = 'Day';
   static const nutrition = 'Nutrition';
+  static const subscribe = 'Subscribe';
+  static const subscribeRequest = 'Subscribe request sent succesfully';
 
 
 

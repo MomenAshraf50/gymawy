@@ -1,3 +1,4 @@
+import 'package:gymawy/features/home/data/models/add_exercise_model.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 
 class ExerciseDetailsModel extends ExerciseDetailsEntity {
@@ -17,7 +18,7 @@ class ExerciseDetailsModel extends ExerciseDetailsEntity {
           exerciseId: json['EXERCISE_detail_id'],
         day: json['day'],
         exerciseDetailId: json['EXERCISE_detail_id'],
-        exerciseModel: ExerciseModel.fromJson(json['exercises']),
+        exerciseModel: AddExerciseModel.fromJson(json['exercises']),
         planId: json['exercise_plan'],
         reps: json['reps'],
         rest: json['rest'],

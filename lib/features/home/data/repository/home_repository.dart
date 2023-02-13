@@ -8,13 +8,17 @@ import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
+import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
+import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/get_exercise_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/subscription_request_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
@@ -54,6 +58,8 @@ typedef CallGetNutrition = Future<List<AddNutritionEntity>> Function();
 typedef CallDeleteNutrition = Future<List<AddNutritionEntity>> Function();
 typedef CallAddNutritionDetails = Future<NutritionDetailsEntity> Function();
 typedef CallGetNutritionDetails = Future<List<NutritionDetailsEntity>> Function();
+typedef CallSubscriptionRequest = Future<SubscriptionRequestEntity> Function();
+typedef CallGetSubscriptionRequests = Future<List<SubscriptionRequestEntity>> Function();
 
 
 
@@ -579,6 +585,46 @@ class HomeRepository extends HomeBaseRepository {
       GetNutritionPlanDetailsParams params) async {
     return await fetchGetNutritionDetails(() {
       return remoteDataSource.getNutritionDetails(params);
+    });
+  }
+
+  Future<Either<Failure, SubscriptionRequestEntity>> fetchSubscriptionRequest(
+      CallSubscriptionRequest mainMethod,
+      ) async {
+    try {
+      final subscriptionRequest = await mainMethod();
+      return Right(subscriptionRequest);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SubscriptionRequestEntity>> subscriptionRequest(SubscriptionRequestParams params)async {
+    return await fetchSubscriptionRequest((){
+      return remoteDataSource.subscriptionRequest(params);
+    });
+  }
+
+  Future<Either<Failure, List<SubscriptionRequestEntity>>> fetchGetSubscriptionRequests(
+      CallGetSubscriptionRequests mainMethod,
+      ) async {
+    try {
+      final subscriptionRequests = await mainMethod();
+      return Right(subscriptionRequests);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<SubscriptionRequestEntity>>> getSubscriptionRequests(GetSubscriptionsRequestsParams params) async{
+    return await fetchGetSubscriptionRequests((){
+      return remoteDataSource.getSubscriptionRequests(params);
     });
   }
 
