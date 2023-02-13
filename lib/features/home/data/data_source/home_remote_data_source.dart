@@ -12,13 +12,17 @@ import 'package:gymawy/features/home/data/models/certificate_model.dart';
 import 'package:gymawy/features/home/data/models/exercise_details_model.dart';
 import 'package:gymawy/features/home/data/models/profile_model.dart';
 import 'package:gymawy/features/home/data/models/search_model.dart';
+import 'package:gymawy/features/home/data/models/subscription_request_model.dart';
 import 'package:gymawy/features/home/data/models/update_coach_model.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/get_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_nutrition_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/subscription_request_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
@@ -126,6 +130,12 @@ abstract class HomeBaseDataSource {
 
   Future<List<NutritionDetailsModel>> getNutritionDetails(
       GetNutritionPlanDetailsParams params);
+
+  Future<SubscriptionRequestModel> subscriptionRequest(
+      SubscriptionRequestParams params);
+
+  Future<List<SubscriptionRequestModel>> getSubscriptionRequests(
+      GetSubscriptionsRequestsParams params);
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -722,5 +732,29 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
         .map((e) => NutritionDetailsModel.fromJson(e)));
     // return List<AddExerciseModel>.from(
     //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
+  }
+
+  @override
+  Future<SubscriptionRequestModel> subscriptionRequest(
+      SubscriptionRequestParams params) async {
+    final Response f =
+        await dioHelper.post(url: subscriptionEndPoint, token: token, data: {
+      'trainer': params.coachId,
+      if (params.startDate != null) 'start_date': params.startDate,
+      if (params.endDate != null) 'end_date': params.endDate,
+    });
+
+    return SubscriptionRequestModel.fromJson(f.data);
+  }
+
+  @override
+  Future<List<SubscriptionRequestModel>> getSubscriptionRequests(params) async {
+    final Response f = await dioHelper.get(
+        url: subscriptionEndPoint,
+        token: token,
+        query: {'state': params.requestState});
+
+    return List<SubscriptionRequestModel>.from((f.data['results'] as List)
+        .map((e) => SubscriptionRequestModel.fromJson(e)));
   }
 }

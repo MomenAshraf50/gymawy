@@ -280,25 +280,7 @@ class SearchScreen extends StatelessWidget {
                                     navigateTo(
                                         context,
                                         ClientDetailsScreen(
-                                          name: homeCubit
-                                              .results![index]
-                                              .userName,
-                                          address: homeCubit
-                                              .results![index]
-                                              .location,
-                                          age:
-                                          '${homeCubit.results![index].age}',
-                                          bodyFat:
-                                          '${homeCubit.results![index].bodyFat}',
-                                          goal: homeCubit
-                                              .results![index].goal,
-                                          img: homeCubit
-                                              .results![index]
-                                              .profilePicture,
-                                          tall:
-                                          '${homeCubit.results![index].currentTall}',
-                                          weight:
-                                          '${homeCubit.results![index].currentWeight}',
+                                          clientId: homeCubit.results![index].userId!,
                                         ));
                                   }
                                 },

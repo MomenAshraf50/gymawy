@@ -14,6 +14,8 @@ import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/subscription_request_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
@@ -82,6 +84,8 @@ class HomeCubit extends Cubit<HomeStates> {
   final DeleteNutritionUseCase _deleteNutritionUseCase;
   final AddNutritionDetailsUseCase _addNutritionDetailsUseCase;
   final GetNutritionPlanDetailsUseCase _getNutritionPlanDetailsUseCase;
+  final SubscriptionRequestUseCase _subscriptionRequestUseCase;
+  final GetSubscriptionUseCase _getSubscriptionUseCase;
 
 
 
@@ -112,6 +116,8 @@ class HomeCubit extends Cubit<HomeStates> {
     required DeleteNutritionUseCase deleteNutritionUseCase,
     required AddNutritionDetailsUseCase addNutritionDetailsUseCase,
     required GetNutritionPlanDetailsUseCase getNutritionPlanDetailsUseCase,
+    required SubscriptionRequestUseCase subscriptionRequestUseCase,
+    required GetSubscriptionUseCase getSubscriptionUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -138,6 +144,8 @@ class HomeCubit extends Cubit<HomeStates> {
         _deleteNutritionUseCase = deleteNutritionUseCase,
         _addNutritionDetailsUseCase = addNutritionDetailsUseCase,
         _getNutritionPlanDetailsUseCase = getNutritionPlanDetailsUseCase,
+        _subscriptionRequestUseCase = subscriptionRequestUseCase,
+        _getSubscriptionUseCase = getSubscriptionUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -1041,7 +1049,27 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
 
+  void subscriptionRequest(SubscriptionRequestParams params)async {
+    emit(SubscriptionRequestLoadingState());
+    final result = await _subscriptionRequestUseCase(params);
 
+    result.fold((failure){
+      emit(SubscriptionRequestErrorState(mapFailureToMessage(failure)));
+    }, (data){
+      emit(SubscriptionRequestSuccessState(data));
+    });
+  }
+
+  void getSubscriptionRequests(GetSubscriptionsRequestsParams params)async {
+    emit(GetSubscriptionRequestLoadingState());
+    final result = await _getSubscriptionUseCase(params);
+
+    result.fold((failure){
+      emit(GetSubscriptionRequestErrorState(mapFailureToMessage(failure)));
+    }, (data){
+      emit(GetSubscriptionRequestSuccessState(data));
+    });
+  }
 
 
 }

@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/loadingPage.dart';
+import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/search/search_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_client_progress_item.dart';
@@ -10,87 +13,86 @@ import '../../../controller/home_cubit.dart';
 import 'clients_details_screen.dart';
 
 class ClientsScreen extends StatelessWidget {
-  ClientsScreen({Key? key , required this.clientVariable}) : super(key: key);
+  ClientsScreen({Key? key, required this.clientVariable}) : super(key: key);
   String? clientVariable;
 
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
     constClientVariable = clientVariable;
-    homeCubit.search(search: 'search');
-    debugPrintFullText( 'is ===========================$constClientVariable');
+    homeCubit.getSubscriptionRequests(
+        GetSubscriptionsRequestsParams(requestState: 'Accepted'));
+    List<SubscriptionRequestEntity> subscriptionRequestEntity = [];
     return Scaffold(
-      body: BlocBuilder<HomeCubit,HomeStates>(
+      body: BlocConsumer<HomeCubit, HomeStates>(
+        listener: (context, state) {
+          if (state is GetSubscriptionRequestSuccessState) {
+            subscriptionRequestEntity = state.subscriptionRequestEntity;
+          }
+        },
         builder: (context, state) {
-          return WillPopScope(
-            onWillPop: ()
-            async {
-              Navigator.pop(context);
-              clientVariable = null;
-              constClientVariable = null;
-              debugPrintFullText( 'is ===========================$constClientVariable');
-              return false;
-            },
-            child: SafeArea(
-              child: Padding(
-                padding: designApp,
-                child:
-                Column(
-                  children: [
-                    defaultAppBar(
-                      title: AppString.clients,
-                      context: context,
-                      onPressed: ()
-                      {
-                        Navigator.pop(context);
-                        clientVariable = null;
-                        constClientVariable = null;
-                        debugPrintFullText( 'is ===========================$constClientVariable');
-                      },
-                      actions: [
-                        IconButton(
-                            onPressed: ()
-                            {
-                              navigateTo(context, SearchScreen(
-                                clientsScreen: true,
-                              ));
-                            },
-                            icon: const Icon(Icons.search)
-                        )
-                      ]
-                    ),
-                    verticalSpace(4.h),
-                    if(homeCubit.results != null)
-                    Expanded(
-                        child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) => InkWell(
-                            onTap: ()
-                            {
-                              navigateTo(context, ClientDetailsScreen(
-                                name: homeCubit.results![index].userName!,
-                                address: homeCubit.results![index].location,
-                                age: '${homeCubit.results![index].age!}',
-                                bodyFat: '${homeCubit.results![index].bodyFat!}',
-                                goal: homeCubit.results![index].goal,
-                                img: homeCubit.results![index].profilePicture!,
-                                tall: '${homeCubit.results![index].currentTall!}',
-                                weight: '${homeCubit.results![index].currentWeight!}',
-                              ));
-                            },
-                            child: buildClientProgressItem(
-                                isProgress: false,
-                                image: NetworkImage(homeCubit.results![index].profilePicture!),
-                                name: homeCubit.results![index].userName!,
-                            ),
-                          ),
-                          itemCount: homeCubit.results!.length,
-                        ))
-                  ],
-                )
-              ),
-            ),
-          );
+          return state is GetSubscriptionRequestLoadingState
+              ? const LoadingPage()
+              : WillPopScope(
+                  onWillPop: () async {
+                    Navigator.pop(context);
+                    clientVariable = null;
+                    constClientVariable = null;
+                    debugPrintFullText(
+                        'is ===========================$constClientVariable');
+                    return false;
+                  },
+                  child: SafeArea(
+                    child: Padding(
+                        padding: designApp,
+                        child: Column(
+                          children: [
+                            defaultAppBar(
+                                title: AppString.clients,
+                                context: context,
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  clientVariable = null;
+                                  constClientVariable = null;
+                                  debugPrintFullText(
+                                      'is ===========================$constClientVariable');
+                                },
+                                actions: [
+                                  IconButton(
+                                      onPressed: () {
+                                        navigateTo(
+                                            context,
+                                            SearchScreen(
+                                              clientsScreen: true,
+                                            ));
+                                      },
+                                      icon: const Icon(Icons.search))
+                                ]),
+                            verticalSpace(4.h),
+                            if (subscriptionRequestEntity.isNotEmpty)
+                              Expanded(
+                                  child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                itemBuilder: (context, index) => InkWell(
+                                  onTap: () {
+                                    navigateTo(
+                                        context,
+                                        ClientDetailsScreen(
+                                          clientId: subscriptionRequestEntity[index].clientId,
+                                        ));
+                                  },
+                                  child: buildClientProgressItem(
+                                    isProgress: false,
+                                    image: NetworkImage('https://pixlr.com/images/index/remove-bg.webp'),
+                                    name: subscriptionRequestEntity[index].clientUsername,
+                                  ),
+                                ),
+                                itemCount: subscriptionRequestEntity.length,
+                              ))
+                          ],
+                        )),
+                  ),
+                );
         },
       ),
     );

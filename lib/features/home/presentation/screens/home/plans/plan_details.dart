@@ -221,7 +221,7 @@ class PlanDetails extends StatelessWidget {
                                       makerName: homeCubit
                                           .exerciseDetailsResult![index]
                                           .exerciseModel
-                                          .exerciseMaker,
+                                          .userName,
                                       name: homeCubit
                                           .exerciseDetailsResult![index]
                                           .exerciseModel

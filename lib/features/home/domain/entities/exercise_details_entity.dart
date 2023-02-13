@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:gymawy/features/home/data/models/add_exercise_model.dart';
+import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
 
 class ExerciseDetailsEntity extends Equatable {
   int exerciseDetailId;
-  ExerciseModel exerciseModel;
+  AddExerciseEntity exerciseModel;
   int sets;
   int reps;
   double rest;
@@ -35,37 +36,7 @@ class ExerciseDetailsEntity extends Equatable {
       ];
 }
 
-class ExerciseDetailsParams extends Equatable {
-  int? exerciseDetailId;
-  bool update;
-  int sets;
-  int reps;
-  double rest;
-  String day;
-  int? exerciseId;
-  int? planId;
 
-  ExerciseDetailsParams({
-    this.exerciseDetailId,
-    required this.update,
-    required this.sets,
-    required this.reps,
-    required this.rest,
-    required this.day,
-    this.exerciseId,
-    this.planId,
-  });
-
-  @override
-  List<Object?> get props => [
-        sets,
-        rest,
-        reps,
-        day,
-        exerciseId,
-        planId,
-      ];
-}
 
 class ExerciseModel extends Equatable {
   String exerciseName;
