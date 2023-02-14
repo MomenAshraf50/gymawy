@@ -343,15 +343,29 @@ class HomeClientScreen extends StatelessWidget {
                                       padding: EdgeInsets.all(10.rSp),
                                       child: Column(
                                         children: [
-                                          index == 4 || index == 5
-                                              ? Lottie.asset(
-                                              Assets.images.lotti.dumbble,
-                                              height: 11.h)
-                                              : SvgPicture.asset(
-                                            homeCubit
-                                                .listSuggestions[index].img,
-                                              height: 11.h
-                                          ),
+
+                                          if(isCoachLogin == true)
+                                            index == 4
+                                                ? Lottie.asset(
+                                                Assets.images.lotti.dumbble,
+                                                height: 11.h)
+                                                : SvgPicture.asset(
+                                                homeCubit
+                                                    .listSuggestions[index].img,
+                                                height: 11.h
+                                            ),
+
+                                          if(isCoachLogin == false)
+                                            index == 3
+                                                ? Lottie.asset(
+                                                Assets.images.lotti.dumbble,
+                                                height: 11.h)
+                                                : SvgPicture.asset(
+                                                homeCubit
+                                                    .listSuggestions[index].img,
+                                                height: 11.h
+                                            ),
+
                                           verticalSpace(2.h),
                                           myText(
                                             title: homeCubit
@@ -368,19 +382,35 @@ class HomeClientScreen extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
-                                  if (index == 0) {
-                                    navigateTo(context,  const PlansScreen());
-                                  } else if (index == 1) {
-                                    navigateTo(context, ExercisesScreen(isAddExercise: false,));
-                                  } else if (index == 2) {
-                                    navigateTo(context, NutritionScreen());
-                                  } else if (index == 3){
-                                    navigateTo(context, ClientsScreen(clientVariable: 'test',));
-                                  }else if (index == 4){
-                                    navigateTo(context, const ProgressScreen());
-                                  } else {
-                                    navigateTo(context, const WorkoutTrackerScreen());
+                                  if(isCoachLogin == true)
+                                  {
+                                    if (index == 0) {
+                                      navigateTo(context,  const PlansScreen());
+                                    } else if (index == 1) {
+                                      navigateTo(context, ExercisesScreen(isAddExercise: false,));
+                                    } else if (index == 2) {
+                                      navigateTo(context, NutritionScreen());
+                                    } else if (index == 3){
+                                      navigateTo(context, ClientsScreen(clientVariable: 'test',));
+                                    }else{
+                                      navigateTo(context, const ProgressScreen());
+                                    }
                                   }
+
+                                  if(isCoachLogin == false)
+                                  {
+                                    if (index == 0) {
+                                      navigateTo(context,  const PlansScreen());
+                                    } else if (index == 1) {
+                                      navigateTo(context, ExercisesScreen(isAddExercise: false,));
+                                    } else if (index == 2) {
+                                      navigateTo(context, NutritionScreen());
+                                    } else {
+                                      navigateTo(context, const WorkoutTrackerScreen());
+                                    }
+                                  }
+
+
 
                                 },
                               );

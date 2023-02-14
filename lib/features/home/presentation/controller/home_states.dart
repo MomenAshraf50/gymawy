@@ -311,3 +311,10 @@ class GetSubscriptionRequestErrorState extends HomeStates{
   GetSubscriptionRequestErrorState(this.failure);
 }
 
+class DeleteSubscriptionRequestLoadingState extends HomeStates{}
+class DeleteSubscriptionRequestSuccessState extends HomeStates{}
+class DeleteSubscriptionRequestErrorState extends HomeStates{
+  final String failure;
+  DeleteSubscriptionRequestErrorState(this.failure);
+}
+
