@@ -52,6 +52,19 @@ abstract class DioHelper {
     bool isMultipart = false,
 
   });
+
+  Future<dynamic> patch({
+    String? base,
+    required String url,
+    dynamic data,
+    dynamic query,
+    String? token,
+    ProgressCallback? progressCallback,
+    CancelToken? cancelToken,
+    int? timeOut,
+    bool isMultipart = false,
+
+  });
 }
 
 class DioImpl extends DioHelper {
@@ -264,6 +277,58 @@ class DioImpl extends DioHelper {
         cancelToken: cancelToken,
       ),
     );
+
+  }
+  @override
+  Future patch({
+    String? base,
+    required String url,
+    dynamic data,
+    dynamic query,
+    String? token,
+    ProgressCallback? progressCallback,
+    CancelToken? cancelToken,
+    int? timeOut,
+    bool isMultipart = false,
+  }) async {
+    if (timeOut != null) {
+      dio.options.connectTimeout = timeOut;
+    }
+
+    if (base != null) {
+      dio.options.baseUrl = base;
+    } else {
+      dio.options.baseUrl = baseUrl;
+    }
+
+    dio.options.headers = {
+      if (isMultipart) 'Content-Type': 'multipart/form-data',
+      if (!isMultipart) 'Content-Type': 'application/json',
+      if (!isMultipart) 'Accept': 'application/json',
+      'Accept-Language': isArabic ? 'ar' : 'en',
+      if (token != null)
+        'Authorization': '${base == null ? 'Token' : ''} $token'
+    };
+
+    if (url.contains('??')) {
+      url = url.replaceAll('??', '?');
+    }
+
+    debugPrint('URL => ${dio.options.baseUrl + url}');
+    debugPrint('Header => ${dio.options.headers.toString()}');
+    debugPrint('Body => $data');
+    debugPrint('Query => $query');
+
+    return await request(
+          () async => await dio.patch(
+        url,
+        queryParameters: query,
+        onSendProgress: progressCallback,
+        data: data,
+        cancelToken: cancelToken,
+      ),
+    );
+
   }
 }
 

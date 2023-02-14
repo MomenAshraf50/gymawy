@@ -10,6 +10,7 @@ import 'package:gymawy/features/home/data/models/add_exercise_model.dart';
 import 'package:gymawy/features/home/data/models/add_nutrition_model.dart';
 import 'package:gymawy/features/home/data/models/certificate_model.dart';
 import 'package:gymawy/features/home/data/models/exercise_details_model.dart';
+import 'package:gymawy/features/home/data/models/notifications_model.dart';
 import 'package:gymawy/features/home/data/models/profile_model.dart';
 import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/data/models/subscription_request_model.dart';
@@ -22,6 +23,7 @@ import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/get_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/mark_as_read_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/subscription_request_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
@@ -139,9 +141,12 @@ abstract class HomeBaseDataSource {
   Future<List<SubscriptionRequestModel>> getSubscriptionRequests(
       GetSubscriptionsRequestsParams params);
 
-  Future<void> deleteSubscriptionRequest(DeleteSubscriptionRequestParams params);
+  Future<void> deleteSubscriptionRequest(
+      DeleteSubscriptionRequestParams params);
 
+  Future<List<NotificationsModel>> getNotifications();
 
+  Future<void> markAsRead(MarkAsReadParams params);
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -744,51 +749,59 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   @override
   Future<SubscriptionRequestModel> subscriptionRequest(
       SubscriptionRequestParams params) async {
-    final Response f = params.isUpdate == true?
-    await dioHelper.put(
-        url: '$subscriptionEndPoint${params.subscriptionRequest}/',
-        token: token,
-        data: {
-          'state': params.status,
-        }):
-        await dioHelper.post(
-            url: subscriptionEndPoint,
+    final Response f = params.isUpdate == true
+        ? await dioHelper.put(
+            url: '$subscriptionEndPoint${params.subscriptionRequest}/',
             token: token,
             data: {
-              'trainer': params.coachId,
-               if (params.startDate != null)
-              'start_date': params.startDate,
-              if (params.endDate != null)
-              'end_date': params.endDate,
-    }
-    );
+                'state': params.status,
+              })
+        : await dioHelper.post(url: subscriptionEndPoint, token: token, data: {
+            'trainer': params.coachId,
+            if (params.startDate != null) 'start_date': params.startDate,
+            if (params.endDate != null) 'end_date': params.endDate,
+          });
 
     return SubscriptionRequestModel.fromJson(f.data);
   }
 
   @override
   Future<List<SubscriptionRequestModel>> getSubscriptionRequests(params) async {
-    final Response f = await dioHelper.get(
-        url: subscriptionEndPoint,
-        token: token,
-        query: {
-           if (params.requestState != null)
-          'state': params.requestState,
-
-          if (params.subscriptionRequestId != null)
-            'SubscriptionRequest_id': params.subscriptionRequestId
-        });
+    final Response f =
+        await dioHelper.get(url: subscriptionEndPoint, token: token, query: {
+      if (params.requestState != null) 'state': params.requestState,
+      if (params.subscriptionRequestId != null)
+        'SubscriptionRequest_id': params.subscriptionRequestId
+    });
 
     return List<SubscriptionRequestModel>.from((f.data['results'] as List)
         .map((e) => SubscriptionRequestModel.fromJson(e)));
   }
 
   @override
-  Future<void> deleteSubscriptionRequest(DeleteSubscriptionRequestParams params) async {
+  Future<void> deleteSubscriptionRequest(
+      DeleteSubscriptionRequestParams params) async {
     await dioHelper.delete(
       url: '$subscriptionEndPoint${params.subscriptionRequestId}/',
       token: token,
     );
   }
 
+  @override
+  Future<List<NotificationsModel>> getNotifications() async {
+    final Response f = await dioHelper.get(
+      url: notificationsEndPoint,
+      token: token,
+    );
+    return List<NotificationsModel>.from(
+        (f.data['results'] as List).map((e) => NotificationsModel.fromJson(e)));
+  }
+
+  @override
+  Future<void> markAsRead(MarkAsReadParams params) async {
+    await dioHelper.patch(
+      url: "$notificationsEndPoint${params.notificationId}$markAsReadEndPoint",
+      token: token,
+    );
+  }
 }

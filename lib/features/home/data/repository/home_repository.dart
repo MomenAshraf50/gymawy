@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:gymawy/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
+import 'package:gymawy/features/home/domain/entities/notifications_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
@@ -18,6 +19,7 @@ import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dar
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/get_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/mark_as_read_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/subscription_request_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
@@ -62,6 +64,8 @@ typedef CallGetNutritionDetails = Future<List<NutritionDetailsEntity>> Function(
 typedef CallSubscriptionRequest = Future<SubscriptionRequestEntity> Function();
 typedef CallGetSubscriptionRequests = Future<List<SubscriptionRequestEntity>> Function();
 typedef CallDeleteSubscriptionRequest = Future<void> Function();
+typedef CallGetNotifications = Future<List<NotificationsEntity>> Function();
+typedef CallMarkAsRead = Future<void> Function();
 
 
 
@@ -657,6 +661,48 @@ class HomeRepository extends HomeBaseRepository {
       return remoteDataSource.deleteSubscriptionRequest(params);
     });
   }
+
+  Future<Either<Failure, List<NotificationsEntity>>> fetchGetNotifications(
+      CallGetNotifications mainMethod,
+      ) async {
+    try {
+      final notificationsEntity = await mainMethod();
+      return Right(notificationsEntity);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+  @override
+  Future<Either<Failure, List<NotificationsEntity>>> getNotifications() async{
+    return await fetchGetNotifications((){
+      return remoteDataSource.getNotifications();
+    });
+  }
+
+
+  Future<Either<Failure, void>> fetchMarkAsRead(
+      CallMarkAsRead mainMethod,
+      ) async {
+    try {
+      final markAsRead = await mainMethod();
+      return Right(markAsRead);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> markAsRead(MarkAsReadParams params) {
+    return fetchMarkAsRead((){
+      return remoteDataSource.markAsRead(params);
+    });
+  }
+
+
 
 
 

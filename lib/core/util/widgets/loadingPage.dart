@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
+import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:lottie/lottie.dart';
 
 
@@ -16,6 +17,8 @@ class LoadingPage extends StatelessWidget {
     return Center(
           child: Lottie.asset(
           Assets.images.lotti.loading,
+            height: 20.h,
+            width: 40.w
           ),
         );
   }
