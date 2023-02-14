@@ -19,12 +19,13 @@ class GetSubscriptionUseCase extends UseCase<List<SubscriptionRequestEntity>,Get
 }
 
 class GetSubscriptionsRequestsParams extends Equatable{
-  String requestState;
+  String? requestState;
+  int? subscriptionRequestId;
 
-  GetSubscriptionsRequestsParams({required this.requestState});
+  GetSubscriptionsRequestsParams({this.requestState,this.subscriptionRequestId});
 
   @override
-  List<Object?> get props => [requestState];
+  List<Object?> get props => [requestState,subscriptionRequestId];
 
 
 }

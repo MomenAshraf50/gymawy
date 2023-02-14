@@ -33,6 +33,7 @@ import '../../domain/usecase/add_nutrition_details_usecase.dart';
 import '../../domain/usecase/add_plan_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
+import '../../domain/usecase/delete_subscriptionRequest_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
 import '../../domain/usecase/get_nutrition_details.dart';
 import '../../domain/usecase/get_nutrition_usecase.dart';
@@ -60,6 +61,8 @@ typedef CallAddNutritionDetails = Future<NutritionDetailsEntity> Function();
 typedef CallGetNutritionDetails = Future<List<NutritionDetailsEntity>> Function();
 typedef CallSubscriptionRequest = Future<SubscriptionRequestEntity> Function();
 typedef CallGetSubscriptionRequests = Future<List<SubscriptionRequestEntity>> Function();
+typedef CallDeleteSubscriptionRequest = Future<void> Function();
+
 
 
 
@@ -634,7 +637,26 @@ class HomeRepository extends HomeBaseRepository {
 
 
 
+  Future<Either<Failure, void>> fetchDeleteSubscriptionRequest(
+      CallDeleteSubscriptionRequest mainMethod,
+      ) async {
+    try {
+      final deleteSubscriptionRequest = await mainMethod();
+      return Right(deleteSubscriptionRequest);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
 
+  @override
+  Future<Either<Failure, void>> deleteSubscriptionRequest(
+      DeleteSubscriptionRequestParams params) async {
+    return await fetchDeleteSubscriptionRequest(() {
+      return remoteDataSource.deleteSubscriptionRequest(params);
+    });
+  }
 
 
 

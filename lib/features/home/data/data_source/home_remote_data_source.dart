@@ -33,6 +33,7 @@ import '../../domain/usecase/add_plan_usecase.dart';
 import '../../domain/usecase/add_exercise_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
+import '../../domain/usecase/delete_subscriptionRequest_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
 import '../../domain/usecase/get_nutrition_details.dart';
 import '../../domain/usecase/get_plan_usecase.dart';
@@ -137,6 +138,10 @@ abstract class HomeBaseDataSource {
 
   Future<List<SubscriptionRequestModel>> getSubscriptionRequests(
       GetSubscriptionsRequestsParams params);
+
+  Future<void> deleteSubscriptionRequest(DeleteSubscriptionRequestParams params);
+
+
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -766,9 +771,24 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     final Response f = await dioHelper.get(
         url: subscriptionEndPoint,
         token: token,
-        query: {'state': params.requestState});
+        query: {
+           if (params.requestState != null)
+          'state': params.requestState,
+
+          if (params.subscriptionRequestId != null)
+            'SubscriptionRequest_id': params.subscriptionRequestId
+        });
 
     return List<SubscriptionRequestModel>.from((f.data['results'] as List)
         .map((e) => SubscriptionRequestModel.fromJson(e)));
   }
+
+  @override
+  Future<void> deleteSubscriptionRequest(DeleteSubscriptionRequestParams params) async {
+    await dioHelper.delete(
+      url: '$subscriptionEndPoint${params.subscriptionRequestId}/',
+      token: token,
+    );
+  }
+
 }

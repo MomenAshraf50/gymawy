@@ -32,6 +32,7 @@ import '../../features/home/domain/usecase/certification_usecase.dart';
 import '../../features/home/domain/usecase/delete_certification_usecase.dart';
 import '../../features/home/domain/usecase/delete_exercise_details_usecase.dart';
 import '../../features/home/domain/usecase/delete_exersice_plan_usecase.dart';
+import '../../features/home/domain/usecase/delete_subscriptionRequest_usecase.dart';
 import '../../features/home/domain/usecase/get_exercise_plan_details.dart';
 import '../../features/home/domain/usecase/get_nutrition_details.dart';
 import '../../features/home/domain/usecase/get_plan_usecase.dart';
@@ -86,6 +87,7 @@ Future<void> init() async {
         getNutritionPlanDetailsUseCase: sl(),
         subscriptionRequestUseCase: sl(),
         getSubscriptionUseCase: sl(),
+        deleteSubscriptionRequestUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -137,6 +139,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetNutritionPlanDetailsUseCase(sl()));
   sl.registerLazySingleton(() => SubscriptionRequestUseCase(sl()));
   sl.registerLazySingleton(() => GetSubscriptionUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteSubscriptionRequestUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(

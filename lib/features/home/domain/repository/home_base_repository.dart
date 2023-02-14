@@ -29,6 +29,7 @@ import '../usecase/add_nutrition_details_usecase.dart';
 import '../usecase/add_plan_usecase.dart';
 import '../usecase/delete_exercise_details_usecase.dart';
 import '../usecase/delete_exersice_plan_usecase.dart';
+import '../usecase/delete_subscriptionRequest_usecase.dart';
 import '../usecase/get_exercise_plan_details.dart';
 import '../usecase/get_nutrition_details.dart';
 import '../usecase/get_nutrition_usecase.dart';
@@ -140,6 +141,10 @@ abstract class HomeBaseRepository {
       SubscriptionRequestParams params);
 
   Future<Either<Failure, List<SubscriptionRequestEntity>>> getSubscriptionRequests(GetSubscriptionsRequestsParams params);
+
+
+  Future<Either<Failure, void>> deleteSubscriptionRequest(DeleteSubscriptionRequestParams params);
+
 
 
 }

@@ -42,6 +42,7 @@ import '../../domain/usecase/certification_usecase.dart';
 import '../../domain/usecase/delete_certification_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
 import '../../domain/usecase/delete_exersice_plan_usecase.dart';
+import '../../domain/usecase/delete_subscriptionRequest_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
 import '../../domain/usecase/get_nutrition_details.dart';
 import '../../domain/usecase/get_nutrition_usecase.dart';
@@ -86,6 +87,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final GetNutritionPlanDetailsUseCase _getNutritionPlanDetailsUseCase;
   final SubscriptionRequestUseCase _subscriptionRequestUseCase;
   final GetSubscriptionUseCase _getSubscriptionUseCase;
+  final DeleteSubscriptionRequestUseCase _deleteSubscriptionRequestUseCase;
 
 
 
@@ -118,6 +120,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required GetNutritionPlanDetailsUseCase getNutritionPlanDetailsUseCase,
     required SubscriptionRequestUseCase subscriptionRequestUseCase,
     required GetSubscriptionUseCase getSubscriptionUseCase,
+    required DeleteSubscriptionRequestUseCase deleteSubscriptionRequestUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -146,6 +149,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _getNutritionPlanDetailsUseCase = getNutritionPlanDetailsUseCase,
         _subscriptionRequestUseCase = subscriptionRequestUseCase,
         _getSubscriptionUseCase = getSubscriptionUseCase,
+        _deleteSubscriptionRequestUseCase = deleteSubscriptionRequestUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -198,15 +202,18 @@ class HomeCubit extends Cubit<HomeStates> {
       title: AppString.nutrition,
       img: Assets.images.svg.meal,
     ),
+    if(isCoachLogin == true)
     Suggestions(
       title: AppString.clients,
       img: Assets.images.svg.clients,
     ),
-    Suggestions(
+    if(isCoachLogin == true)
+      Suggestions(
       title: AppString.clientProgress,
       img: Assets.images.svg.clients,
     ),
-    Suggestions(
+    if(isCoachLogin == false)
+      Suggestions(
       title: AppString.workoutTracker,
       img: Assets.images.svg.clients,
     )
@@ -1071,6 +1078,21 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(GetSubscriptionRequestSuccessState(data));
     });
   }
+
+
+  void deleteSubscriptionRequest(DeleteSubscriptionRequestParams params)async {
+    emit(DeleteSubscriptionRequestLoadingState());
+
+    final result = await _deleteSubscriptionRequestUseCase(params);
+
+    result.fold((failure){
+      emit(DeleteSubscriptionRequestErrorState(mapFailureToMessage(failure)));
+    }, (data){
+      emit(DeleteSubscriptionRequestSuccessState());
+    });
+  }
+
+
 
 
 }

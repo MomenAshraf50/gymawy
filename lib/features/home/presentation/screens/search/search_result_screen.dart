@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/default%20dialog.dart';
 import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/subscription_request_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
+import '../../../../../core/di/injection.dart';
+import '../../../../../core/network/local/cache_helper.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/myText.dart';
 import '../../../../../core/util/widgets/my_icon_button.dart';
+import '../../../domain/entities/subscription_request_entity.dart';
+import '../../../domain/usecase/delete_subscriptionRequest_usecase.dart';
 import '../../../domain/usecase/get_certifications.dart';
 import '../../controller/home_cubit.dart';
 import '../profile/social_web_view.dart';
@@ -60,9 +66,21 @@ class SearchResultScreen extends StatelessWidget {
     homeCubit.getCertificates(
         GetCertificateParams(
           ownerId: userId!,
-          ownerName: '',
-        ),
+          ownerName: '',),
         context);
+
+
+    List<SubscriptionRequestEntity>? subscriptionRequestResult;
+
+    if(subscriptionID != 0) {
+      homeCubit.getSubscriptionRequests(
+          GetSubscriptionsRequestsParams(
+            subscriptionRequestId: subscriptionID,
+          )
+      );
+    }
+
+
     int selected = 0;
 
     return SafeArea(
@@ -74,11 +92,29 @@ class SearchResultScreen extends StatelessWidget {
                   context: context,
                   toast: TOAST.success,
                   text: AppString.subscribeRequest);
+              sl<CacheHelper>().put('subscriptionID', state.subscriptionRequestEntity.subscriptionRequestId);
 
+              homeCubit.getSubscriptionRequests(
+                  GetSubscriptionsRequestsParams(
+                    subscriptionRequestId: state.subscriptionRequestEntity.subscriptionRequestId,
+                  )
+              );
+            }
+            if(state is GetSubscriptionRequestSuccessState) {
+              subscriptionRequestResult = state.subscriptionRequestEntity;
+            }
+            if(state is DeleteSubscriptionRequestSuccessState)
+            {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              designToastDialog(
+                  context: context,
+                  toast: TOAST.success,
+                  text: 'Subscription canceled successfully');
             }
           },
           builder: (context, state) {
-            return state is SubscriptionRequestLoadingState
+            return state is SubscriptionRequestLoadingState || subscriptionRequestResult == null
                 ? const LoadingPage()
                 : SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
@@ -100,8 +136,6 @@ class SearchResultScreen extends StatelessWidget {
                                   child: CircleAvatar(
                                     radius: 60.rSp,
                                     backgroundImage: NetworkImage(
-                                        // 'https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc='
-                                        //homeCubit.searchResults!.profilePicture,
                                         pic!),
                                   ),
                                 ),
@@ -123,9 +157,7 @@ class SearchResultScreen extends StatelessWidget {
                                           children: [
                                             myText(
                                               title:
-                                                  //homeCubit.searchResults!.fullName,
-                                                  name!,
-                                              //AppString.userNameProfile,
+                                              name!,
                                               style: Style.small,
                                             ),
                                             if (verification == null)
@@ -138,33 +170,70 @@ class SearchResultScreen extends StatelessWidget {
                                                 title: AppString.coach,
                                                 style: Style.small,
                                               ),
-                                            // const myText(
-                                            //   title: AppString.coach,
-                                            //   style: Style.small,
-                                            // ),
                                           ],
                                         ),
                                       ),
                                       verticalSpace(1.h),
-                                      if (!isCoachLogin! &&
-                                          verification != null)
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: myButton(
-                                                  text: AppString.subscribe,
-                                                  height: 4.h,
-                                                  fontSize: 10.rSp,
-                                                  onPressed: () {
-                                                    homeCubit.subscriptionRequest(
-                                                        SubscriptionRequestParams(
+                                      if (!isCoachLogin! && verification != null && subscriptionRequestResult!.isEmpty)
+                                        myButton(
+                                            text:AppString.subscribe,
+                                            color:ColorsManager.mainColor,
+                                            height: 4.h,
+                                            fontSize: 10.rSp,
+                                            onPressed: () {
+                                                homeCubit.subscriptionRequest(
+                                                    SubscriptionRequestParams(
                                                       coachId: userId!,
                                                       isUpdate: false,
                                                     ));
-                                                  }),
-                                            ),
-                                          ],
-                                        ),
+                                            }),
+
+
+
+                                      if (!isCoachLogin! && verification != null && subscriptionRequestResult!.isNotEmpty && subscriptionRequestResult![0].requestState != 'Accepted')
+                                        myButton(
+                                            text: subscriptionRequestResult![0].requestState == 'Pending'?
+                                            'Pending' : AppString.subscribe,
+                                            color: subscriptionRequestResult![0].requestState == 'Pending'?
+                                            ColorsManager.regularGrey : ColorsManager.mainColor,
+                                            height: 4.h,
+                                            fontSize: 10.rSp,
+                                            onPressed: () {
+                                              if(subscriptionRequestResult![0].requestState == 'Pending')
+                                              {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return DefaultDialog(
+                                                        message: 'Delete your request',
+                                                        pushButtonText: 'Yes',
+                                                        buttonColor: ColorsManager.redPrimary,
+                                                        pushButtonVoidCallback: ()
+                                                        {
+                                                          homeCubit.deleteSubscriptionRequest(
+                                                              DeleteSubscriptionRequestParams(
+                                                                subscriptionRequestResult![0].subscriptionRequestId,
+                                                              )
+                                                          );
+                                                        }
+                                                    );
+                                                  },
+                                                );
+                                              }
+                                            }),
+
+
+
+
+
+
+
+
+
+
+
+
+
                                     ],
                                   ),
                                 ),
@@ -178,8 +247,6 @@ class SearchResultScreen extends StatelessWidget {
                             const Icon(Icons.location_on_outlined),
                             myText(
                               title: location!,
-                              //homeCubit.searchResults!.governorate,
-                              //AppString.location,
                               style: Style.small,
                               fontSize: 16.rSp,
                             ),
@@ -367,15 +434,15 @@ class SearchResultScreen extends StatelessWidget {
                                                         context,
                                                         ViewCertification(
                                                           certification: homeCubit
-                                                              .certificateResult![
+                                                              .certificateResult[
                                                                   index]
                                                               .certificateFile,
                                                           certificationName: homeCubit
-                                                              .certificateResult![
+                                                              .certificateResult[
                                                                   index]
                                                               .certificateName,
                                                           certificationID: (homeCubit
-                                                                  .certificateResult![
+                                                                  .certificateResult[
                                                                       index]
                                                                   .certificateId)
                                                               .toString(),
@@ -388,26 +455,17 @@ class SearchResultScreen extends StatelessWidget {
                                                       verticalSpace(1.h),
                                                       myText(
                                                           title: homeCubit
-                                                              .certificateResult![
+                                                              .certificateResult[
                                                                   index]
                                                               .certificateName,
                                                           style: Style.medium),
                                                       verticalSpace(1.h),
                                                       myText(
                                                           title: homeCubit
-                                                              .certificateResult![
+                                                              .certificateResult[
                                                                   index]
                                                               .certificateDate,
                                                           style: Style.medium),
-                                                      //certificateResultImg!
-                                                      // Image.network(
-                                                      //   homeCubit.certificateResult![index].certificateFile,
-                                                      //   height: 25.h,
-                                                      // ),
-                                                      // SvgPicture.asset(
-                                                      //   listTrainingImages[index].img,
-                                                      //   height: 25.h,
-                                                      // ),
                                                     ],
                                                   ),
                                                 ),
@@ -418,74 +476,9 @@ class SearchResultScreen extends StatelessWidget {
                                                   CircularProgressIndicator());
                                     },
                                     itemCount:
-                                        homeCubit.certificateResult!.length,
+                                        homeCubit.certificateResult.length,
                                   ),
                                 ),
-                              // Card(
-                              //   margin: EdgeInsets.all(25.rSp),
-                              //   elevation: 5,
-                              //   child: Padding(
-                              //     padding: EdgeInsets.all(20.0.rSp),
-                              //     child: SizedBox(
-                              //       width: double.infinity,
-                              //       child: Column(
-                              //         crossAxisAlignment: CrossAxisAlignment.center,
-                              //         children: const [
-                              //           myText(
-                              //             title: AppString.certifications,
-                              //             style: Style.medium,
-                              //             fontWeight: FontWeight.w600,
-                              //           ),
-                              //         ],
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              Card(
-                                margin: EdgeInsets.all(25.rSp),
-                                elevation: 5,
-                                child: Padding(
-                                  padding: EdgeInsets.all(20.0.rSp),
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: const [
-                                        myText(
-                                          title: AppString.cv,
-                                          style: Style.medium,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                margin: EdgeInsets.all(25.rSp),
-                                elevation: 5,
-                                child: Padding(
-                                  padding: EdgeInsets.all(20.0.rSp),
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: const [
-                                        myText(
-                                          title: AppString.personalTraining,
-                                          style: Style.medium,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                        myText(
-                                            title: AppString.strict,
-                                            style: Style.medium),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                       ],

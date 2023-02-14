@@ -45,6 +45,7 @@ void main() async
   userName = await sl<CacheHelper>().get('userName');
   isCoachLogin = await sl<CacheHelper>().get('isCoach');
   email = await sl<CacheHelper>().get('email');
+  subscriptionID = await sl<CacheHelper>().get('subscriptionID');
   debugPrintFullText('My Current Token => $token');
   debugPrintFullText('My Current ID => $userId');
   debugPrintFullText('My Current type => $isCoachLogin');

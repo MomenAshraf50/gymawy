@@ -44,8 +44,10 @@ class NutritionScreen extends StatelessWidget {
                       backgroundColor: ColorsManager.white,
                       iconColor: ColorsManager.black,
                     ),
+                    if(isCoachLogin == true)
                     horizontalSpace(5.w),
-                    defaultActionButton(
+                    if(isCoachLogin == true)
+                      defaultActionButton(
                         icon: Icons.add,
                         onPressed: ()
                         {

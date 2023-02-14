@@ -40,6 +40,7 @@ String? token = '';
 String? email = '';
 String? userName = '';
 int? userId = 0;
+int? subscriptionID = 0;
 bool? isCoachLogin = false;
 double? currentLat = 0;
 double? currentLng = 0;
