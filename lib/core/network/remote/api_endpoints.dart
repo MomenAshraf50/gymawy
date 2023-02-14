@@ -12,6 +12,8 @@ const String addNutritionEndPoint = 'nutritions/';
 const String addExerciseDetailsEndPoint = 'exerciseDetail/';
 const String addNutritionDetailsEndPoint = 'nutritionDetail/';
 const String subscriptionEndPoint = 'subscriptionRequest/';
+const String notificationsEndPoint = 'notifications/';
+const String markAsReadEndPoint = '/mark_as_read/';
 String updateCoachEndPoint = 'trainers/$userId/';
 String updateClientsEndPoint = 'clients/$userId/';
 

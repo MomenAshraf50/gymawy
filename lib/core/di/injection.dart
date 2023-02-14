@@ -8,8 +8,10 @@ import 'package:gymawy/features/home/domain/usecase/add_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
+import 'package:gymawy/features/home/domain/usecase/get_notifications_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/mark_as_read_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/search_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/subscription_request_usecase.dart';
@@ -88,6 +90,8 @@ Future<void> init() async {
         subscriptionRequestUseCase: sl(),
         getSubscriptionUseCase: sl(),
         deleteSubscriptionRequestUseCase: sl(),
+        getNotificationsUseCase: sl(),
+        markAsReadUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -140,6 +144,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SubscriptionRequestUseCase(sl()));
   sl.registerLazySingleton(() => GetSubscriptionUseCase(sl()));
   sl.registerLazySingleton(() => DeleteSubscriptionRequestUseCase(sl()));
+  sl.registerLazySingleton(() => GetNotificationsUseCase(sl()));
+  sl.registerLazySingleton(() => MarkAsReadUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(

@@ -194,7 +194,8 @@ class AppString {
   static const day = 'Day';
   static const nutrition = 'Nutrition';
   static const subscribe = 'Subscribe';
-  static const subscribeRequest = 'Subscribe request sent succesfully';
+  static const subscribeRequest = 'Subscribe request sent successfully';
+  static const markAsRead = 'Mark as read';
 
 
 

@@ -4,17 +4,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/add_exercise_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/add_meal_screen.dart';
-import 'package:gymawy/features/home/presentation/widgets/build_latest_client_activity.dart';
 import '../../../../../../core/util/resources/assets.gen.dart';
 import '../../../widgets/build_client_details_screen_items.dart';
-import '../../../widgets/build_day_progress.dart';
 
 class ClientDetailsScreen extends StatelessWidget {
   ClientDetailsScreen({

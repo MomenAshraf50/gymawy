@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:gymawy/core/error/failures.dart';
+import 'package:gymawy/core/usecase/use_case.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
@@ -14,7 +15,9 @@ import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_notifications_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/mark_as_read_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/subscription_request_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_exercise_usecase.dart';
@@ -88,6 +91,8 @@ class HomeCubit extends Cubit<HomeStates> {
   final SubscriptionRequestUseCase _subscriptionRequestUseCase;
   final GetSubscriptionUseCase _getSubscriptionUseCase;
   final DeleteSubscriptionRequestUseCase _deleteSubscriptionRequestUseCase;
+  final GetNotificationsUseCase _getNotificationsUseCase;
+  final MarkAsReadUseCase _markAsReadUseCase;
 
 
 
@@ -121,6 +126,8 @@ class HomeCubit extends Cubit<HomeStates> {
     required SubscriptionRequestUseCase subscriptionRequestUseCase,
     required GetSubscriptionUseCase getSubscriptionUseCase,
     required DeleteSubscriptionRequestUseCase deleteSubscriptionRequestUseCase,
+    required GetNotificationsUseCase getNotificationsUseCase,
+    required MarkAsReadUseCase markAsReadUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -150,6 +157,8 @@ class HomeCubit extends Cubit<HomeStates> {
         _subscriptionRequestUseCase = subscriptionRequestUseCase,
         _getSubscriptionUseCase = getSubscriptionUseCase,
         _deleteSubscriptionRequestUseCase = deleteSubscriptionRequestUseCase,
+        _getNotificationsUseCase = getNotificationsUseCase,
+        _markAsReadUseCase = markAsReadUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -1092,7 +1101,28 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  void getNotifications() async{
+    emit(GetNotificationsLoadingState());
+    final result = await _getNotificationsUseCase(NoParams());
 
+    result.fold((failure){
+      emit(GetNotificationsErrorState(mapFailureToMessage(failure)));
+    } , (data){
+      emit(GetNotificationsSuccessState(data));
+    });
+  }
+
+  void markAsRead(MarkAsReadParams params)async {
+    emit(MarkAsReadLoadingState());
+
+    final result = await _markAsReadUseCase(params);
+
+    result.fold((failure){
+      emit(MarkAsReadErrorState(mapFailureToMessage(failure)));
+    }, (data){
+      emit(MarkAsReadSuccessState());
+    });
+  }
 
 
 }
