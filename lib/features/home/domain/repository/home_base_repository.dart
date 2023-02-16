@@ -2,11 +2,13 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:gymawy/features/home/domain/entities/coach_subscriptions_entity.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/entities/notifications_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
@@ -150,6 +152,11 @@ abstract class HomeBaseRepository {
   Future<Either<Failure, List<NotificationsEntity>>> getNotifications();
 
   Future<Either<Failure, void>> markAsRead(MarkAsReadParams params);
+
+  Future<Either<Failure, List<CoachSubscriptionsEntity>>> getCoachSubscriptions();
+
+  Future<Either<Failure, CoachSubscriptionsEntity>> updateSubscriptionStatus(UpdateSubscriptionStatusParams params);
+
 
 
 

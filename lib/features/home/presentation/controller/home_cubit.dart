@@ -15,6 +15,7 @@ import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_coach_subscriptions_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_notifications_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/mark_as_read_usecase.dart';
@@ -24,6 +25,7 @@ import 'package:gymawy/features/home/domain/usecase/update_exercise_usecase.dart
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
+import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
 import 'package:gymawy/features/home/presentation/screens/qr_code/qr_code_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
@@ -93,6 +95,8 @@ class HomeCubit extends Cubit<HomeStates> {
   final DeleteSubscriptionRequestUseCase _deleteSubscriptionRequestUseCase;
   final GetNotificationsUseCase _getNotificationsUseCase;
   final MarkAsReadUseCase _markAsReadUseCase;
+  final GetCoachSubscriptionsUseCase _getCoachSubscriptionsUseCase;
+  final UpdateSubscriptionStatusUseCase _updateSubscriptionStatusUseCase;
 
 
 
@@ -128,6 +132,8 @@ class HomeCubit extends Cubit<HomeStates> {
     required DeleteSubscriptionRequestUseCase deleteSubscriptionRequestUseCase,
     required GetNotificationsUseCase getNotificationsUseCase,
     required MarkAsReadUseCase markAsReadUseCase,
+    required GetCoachSubscriptionsUseCase getCoachSubscriptionsUseCase,
+    required UpdateSubscriptionStatusUseCase updateSubscriptionStatusUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -159,6 +165,8 @@ class HomeCubit extends Cubit<HomeStates> {
         _deleteSubscriptionRequestUseCase = deleteSubscriptionRequestUseCase,
         _getNotificationsUseCase = getNotificationsUseCase,
         _markAsReadUseCase = markAsReadUseCase,
+        _getCoachSubscriptionsUseCase = getCoachSubscriptionsUseCase,
+        _updateSubscriptionStatusUseCase = updateSubscriptionStatusUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -1124,7 +1132,29 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  void getCoachSubscriptions()async {
+    emit(GetCoachSubscriptionsLoadingState());
 
+    final result = await _getCoachSubscriptionsUseCase(NoParams());
+
+    result.fold((failure) {
+      emit(GetCoachSubscriptionsErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(GetCoachSubscriptionsSuccessState(data));
+    });
+  }
+
+  void updateSubscriptionStatus(UpdateSubscriptionStatusParams params)async {
+    emit(UpdateSubscriptionStatusLoadingState());
+
+    final result = await _updateSubscriptionStatusUseCase(params);
+
+    result.fold((failure) {
+      emit(UpdateSubscriptionStatusErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(UpdateSubscriptionStatusSuccessState(data));
+    });
+  }
 }
 
 class Suggestions extends Equatable {

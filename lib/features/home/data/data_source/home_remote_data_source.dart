@@ -9,6 +9,7 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/features/home/data/models/add_exercise_model.dart';
 import 'package:gymawy/features/home/data/models/add_nutrition_model.dart';
 import 'package:gymawy/features/home/data/models/certificate_model.dart';
+import 'package:gymawy/features/home/data/models/coach_subscriptions_model.dart';
 import 'package:gymawy/features/home/data/models/exercise_details_model.dart';
 import 'package:gymawy/features/home/data/models/notifications_model.dart';
 import 'package:gymawy/features/home/data/models/profile_model.dart';
@@ -16,6 +17,7 @@ import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/data/models/subscription_request_model.dart';
 import 'package:gymawy/features/home/data/models/update_coach_model.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
@@ -147,6 +149,11 @@ abstract class HomeBaseDataSource {
   Future<List<NotificationsModel>> getNotifications();
 
   Future<void> markAsRead(MarkAsReadParams params);
+
+  Future<List<CoachSubscriptionsModel>> getCoachSubscriptions();
+
+  Future<CoachSubscriptionsModel> updateSubscriptionStatus(
+      UpdateSubscriptionStatusParams params);
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -751,12 +758,13 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       SubscriptionRequestParams params) async {
     final Response f = params.isUpdate == true
         ? await dioHelper.put(
-            url: '$subscriptionEndPoint${params.subscriptionRequest}/',
+            url: '$subscriptionRequestEndPoint${params.subscriptionRequest}/',
             token: token,
             data: {
                 'state': params.status,
               })
-        : await dioHelper.post(url: subscriptionEndPoint, token: token, data: {
+        : await dioHelper
+            .post(url: subscriptionRequestEndPoint, token: token, data: {
             'trainer': params.coachId,
             if (params.startDate != null) 'start_date': params.startDate,
             if (params.endDate != null) 'end_date': params.endDate,
@@ -767,8 +775,8 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
 
   @override
   Future<List<SubscriptionRequestModel>> getSubscriptionRequests(params) async {
-    final Response f =
-        await dioHelper.get(url: subscriptionEndPoint, token: token, query: {
+    final Response f = await dioHelper
+        .get(url: subscriptionRequestEndPoint, token: token, query: {
       if (params.requestState != null) 'state': params.requestState,
       if (params.subscriptionRequestId != null)
         'SubscriptionRequest_id': params.subscriptionRequestId
@@ -782,7 +790,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   Future<void> deleteSubscriptionRequest(
       DeleteSubscriptionRequestParams params) async {
     await dioHelper.delete(
-      url: '$subscriptionEndPoint${params.subscriptionRequestId}/',
+      url: '$subscriptionRequestEndPoint${params.subscriptionRequestId}/',
       token: token,
     );
   }
@@ -803,5 +811,31 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       url: "$notificationsEndPoint${params.notificationId}$markAsReadEndPoint",
       token: token,
     );
+  }
+
+  @override
+  Future<List<CoachSubscriptionsModel>> getCoachSubscriptions() async {
+    final Response f = await dioHelper.get(
+      url: subscriptionEndPoint,
+      token: token,
+    );
+    return List<CoachSubscriptionsModel>.from((f.data['results'] as List)
+        .map((e) => CoachSubscriptionsModel.fromJson(e)));
+  }
+
+  @override
+  Future<CoachSubscriptionsModel> updateSubscriptionStatus(
+      UpdateSubscriptionStatusParams params) async {
+    final Response f = await dioHelper.put(
+      url: '$subscriptionEndPoint${params.subscriptionId}/',
+      token: token,
+      data: {
+        'status': params.status,
+        'client': params.clientId,
+        'trainer': params.coachId,
+      }
+    );
+
+    return CoachSubscriptionsModel.fromJson(f.data);
   }
 }

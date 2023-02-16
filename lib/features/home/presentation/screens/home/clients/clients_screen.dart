@@ -4,11 +4,10 @@ import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/loadingPage.dart';
-import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
-import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
+import 'package:gymawy/features/home/domain/entities/coach_subscriptions_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/pending_screen.dart';
-import 'package:gymawy/features/home/presentation/screens/search/search_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_client_progress_item.dart';
 import '../../../controller/home_cubit.dart';
 import 'clients_details_screen.dart';
@@ -21,14 +20,13 @@ class ClientsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
     constClientVariable = clientVariable;
-    homeCubit.getSubscriptionRequests(
-        GetSubscriptionsRequestsParams(requestState: 'Accepted'));
-    List<SubscriptionRequestEntity> subscriptionRequestEntity = [];
+    homeCubit.getCoachSubscriptions();
+    List<CoachSubscriptionsEntity> subscriptionRequestEntity = [];
     return Scaffold(
       body: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, state) {
-          if (state is GetSubscriptionRequestSuccessState) {
-            subscriptionRequestEntity = state.subscriptionRequestEntity;
+          if (state is GetCoachSubscriptionsSuccessState) {
+            subscriptionRequestEntity = state.subscriptionsEntity;
           }
         },
         builder: (context, state) {
@@ -88,7 +86,7 @@ class ClientsScreen extends StatelessWidget {
                                   child: buildClientProgressItem(
                                     isProgress: false,
                                     image: NetworkImage(subscriptionRequestEntity[index].clientPic),
-                                    name: subscriptionRequestEntity[index].clientUsername,
+                                    name: subscriptionRequestEntity[index].clientUserName,
                                   ),
                                 ),
                                 itemCount: subscriptionRequestEntity.length,

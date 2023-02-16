@@ -43,57 +43,60 @@ class PendingScreen extends StatelessWidget {
         builder: (context, state) {
           return state is GetSubscriptionRequestLoadingState? const LoadingPage() :
             SafeArea(
-              child: Column(
-                children: [
-                  defaultAppBar(
-                      title: 'Pending',
-                      context: context,
-                      onPressed: ()
-                      {
-                        Navigator.pop(context);
-                        homeCubit.getSubscriptionRequests(GetSubscriptionsRequestsParams(requestState: 'Accepted'));
-                      }
-                  ),
-                  Expanded(
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => InkWell(
-                          onTap: ()
-                          {
-                            navigateTo(
-                                context,
-                                ClientDetailsScreen(
-                                  clientId: subscriptionRequestEntity[index].clientId,
-                                ));
-                          },
-                          child: buildClientProgressItem(
-                            isProgress: false,
-                            isPending: true,
-                            onPressedAccept: ()
+              child: Padding(
+                padding: designApp,
+                child: Column(
+                  children: [
+                    defaultAppBar(
+                        title: 'Pending',
+                        context: context,
+                        onPressed: ()
+                        {
+                          Navigator.pop(context);
+                          homeCubit.getSubscriptionRequests(GetSubscriptionsRequestsParams(requestState: 'Accepted'));
+                        }
+                    ),
+                    Expanded(
+                        child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) => InkWell(
+                            onTap: ()
                             {
-                              homeCubit.subscriptionRequest(
-                                  SubscriptionRequestParams(
-                                    status: 'Accepted',
-                                    isUpdate: true,
-                                    subscriptionRequest: subscriptionRequestEntity[index].subscriptionRequestId,
+                              navigateTo(
+                                  context,
+                                  ClientDetailsScreen(
+                                    clientId: subscriptionRequestEntity[index].clientId,
                                   ));
                             },
-                            onPressedDecline: ()
-                            {
-                              homeCubit.subscriptionRequest(
-                                  SubscriptionRequestParams(
-                                    status: 'Declined',
-                                    isUpdate: true,
-                                    subscriptionRequest: subscriptionRequestEntity[index].subscriptionRequestId,
-                                  ));
-                            },
-                            image: NetworkImage(subscriptionRequestEntity[index].clientPic),
-                            name: subscriptionRequestEntity[index].clientUsername,
+                            child: buildClientProgressItem(
+                              isProgress: false,
+                              isPending: true,
+                              onPressedAccept: ()
+                              {
+                                homeCubit.subscriptionRequest(
+                                    SubscriptionRequestParams(
+                                      status: 'Accepted',
+                                      isUpdate: true,
+                                      subscriptionRequest: subscriptionRequestEntity[index].subscriptionRequestId,
+                                    ));
+                              },
+                              onPressedDecline: ()
+                              {
+                                homeCubit.subscriptionRequest(
+                                    SubscriptionRequestParams(
+                                      status: 'Declined',
+                                      isUpdate: true,
+                                      subscriptionRequest: subscriptionRequestEntity[index].subscriptionRequestId,
+                                    ));
+                              },
+                              image: NetworkImage(subscriptionRequestEntity[index].clientPic),
+                              name: subscriptionRequestEntity[index].clientUsername,
+                            ),
                           ),
-                        ),
-                        itemCount: subscriptionRequestEntity.length,
-                      ))
-                ],
+                          itemCount: subscriptionRequestEntity.length,
+                        ))
+                  ],
+                ),
               )
           );
         },

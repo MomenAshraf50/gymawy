@@ -5,12 +5,14 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gymawy/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
+import 'package:gymawy/features/home/domain/entities/coach_subscriptions_entity.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/entities/notifications_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
@@ -66,6 +68,9 @@ typedef CallGetSubscriptionRequests = Future<List<SubscriptionRequestEntity>> Fu
 typedef CallDeleteSubscriptionRequest = Future<void> Function();
 typedef CallGetNotifications = Future<List<NotificationsEntity>> Function();
 typedef CallMarkAsRead = Future<void> Function();
+typedef CallGetCoachSubscriptions = Future<List<CoachSubscriptionsEntity>> Function();
+typedef CallUpdateSubscriptionStatus = Future<CoachSubscriptionsEntity> Function();
+
 
 
 
@@ -699,6 +704,46 @@ class HomeRepository extends HomeBaseRepository {
   Future<Either<Failure, void>> markAsRead(MarkAsReadParams params) {
     return fetchMarkAsRead((){
       return remoteDataSource.markAsRead(params);
+    });
+  }
+
+  Future<Either<Failure, List<CoachSubscriptionsEntity>>> fetchGetCoachSubscriptions(
+      CallGetCoachSubscriptions mainMethod,
+      ) async {
+    try {
+      final coachSubscriptionsEntity = await mainMethod();
+      return Right(coachSubscriptionsEntity);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CoachSubscriptionsEntity>>> getCoachSubscriptions() async{
+    return await fetchGetCoachSubscriptions((){
+      return remoteDataSource.getCoachSubscriptions();
+    });
+  }
+
+  Future<Either<Failure, CoachSubscriptionsEntity>> fetchUpdateSubscriptionStatus(
+      CallUpdateSubscriptionStatus mainMethod,
+      ) async {
+    try {
+      final subscriptionEntity = await mainMethod();
+      return Right(subscriptionEntity);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, CoachSubscriptionsEntity>> updateSubscriptionStatus(UpdateSubscriptionStatusParams params) async{
+    return await fetchUpdateSubscriptionStatus((){
+      return  remoteDataSource.updateSubscriptionStatus(params);
     });
   }
 
