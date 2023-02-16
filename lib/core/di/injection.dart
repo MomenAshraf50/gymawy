@@ -8,6 +8,7 @@ import 'package:gymawy/features/home/domain/usecase/add_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
+import 'package:gymawy/features/home/domain/usecase/get_coach_subscriptions_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_notifications_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
@@ -20,6 +21,7 @@ import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.da
 import 'package:gymawy/features/home/domain/usecase/update_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/login/data/data_source/login_remote_data_source.dart';
 import 'package:gymawy/features/login/data/repository/login_repository.dart';
@@ -92,6 +94,8 @@ Future<void> init() async {
         deleteSubscriptionRequestUseCase: sl(),
         getNotificationsUseCase: sl(),
         markAsReadUseCase: sl(),
+        getCoachSubscriptionsUseCase: sl(),
+        updateSubscriptionStatusUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -146,6 +150,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeleteSubscriptionRequestUseCase(sl()));
   sl.registerLazySingleton(() => GetNotificationsUseCase(sl()));
   sl.registerLazySingleton(() => MarkAsReadUseCase(sl()));
+  sl.registerLazySingleton(() => GetCoachSubscriptionsUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateSubscriptionStatusUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(

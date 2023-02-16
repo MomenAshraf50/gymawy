@@ -1,4 +1,5 @@
 import 'package:gymawy/features/home/domain/entities/add_nutrition_entity.dart';
+import 'package:gymawy/features/home/domain/entities/coach_subscriptions_entity.dart';
 import 'package:gymawy/features/home/domain/entities/notifications_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
@@ -336,5 +337,29 @@ class MarkAsReadSuccessState extends HomeStates{}
 class MarkAsReadErrorState extends HomeStates{
   final String failure;
   MarkAsReadErrorState(this.failure);
+}
+
+class GetCoachSubscriptionsLoadingState extends HomeStates{}
+class GetCoachSubscriptionsSuccessState extends HomeStates{
+  List<CoachSubscriptionsEntity> subscriptionsEntity;
+
+  GetCoachSubscriptionsSuccessState(this.subscriptionsEntity);
+
+}
+class GetCoachSubscriptionsErrorState extends HomeStates{
+  final String failure;
+  GetCoachSubscriptionsErrorState(this.failure);
+}
+
+class UpdateSubscriptionStatusLoadingState extends HomeStates{}
+class UpdateSubscriptionStatusSuccessState extends HomeStates{
+  CoachSubscriptionsEntity subscriptionsEntity;
+
+  UpdateSubscriptionStatusSuccessState(this.subscriptionsEntity);
+
+}
+class UpdateSubscriptionStatusErrorState extends HomeStates{
+  final String failure;
+  UpdateSubscriptionStatusErrorState(this.failure);
 }
 
