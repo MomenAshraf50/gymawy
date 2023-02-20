@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "244268126035",
+    "project_id": "gemawy-e209d",
+    "storage_bucket": "gemawy-e209d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244268126035:android:c4475ddff6ea8f8a1d5ba6",
+        "android_client_info": {
+          "package_name": "com.cloudev.gymawy.gymawy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244268126035-c90ss2fg2mq7mbo0qn0oud8kh9mbho6s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cloudev.gymawy.gymawy",
+            "certificate_hash": "8afdb4550f2bf8c8b3715804deeadc3563ab6514"
+          }
+        },
+        {
+          "client_id": "244268126035-s5cq04e70s3mrdhigssusk9gi9aduf6o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt9ia9T6z_r1PgzDRUp95OGoCEQYf2uKM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244268126035-s5cq04e70s3mrdhigssusk9gi9aduf6o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

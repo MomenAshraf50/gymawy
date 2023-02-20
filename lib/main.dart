@@ -16,10 +16,22 @@ import 'core/util/cubit/state.dart';
 import 'core/util/resources/constants_manager.dart';
 import 'features/home/presentation/controller/home_cubit.dart';
 import 'features/login/presentation/controller/login_cubit.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+
 
 void main() async
 {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  await firebaseMessaging.getToken().then((value){
+    debugPrintFullText(value!);
+  });
+
 
   if (defaultTargetPlatform == TargetPlatform.android) {
     AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
