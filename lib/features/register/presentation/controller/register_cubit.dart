@@ -36,6 +36,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
   int currentNavIndex = 0;
   TextEditingController emailController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
+  TextEditingController bioController = TextEditingController();
   TextEditingController userFirstNameController = TextEditingController();
   TextEditingController userLastNameController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
@@ -60,15 +61,11 @@ class RegisterCubit extends Cubit<RegisterStates>{
  late List<Widget> pagesClint = [
      CreateAccountScreen(),
      CompleteProfileScreen(),
-     const AddressScreen(),
-     const SelectFatScreen(),
-     const GoalScreen(),
   ];
 
   late List<Widget> pagesCoach = [
     CreateAccountScreen(),
     CompleteProfileScreen(),
-    const AddressScreen(),
     const SocialMediaScreen(),
   ];
 
@@ -300,7 +297,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
     int? currentWeight,
     int? currentTall,
     int? fixedPrice,
-    String? age,
+    required String age,
     String? facebookLink,
     String? instagramLink,
     String? youTubeLink,
@@ -317,7 +314,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
       fullName: fullName,
       email: email,
       profilePicture: profilePicture,
-      bio: '',
+      bio: bio,
       phoneNumber: phoneNumber,
       gander: gander,
       country: country,
@@ -326,14 +323,6 @@ class RegisterCubit extends Cubit<RegisterStates>{
       password: password,
       confirmPassword: confirmPassword,
       age: age!,
-      currentWeight: currentWeight!,
-      currentTall: currentTall!,
-      bodyFat: bodyFat!,
-      fixedPrice: 0,
-      instagramLink: '',
-      tikTokLink: '',
-      youTubeLink: '',
-      facebookLink: '',
     ) :
         RegisterParams(
           userName: userName,
@@ -342,7 +331,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
           fullName: fullName,
           email: email,
           profilePicture: profilePicture,
-          bio: '',
+          bio: bio,
           phoneNumber: phoneNumber,
           gander: gander,
           country: country,
@@ -355,10 +344,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
           youTubeLink: youTubeLink!,
           tikTokLink: tikTokLink!,
           instagramLink: instagramLink!,
-          age: '',
-          bodyFat: 0,
-          currentTall: 0,
-          currentWeight: 0,
+          age: age!,
         )
     );
 

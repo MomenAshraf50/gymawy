@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/features/login/presentation/screens/login_screen.dart';
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
 import 'package:lottie/lottie.dart';
@@ -27,7 +28,6 @@ class SocialMediaScreen extends StatelessWidget {
           debugPrintFullText(state.token);
           userPicRegister = null;
           genderRegister = '';
-          bodyFatRegister = '';
           countryRegister = '';
           governmentRegister = '';
           userNameRegister = '';
@@ -36,11 +36,10 @@ class SocialMediaScreen extends StatelessWidget {
           fullNameRegister = '';
           ageRegister = '';
           emailRegister = '';
+          bio = '';
           phoneRegister = '';
           passwordRegister = '';
           confirmPasswordRegister = '';
-          currentTallRegister = 0;
-          currentWeightRegister = 0;
           fixedPriceRegister = 0;
           facebookLinkRegister = '';
           instagramLinkRegister = '';
@@ -57,7 +56,7 @@ class SocialMediaScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return SingleChildScrollView(
+        return state is RegisterLoadingState?const LoadingPage(): SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: designApp,
@@ -95,7 +94,7 @@ class SocialMediaScreen extends StatelessWidget {
                   textOnly: true,
                   color: ColorsManager.mainColor,
                   height: 3.h,
-                  text: AppString.next,
+                  text: AppString.create,
                   onPressed: () {
                     facebookLinkRegister =
                         registerCubit.facebookController.text;
@@ -106,7 +105,8 @@ class SocialMediaScreen extends StatelessWidget {
                     registerCubit.registerClient(
                       email: emailRegister!,
                       password: passwordRegister!,
-                      bio: '',
+                      bio: bio!,
+                      age: ageRegister!,
                       city: cityRegister!,
                       confirmPassword: confirmPasswordRegister!,
                       country: countryRegister!,

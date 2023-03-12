@@ -16,7 +16,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
     homeCubit.profile(
-        id: '$userId'
+        id: userId!
     );
     homeCubit.currentNavIndex = 0;
     return BlocBuilder<HomeCubit, HomeStates>(

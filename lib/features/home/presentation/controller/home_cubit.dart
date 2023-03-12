@@ -475,7 +475,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   ProfileEntity? profileResults;
 
-  void profile({required String id,bool? isCoach , context}) async {
+  void profile({required int id,bool? isCoach , context}) async {
     emit(ProfileLoadingState());
 
     final result = await _profileUseCase(ProfileParams(

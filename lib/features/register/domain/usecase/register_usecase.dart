@@ -31,9 +31,6 @@ class RegisterUseCase
       governorate: params.governorate,
       city: params.city,
       age: params.age,
-      currentWeight: params.currentWeight,
-      currentTall: params.currentTall,
-      bodyFat: params.bodyFat,
       fixedPrice: params.fixedPrice,
       facebookLink: params.facebookLink,
       instagramLink: params.instagramLink,
@@ -59,17 +56,14 @@ class RegisterParams extends Equatable {
   final String password;
   final String confirmPassword;
   final String age;
-  final int currentWeight;
-  final int currentTall;
-  final int bodyFat;
-  final int fixedPrice;
-  final String facebookLink;
-  final String instagramLink;
-  final String youTubeLink;
-  final String tikTokLink;
+  final int? fixedPrice;
+  final String? facebookLink;
+  final String? instagramLink;
+  final String? youTubeLink;
+  final String? tikTokLink;
 
 
-  const RegisterParams({
+  const  RegisterParams({
     required this.userName,
     required this.firstName,
     required this.lastName,
@@ -85,14 +79,11 @@ class RegisterParams extends Equatable {
     required this.password,
     required this.confirmPassword,
     required this.age,
-    required this.currentWeight,
-    required this.currentTall,
-    required this.bodyFat,
-    required this.fixedPrice,
-    required this.facebookLink,
-    required this.instagramLink,
-    required this.youTubeLink,
-    required this.tikTokLink,
+     this.fixedPrice,
+     this.facebookLink,
+     this.instagramLink,
+     this.youTubeLink,
+     this.tikTokLink,
   });
 
   @override
@@ -112,13 +103,5 @@ class RegisterParams extends Equatable {
     governorate,
     city,
     age,
-    currentWeight,
-    currentTall,
-    bodyFat,
-    fixedPrice,
-    facebookLink,
-    instagramLink,
-    youTubeLink,
-    tikTokLink,
   ];
 }

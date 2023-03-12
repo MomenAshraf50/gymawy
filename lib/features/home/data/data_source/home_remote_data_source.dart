@@ -58,7 +58,7 @@ abstract class HomeBaseDataSource {
   });
 
   Future<ProfileModel> profile({
-    required String id,
+    required int id,
     bool? isCoach,
   });
 
@@ -254,7 +254,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
 
   @override
   Future<ProfileModel> profile({
-    required String id,
+    required int id,
     bool? isCoach,
   }) async {
     final Response f = await dioHelper.get(

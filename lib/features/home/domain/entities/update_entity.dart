@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class UpdateEntity extends Equatable {
   String userName;
-  String? userId;
+  int userId;
   String fullName;
   String profilePicture;
   String bio;
@@ -40,7 +40,7 @@ class UpdateEntity extends Equatable {
     required this.governorate,
     required this.city,
     this.verification,
-    this.userId,
+    required this.userId,
     this.age,
     this.bodyFat,
     this.currentTall,
