@@ -1,3 +1,4 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
@@ -49,9 +50,9 @@ class CreateAccountScreen extends StatelessWidget {
                       alignment: AlignmentDirectional.bottomEnd,
                       children: [
                         registerCubit.imageFile == null
-                            ? svgImage(path: Assets.images.svg.group2584)
+                            ? svgImage(path: Assets.images.svg.group2584,height: 16.h,width: 16.w)
                             : CircleAvatar(
-                                radius: 100.rSp,
+                                radius: 70.rSp,
                                 backgroundImage:
                                     FileImage(registerCubit.imageFile!),
                               ),
@@ -104,16 +105,6 @@ class CreateAccountScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // myTextFill(
-                    //     svgImg: Assets.images.svg.user,
-                    //     validate: (String? value) {
-                    //       if (value!.isEmpty) {
-                    //         return 'isEmpty';
-                    //       }
-                    //     },
-                    //     controller: registerCubit.fullNameController,
-                    //     hint: AppString.fullName,
-                    // ),
                     myTextFill(
                         svgImg: Assets.images.svg.age,
                         validate: (String? value) {
@@ -125,37 +116,7 @@ class CreateAccountScreen extends StatelessWidget {
                         hint: AppString.userAge,
                         type: TextInputType.number,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: myTextFill(
-                              svgImg: Assets.images.svg.weight,
-                              validate: (String? value) {
-                                if (value!.isEmpty) {
-                                  return 'isEmpty';
-                                }
-                              },
-                              controller: registerCubit.currentWeightController,
-                              hint: AppString.currentWeight,
-                              type: TextInputType.number,
-                          ),
-                        ),
-                        horizontalSpace(5.w),
-                        Expanded(
-                          child: myTextFill(
-                              svgImg: Assets.images.svg.tall,
-                              validate: (String? value) {
-                                if (value!.isEmpty) {
-                                  return 'isEmpty';
-                                }
-                              },
-                              controller: registerCubit.currentTallController,
-                              hint: AppString.currentTall,
-                              type: TextInputType.number,
-                          ),
-                        ),
-                      ],
-                    ),
+
                     myTextFill(
                       svgImg: Assets.images.svg.email,
                       validate: (String? value) {
@@ -170,6 +131,16 @@ class CreateAccountScreen extends StatelessWidget {
                       },
                       controller: registerCubit.emailController,
                       hint: AppString.email,
+                    ),
+                    myTextFill(
+                      svgImg: Assets.images.svg.user,
+                      validate: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'isEmpty';
+                        }
+                      },
+                      controller: registerCubit.bioController,
+                      hint: AppString.bio,
                     ),
                     myTextFill(
                         svgImg: Assets.images.svg.phone,
@@ -291,6 +262,15 @@ class CreateAccountScreen extends StatelessWidget {
                         height: 3.h,
                         text: AppString.next,
                         onPressed: () {
+                          if(registerCubit.imageFile != null){
+                            registerCubit.nextPage(true, context,);
+                          }else{
+                            designToastDialog(
+                                context: context,
+                                toast: TOAST.error,
+                                text: 'Please complete your data'
+                            );
+                          }
                           userPicRegister= registerCubit.imageFile;
                           userNameRegister = registerCubit.userNameController.text;
                           firstNameRegister = registerCubit.userFirstNameController.text;
@@ -301,13 +281,13 @@ class CreateAccountScreen extends StatelessWidget {
                           phoneRegister = registerCubit.phoneController.text;
                           passwordRegister = registerCubit.passwordController.text;
                           confirmPasswordRegister = registerCubit.confirmPasswordController.text;
-                          currentWeightRegister = int.parse(registerCubit.currentWeightController.text);
-                          currentTallRegister = int.parse(registerCubit.currentTallController.text);
+                          bio = registerCubit.bioController.text;
+
 
                           // registerCubit.isAccept
                           //     ? registerCubit.nextPage(true, context)
                           //     : null;
-                          registerCubit.nextPage(true, context,);
+
                         }),
                   ],
                 ),

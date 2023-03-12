@@ -55,7 +55,7 @@ abstract class HomeBaseRepository {
   });
 
   Future<Either<Failure, ProfileEntity>> profile({
-    required String id,
+    required int id,
     bool? isCoach,
   });
 

@@ -51,7 +51,7 @@ class ClientDetailsScreen extends StatelessWidget {
     HomeCubit homeCubit = HomeCubit.get(context);
 
     homeCubit.profile(
-        id: "$clientId",
+        id: clientId,
         isCoach: false
     );
     return BlocBuilder<HomeCubit, HomeStates>(

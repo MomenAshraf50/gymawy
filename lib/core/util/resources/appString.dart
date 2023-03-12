@@ -1,5 +1,6 @@
 class AppString {
   static const gymAwy = 'Gymawy';
+  static const bio = 'Bio';
   static const no_pain_no_gain = 'NO PAIN NO GAIN';
   static const welcome_gymawy = 'Welcome Gymawy';
   static const email = 'Email';
@@ -196,6 +197,7 @@ class AppString {
   static const subscribe = 'Subscribe';
   static const subscribeRequest = 'Subscribe request sent successfully';
   static const markAsRead = 'Mark as read';
+  static const create = 'Create';
 
 
 

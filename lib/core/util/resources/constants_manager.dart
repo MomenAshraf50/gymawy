@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
-
 import 'extensions_manager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '/core/util/resources/colors_manager.dart';
@@ -30,10 +29,10 @@ const String cacheFailureMessage = 'Cache Failure';
 
 EdgeInsetsGeometry designApp =  EdgeInsets.all(25.rSp);
 
-Widget svgImage({required String path,Color? color}){
+Widget svgImage({required String path,Color? color,double? height,double? width}){
   return color != null ?
-  SvgPicture.asset(path ,color: color,height: 28,width: 28,) :
-  SvgPicture.asset(path) ;
+  SvgPicture.asset(path ,color: color,height: height ?? 28,width: width ?? 28,) :
+  SvgPicture.asset(path,height: height,width: width,) ;
 }
 
 String? token = '';
@@ -315,6 +314,7 @@ String displayTranslatedText({
 
 File? userPicRegister;
 String? genderRegister = '';
+String? bio = '';
 String? bodyFatRegister = '';
 String? countryRegister = '';
 String? governmentRegister = '';

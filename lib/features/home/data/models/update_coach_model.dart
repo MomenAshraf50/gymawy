@@ -17,7 +17,7 @@ class UpdateModel extends UpdateEntity {
     required super.governorate,
     required super.city,
     super.verification,
-    super.userId,
+    required super.userId,
     super.age,
     super.bodyFat,
     super.currentTall,
@@ -28,7 +28,7 @@ class UpdateModel extends UpdateEntity {
   factory UpdateModel.fromJson(Map<String, dynamic> json) {
     return UpdateModel(
       userName: json['user'],
-      fullName: json['name'],
+      fullName: "json['name']",
       profilePicture: json['profile_picture'],
       bio: json['bio'],
       phoneNumber: json['phone_number'],

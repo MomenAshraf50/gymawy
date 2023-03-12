@@ -48,7 +48,7 @@ class LoginScreen extends StatelessWidget {
           token = state.token;
           isCoachLogin = state.isCoach;
           homeCubit.profile(
-              id: '${state.id}'
+              id: state.id
           );
           navigateAndFinish(context, MainScreen());
           debugPrintFullText(token!);

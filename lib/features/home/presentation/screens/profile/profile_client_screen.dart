@@ -75,7 +75,7 @@ class ClientProfileScreen extends StatelessWidget {
                               homeCubit.profileResults!.profilePicture
                             ),
                           ),
-                          horizontalSpace(5.w),
+                          horizontalSpace(2.w),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -94,7 +94,7 @@ class ClientProfileScreen extends StatelessWidget {
                                       maxLines: 1,
                                     ),
                                   ),
-                                  horizontalSpace(5.w),
+                                  horizontalSpace(2.w),
                                   CircleAvatar(
                                     radius: 20.rSp,
                                     backgroundColor: ColorsManager.mainColor,
@@ -104,7 +104,7 @@ class ClientProfileScreen extends StatelessWidget {
                                           {
                                             navigateTo(context, const EditProfileScreen());
                                           },
-                                          icon: const Icon(Icons.edit)
+                                          icon: const Icon(Icons.edit,color: ColorsManager.white,)
                                       ),
                                     ),
                                   ),

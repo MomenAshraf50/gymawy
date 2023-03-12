@@ -21,7 +21,7 @@ class ProfileUseCase implements UseCase<ProfileEntity, ProfileParams> {
 }
 
 class ProfileParams extends Equatable {
-  final String id;
+  final int id;
   final bool? isCoach;
 
 
