@@ -19,6 +19,7 @@ import 'package:gymawy/features/home/domain/usecase/get_coach_subscriptions_usec
 import 'package:gymawy/features/home/domain/usecase/get_notifications_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/mark_as_read_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/subscription_request_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_exercise_usecase.dart';
@@ -97,6 +98,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final MarkAsReadUseCase _markAsReadUseCase;
   final GetCoachSubscriptionsUseCase _getCoachSubscriptionsUseCase;
   final UpdateSubscriptionStatusUseCase _updateSubscriptionStatusUseCase;
+  final NotificationsSubscriptionUseCase _notificationsSubscriptionUseCase;
 
 
 
@@ -134,6 +136,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required MarkAsReadUseCase markAsReadUseCase,
     required GetCoachSubscriptionsUseCase getCoachSubscriptionsUseCase,
     required UpdateSubscriptionStatusUseCase updateSubscriptionStatusUseCase,
+    required NotificationsSubscriptionUseCase notificationsSubscriptionUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -167,6 +170,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _markAsReadUseCase = markAsReadUseCase,
         _getCoachSubscriptionsUseCase = getCoachSubscriptionsUseCase,
         _updateSubscriptionStatusUseCase = updateSubscriptionStatusUseCase,
+        _notificationsSubscriptionUseCase = notificationsSubscriptionUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -1153,6 +1157,17 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(UpdateSubscriptionStatusErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(UpdateSubscriptionStatusSuccessState(data));
+    });
+  }
+
+  void notificationsSubscription(NotificationsSubscriptionParams params)async{
+    emit(NotificationsSubscriptionLoadingState());
+    final result = await _notificationsSubscriptionUseCase(params);
+
+    result.fold((failure){
+      emit(NotificationsSubscriptionErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(NotificationsSubscriptionSuccessState());
     });
   }
 }

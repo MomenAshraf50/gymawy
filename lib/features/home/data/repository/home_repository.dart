@@ -12,6 +12,7 @@ import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
@@ -70,6 +71,7 @@ typedef CallGetNotifications = Future<List<NotificationsEntity>> Function();
 typedef CallMarkAsRead = Future<void> Function();
 typedef CallGetCoachSubscriptions = Future<List<CoachSubscriptionsEntity>> Function();
 typedef CallUpdateSubscriptionStatus = Future<CoachSubscriptionsEntity> Function();
+typedef CallNotificationsSubscriptions = Future<void> Function();
 
 
 
@@ -744,6 +746,26 @@ class HomeRepository extends HomeBaseRepository {
   Future<Either<Failure, CoachSubscriptionsEntity>> updateSubscriptionStatus(UpdateSubscriptionStatusParams params) async{
     return await fetchUpdateSubscriptionStatus((){
       return  remoteDataSource.updateSubscriptionStatus(params);
+    });
+  }
+
+  Future<Either<Failure, void>> fetchNotificationsSubscriptions(
+      CallNotificationsSubscriptions mainMethod,
+      ) async {
+    try {
+      final notificationsSubscription = await mainMethod();
+      return Right(notificationsSubscription);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> notificationSubscription(NotificationsSubscriptionParams params) async{
+    return await fetchNotificationsSubscriptions(() {
+      return remoteDataSource.notificationsSubscription(params);
     });
   }
 

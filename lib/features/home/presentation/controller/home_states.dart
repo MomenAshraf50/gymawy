@@ -363,3 +363,10 @@ class UpdateSubscriptionStatusErrorState extends HomeStates{
   UpdateSubscriptionStatusErrorState(this.failure);
 }
 
+class NotificationsSubscriptionLoadingState extends HomeStates{}
+class NotificationsSubscriptionSuccessState extends HomeStates{}
+class NotificationsSubscriptionErrorState extends HomeStates{
+  final String failure;
+  NotificationsSubscriptionErrorState(this.failure);
+}
+

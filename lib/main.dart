@@ -29,6 +29,7 @@ void main() async
 
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   await firebaseMessaging.getToken().then((value){
+    deviceToken = value;
     debugPrintFullText(value!);
   });
 
