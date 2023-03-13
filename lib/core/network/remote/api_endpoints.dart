@@ -15,6 +15,7 @@ const String subscriptionRequestEndPoint = 'subscriptionRequest/';
 const String subscriptionEndPoint = 'subscriptions/';
 const String notificationsEndPoint = 'notifications/';
 const String markAsReadEndPoint = '/mark_as_read/';
+const String notificationSubscriptionEndPoint = 'Device/notification_subscribe/';
 String updateCoachEndPoint = 'trainers/$userId/';
 String updateClientsEndPoint = 'clients/$userId/';
 

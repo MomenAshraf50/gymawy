@@ -5,6 +5,7 @@ import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/presentation/screens/settings/notifications_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/settings/support_screen.dart';
 
@@ -23,6 +24,10 @@ Widget buildSettingsItem({required String text,required String iconPath,required
         homeCubit.share();
       } else {
         homeCubit.signOut(context);
+        homeCubit.notificationsSubscription(NotificationsSubscriptionParams(
+            deviceToken: deviceToken!,
+            userLoggedIn: 'False'
+        ));
       }
     },
     child: Padding(

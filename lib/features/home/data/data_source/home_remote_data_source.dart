@@ -17,6 +17,7 @@ import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/data/models/subscription_request_model.dart';
 import 'package:gymawy/features/home/data/models/update_coach_model.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
@@ -154,6 +155,9 @@ abstract class HomeBaseDataSource {
 
   Future<CoachSubscriptionsModel> updateSubscriptionStatus(
       UpdateSubscriptionStatusParams params);
+
+  Future<void> notificationsSubscription(
+      NotificationsSubscriptionParams params);
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -827,15 +831,27 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   Future<CoachSubscriptionsModel> updateSubscriptionStatus(
       UpdateSubscriptionStatusParams params) async {
     final Response f = await dioHelper.put(
-      url: '$subscriptionEndPoint${params.subscriptionId}/',
-      token: token,
-      data: {
-        'status': params.status,
-        'client': params.clientId,
-        'trainer': params.coachId,
-      }
-    );
+        url: '$subscriptionEndPoint${params.subscriptionId}/',
+        token: token,
+        data: {
+          'status': params.status,
+          'client': params.clientId,
+          'trainer': params.coachId,
+        });
 
     return CoachSubscriptionsModel.fromJson(f.data);
+  }
+
+  @override
+  Future<void> notificationsSubscription(
+      NotificationsSubscriptionParams params) async {
+    await dioHelper.post(
+      url: notificationSubscriptionEndPoint,
+      token: token,
+      data: {
+        'device_token': params.deviceToken,
+        'subscription': params.userLoggedIn,
+      },
+    );
   }
 }

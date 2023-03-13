@@ -14,6 +14,7 @@ import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/presentation/screens/home_layout.dart';
 import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
 import 'package:gymawy/features/login/presentation/controller/login_states.dart';
@@ -52,6 +53,10 @@ class LoginScreen extends StatelessWidget {
           );
           navigateAndFinish(context, MainScreen());
           debugPrintFullText(token!);
+          homeCubit.notificationsSubscription(NotificationsSubscriptionParams(
+            deviceToken: deviceToken!,
+            userLoggedIn: 'True'
+          ));
         }
         /// Show Error Message مش بيخش الايرور ستيت اساسا
          if(state is LoginErrorState){

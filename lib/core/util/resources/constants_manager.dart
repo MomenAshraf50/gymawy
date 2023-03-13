@@ -36,6 +36,7 @@ Widget svgImage({required String path,Color? color,double? height,double? width}
 }
 
 String? token = '';
+String? deviceToken = '';
 String? email = '';
 String? userName = '';
 int? userId = 0;
