@@ -19,15 +19,30 @@ class SettingsScreen extends StatelessWidget {
     SettingsItem(AppString.share, Assets.images.svg.share_icon),
     SettingsItem(AppString.logOut, Assets.images.svg.logout_icon),
   ];
-
   @override
   Widget build(BuildContext context) {
+    HomeCubit homeCubit = HomeCubit.get(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(itemBuilder:(context,index) => BlocBuilder<HomeCubit,HomeStates>(
+              child: ListView.builder(itemBuilder:(context,index) => BlocConsumer<HomeCubit,HomeStates>(
+                listener: (context,state){
+                  if(state is NotificationsSubscriptionSuccessState){
+                    homeCubit.signOut(context);
+                  }
+                  if(state is NotificationsSubscriptionLoadingState){
+                    showDialog(context: context, builder: (context) => const Dialog(
+                      child: CircularProgressIndicator(),
+                    ));
+                  }
+
+                  if(state is NotificationsSubscriptionErrorState){
+                    designToastDialog(context: context, toast: TOAST.error,text: 'Something went wrong');
+                  }
+
+                },
                 builder: (context, state) {
                   return buildSettingsItem(
                       text: settingsItems[index].title,

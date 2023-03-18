@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gymawy/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
+import 'package:gymawy/features/home/domain/entities/body_measurements_entity.dart';
 import 'package:gymawy/features/home/domain/entities/coach_subscriptions_entity.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/entities/notifications_entity.dart';
@@ -12,6 +13,8 @@ import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
@@ -72,6 +75,9 @@ typedef CallMarkAsRead = Future<void> Function();
 typedef CallGetCoachSubscriptions = Future<List<CoachSubscriptionsEntity>> Function();
 typedef CallUpdateSubscriptionStatus = Future<CoachSubscriptionsEntity> Function();
 typedef CallNotificationsSubscriptions = Future<void> Function();
+typedef CallBodyMeasurements = Future<BodyMeasurementsEntity> Function();
+typedef CallGetBodyMeasurements = Future<BodyMeasurementsEntity> Function();
+typedef CallDeleteBodyMeasurements = Future<void> Function();
 
 
 
@@ -766,6 +772,67 @@ class HomeRepository extends HomeBaseRepository {
   Future<Either<Failure, void>> notificationSubscription(NotificationsSubscriptionParams params) async{
     return await fetchNotificationsSubscriptions(() {
       return remoteDataSource.notificationsSubscription(params);
+    });
+  }
+
+  Future<Either<Failure, BodyMeasurementsEntity>> fetchBodyMeasurements(
+      CallBodyMeasurements mainMethod,
+      ) async {
+    try {
+      final bodyMeasurementsEntity = await mainMethod();
+      return Right(bodyMeasurementsEntity);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, BodyMeasurementsEntity>> bodyMeasurements(BodyMeasurementsParams params) async{
+    return await fetchBodyMeasurements((){
+      return remoteDataSource.bodyMeasurements(params);
+    });
+  }
+
+
+  Future<Either<Failure, BodyMeasurementsEntity>> fetchGetBodyMeasurements(
+      CallGetBodyMeasurements mainMethod,
+      ) async {
+    try {
+      final bodyMeasurementsEntity = await mainMethod();
+      return Right(bodyMeasurementsEntity);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, BodyMeasurementsEntity>> getBodyMeasurements(GetBodyMeasurementsParams params) async{
+    return await fetchGetBodyMeasurements((){
+      return remoteDataSource.getBodyMeasurements(params);
+    });
+  }
+
+  Future<Either<Failure, void>> fetchDeleteBodyMeasurements(
+      CallDeleteBodyMeasurements mainMethod,
+      ) async {
+    try {
+      final deleteBodyMeasurements = await mainMethod();
+      return Right(deleteBodyMeasurements);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteBodyMeasurements() async{
+    return await fetchDeleteBodyMeasurements((){
+      return remoteDataSource.deleteBodyMeasurements();
     });
   }
 

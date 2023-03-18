@@ -5,8 +5,11 @@ import 'package:gymawy/features/home/domain/repository/home_base_repository.dart
 import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/add_nutrition_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/get_coach_subscriptions_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_notifications_usecase.dart';
@@ -98,6 +101,9 @@ Future<void> init() async {
         getCoachSubscriptionsUseCase: sl(),
         updateSubscriptionStatusUseCase: sl(),
         notificationsSubscriptionUseCase: sl(),
+        bodyMeasurementsUseCase: sl(),
+        deleteBodyMeasurementsUseCase: sl(),
+        getBodyMeasurementsUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -155,6 +161,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetCoachSubscriptionsUseCase(sl()));
   sl.registerLazySingleton(() => UpdateSubscriptionStatusUseCase(sl()));
   sl.registerLazySingleton(() => NotificationsSubscriptionUseCase(sl()));
+  sl.registerLazySingleton(() => GetBodyMeasurementsUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteBodyMeasurementsUseCase(sl()));
+  sl.registerLazySingleton(() => BodyMeasurementsUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(
