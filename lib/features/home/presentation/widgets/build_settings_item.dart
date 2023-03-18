@@ -23,7 +23,6 @@ Widget buildSettingsItem({required String text,required String iconPath,required
       } else if (text == 'Share') {
         homeCubit.share();
       } else {
-        homeCubit.signOut(context);
         homeCubit.notificationsSubscription(NotificationsSubscriptionParams(
             deviceToken: deviceToken!,
             userLoggedIn: 'False'

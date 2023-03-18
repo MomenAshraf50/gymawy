@@ -1,4 +1,5 @@
 import 'package:gymawy/features/home/domain/entities/add_nutrition_entity.dart';
+import 'package:gymawy/features/home/domain/entities/body_measurements_entity.dart';
 import 'package:gymawy/features/home/domain/entities/coach_subscriptions_entity.dart';
 import 'package:gymawy/features/home/domain/entities/notifications_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
@@ -368,5 +369,34 @@ class NotificationsSubscriptionSuccessState extends HomeStates{}
 class NotificationsSubscriptionErrorState extends HomeStates{
   final String failure;
   NotificationsSubscriptionErrorState(this.failure);
+}
+
+class BodyMeasurementsLoadingState extends HomeStates{}
+class BodyMeasurementsSuccessState extends HomeStates{
+  BodyMeasurementsEntity bodyMeasurementsEntity;
+
+  BodyMeasurementsSuccessState(this.bodyMeasurementsEntity);
+}
+class BodyMeasurementsErrorState extends HomeStates{
+  final String failure;
+  BodyMeasurementsErrorState(this.failure);
+}
+
+class GetBodyMeasurementsLoadingState extends HomeStates{}
+class GetBodyMeasurementsSuccessState extends HomeStates{
+  BodyMeasurementsEntity bodyMeasurementsEntity;
+
+  GetBodyMeasurementsSuccessState(this.bodyMeasurementsEntity);
+}
+class GetBodyMeasurementsErrorState extends HomeStates{
+  final String failure;
+  GetBodyMeasurementsErrorState(this.failure);
+}
+
+class DeleteBodyMeasurementsLoadingState extends HomeStates{}
+class DeleteBodyMeasurementsSuccessState extends HomeStates{}
+class DeleteBodyMeasurementsErrorState extends HomeStates{
+  final String failure;
+  DeleteBodyMeasurementsErrorState(this.failure);
 }
 

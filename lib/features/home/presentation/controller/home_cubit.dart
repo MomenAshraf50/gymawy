@@ -13,8 +13,11 @@ import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dar
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_coach_subscriptions_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_notifications_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
@@ -99,6 +102,9 @@ class HomeCubit extends Cubit<HomeStates> {
   final GetCoachSubscriptionsUseCase _getCoachSubscriptionsUseCase;
   final UpdateSubscriptionStatusUseCase _updateSubscriptionStatusUseCase;
   final NotificationsSubscriptionUseCase _notificationsSubscriptionUseCase;
+  final BodyMeasurementsUseCase _bodyMeasurementsUseCase;
+  final GetBodyMeasurementsUseCase _getBodyMeasurementsUseCase;
+  final DeleteBodyMeasurementsUseCase _deleteBodyMeasurementsUseCase;
 
 
 
@@ -137,6 +143,9 @@ class HomeCubit extends Cubit<HomeStates> {
     required GetCoachSubscriptionsUseCase getCoachSubscriptionsUseCase,
     required UpdateSubscriptionStatusUseCase updateSubscriptionStatusUseCase,
     required NotificationsSubscriptionUseCase notificationsSubscriptionUseCase,
+    required BodyMeasurementsUseCase bodyMeasurementsUseCase,
+    required GetBodyMeasurementsUseCase getBodyMeasurementsUseCase,
+    required DeleteBodyMeasurementsUseCase deleteBodyMeasurementsUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -171,6 +180,9 @@ class HomeCubit extends Cubit<HomeStates> {
         _getCoachSubscriptionsUseCase = getCoachSubscriptionsUseCase,
         _updateSubscriptionStatusUseCase = updateSubscriptionStatusUseCase,
         _notificationsSubscriptionUseCase = notificationsSubscriptionUseCase,
+        _bodyMeasurementsUseCase = bodyMeasurementsUseCase,
+        _getBodyMeasurementsUseCase = getBodyMeasurementsUseCase,
+        _deleteBodyMeasurementsUseCase = deleteBodyMeasurementsUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -1170,6 +1182,40 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(NotificationsSubscriptionSuccessState());
     });
   }
+
+  void bodyMeasurements(BodyMeasurementsParams params) async{
+    emit(BodyMeasurementsLoadingState());
+    final result = await _bodyMeasurementsUseCase(params);
+
+    result.fold((failure){
+      emit(BodyMeasurementsErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(BodyMeasurementsSuccessState(data));
+    });
+  }
+
+  void getBodyMeasurements(GetBodyMeasurementsParams params) async{
+    emit(GetBodyMeasurementsLoadingState());
+    final result = await _getBodyMeasurementsUseCase(params);
+
+    result.fold((failure){
+      emit(GetBodyMeasurementsErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(GetBodyMeasurementsSuccessState(data));
+    });
+  }
+
+  void deleteBodyMeasurements() async{
+    emit(DeleteBodyMeasurementsLoadingState());
+    final result = await _deleteBodyMeasurementsUseCase(NoParams());
+
+    result.fold((failure){
+      emit(DeleteBodyMeasurementsErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(DeleteBodyMeasurementsSuccessState());
+    });
+  }
+
 }
 
 class Suggestions extends Equatable {

@@ -8,6 +8,7 @@ import 'package:gymawy/core/network/remote/dio_helper.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/features/home/data/models/add_exercise_model.dart';
 import 'package:gymawy/features/home/data/models/add_nutrition_model.dart';
+import 'package:gymawy/features/home/data/models/body_measurements_model.dart';
 import 'package:gymawy/features/home/data/models/certificate_model.dart';
 import 'package:gymawy/features/home/data/models/coach_subscriptions_model.dart';
 import 'package:gymawy/features/home/data/models/exercise_details_model.dart';
@@ -17,6 +18,8 @@ import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/data/models/subscription_request_model.dart';
 import 'package:gymawy/features/home/data/models/update_coach_model.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
@@ -158,6 +161,13 @@ abstract class HomeBaseDataSource {
 
   Future<void> notificationsSubscription(
       NotificationsSubscriptionParams params);
+
+  Future<BodyMeasurementsModel> bodyMeasurements(BodyMeasurementsParams params);
+
+  Future<BodyMeasurementsModel> getBodyMeasurements(
+      GetBodyMeasurementsParams params);
+
+  Future<void> deleteBodyMeasurements();
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -853,5 +863,79 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
         'subscription': params.userLoggedIn,
       },
     );
+  }
+
+  @override
+  Future<BodyMeasurementsModel> bodyMeasurements(
+      BodyMeasurementsParams params) async {
+    final Response f = params.update
+        ? await dioHelper.put(
+            token: token,
+            url: '$bodyMeasurementsEndPoint${params.measurementsId}/',
+            data: FormData.fromMap({
+              'weight': params.weight,
+              'tall': params.tall,
+              'body_fat': params.bodyFat,
+              if (params.fullBodyPic != null)
+                'full_body_pic': await MultipartFile.fromFile(
+                    params.fullBodyPic!.path,
+                    filename:
+                        Uri.file(params.fullBodyPic!.path).pathSegments.last),
+              if (params.rightSideBodyPic != null)
+                'rightSide_body_pic': await MultipartFile.fromFile(
+                  params.rightSideBodyPic!.path,
+                  filename:
+                      Uri.file(params.rightSideBodyPic!.path).pathSegments.last,
+                ),
+              if (params.leftSideBodyPic != null)
+                'leftSide_body_pic': MultipartFile.fromFile(
+                  params.leftSideBodyPic!.path,
+                  filename:
+                      Uri.file(params.leftSideBodyPic!.path).pathSegments.last,
+                ),
+              'goal': params.goal,
+            }),
+          )
+        : await dioHelper.post(
+            token: token,
+            url: bodyMeasurementsEndPoint,
+            data: FormData.fromMap({
+              'weight': params.weight,
+              'tall': params.tall,
+              'body_fat': params.bodyFat,
+              'full_body_pic': await MultipartFile.fromFile(
+                  params.fullBodyPic!.path,
+                  filename:
+                      Uri.file(params.fullBodyPic!.path).pathSegments.last),
+              'rightSide_body_pic': await MultipartFile.fromFile(
+                params.rightSideBodyPic!.path,
+                filename:
+                    Uri.file(params.rightSideBodyPic!.path).pathSegments.last,
+              ),
+              'leftSide_body_pic': MultipartFile.fromFile(
+                params.leftSideBodyPic!.path,
+                filename:
+                    Uri.file(params.leftSideBodyPic!.path).pathSegments.last,
+              ),
+              'goal': params.goal,
+            }),
+          );
+    return BodyMeasurementsModel.fromJson(f.data);
+  }
+
+  @override
+  Future<BodyMeasurementsModel> getBodyMeasurements(
+      GetBodyMeasurementsParams params) async {
+    final Response f = await dioHelper.get(
+      url: '$bodyMeasurementsEndPoint${params.measurementsId}/',
+      token: token,
+    );
+
+    return BodyMeasurementsModel.fromJson(f.data);
+  }
+
+  @override
+  Future<void> deleteBodyMeasurements() async {
+    await dioHelper.delete(url: bodyMeasurementsEndPoint,token: token,);
   }
 }

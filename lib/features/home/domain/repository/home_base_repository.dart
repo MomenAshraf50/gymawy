@@ -2,12 +2,15 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:gymawy/features/home/domain/entities/body_measurements_entity.dart';
 import 'package:gymawy/features/home/domain/entities/coach_subscriptions_entity.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/entities/notifications_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
+import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
@@ -160,6 +163,12 @@ abstract class HomeBaseRepository {
 
 
   Future<Either<Failure, void>> notificationSubscription(NotificationsSubscriptionParams params);
+
+  Future<Either<Failure, BodyMeasurementsEntity>> bodyMeasurements(BodyMeasurementsParams params);
+
+  Future<Either<Failure, BodyMeasurementsEntity>> getBodyMeasurements(GetBodyMeasurementsParams params);
+
+  Future<Either<Failure, void>> deleteBodyMeasurements();
 
 
 
