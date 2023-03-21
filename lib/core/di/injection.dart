@@ -9,12 +9,14 @@ import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.da
 import 'package:gymawy/features/home/domain/usecase/delete_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_user_plan_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/domain/usecase/get_coach_subscriptions_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_notifications_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_nutrition_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_user-plan_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/mark_as_read_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/profile_usecase.dart';
@@ -26,6 +28,7 @@ import 'package:gymawy/features/home/domain/usecase/update_exercise_usecase.dart
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/user_plan_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/login/data/data_source/login_remote_data_source.dart';
 import 'package:gymawy/features/login/data/repository/login_repository.dart';
@@ -104,6 +107,9 @@ Future<void> init() async {
         bodyMeasurementsUseCase: sl(),
         deleteBodyMeasurementsUseCase: sl(),
         getBodyMeasurementsUseCase: sl(),
+        deleteUserPlanUseCase: sl(),
+        getUserPlanUseCase: sl(),
+        userPlanUseCase: sl(),
       ));
   sl.registerLazySingleton<Repository>(
     () => RepoImplementation(
@@ -164,6 +170,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetBodyMeasurementsUseCase(sl()));
   sl.registerLazySingleton(() => DeleteBodyMeasurementsUseCase(sl()));
   sl.registerLazySingleton(() => BodyMeasurementsUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteUserPlanUseCase(sl()));
+  sl.registerLazySingleton(() => GetUserPlanUseCase(sl()));
+  sl.registerLazySingleton(() => UserPlanUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(

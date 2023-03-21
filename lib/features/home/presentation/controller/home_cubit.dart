@@ -17,10 +17,12 @@ import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.da
 import 'package:gymawy/features/home/domain/usecase/delete_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_nutrition_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_user_plan_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_coach_subscriptions_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_notifications_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/get_user-plan_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/mark_as_read_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/subscription_request_usecase.dart';
@@ -30,6 +32,7 @@ import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart'
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/user_plan_usecase.dart';
 import 'package:gymawy/features/home/presentation/screens/qr_code/qr_code_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
@@ -105,6 +108,9 @@ class HomeCubit extends Cubit<HomeStates> {
   final BodyMeasurementsUseCase _bodyMeasurementsUseCase;
   final GetBodyMeasurementsUseCase _getBodyMeasurementsUseCase;
   final DeleteBodyMeasurementsUseCase _deleteBodyMeasurementsUseCase;
+  final UserPlanUseCase _userPlanUseCase;
+  final GetUserPlanUseCase _getUserPlanUseCase;
+  final DeleteUserPlanUseCase _deleteUserPlanUseCase;
 
 
 
@@ -146,6 +152,9 @@ class HomeCubit extends Cubit<HomeStates> {
     required BodyMeasurementsUseCase bodyMeasurementsUseCase,
     required GetBodyMeasurementsUseCase getBodyMeasurementsUseCase,
     required DeleteBodyMeasurementsUseCase deleteBodyMeasurementsUseCase,
+    required UserPlanUseCase userPlanUseCase,
+    required GetUserPlanUseCase getUserPlanUseCase,
+    required DeleteUserPlanUseCase deleteUserPlanUseCase,
 
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
@@ -183,6 +192,9 @@ class HomeCubit extends Cubit<HomeStates> {
         _bodyMeasurementsUseCase = bodyMeasurementsUseCase,
         _getBodyMeasurementsUseCase = getBodyMeasurementsUseCase,
         _deleteBodyMeasurementsUseCase = deleteBodyMeasurementsUseCase,
+        _userPlanUseCase = userPlanUseCase,
+        _getUserPlanUseCase = getUserPlanUseCase,
+        _deleteUserPlanUseCase = deleteUserPlanUseCase,
         super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -1216,6 +1228,38 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  void userPlan(UserPlanParams params) async{
+    emit(UserPlanLoadingState());
+    final result = await _userPlanUseCase(params);
+
+    result.fold((failure){
+      emit(UserPlanErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(UserPlanSuccessState(data));
+    });
+  }
+
+  void getUserPlan() async{
+    emit(GetUserPlanLoadingState());
+    final result = await _getUserPlanUseCase(NoParams());
+
+    result.fold((failure){
+      emit(GetUserPlanErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(GetUserPlanSuccessState(data));
+    });
+  }
+
+  void deleteUserPlan(DeleteUserPlanParams params)async{
+    emit(DeleteUserPlanLoadingState());
+    final result = await _deleteUserPlanUseCase(params);
+
+    result.fold((failure){
+      emit(DeleteUserPlanErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(DeleteUserPlanSuccessState());
+    });
+  }
 }
 
 class Suggestions extends Equatable {

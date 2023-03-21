@@ -5,6 +5,7 @@ import 'package:gymawy/features/home/domain/entities/notifications_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
+import 'package:gymawy/features/home/domain/entities/user_plan_entity.dart';
 
 import '../../domain/entities/add_exercise_entity.dart';
 import '../../domain/entities/add_exercise_plan_entity.dart';
@@ -400,3 +401,31 @@ class DeleteBodyMeasurementsErrorState extends HomeStates{
   DeleteBodyMeasurementsErrorState(this.failure);
 }
 
+class UserPlanLoadingState extends HomeStates{}
+class UserPlanSuccessState extends HomeStates{
+  UserPlanEntity userPlanEntity;
+
+  UserPlanSuccessState(this.userPlanEntity);
+}
+class UserPlanErrorState extends HomeStates{
+  final String failure;
+  UserPlanErrorState(this.failure);
+}
+
+class GetUserPlanLoadingState extends HomeStates{}
+class GetUserPlanSuccessState extends HomeStates{
+  List<UserPlanEntity> userPlans;
+
+  GetUserPlanSuccessState(this.userPlans);
+}
+class GetUserPlanErrorState extends HomeStates{
+  final String failure;
+  GetUserPlanErrorState(this.failure);
+}
+
+class DeleteUserPlanLoadingState extends HomeStates{}
+class DeleteUserPlanSuccessState extends HomeStates{}
+class DeleteUserPlanErrorState extends HomeStates{
+  final String failure;
+  DeleteUserPlanErrorState(this.failure);
+}

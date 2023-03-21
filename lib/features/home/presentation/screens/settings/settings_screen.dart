@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
+import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/resources/setting_items.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
@@ -19,6 +20,7 @@ class SettingsScreen extends StatelessWidget {
     SettingsItem(AppString.share, Assets.images.svg.share_icon),
     SettingsItem(AppString.logOut, Assets.images.svg.logout_icon),
   ];
+
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
@@ -27,30 +29,39 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(itemBuilder:(context,index) => BlocConsumer<HomeCubit,HomeStates>(
-                listener: (context,state){
-                  if(state is NotificationsSubscriptionSuccessState){
-                    homeCubit.signOut(context);
-                  }
-                  if(state is NotificationsSubscriptionLoadingState){
-                    showDialog(context: context, builder: (context) => const Dialog(
-                      child: CircularProgressIndicator(),
-                    ));
-                  }
+              child: ListView.builder(
+                itemBuilder: (context, index) =>
+                    BlocConsumer<HomeCubit, HomeStates>(
+                  listener: (context, state) {
+                    if (state is NotificationsSubscriptionSuccessState) {
+                      homeCubit.signOut(context);
+                    }
+                    if (state is NotificationsSubscriptionLoadingState) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                                child: SizedBox(
+                                  height: 10.h,
+                                  child: const Center(
+                                      child: CircularProgressIndicator()),
+                                ),
+                              ));
+                    }
 
-                  if(state is NotificationsSubscriptionErrorState){
-                    designToastDialog(context: context, toast: TOAST.error,text: 'Something went wrong');
-                  }
-
-                },
-                builder: (context, state) {
-                  return buildSettingsItem(
-                      text: settingsItems[index].title,
-                      iconPath: settingsItems[index].icon,
-                      context: context
-                  );
-                },
-              ),
+                    if (state is NotificationsSubscriptionErrorState) {
+                      designToastDialog(
+                          context: context,
+                          toast: TOAST.error,
+                          text: 'Something went wrong');
+                    }
+                  },
+                  builder: (context, state) {
+                    return buildSettingsItem(
+                        text: settingsItems[index].title,
+                        iconPath: settingsItems[index].icon,
+                        context: context);
+                  },
+                ),
                 itemCount: settingsItems.length,
               ),
             ),
