@@ -9,7 +9,9 @@ import 'package:gymawy/features/home/domain/entities/notifications_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
+import 'package:gymawy/features/home/domain/entities/user_plan_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_user_plan_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
@@ -25,6 +27,7 @@ import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/user_plan_usecase.dart';
 import 'package:gymawy/features/home/presentation/screens/home/nutrition/add_nutrition.dart';
 import '../../../../core/error/failures.dart';
 import '../entities/add_exercise_entity.dart';
@@ -169,6 +172,13 @@ abstract class HomeBaseRepository {
   Future<Either<Failure, BodyMeasurementsEntity>> getBodyMeasurements(GetBodyMeasurementsParams params);
 
   Future<Either<Failure, void>> deleteBodyMeasurements();
+
+  Future<Either<Failure, UserPlanEntity>> userPlan(UserPlanParams params);
+
+  Future<Either<Failure, List<UserPlanEntity>>> getUserPlan();
+
+ Future<Either<Failure, void>> deleteUserPlan(DeleteUserPlanParams params);
+
 
 
 

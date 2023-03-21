@@ -17,8 +17,10 @@ import 'package:gymawy/features/home/data/models/profile_model.dart';
 import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/data/models/subscription_request_model.dart';
 import 'package:gymawy/features/home/data/models/update_coach_model.dart';
+import 'package:gymawy/features/home/data/models/user_plan_model.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_user_plan_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
@@ -35,6 +37,7 @@ import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/user_plan_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import '../../domain/usecase/add_nutrition_details_usecase.dart';
 import '../../domain/usecase/add_plan_usecase.dart';
@@ -168,6 +171,12 @@ abstract class HomeBaseDataSource {
       GetBodyMeasurementsParams params);
 
   Future<void> deleteBodyMeasurements();
+
+  Future<UserPlanModel> userPlan(UserPlanParams params);
+
+  Future<List<UserPlanModel>> getUserPlan();
+
+  Future<void> deleteUserPlan(DeleteUserPlanParams params);
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -936,6 +945,54 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
 
   @override
   Future<void> deleteBodyMeasurements() async {
-    await dioHelper.delete(url: bodyMeasurementsEndPoint,token: token,);
+    await dioHelper.delete(
+      url: bodyMeasurementsEndPoint,
+      token: token,
+    );
+  }
+
+  @override
+  Future<UserPlanModel> userPlan(UserPlanParams params) async {
+    final Response f = params.isUpdate
+        ? await dioHelper.put(
+            url: userPlanEndPoint,
+            token: token,
+            data: {
+              'client': params.clientId,
+              if (params.exercisePlanId != null)
+                'exercise_plan': params.exercisePlanId,
+              if (params.nutritionPlanId != null)
+                'nutrition_plan': params.nutritionPlanId,
+            },
+          )
+        : await dioHelper.post(
+            url: userPlanEndPoint,
+            token: token,
+            data: {
+              'client': params.clientId,
+              'exercise_plan': params.exercisePlanId,
+              'nutrition_plan': params.nutritionPlanId,
+            },
+          );
+    return UserPlanModel.fromJson(f.data);
+  }
+
+  @override
+  Future<List<UserPlanModel>> getUserPlan() async {
+    final Response f = await dioHelper.get(
+      url: userPlanEndPoint,
+      token: token,
+    );
+
+    return List<UserPlanModel>.from(
+        (f.data['results'] as List).map((e) => UserPlanModel.fromJson(e)));
+  }
+
+  @override
+  Future<void> deleteUserPlan(DeleteUserPlanParams params) async {
+    await dioHelper.delete(
+      url: '$userPlanEndPoint${params.userPlanId}/',
+      token: token,
+    );
   }
 }

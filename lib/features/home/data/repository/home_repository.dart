@@ -13,7 +13,9 @@ import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
+import 'package:gymawy/features/home/domain/entities/user_plan_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/delete_user_plan_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
@@ -31,6 +33,7 @@ import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/user_plan_usecase.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/add_exercise_plan_entity.dart';
@@ -78,6 +81,9 @@ typedef CallNotificationsSubscriptions = Future<void> Function();
 typedef CallBodyMeasurements = Future<BodyMeasurementsEntity> Function();
 typedef CallGetBodyMeasurements = Future<BodyMeasurementsEntity> Function();
 typedef CallDeleteBodyMeasurements = Future<void> Function();
+typedef CallUserPlan = Future<UserPlanEntity> Function();
+typedef CallGetUserPlan = Future<List<UserPlanEntity>> Function();
+typedef CallDeleteUserPlan = Future<void> Function();
 
 
 
@@ -833,6 +839,68 @@ class HomeRepository extends HomeBaseRepository {
   Future<Either<Failure, void>> deleteBodyMeasurements() async{
     return await fetchDeleteBodyMeasurements((){
       return remoteDataSource.deleteBodyMeasurements();
+    });
+  }
+
+  Future<Either<Failure, UserPlanEntity>> fetchUserPlan(
+      CallUserPlan mainMethod,
+      ) async {
+    try {
+      final userPlanEntity = await mainMethod();
+      return Right(userPlanEntity);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserPlanEntity>> userPlan(UserPlanParams params) async{
+    return await fetchUserPlan((){
+      return remoteDataSource.userPlan(params);
+    });
+  }
+
+
+  Future<Either<Failure, List<UserPlanEntity>>> fetchGetUserPlan(
+      CallGetUserPlan mainMethod,
+      ) async {
+    try {
+      final userPlanEntity = await mainMethod();
+      return Right(userPlanEntity);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<UserPlanEntity>>> getUserPlan() async {
+    return await fetchGetUserPlan((){
+      return remoteDataSource.getUserPlan();
+    });
+  }
+
+
+  Future<Either<Failure, void>> fetchDeleteUserPlan(
+      CallDeleteUserPlan mainMethod,
+      ) async {
+    try {
+      final userPlanEntity = await mainMethod();
+      return Right(userPlanEntity);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteUserPlan(DeleteUserPlanParams params) async{
+    return await fetchDeleteUserPlan((){
+      return remoteDataSource.deleteUserPlan(params);
     });
   }
 

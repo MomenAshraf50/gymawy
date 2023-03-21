@@ -82,7 +82,6 @@ class SearchResultScreen extends StatelessWidget {
 
 
     int selected = 0;
-
     return SafeArea(
       child: Scaffold(
         body: BlocConsumer<HomeCubit, HomeStates>(
@@ -93,7 +92,9 @@ class SearchResultScreen extends StatelessWidget {
                   toast: TOAST.success,
                   text: AppString.subscribeRequest);
               sl<CacheHelper>().put('subscriptionID', state.subscriptionRequestEntity.subscriptionRequestId);
+              subscriptionID = state.subscriptionRequestEntity.subscriptionRequestId;
 
+              debugPrintFullText('${subscriptionRequestResult!}');
               homeCubit.getSubscriptionRequests(
                   GetSubscriptionsRequestsParams(
                     subscriptionRequestId: state.subscriptionRequestEntity.subscriptionRequestId,
@@ -114,7 +115,7 @@ class SearchResultScreen extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            return state is SubscriptionRequestLoadingState || subscriptionRequestResult == null
+            return subscriptionRequestResult == null
                 ? const LoadingPage()
                 : SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
@@ -221,19 +222,6 @@ class SearchResultScreen extends StatelessWidget {
                                                 );
                                               }
                                             }),
-
-
-
-
-
-
-
-
-
-
-
-
-
                                     ],
                                   ),
                                 ),
