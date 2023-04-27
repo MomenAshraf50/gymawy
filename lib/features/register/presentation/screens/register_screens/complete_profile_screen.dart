@@ -13,7 +13,7 @@ import 'package:gymawy/core/util/widgets/list_title_container.dart';
 import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/core/util/widgets/my_icon_button.dart';
 import 'package:gymawy/features/login/presentation/screens/login_screen.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
@@ -144,7 +144,7 @@ class CompleteProfileScreen extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       flex: 2,
-                                      child: myTextFill(
+                                      child: DefaultTextField(
                                         svgImg: Assets.images.svg.dollarSignSvgrepoCom,
                                         controller: registerCubit.pricePerMonth,
                                         hint: AppString.price_of_month,

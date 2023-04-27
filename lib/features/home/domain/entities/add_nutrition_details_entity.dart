@@ -9,7 +9,6 @@ class NutritionDetailsEntity extends Equatable {
   String meal;
   String mealTime;
   String day;
-  int nutritionId;
   int planId;
 
   NutritionDetailsEntity({
@@ -18,7 +17,6 @@ class NutritionDetailsEntity extends Equatable {
     required this.mealTime,
     required this.meal,
     required this.day,
-    required this.nutritionId,
     required this.planId,
   });
 
@@ -29,7 +27,6 @@ class NutritionDetailsEntity extends Equatable {
   mealTime,
   meal,
   day,
-  nutritionId,
   planId,
   ];
 }

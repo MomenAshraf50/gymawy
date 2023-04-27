@@ -52,7 +52,7 @@ class ExerciseBasicData extends StatelessWidget {
                         context: context,
 
                         actions: [
-                          if(exerciseEntity.userId == userId)
+                          if(exerciseEntity.makerInformation.userId == userId)
                           defaultActionButton(
                               backgroundColor: ColorsManager.mainColor,
                               icon: Icons.edit,
@@ -60,9 +60,9 @@ class ExerciseBasicData extends StatelessWidget {
                                 navigateTo(context, AddExerciseScreen(exerciseEntity: exerciseEntity,));
                               }
                           ),
-                          if(exerciseEntity.userId == userId)
+                          if(exerciseEntity.makerInformation.userId == userId)
                           horizontalSpace(2.w),
-                          if(exerciseEntity.userId == userId)
+                          if(exerciseEntity.makerInformation.userId == userId)
                           defaultActionButton(
                               backgroundColor: Colors.red,
                               icon: Icons.delete,
@@ -117,7 +117,7 @@ class ExerciseBasicData extends StatelessWidget {
                     ),
                     verticalSpace(3.h),
                     myText(
-                      title: 'Exercise Added by coach: ${exerciseEntity.userName}',
+                      title: 'Exercise Added by coach: ${exerciseEntity.makerInformation.userName}',
                       style: Style.medium,
                       fontSize: 16.rSp,
                     ),

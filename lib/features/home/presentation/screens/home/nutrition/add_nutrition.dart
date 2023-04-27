@@ -5,7 +5,7 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default%20dialog.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
-import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/home/domain/entities/add_nutrition_entity.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import '../../../../../../core/util/resources/appString.dart';
@@ -118,7 +118,7 @@ class AddNutrition extends StatelessWidget {
                                     value!);
                               },
                             ),
-                            myTextFill(
+                            DefaultTextField(
                               controller: mealNameController,
                               hint: AppString.nameOfMeal,
                               validate: (String? value) {
@@ -131,14 +131,14 @@ class AddNutrition extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                  child: myTextFill(
+                                  child: DefaultTextField(
                                     controller: componentController,
                                     hint: 'Component',
                                   ),
                                 ),
                                 horizontalSpace(3.w),
                                 Expanded(
-                                  child: myTextFill(
+                                  child: DefaultTextField(
                                     controller: quantityController,
                                     hint: 'Quantity',
                                   ),
@@ -233,14 +233,14 @@ class AddNutrition extends StatelessWidget {
                                 ],
                               ),
                             verticalSpace(3.h),
-                            myTextFill(
+                            DefaultTextField(
                               controller: howToPrepareController,
                               hint: 'How to prepare',
                             ),
                             Row(
                               children: [
                                 Expanded(
-                                  child: myTextFill(
+                                  child: DefaultTextField(
                                     controller: caloriesController,
                                     type: TextInputType.phone,
                                     hint: AppString.calories,
@@ -254,7 +254,7 @@ class AddNutrition extends StatelessWidget {
                                 ),
                                 horizontalSpace(3.w),
                                 Expanded(
-                                  child: myTextFill(
+                                  child: DefaultTextField(
                                     controller: fatController,
                                     type: TextInputType.phone,
                                     hint: AppString.fat,
@@ -271,7 +271,7 @@ class AddNutrition extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                  child: myTextFill(
+                                  child: DefaultTextField(
                                     controller: proteinController,
                                     hint: AppString.protein,
                                     type: TextInputType.phone,
@@ -285,7 +285,7 @@ class AddNutrition extends StatelessWidget {
                                 ),
                                 horizontalSpace(3.w),
                                 Expanded(
-                                  child: myTextFill(
+                                  child: DefaultTextField(
                                     controller: carbohydrateController,
                                     type: TextInputType.phone,
                                     hint: AppString.carbohydrate,

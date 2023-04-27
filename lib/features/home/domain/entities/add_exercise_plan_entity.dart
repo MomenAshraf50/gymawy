@@ -1,27 +1,22 @@
 import 'package:equatable/equatable.dart';
+import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 
 class AddPlanEntity extends Equatable {
-  int? exercisePlanId;
-  int? nutritionPlanId;
-  int? userId;
+  int planId;
   String planName;
   String planVisibility;
-  String? userName;
-
+  UserInformation makerInformation;
   AddPlanEntity({
-    this.exercisePlanId,
-    this.nutritionPlanId,
-    this.userId,
-    this.userName,
+    required this.planId,
+    required this.makerInformation,
     required this.planName,
     required this.planVisibility,
   });
 
   @override
   List<Object?> get props => [
-    exercisePlanId,
-    userId,
-    userName,
+    planId,
+    makerInformation,
     planName,
     planVisibility,
 

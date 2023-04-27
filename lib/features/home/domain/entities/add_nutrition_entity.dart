@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 
 class AddNutritionEntity extends Equatable {
   int? nutritionId;
-  int? userId;
-  String? userName;
+  UserInformation userInformation;
   String? nutritionName;
   String? nutritionCategory;
   String? nutritionPic;
@@ -17,8 +17,7 @@ class AddNutritionEntity extends Equatable {
 
   AddNutritionEntity({
     this.nutritionId,
-    this.userName,
-    this.userId,
+    required this.userInformation,
     this.nutritionName,
     this.nutritionCategory,
     this.nutritionPic,
@@ -34,8 +33,7 @@ class AddNutritionEntity extends Equatable {
   @override
   List<Object?> get props => [
     nutritionId,
-    userName,
-    userId,
+    userInformation,
     nutritionName,
     nutritionCategory,
     nutritionPic,

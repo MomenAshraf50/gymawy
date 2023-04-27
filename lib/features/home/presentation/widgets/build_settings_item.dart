@@ -25,7 +25,7 @@ Widget buildSettingsItem({required String text,required String iconPath,required
       } else {
         homeCubit.notificationsSubscription(NotificationsSubscriptionParams(
             deviceToken: deviceToken!,
-            userLoggedIn: 'False'
+            userLoggedIn: false
         ));
       }
     },

@@ -1,69 +1,112 @@
 import 'package:equatable/equatable.dart';
 
 class ProfileEntity extends Equatable {
-  String userName;
-  int? userId;
-  String fullName;
-  String profilePicture;
-  String? bio;
-  String phoneNumber;
-  String gender;
-  int? age;
+  UserInformation userInformation;
   int? bodyFat;
   double? currentWeight;
   int? currentTall;
   double? fixedPrice;
+  double? rating;
+  int? experience;
   String? goal;
   String? facebookLink;
   String? instagramLink;
   String? tiktokLink;
   String? youtubeLink;
-  String country;
-  String governorate;
-  String? city;
   bool? verification;
 
-
   ProfileEntity({
-    required this.userName,
-    required this.fullName,
-    required this.profilePicture,
-    required this.bio,
-    required this.phoneNumber,
-    required this.gender,
+    required this.userInformation,
+    this.experience,
+    this.rating,
     this.fixedPrice,
     this.facebookLink,
     this.instagramLink,
     this.tiktokLink,
     this.youtubeLink,
-    required this.country,
-    required this.governorate,
-    required this.city,
     this.verification,
-    this.userId,
-    this.age,
     this.bodyFat,
     this.currentTall,
     this.currentWeight,
-    this.goal
+    this.goal,
   });
 
   @override
   List<Object?> get props => [
-    userName,
-    fullName,
-    profilePicture,
-    bio,
-    phoneNumber,
-    gender,
-    fixedPrice,
-    facebookLink,
-    instagramLink,
-    tiktokLink,
-    youtubeLink,
-    country,
-    governorate,
-    city,
-    verification
-  ];
+        fixedPrice,
+        facebookLink,
+        instagramLink,
+        tiktokLink,
+        youtubeLink,
+        verification,
+        experience,
+        rating,
+        bodyFat,
+        currentTall,
+        currentWeight,
+        goal
+      ];
+}
+
+class UserInformation extends Equatable {
+  String userName;
+  int userId;
+  String fullName;
+  String profilePicture;
+  String bio;
+  String phoneNumber;
+  String gender;
+  int age;
+  String email;
+  String country;
+  String governorate;
+  String city;
+
+  UserInformation({
+    required this.userName,
+    required this.userId,
+    required this.fullName,
+    required this.profilePicture,
+    required this.bio,
+    required this.phoneNumber,
+    required this.gender,
+    required this.age,
+    required this.email,
+    required this.city,
+    required this.country,
+    required this.governorate,
+  });
+
+  factory UserInformation.fromJson(Map<String,dynamic> json){
+    return UserInformation(
+      userName: json['username'],
+      userId: json['id'],
+          governorate: json['Governorate'],
+      country: json['country'],
+      city: json['city'],
+      bio: json['bio'],
+      email: json['email'],
+      phoneNumber: json['phone'],
+      fullName: '${json['first_name']} ${json['last_name']}',
+      age: json['age'],
+      gender: json['gander'],
+      profilePicture: json['profile_picture'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        userName,
+        userId,
+        fullName,
+        profilePicture,
+        bio,
+        phoneNumber,
+        gender,
+        age,
+        email,
+        city,
+        country,
+        governorate,
+      ];
 }

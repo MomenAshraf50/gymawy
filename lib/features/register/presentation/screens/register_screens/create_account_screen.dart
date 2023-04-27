@@ -10,7 +10,7 @@ import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
 import 'package:gymawy/features/register/presentation/widgets/creat_account_widgets.dart';
@@ -66,7 +66,7 @@ class CreateAccountScreen extends StatelessWidget {
                       ],
                     ),
                     verticalSpace(5.h),
-                    myTextFill(
+                    DefaultTextField(
                         svgImg: Assets.images.svg.user,
                         validate: (String? value) {
                           if (value!.isEmpty) {
@@ -79,7 +79,7 @@ class CreateAccountScreen extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: myTextFill(
+                          child: DefaultTextField(
                               svgImg: Assets.images.svg.user,
                               validate: (String? value) {
                                 if (value!.isEmpty) {
@@ -92,7 +92,7 @@ class CreateAccountScreen extends StatelessWidget {
                         ),
                         horizontalSpace(5.w),
                         Expanded(
-                          child: myTextFill(
+                          child: DefaultTextField(
                               svgImg: Assets.images.svg.user,
                               validate: (String? value) {
                                 if (value!.isEmpty) {
@@ -105,7 +105,7 @@ class CreateAccountScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    myTextFill(
+                    DefaultTextField(
                         svgImg: Assets.images.svg.age,
                         validate: (String? value) {
                           if (value!.isEmpty) {
@@ -117,7 +117,7 @@ class CreateAccountScreen extends StatelessWidget {
                         type: TextInputType.number,
                     ),
 
-                    myTextFill(
+                    DefaultTextField(
                       svgImg: Assets.images.svg.email,
                       validate: (String? value) {
                         bool emailValid = RegExp(
@@ -132,7 +132,7 @@ class CreateAccountScreen extends StatelessWidget {
                       controller: registerCubit.emailController,
                       hint: AppString.email,
                     ),
-                    myTextFill(
+                    DefaultTextField(
                       svgImg: Assets.images.svg.user,
                       validate: (String? value) {
                         if (value!.isEmpty) {
@@ -142,7 +142,7 @@ class CreateAccountScreen extends StatelessWidget {
                       controller: registerCubit.bioController,
                       hint: AppString.bio,
                     ),
-                    myTextFill(
+                    DefaultTextField(
                         svgImg: Assets.images.svg.phone,
                         validate: (String? value) {
                           if (value!.isEmpty) {
@@ -153,7 +153,7 @@ class CreateAccountScreen extends StatelessWidget {
                         hint: AppString.phone,
                         type: TextInputType.number,
                     ),
-                    myTextFill(
+                    DefaultTextField(
                         isPassword: true,
                         svgImg: Assets.images.svg.lock,
                         onChanged: (val) {
@@ -166,7 +166,7 @@ class CreateAccountScreen extends StatelessWidget {
                         },
                         controller: registerCubit.passwordController,
                         hint: AppString.password),
-                    myTextFill(
+                    DefaultTextField(
                         isPassword: true,
                         svgImg: Assets.images.svg.lock,
                         validate: (String? value) {
@@ -225,7 +225,7 @@ class CreateAccountScreen extends StatelessWidget {
                       ),
                     ),
                     Visibility(
-                      visible: registerCubit.isPasswordMach(),
+                      visible: !registerCubit.isPasswordMach(),
                       child: Container(
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -262,32 +262,28 @@ class CreateAccountScreen extends StatelessWidget {
                         height: 3.h,
                         text: AppString.next,
                         onPressed: () {
-                          if(registerCubit.imageFile != null){
-                            registerCubit.nextPage(true, context,);
-                          }else{
-                            designToastDialog(
-                                context: context,
-                                toast: TOAST.error,
-                                text: 'Please complete your data'
-                            );
+                          if(formKey.currentState!.validate()){
+                            if(registerCubit.imageFile != null && registerCubit.isPasswordValid()){
+                              registerCubit.nextPage(true, context,);
+                              userPicRegister= registerCubit.imageFile;
+                              userNameRegister = registerCubit.userNameController.text;
+                              firstNameRegister = registerCubit.userFirstNameController.text;
+                              lastNameRegister = registerCubit.userLastNameController.text;
+                              fullNameRegister = '${registerCubit.userFirstNameController.text} ${registerCubit.userLastNameController.text}';
+                              ageRegister = registerCubit.userAgeController.text;
+                              emailRegister = registerCubit.emailController.text;
+                              phoneRegister = registerCubit.phoneController.text;
+                              passwordRegister = registerCubit.passwordController.text;
+                              confirmPasswordRegister = registerCubit.confirmPasswordController.text;
+                              bio = registerCubit.bioController.text;
+                            }else{
+                              designToastDialog(
+                                  context: context,
+                                  toast: TOAST.error,
+                                  text: 'Please complete your data'
+                              );
+                            }
                           }
-                          userPicRegister= registerCubit.imageFile;
-                          userNameRegister = registerCubit.userNameController.text;
-                          firstNameRegister = registerCubit.userFirstNameController.text;
-                          lastNameRegister = registerCubit.userLastNameController.text;
-                          fullNameRegister = '${registerCubit.userFirstNameController.text} ${registerCubit.userLastNameController.text}';
-                          ageRegister = registerCubit.userAgeController.text;
-                          emailRegister = registerCubit.emailController.text;
-                          phoneRegister = registerCubit.phoneController.text;
-                          passwordRegister = registerCubit.passwordController.text;
-                          confirmPasswordRegister = registerCubit.confirmPasswordController.text;
-                          bio = registerCubit.bioController.text;
-
-
-                          // registerCubit.isAccept
-                          //     ? registerCubit.nextPage(true, context)
-                          //     : null;
-
                         }),
                   ],
                 ),

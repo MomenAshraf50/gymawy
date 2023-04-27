@@ -7,6 +7,9 @@ class CertificateEntity extends Equatable {
   String certificateName;
   String certificateFile;
   String certificateDate;
+  String certificateSerial;
+  String certificateExpirationDate;
+  String certificateDescription;
 
   CertificateEntity({
     required this.ownerName,
@@ -15,6 +18,9 @@ class CertificateEntity extends Equatable {
     required this.certificateName,
     required this.certificateFile,
     required this.certificateDate,
+    required this.certificateSerial,
+    required this.certificateExpirationDate,
+    required this.certificateDescription,
   });
 
   @override
@@ -25,5 +31,8 @@ class CertificateEntity extends Equatable {
         certificateName,
         certificateFile,
         certificateDate,
+    certificateSerial,
+    certificateExpirationDate,
+    certificateDescription,
       ];
 }
