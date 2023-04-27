@@ -31,6 +31,8 @@ class GetTextHeightState extends HomeStates{}
 class ChangeCurrentStepState extends HomeStates{}
 class SignOutState extends HomeStates{}
 class UpdateLoadingState extends HomeStates{}
+class EditProfilePasswordChangedState extends HomeStates{}
+class EditProfileMatchPasswordState extends HomeStates{}
 class UpdateSuccessState extends HomeStates{
   UpdateEntity entity;
 

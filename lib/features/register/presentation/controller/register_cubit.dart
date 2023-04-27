@@ -141,7 +141,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
   bool isPasswordMach() {
     return passwordController.text.isNotEmpty &&
         confirmPasswordController.text.isNotEmpty &&
-        !isPasswordNotMach;
+        isPasswordNotMach;
   }
 
   String changeDateFormat(DateTime value){

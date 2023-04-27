@@ -72,7 +72,7 @@ class ClientProfileScreen extends StatelessWidget {
                             radius: 50.rSp,
                             backgroundImage: NetworkImage(
                                 //AppString.networkImage
-                              homeCubit.profileResults!.profilePicture
+                              homeCubit.profileResults!.userInformation.profilePicture
                             ),
                           ),
                           horizontalSpace(2.w),
@@ -86,7 +86,7 @@ class ClientProfileScreen extends StatelessWidget {
                                     child: myText(
                                       title:
                                       //'0000000000000000000000000000000000000',
-                                      homeCubit.profileResults!.fullName,
+                                      homeCubit.profileResults!.userInformation.fullName,
                                       //AppString.userNameProfile,
                                       style: Style.medium,
                                       fontSize: 14.rSp,
@@ -102,7 +102,13 @@ class ClientProfileScreen extends StatelessWidget {
                                       child: IconButton(
                                           onPressed: ()
                                           {
-                                            navigateTo(context, const EditProfileScreen());
+                                            navigateTo(context, EditProfileScreen(
+                                              userName: homeCubit.profileResults!.userInformation.userName,
+                                              email: homeCubit.profileResults!.userInformation.email,
+                                              fullName: homeCubit.profileResults!.userInformation.fullName,
+                                              phone: homeCubit.profileResults!.userInformation.phoneNumber,
+                                              bio: homeCubit.profileResults!.userInformation.bio,
+                                            ));
                                           },
                                           icon: const Icon(Icons.edit,color: ColorsManager.white,)
                                       ),
@@ -129,7 +135,7 @@ class ClientProfileScreen extends StatelessWidget {
                                     size: 15.rSp,
                                   ),
                                   myText(
-                                    title: homeCubit.profileResults!.governorate,
+                                    title: homeCubit.profileResults!.userInformation.governorate,
                                     //AppString.address,
                                     style: Style.extraSmall,
                                     fontSize: 12.rSp,
@@ -137,7 +143,7 @@ class ClientProfileScreen extends StatelessWidget {
                                 ],
                               ),
                               myText(
-                                title: '${homeCubit.profileResults!.age} Years old',
+                                title: '${homeCubit.profileResults!.userInformation.age} Years old',
                                 //AppString.age,
                                 style: Style.extraSmall,
                                 fontSize: 12.rSp,

@@ -1,4 +1,3 @@
-import 'package:file_previewer/file_previewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,7 +9,6 @@ import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/profile/add_coach_certifications.dart';
 import 'package:gymawy/features/home/presentation/screens/profile/social_web_view.dart';
 import 'package:gymawy/features/home/presentation/screens/profile/view_certification.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
@@ -29,24 +27,13 @@ class ProfileCoachScreen extends StatelessWidget {
     HomeCubit homeCubit = HomeCubit.get(context);
     homeCubit.getCertificates(
         GetCertificateParams(
-          ownerId: homeCubit.profileResults!.userId!,
+          ownerId: homeCubit.profileResults!.userInformation.userId!,
           ownerName: '',
         ),
         context);
     debugPrintFullText('sssssssssssssssssssss${homeCubit.certificateResult}');
 
     int selected = 0;
-    // List<TrainingImage> listTrainingImages = [
-    //   TrainingImage(
-    //     img: Assets.images.svg.client,
-    //   ),
-    //   TrainingImage(
-    //     img: Assets.images.svg.coach,
-    //   ),
-    // ];
-    //Widget? certificateResultImg;
-    //var certificationImage;
-
     return SafeArea(
       child: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, state) {},
@@ -78,7 +65,7 @@ class ProfileCoachScreen extends StatelessWidget {
                                         radius: 60.rSp,
                                         backgroundImage: NetworkImage(
                                             homeCubit.profileResults!
-                                                .profilePicture),
+                                                .userInformation.profilePicture),
                                       ),
                               ),
                               IconButton(
@@ -109,7 +96,7 @@ class ProfileCoachScreen extends StatelessWidget {
                                     children: [
                                       myText(
                                         title:
-                                            homeCubit.profileResults!.fullName,
+                                            homeCubit.profileResults!.userInformation.fullName,
                                         //AppString.userNameProfile,
                                         style: Style.small,
                                       ),
@@ -125,7 +112,7 @@ class ProfileCoachScreen extends StatelessWidget {
                                 verticalSpace(1.h),
                                 Row(
                                   children: [
-                                    if (isCoachLogin == true)
+                                    if (isCoachLogin!)
                                       Expanded(
                                         child: myButton(
                                             text: AppString.editLinksButton,
@@ -133,7 +120,12 @@ class ProfileCoachScreen extends StatelessWidget {
                                             fontSize: 10.rSp,
                                             onPressed: () {
                                               navigateTo(context,
-                                                  const EditCoachLinksScreen());
+                                                  EditCoachLinksScreen(
+                                                    facebookLink: homeCubit.profileResults!.facebookLink!,
+                                                    tiktokLink: homeCubit.profileResults!.tiktokLink!,
+                                                    instagramLink: homeCubit.profileResults!.instagramLink!,
+                                                    youtubeLink: homeCubit.profileResults!.youtubeLink!,
+                                                  ));
                                             }),
                                       ),
                                     horizontalSpace(1.w),
@@ -144,7 +136,14 @@ class ProfileCoachScreen extends StatelessWidget {
                                           fontSize: 10.rSp,
                                           onPressed: () {
                                             navigateTo(context,
-                                                const EditProfileScreen());
+                                                EditProfileScreen(
+                                                  userName: homeCubit.profileResults!.userInformation.userName,
+                                                  email: homeCubit.profileResults!.userInformation.email!,
+                                                  fullName: homeCubit.profileResults!.userInformation.fullName,
+                                                  phone: homeCubit.profileResults!.userInformation.phoneNumber,
+                                                  bio: homeCubit.profileResults!.userInformation.bio!,
+                                                  price: homeCubit.profileResults!.fixedPrice!,
+                                                ));
                                           }),
                                     )
                                   ],
@@ -161,7 +160,7 @@ class ProfileCoachScreen extends StatelessWidget {
                     children: [
                       const Icon(Icons.location_on_outlined),
                       myText(
-                        title: homeCubit.profileResults!.governorate,
+                        title: homeCubit.profileResults!.userInformation.governorate,
                         style: Style.small,
                         fontSize: 16.rSp,
                       ),
@@ -201,28 +200,7 @@ class ProfileCoachScreen extends StatelessWidget {
                                 fontSize: 16.rSp,
                               ),
                               myText(
-                                title: AppString.following,
-                                style: Style.extraSmall,
-                                fontSize: 16.rSp,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          height: 4.h,
-                          width: 0.5.w,
-                          color: Colors.grey,
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              myText(
-                                title: AppString.followersNumber,
-                                style: Style.extraSmall,
-                                fontSize: 16.rSp,
-                              ),
-                              myText(
-                                title: AppString.followers,
+                                title: AppString.clients,
                                 style: Style.extraSmall,
                                 fontSize: 16.rSp,
                               ),
@@ -315,7 +293,7 @@ class ProfileCoachScreen extends StatelessWidget {
                                         AddCoachCertifications(
                                           userId: userId,
                                           certificateEntity: homeCubit
-                                              .certificateResult![index],
+                                              .certificateResult[index],
                                         ));
                                   },
                                   child: Container(
@@ -345,22 +323,22 @@ class ProfileCoachScreen extends StatelessWidget {
                                       padding: EdgeInsets.all(10.rSp),
                                       child: index !=
                                               homeCubit
-                                                  .certificateResult!.length
+                                                  .certificateResult.length
                                           ? InkWell(
                                               onTap: () {
                                                 navigateTo(
                                                     context,
                                                     ViewCertification(
                                                       certification: homeCubit
-                                                          .certificateResult![
+                                                          .certificateResult[
                                                               index]
                                                           .certificateFile,
                                                       certificationName: homeCubit
-                                                          .certificateResult![
+                                                          .certificateResult[
                                                               index]
                                                           .certificateName,
                                                       certificationID: (homeCubit
-                                                              .certificateResult![
+                                                              .certificateResult[
                                                                   index]
                                                               .certificateId)
                                                           .toString(),
@@ -371,9 +349,9 @@ class ProfileCoachScreen extends StatelessWidget {
                                                   homeCubit.certificateResultImg!,
                                                   verticalSpace(3.h),
                                                   myText(
-                                                      title: homeCubit.certificateResult![index].certificateName,
+                                                      title: homeCubit.certificateResult[index].certificateName,
                                                       style: Style.medium),
-                                                  myText(title: homeCubit.certificateResult![index].certificateDate,
+                                                  myText(title: homeCubit.certificateResult[index].certificateDate,
                                                       style: Style.medium),
                                                 ],
                                               ),
@@ -395,7 +373,7 @@ class ProfileCoachScreen extends StatelessWidget {
                               : const Center(
                                   child: CircularProgressIndicator());
                         },
-                        itemCount: homeCubit.certificateResult!.length + 1,
+                        itemCount: homeCubit.certificateResult.length + 1,
                       ),
                     ),
                   if (homeCubit.certificateResult.isEmpty)
@@ -423,48 +401,7 @@ class ProfileCoachScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  Card(
-                    margin: EdgeInsets.all(25.rSp),
-                    elevation: 5,
-                    child: Padding(
-                      padding: EdgeInsets.all(20.0.rSp),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            myText(
-                              title: AppString.cv,
-                              style: Style.medium,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    margin: EdgeInsets.all(25.rSp),
-                    elevation: 5,
-                    child: Padding(
-                      padding: EdgeInsets.all(20.0.rSp),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            myText(
-                              title: AppString.personalTraining,
-                              style: Style.medium,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            myText(
-                                title: AppString.strict, style: Style.medium),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+
                 ],
               ),
             ),

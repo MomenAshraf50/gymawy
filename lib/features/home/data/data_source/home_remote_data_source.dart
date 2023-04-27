@@ -48,7 +48,7 @@ import '../../domain/usecase/delete_subscriptionRequest_usecase.dart';
 import '../../domain/usecase/get_exercise_plan_details.dart';
 import '../../domain/usecase/get_nutrition_details.dart';
 import '../../domain/usecase/get_plan_usecase.dart';
-import '../models/add_exercise_plan_model.dart';
+import '../models/plan_model.dart';
 import '../models/add_nutrition_details_model.dart';
 
 abstract class HomeBaseDataSource {
@@ -99,15 +99,15 @@ abstract class HomeBaseDataSource {
 
   Future<void> deleteExercise(DeleteExerciseParams params);
 
-  Future<AddExercisePlanModel> addPlan({
+  Future<PlanModel> addPlan({
     required bool isNutrition,
     required String planName,
     required String planVisibility,
   });
 
-  Future<List<AddExercisePlanModel>> getPlan(GetPlanParams params);
+  Future<List<PlanModel>> getPlan(GetPlanParams params);
 
-  Future<AddExercisePlanModel> updatePlan(AddPlanParams params);
+  Future<PlanModel> updatePlan(AddPlanParams params);
 
   Future<void> deletePlan(DeletePlanParams params);
 
@@ -195,28 +195,22 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       data: isCoachLogin!
           ? {
               'username': params.userName,
-              'first_name': params.firstName,
-              'last_name': params.lastName,
               'bio': params.bio,
               'name': params.fullName,
               'fixed_price_month': params.fixedPrice,
               'phone_number': params.phone,
-              'password': params.password,
+              if (params.password != null)
+                'password': params.password,
               'email': params.email,
             }
           : {
               'username': params.userName,
-              'first_name': params.firstName,
-              'last_name': params.lastName,
               'bio': params.bio,
               'name': params.fullName,
               'phone_number': params.phone,
-              'password': params.password,
+              if (params.password != null)
+                'password': params.password,
               'email': params.email,
-              'current_weight': params.currentWeight,
-              'body_fat': params.bodyFat,
-              'goal': params.goal,
-              'current_tall': params.currentTall,
             },
     );
     return UpdateModel.fromJson(f.data);
@@ -538,7 +532,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   }
 
   @override
-  Future<AddExercisePlanModel> addPlan({
+  Future<PlanModel> addPlan({
     required String planName,
     required String planVisibility,
     required bool isNutrition,
@@ -554,13 +548,11 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       ),
     );
 
-    return isNutrition
-        ? AddExercisePlanModel.fromNutritionJson(f.data)
-        : AddExercisePlanModel.fromExerciseJson(f.data);
+    return PlanModel.fromJson(f.data);
   }
 
   @override
-  Future<List<AddExercisePlanModel>> getPlan(GetPlanParams params) async {
+  Future<List<PlanModel>> getPlan(GetPlanParams params) async {
     final Response f = await dioHelper.get(
       url: params.isNutrition
           ? addNutritionPlanEndPoint
@@ -572,17 +564,12 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             }
           : null,
     );
-    return params.isNutrition
-        ? List<AddExercisePlanModel>.from((f.data['results'] as List)
-            .map((e) => AddExercisePlanModel.fromNutritionJson(e)))
-        : List<AddExercisePlanModel>.from((f.data['results'] as List)
-            .map((e) => AddExercisePlanModel.fromExerciseJson(e)));
-    // return List<AddExerciseModel>.from(
-    //     (f.data['results'] as List).map((e) => AddExerciseModel.fromJson(e))).where((element) => element.exerciseName =='').toList();
+    return List<PlanModel>.from((f.data['results'] as List)
+            .map((e) => PlanModel.fromJson(e)));
   }
 
   @override
-  Future<AddExercisePlanModel> updatePlan(AddPlanParams params) async {
+  Future<PlanModel> updatePlan(AddPlanParams params) async {
     final Response f = await dioHelper.put(
         url: params.isNutrition == true
             ? '$addNutritionPlanEndPoint${params.exercisePlanId}/'
@@ -592,9 +579,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
           'plan_name': params.planName,
           'visibility': params.planVisibility,
         }));
-    return params.isNutrition == true
-        ? AddExercisePlanModel.fromNutritionJson(f.data)
-        : AddExercisePlanModel.fromExerciseJson(f.data);
+    return  PlanModel.fromJson(f.data);
   }
 
   @override
@@ -821,7 +806,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   @override
   Future<List<NotificationsModel>> getNotifications() async {
     final Response f = await dioHelper.get(
-      url: notificationsEndPoint,
+      url: getNotificationsEndPoint,
       token: token,
     );
     return List<NotificationsModel>.from(
@@ -865,11 +850,10 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   Future<void> notificationsSubscription(
       NotificationsSubscriptionParams params) async {
     await dioHelper.post(
-      url: notificationSubscriptionEndPoint,
+      url: params.userLoggedIn? notificationSubscribeEndPoint : notificationUnSubscribeEndPoint,
       token: token,
       data: {
         'device_token': params.deviceToken,
-        'subscription': params.userLoggedIn,
       },
     );
   }

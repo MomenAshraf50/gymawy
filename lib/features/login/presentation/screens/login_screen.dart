@@ -11,9 +11,10 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
+import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/presentation/screens/home_layout.dart';
 import 'package:gymawy/features/login/presentation/controller/login_cubit.dart';
@@ -51,11 +52,11 @@ class LoginScreen extends StatelessWidget {
           homeCubit.profile(
               id: state.id
           );
-          navigateAndFinish(context, MainScreen());
+          navigateAndFinish(context, const MainScreen());
           debugPrintFullText(token!);
           homeCubit.notificationsSubscription(NotificationsSubscriptionParams(
             deviceToken: deviceToken!,
-            userLoggedIn: 'True'
+            userLoggedIn: true
           ));
         }
         /// Show Error Message مش بيخش الايرور ستيت اساسا
@@ -68,7 +69,7 @@ class LoginScreen extends StatelessWidget {
         AppBloc appBloc = AppBloc.get(context);
         return BlocBuilder<AppBloc, AppState>(
           builder: (context, state) {
-            return Scaffold(
+            return state is LoginLoadingState? const LoadingPage() :Scaffold(
               body: HideKeyboardPage(
                 child: SafeArea(
                   child: Form(
@@ -100,7 +101,7 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                 ),
                                 verticalSpace(5.h),
-                                myTextFill(
+                                DefaultTextField(
                                   isPassword: false,
                                   validate: (String? value) {
                                     if (value!.isEmpty) {
@@ -112,7 +113,7 @@ class LoginScreen extends StatelessWidget {
                                   hint: AppString.email,
                                   svgImg: Assets.images.svg.email,
                                 ),
-                                myTextFill(
+                                DefaultTextField(
                                   validate: (String? value) {
                                     if (value!.isEmpty) {
                                       return 'isEmpty';

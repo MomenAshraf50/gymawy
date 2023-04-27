@@ -15,7 +15,7 @@ import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../core/util/widgets/myTextFill.dart';
+import '../../../../../core/util/widgets/default_text_field.dart';
 import '../../controller/home_cubit.dart';
 import '../../widgets/build_exercise_item.dart';
 import '../home/exercises/exercise_basic_data.dart';
@@ -97,7 +97,7 @@ class SearchScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
-                            child: myTextFill(
+                            child: DefaultTextField(
                               controller: homeCubit.searchController,
                               hint: clientsScreen != null
                                   ? 'Search for clients'
@@ -177,8 +177,8 @@ class SearchScreen extends StatelessWidget {
                                         navigateTo(
                                             context,
                                             PlanDetails(
-                                              planId:isNutritionPlan == true ? homeCubit.planResult![index].nutritionPlanId : homeCubit.planResult![index].exercisePlanId,
-                                              ownerUserId: homeCubit.planResult![index].userId!,
+                                              planId:isNutritionPlan == true ? homeCubit.planResult![index].planId : homeCubit.planResult![index].planId,
+                                              ownerUserId: homeCubit.planResult![index].makerInformation.userId,
                                               isNutrition: isNutritionPlan,
                                               planName: homeCubit.planResult![index].planName,
                                               planVisibility: homeCubit.planResult![index].planVisibility,

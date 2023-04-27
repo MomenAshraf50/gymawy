@@ -11,7 +11,7 @@ import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/core/util/widgets/progress.dart';
 import 'package:gymawy/core/util/widgets/two_option_dialog.dart';
 import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
@@ -132,7 +132,7 @@ class AddExerciseScreen extends StatelessWidget {
                               ),
                             ),
                             verticalSpace(3.h),
-                            myTextFill(
+                            DefaultTextField(
                                 validate: (String? value) {
                                   if (value!.isEmpty) {
                                     return 'isEmpty';

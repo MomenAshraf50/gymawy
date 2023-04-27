@@ -6,7 +6,7 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/login/presentation/screens/recovery_password_screen.dart';
 
 import '../../../../core/util/resources/colors_manager.dart';
@@ -40,7 +40,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     align: TextAlign.center,
                   ),
                   verticalSpace(10.h),
-                  myTextFill(
+                  DefaultTextField(
                     svgImg: Assets.images.svg.phone,
                     type: TextInputType.number,
                     controller: controller,

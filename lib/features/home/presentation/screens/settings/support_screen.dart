@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
@@ -25,7 +25,7 @@ class SupportScreen extends StatelessWidget {
                 context: context
             ),
             verticalSpace(5.h),
-            myTextFill(
+            DefaultTextField(
                 controller: homeCubit.supportTextController,
                 hint: 'how can we help you',
                 maxLines: 10,

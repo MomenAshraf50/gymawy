@@ -7,10 +7,11 @@ import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/home/domain/entities/certificate_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
+import 'package:mime/mime.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/myButton.dart';
@@ -39,7 +40,12 @@ class AddCoachCertifications extends StatelessWidget {
           homeCubit.day = null;
           homeCubit.certificationPdf = null;
           homeCubit.certificateNameController.text = '';
-          homeCubit.getCertificates(GetCertificateParams( ownerId: userId!, ownerName: '',), context);
+          homeCubit.getCertificates(
+              GetCertificateParams(
+                ownerId: userId!,
+                ownerName: '',
+              ),
+              context);
           designToastDialog(
               context: context,
               toast: TOAST.success,
@@ -52,7 +58,12 @@ class AddCoachCertifications extends StatelessWidget {
           homeCubit.day = null;
           homeCubit.certificationPdf = null;
           homeCubit.certificateNameController.text = '';
-          homeCubit.getCertificates(GetCertificateParams( ownerId: userId!, ownerName: '',), context);
+          homeCubit.getCertificates(
+              GetCertificateParams(
+                ownerId: userId!,
+                ownerName: '',
+              ),
+              context);
           designToastDialog(
               context: context,
               toast: TOAST.success,
@@ -149,11 +160,12 @@ class AddCoachCertifications extends StatelessWidget {
                           ),
                         ),
                         verticalSpace(4.h),
-                        if (homeCubit.certificationPdf != null|| certificateEntity !=null)
+                        if (homeCubit.certificationPdf != null ||
+                            certificateEntity != null)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              myTextFill(
+                              DefaultTextField(
                                 validate: (String? value) {
                                   if (value!.isEmpty) {
                                     return 'isEmpty';
@@ -203,16 +215,28 @@ class AddCoachCertifications extends StatelessWidget {
                             fontSize: 14.rSp,
                             onPressed: () {
                               if (certificateEntity == null) {
-                                if (formKey.currentState!.validate() && homeCubit.month != null && homeCubit.certificationPdf != null) {
-                                  homeCubit.certificate(
-                                    id: userId.toString(),
-                                    certificateName: homeCubit
-                                        .certificateNameController.text,
-                                    certificateFile:
-                                        homeCubit.certificationPdf!,
-                                    certificateDate:
-                                        '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}',
-                                  );
+                                if (formKey.currentState!.validate() &&
+                                    homeCubit.month != null &&
+                                    homeCubit.certificationPdf != null) {
+                                  if (lookupMimeType(homeCubit.certificationPdf!
+                                          .files.first.path!) ==
+                                      'application/pdf') {
+                                    homeCubit.certificate(
+                                      id: userId.toString(),
+                                      certificateName: homeCubit
+                                          .certificateNameController.text,
+                                      certificateFile:
+                                          homeCubit.certificationPdf!,
+                                      certificateDate:
+                                          '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}',
+                                    );
+                                  } else {
+                                    designToastDialog(
+                                        context: context,
+                                        toast: TOAST.warning,
+                                        text: 'Please pick a pdf file.');
+                                  }
+
                                   //loginCubit.logIn(email: emailController.text, password: passwordController.text);
                                 } else {
                                   designToastDialog(
@@ -221,30 +245,41 @@ class AddCoachCertifications extends StatelessWidget {
                                       text: 'please fill ur data');
                                 }
                               } else {
-                                if(homeCubit.certificationPdf != null){
-                                  homeCubit.updateCertificate(
-                                    UpdateCertificateParams(
-                                      certificate: homeCubit.certificationPdf,
-                                        isFile: true,
-                                        certificateId: certificateEntity!.certificateId,
-                                        certificateName: homeCubit
-                                            .certificateNameController.text,
-                                        certificateDate: homeCubit
-                                            .certificateDate !=
-                                            '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
-                                            ? '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
-                                            : homeCubit.certificateDate!),
-                                  );
-                                }else{
+                                if (homeCubit.certificationPdf != null) {
+                                  if (lookupMimeType(homeCubit.certificationPdf!
+                                          .files.first.path!) ==
+                                      'application/pdf'){
+                                    homeCubit.updateCertificate(
+                                        UpdateCertificateParams(
+                                            certificate:
+                                            homeCubit.certificationPdf,
+                                            isFile: true,
+                                            certificateId:
+                                            certificateEntity!.certificateId,
+                                            certificateName: homeCubit
+                                                .certificateNameController.text,
+                                            certificateDate: homeCubit
+                                                .certificateDate !=
+                                                '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
+                                                ? '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
+                                                : homeCubit.certificateDate!),);
+                                  }else{
+                                    designToastDialog(
+                                        context: context,
+                                        toast: TOAST.warning,
+                                        text: 'Please pick a pdf file.');
+                                  }
+                                } else {
                                   homeCubit.updateCertificate(
                                     UpdateCertificateParams(
                                         isFile: false,
-                                        certificateId: certificateEntity!.certificateId,
+                                        certificateId:
+                                            certificateEntity!.certificateId,
                                         certificateName: homeCubit
                                             .certificateNameController.text,
                                         certificateDate: homeCubit
-                                            .certificateDate !=
-                                            '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
+                                                    .certificateDate !=
+                                                '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
                                             ? '${homeCubit.year}-${homeCubit.month}-${homeCubit.day}'
                                             : homeCubit.certificateDate!),
                                   );

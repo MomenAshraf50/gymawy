@@ -11,7 +11,7 @@ import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/myButton.dart';
 import '../../../../../core/util/widgets/myElevatedButton.dart';
-import '../../../../../core/util/widgets/myTextFill.dart';
+import '../../../../../core/util/widgets/default_text_field.dart';
 import '../../controller/register_cubit.dart';
 
 class SocialMediaScreen extends StatelessWidget {
@@ -65,25 +65,25 @@ class SocialMediaScreen extends StatelessWidget {
                 verticalSpace(4.h),
                 Lottie.asset(Assets.images.lotti.social),
                 verticalSpace(4.h),
-                myTextFill(
+                DefaultTextField(
                   controller: registerCubit.facebookController,
                   hint: AppString.facebook,
                   svgImg: Assets.images.svg.facebook,
                 ),
                 verticalSpace(1.h),
-                myTextFill(
+                DefaultTextField(
                   controller: registerCubit.instagramController,
                   hint: AppString.instagram,
                   svgImg: Assets.images.svg.instagramSvgrepoCom,
                 ),
                 verticalSpace(1.h),
-                myTextFill(
+                DefaultTextField(
                   controller: registerCubit.youtubeController,
                   hint: AppString.youTube,
                   svgImg: Assets.images.svg.youtubeSvgrepoCom,
                 ),
                 verticalSpace(1.h),
-                myTextFill(
+                DefaultTextField(
                   controller: registerCubit.tiktokController,
                   hint: AppString.tiktok,
                   svgImg: Assets.images.svg.tiktok,

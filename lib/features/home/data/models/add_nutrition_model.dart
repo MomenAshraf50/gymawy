@@ -2,8 +2,7 @@ import '../../domain/entities/add_nutrition_entity.dart';
 
 class AddNutritionModel extends AddNutritionEntity {
   AddNutritionModel({
-    required super.userName,
-    required super.userId,
+    required super.userInformation,
     required super.nutritionName,
     required super.nutritionCategory,
     required super.nutritionPic,
@@ -19,9 +18,8 @@ class AddNutritionModel extends AddNutritionEntity {
 
   factory AddNutritionModel.fromJson(Map<String, dynamic> json) {
     return AddNutritionModel(
-      nutritionId: json['nutrition_id'] ?? 0,
-      userName:  json['maker_username'] ?? 'UnKnown',
-      userId:  json['maker'] ?? 0,
+      nutritionId: json['id'] ?? 0,
+      userInformation: json['maker'],
       nutritionName:  json['nutrition_name'] ?? 'UnKnown',
       nutritionCategory:  json['nutrition_category'] ?? 'UnKnown',
       nutritionPic:  json['nutrition_pic'] ?? 'UnKnown',

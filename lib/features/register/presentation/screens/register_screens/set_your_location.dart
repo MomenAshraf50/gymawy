@@ -6,7 +6,7 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
-import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 
@@ -70,7 +70,7 @@ class SetYourLocation extends StatelessWidget {
                   left: 4.w,
                   right: 4.w,
                 ),
-                child: myTextFill(
+                child: DefaultTextField(
                     controller: registerCubit.searchLocation,
                     hint: 'pick your address',
                     showSuffix: true,

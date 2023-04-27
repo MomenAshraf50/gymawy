@@ -24,7 +24,7 @@ class FilterDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
     return AlertDialog(
-      shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       title: Column(
         children: [
           InkWell(

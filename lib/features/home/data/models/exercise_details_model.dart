@@ -15,10 +15,10 @@ class ExerciseDetailsModel extends ExerciseDetailsEntity {
 
   factory ExerciseDetailsModel.fromJson(Map<String,dynamic> json){
       return ExerciseDetailsModel(
-          exerciseId: json['EXERCISE_detail_id'],
+          exerciseId: json['exercise'],
         day: json['day'],
-        exerciseDetailId: json['EXERCISE_detail_id'],
-        exerciseModel: AddExerciseModel.fromJson(json['exercises']),
+        exerciseDetailId: json['id'],
+        exerciseModel: AddExerciseModel.fromJson(json['exercise_info']),
         planId: json['exercise_plan'],
         reps: json['reps'],
         rest: json['rest'],

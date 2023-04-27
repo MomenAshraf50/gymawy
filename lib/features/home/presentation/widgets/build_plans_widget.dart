@@ -38,8 +38,8 @@ Widget buildPlanWidget({
                           navigateTo(
                               context,
                               PlanDetails(
-                                planId: isNutrition == true ? homeCubit.planResult![index].nutritionPlanId :homeCubit.planResult![index].exercisePlanId,
-                                ownerUserId: homeCubit.planResult![index].userId!,
+                                planId: isNutrition == true ? homeCubit.planResult![index].planId :homeCubit.planResult![index].planId,
+                                ownerUserId: homeCubit.planResult![index].makerInformation.userId,
                                 planVisibility: homeCubit.planResult![index].planVisibility,
                                 planName: homeCubit.planResult![index].planName,
                                 isNutrition: isNutrition,

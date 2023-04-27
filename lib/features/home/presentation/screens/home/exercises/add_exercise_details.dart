@@ -6,7 +6,7 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default%20dialog.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
@@ -73,7 +73,7 @@ class AddExerciseDetails extends StatelessWidget {
                         title:update? 'Update Exercise Details': 'Add Exercise Details',
                         context: context,
                       ),
-                      myTextFill(
+                      DefaultTextField(
                         controller: setsController,
                         hint: AppString.sets,
                         type: TextInputType.number,
@@ -84,7 +84,7 @@ class AddExerciseDetails extends StatelessWidget {
                           return null;
                         },
                       ),
-                      myTextFill(
+                      DefaultTextField(
                         controller: repsController,
                         hint: AppString.reps,
                         type: TextInputType.number,
@@ -95,7 +95,7 @@ class AddExerciseDetails extends StatelessWidget {
                           return null;
                         },
                       ),
-                      myTextFill(
+                      DefaultTextField(
                         controller: restController,
                         hint: AppString.restInSeconds,
                         type: TextInputType.number,

@@ -1,19 +1,20 @@
 import 'package:equatable/equatable.dart';
+import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 
 class AddExerciseEntity extends Equatable {
-  String userName;
   int exerciseId;
-  int userId;
+  UserInformation makerInformation;
   String exerciseName;
   String exerciseCategory;
   String exercisePic;
   String exerciseVid;
+  String createdAt;
   String exerciseVisibility;
 
   AddExerciseEntity({
-    required this.userName,
+    required this.makerInformation,
+    required this.createdAt,
     required this.exerciseId,
-    required this.userId,
     required this.exerciseName,
     required this.exerciseCategory,
     required this.exercisePic,
@@ -23,9 +24,9 @@ class AddExerciseEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    userName,
+    makerInformation,
     exerciseId,
-    userId,
+    createdAt,
     exerciseName,
     exerciseCategory,
     exercisePic,

@@ -221,6 +221,7 @@ class PlanDetails extends StatelessWidget {
                                       makerName: homeCubit
                                           .exerciseDetailsResult![index]
                                           .exerciseModel
+                                          .makerInformation
                                           .userName,
                                       name: homeCubit
                                           .exerciseDetailsResult![index]
@@ -271,7 +272,7 @@ class PlanDetails extends StatelessWidget {
                             return InkWell(
                               onLongPress: () {
                                 debugPrintFullText(
-                                    '${nutritionResults![index].nutritionModel.userName}');
+                                    nutritionResults![index].nutritionModel.userInformation.userName);
                                 debugPrintFullText('$userName');
 
                                 if (userId == ownerUserId) {

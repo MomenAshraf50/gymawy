@@ -9,6 +9,7 @@ import 'package:gymawy/features/home/presentation/screens/home/client_progress/c
 import 'package:gymawy/features/home/presentation/screens/home/exercises/exercises_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/home/plans/plans_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/home/workout_tracker/workout_tracker.dart';
+import 'package:gymawy/features/home/presentation/screens/search/search_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/filter_dialog.dart';
 import 'package:lottie/lottie.dart';
 import '../../../../../core/util/resources/appString.dart';
@@ -17,7 +18,7 @@ import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/loadingPage.dart';
 import '../../../../../core/util/widgets/myText.dart';
-import '../../../../../core/util/widgets/myTextFill.dart';
+import '../../../../../core/util/widgets/default_text_field.dart';
 import '../../controller/home_cubit.dart';
 import '../../controller/home_states.dart';
 import '../search/search_result_screen.dart';
@@ -40,7 +41,7 @@ class HomeClientScreen extends StatelessWidget {
         listener: (context, state) {
           if (homeCubit.profileResults != null) {
             sl<CacheHelper>()
-                .put('userName', homeCubit.profileResults!.userName);
+                .put('userName', homeCubit.profileResults!.userInformation.userName);
           }
           if (state is GetNotificationsSuccessState) {
             notificationsNum = state.notificationsEntity
@@ -67,7 +68,7 @@ class HomeClientScreen extends StatelessWidget {
                                   CircleAvatar(
                                     radius: 50.rSp,
                                     backgroundImage: NetworkImage(homeCubit
-                                        .profileResults!.profilePicture),
+                                        .profileResults!.userInformation.profilePicture),
                                   ),
                                   const Spacer(),
                                   InkWell(
@@ -107,12 +108,13 @@ class HomeClientScreen extends StatelessWidget {
                               verticalSpace(1.h),
                               myText(
                                 title:
-                                    '${AppString.helloClient}${homeCubit.profileResults!.fullName},',
+                                    '${AppString.helloClient}${homeCubit.profileResults!.userInformation.fullName},',
                                 style: Style.small,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 20.rSp,
                               ),
                               verticalSpace(1.h),
+                              if(!isCoachLogin!)
                               myText(
                                 title: AppString.ready,
                                 style: Style.small,
@@ -127,10 +129,13 @@ class HomeClientScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Expanded(
-                                    child: myTextFill(
+                                    child: DefaultTextField(
                                       controller: homeCubit.searchController,
                                       hint: AppString.search,
                                       iconPrefix: Icons.search,
+                                      onTap: (){
+                                        navigateTo(context, SearchScreen());
+                                      },
                                       onChanged: (value) {
                                         homeCubit.search(
                                             search: homeCubit
@@ -177,186 +182,6 @@ class HomeClientScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              if (homeCubit.results != null &&
-                                  homeCubit.searchController.text.isNotEmpty)
-                                SizedBox(
-                                  height: 20.h,
-                                  child: ListView.builder(
-                                    itemBuilder: (context, index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          isCoachFilter == false
-                                              ? navigateTo(
-                                                  context,
-                                                  SearchResultScreen(
-                                                    userId: homeCubit
-                                                        .results![index].userId,
-                                                    name: homeCubit
-                                                        .results![index]
-                                                        .userName,
-                                                    pic: homeCubit
-                                                        .results![index]
-                                                        .profilePicture,
-                                                    location: homeCubit
-                                                        .results![index]
-                                                        .location,
-                                                    bio: homeCubit
-                                                        .results![index].bio,
-                                                    age: homeCubit
-                                                        .results![index].age,
-                                                    currentWeight: homeCubit
-                                                        .results![index]
-                                                        .currentWeight,
-                                                    currentTall: homeCubit
-                                                        .results![index]
-                                                        .currentTall,
-                                                    bodyFat: homeCubit
-                                                        .results![index]
-                                                        .bodyFat,
-                                                    goal: homeCubit
-                                                        .results![index].goal,
-                                                  ))
-                                              : navigateTo(
-                                                  context,
-                                                  SearchResultScreen(
-                                                    userId: homeCubit
-                                                        .results![index].userId,
-                                                    name: homeCubit
-                                                        .results![index]
-                                                        .userName,
-                                                    pic: homeCubit
-                                                        .results![index]
-                                                        .profilePicture,
-                                                    location: homeCubit
-                                                        .results![index]
-                                                        .location,
-                                                    fixedPrice: homeCubit
-                                                        .results![index]
-                                                        .fixedPrice,
-                                                    facebookLink: homeCubit
-                                                        .results![index]
-                                                        .facebookLink,
-                                                    instagramLink: homeCubit
-                                                        .results![index]
-                                                        .instagramLink,
-                                                    youtubeLink: homeCubit
-                                                        .results![index]
-                                                        .youtubeLink,
-                                                    tiktokLink: homeCubit
-                                                        .results![index]
-                                                        .tiktokLink,
-                                                    verification: homeCubit
-                                                        .results![index]
-                                                        .verification,
-                                                  ));
-                                        },
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 1.h),
-                                          child: Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              color: const Color.fromARGB(
-                                                  255, 251, 239, 233),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.rSp),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(10.0.rSp),
-                                              child: Row(
-                                                children: [
-                                                  CircleAvatar(
-                                                    radius: 33.rSp,
-                                                    backgroundImage:
-                                                        NetworkImage(homeCubit
-                                                            .results![index]
-                                                            .profilePicture!),
-                                                  ),
-                                                  horizontalSpace(2.w),
-                                                  Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      myText(
-                                                        title: homeCubit
-                                                            .results![index]
-                                                            .userName!,
-                                                        //AppString.resultSearchName,
-                                                        style: Style.extraSmall,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 14.rSp,
-                                                      ),
-                                                      // verticalSpace(0.5.h),
-                                                      // myText(
-                                                      //   title: AppString.resultSearchType,
-                                                      //   style: Style.extraSmall,
-                                                      //   fontWeight: FontWeight.w400,
-                                                      //   fontSize: 14.rSp,
-                                                      // ),
-                                                      verticalSpace(0.5.h),
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          // Icon(
-                                                          //   Icons.star,
-                                                          //   color: Colors.yellow,
-                                                          //   size: 20.rSp,
-                                                          // ),
-                                                          // Icon(
-                                                          //   Icons.star,
-                                                          //   color: Colors.yellow,
-                                                          //   size: 20.rSp,
-                                                          // ),
-                                                          // Icon(
-                                                          //   Icons.star,
-                                                          //   color: Colors.yellow,
-                                                          //   size: 20.rSp,
-                                                          // ),
-                                                          // Icon(
-                                                          //   Icons.star,
-                                                          //   color: Colors.yellow,
-                                                          //   size: 20.rSp,
-                                                          // ),
-                                                          // horizontalSpace(4.w),
-                                                          Icon(
-                                                            Icons.location_on,
-                                                            size: 15.rSp,
-                                                          ),
-                                                          myText(
-                                                            title: homeCubit
-                                                                .results![index]
-                                                                .location!,
-                                                            //AppString.resultSearchLocation,
-                                                            style: Style
-                                                                .extraSmall,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontSize: 14.rSp,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    physics: const BouncingScrollPhysics(),
-                                    itemCount: homeCubit.results!.length,
-                                  ),
-                                ),
                               verticalSpace(2.h),
                               const myText(
                                 title: AppString.suggestions,
@@ -382,30 +207,13 @@ class HomeClientScreen extends StatelessWidget {
                                       child: Padding(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 1.w),
-                                        child: Container(
-                                          margin: EdgeInsets.all(9.rSp),
-                                          decoration: BoxDecoration(
-                                            boxShadow: const [
-                                              // selected == index ?
-                                              BoxShadow(
-                                                color: ColorsManager.mainColor,
-                                                spreadRadius: 0,
-                                                blurRadius: 8,
-                                              )
-                                              // : const BoxShadow(),
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            // border: Border.all(color: Colors.orange),
-                                            gradient: const LinearGradient(
-                                              begin: Alignment.bottomLeft,
-                                              end: Alignment.topRight,
-                                              colors: [
-                                                ColorsManager.whiteColor,
-                                                ColorsManager.whiteColor,
-                                              ],
-                                            ),
+                                        child: Card(
+                                          elevation: 7,
+                                          shadowColor: ColorsManager.mainColor,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20),
                                           ),
+                                          margin: EdgeInsets.all(9.rSp),
                                           child: Padding(
                                             padding: EdgeInsets.all(10.rSp),
                                             child: Column(

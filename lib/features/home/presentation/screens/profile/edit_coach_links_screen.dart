@@ -11,16 +11,24 @@ import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/back_button.dart';
-import '../../../../../core/util/widgets/myTextFill.dart';
+import '../../../../../core/util/widgets/default_text_field.dart';
 import '../../controller/home_cubit.dart';
 
 class EditCoachLinksScreen extends StatelessWidget {
-  const EditCoachLinksScreen({Key? key}) : super(key: key);
+  EditCoachLinksScreen({Key? key,required this.tiktokLink,required this.instagramLink,required this.facebookLink,required this.youtubeLink}) : super(key: key);
+
+  String youtubeLink;
+  String facebookLink;
+  String tiktokLink;
+  String instagramLink;
 
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
-
+    homeCubit.facebookLinkController.text = facebookLink;
+    homeCubit.youtubeLinkController.text = youtubeLink;
+    homeCubit.instagramLinkController.text = instagramLink;
+    homeCubit.tiktokLinkController.text = tiktokLink;
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -47,22 +55,22 @@ class EditCoachLinksScreen extends StatelessWidget {
                       verticalSpace(3.h),
                       Column(
                         children: [
-                          myTextFill(
+                          DefaultTextField(
                             controller: homeCubit.facebookLinkController,
                             hint: AppString.facebookLink,
                             svgImg: Assets.images.svg.facebook,
                           ),
-                          myTextFill(
+                          DefaultTextField(
                             controller: homeCubit.instagramLinkController,
                             hint: AppString.instagramLink,
                             svgImg: Assets.images.svg.instagramSvgrepoCom,
                           ),
-                          myTextFill(
+                          DefaultTextField(
                             controller: homeCubit.tiktokLinkController,
                             hint: AppString.tiktokLink,
                             svgImg: Assets.images.svg.tiktok_black,
                           ),
-                          myTextFill(
+                          DefaultTextField(
                             controller: homeCubit.youtubeLinkController,
                             hint: AppString.youtubeLink,
                             svgImg: Assets.images.svg.youtubeSvgrepoCom,

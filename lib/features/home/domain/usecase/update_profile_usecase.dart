@@ -24,8 +24,6 @@ class UpdateProfileParams extends Equatable {
   final String userName;
   final String email;
   final String phone;
-  final String firstName;
-  final String lastName;
   final String fullName;
   final String bio;
   final String? goal;
@@ -33,15 +31,13 @@ class UpdateProfileParams extends Equatable {
   final double? currentWeight;
   final double? currentTall;
   final double? bodyFat;
-  final String password;
+  final String? password;
 
   const UpdateProfileParams({
     required this.email,
     required this.userName,
-    required this.password,
+    this.password,
     required this.phone,
-    required this.firstName,
-    required this.lastName,
     required this.fullName,
     required this.bio,
     this.fixedPrice,
@@ -55,10 +51,7 @@ class UpdateProfileParams extends Equatable {
         userName,
         email,
         phone,
-        firstName,
-        lastName,
         fullName,
         bio,
-        password,
       ];
 }

@@ -311,6 +311,8 @@ class HomeCubit extends Cubit<HomeStates> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController fixedPriceController = TextEditingController();
+  TextEditingController bioController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -332,6 +334,47 @@ class HomeCubit extends Cubit<HomeStates> {
   File? mealImageFile;
   File? profileImageFile;
   File? certificationImageFile;
+
+  bool isPasswordEightCharacters = false;
+  bool isPasswordHasSpecialCharacter = false;
+  bool isPasswordHasUpperAndLower = false;
+  bool isPasswordMatch = false;
+  matchPassword() {
+    if (passwordController.text == confirmPasswordController.text) {
+      isPasswordMatch = true;
+    } else {
+      isPasswordMatch = false;
+    }
+    emit(EditProfileMatchPasswordState());
+  }
+
+  onPasswordChanged(String password) {
+    final upperLower = RegExp(r"(?=.*[a-z])(?=.*[A-Z])\w+");
+    final specialCharacter = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
+    isPasswordEightCharacters = false;
+    if (password.length >= 8) isPasswordEightCharacters = true;
+
+    isPasswordHasUpperAndLower = false;
+    if (upperLower.hasMatch(password)) isPasswordHasUpperAndLower = true;
+
+    isPasswordHasSpecialCharacter = false;
+    if (specialCharacter.hasMatch(password)) {
+      isPasswordHasSpecialCharacter = true;
+    }
+    emit(EditProfilePasswordChangedState());
+  }
+
+  bool isPasswordValid() {
+    return isPasswordEightCharacters &&
+        isPasswordHasSpecialCharacter &&
+        isPasswordHasUpperAndLower;
+  }
+
+  bool isPasswordMach() {
+    return passwordController.text.isNotEmpty &&
+        confirmPasswordController.text.isNotEmpty &&
+        isPasswordMatch;
+  }
 
   Future<File?> pickImageFromGallery(BuildContext context) async {
     File? image;
@@ -415,13 +458,12 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void updateProfile({
+  void
+  updateProfile({
     required String userName,
     required String email,
-    required String password,
+    String? password,
     required String phone,
-    required String firstName,
-    required String lastName,
     required String fullName,
     required double fixedPrice,
     required String bio,
@@ -432,11 +474,10 @@ class HomeCubit extends Cubit<HomeStates> {
       userName: userName,
       password: password,
       phone: phone,
-      firstName: firstName,
-      lastName: lastName,
       fullName: fullName,
       bio: bio,
       fixedPrice: fixedPrice,
+
     ));
 
     result.fold((failure) {

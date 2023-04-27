@@ -9,7 +9,7 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/back_button.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
-import 'package:gymawy/core/util/widgets/myTextFill.dart';
+import 'package:gymawy/core/util/widgets/default_text_field.dart';
 
 import '../../../../core/util/resources/colors_manager.dart';
 import '../../../../core/util/widgets/myButton.dart';
@@ -45,7 +45,7 @@ class RecoveryPasswordScreen extends StatelessWidget {
                         align: TextAlign.center,
                       ),
                       verticalSpace(10.h),
-                      myTextFill(
+                      DefaultTextField(
                         showSuffix: true,
                         svgImg: Assets.images.svg.lock,
                         controller: passwordController,
@@ -58,7 +58,7 @@ class RecoveryPasswordScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      myTextFill(
+                      DefaultTextField(
                         svgImg: Assets.images.svg.lock,
                         controller: confirmPasswordController,
                         isPassword: appBloc.showConfirmPassword,

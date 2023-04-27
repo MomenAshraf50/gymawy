@@ -89,7 +89,7 @@ class ClientDetailsScreen extends StatelessWidget {
                                 radius: 50.rSp,
                                 backgroundImage: NetworkImage(
                                     //AppString.networkImage
-                                  homeCubit.profileResults!.profilePicture
+                                  homeCubit.profileResults!.userInformation.profilePicture
                                 ),
                               ),
                               horizontalSpace(5.w),
@@ -97,7 +97,7 @@ class ClientDetailsScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   myText(
-                                    title: homeCubit.profileResults!.userName,
+                                    title: homeCubit.profileResults!.userInformation.userName,
                                     //AppString.userNameProfile,
                                     style: Style.medium,
                                     fontSize: 14.rSp,
@@ -119,7 +119,7 @@ class ClientDetailsScreen extends StatelessWidget {
                                       myText(
                                         title:
                                         //AppString.address,
-                                        homeCubit.profileResults!.governorate,
+                                        homeCubit.profileResults!.userInformation.governorate,
                                         style: Style.extraSmall,
                                         fontSize: 12.rSp,
                                       ),
@@ -129,7 +129,7 @@ class ClientDetailsScreen extends StatelessWidget {
                                   myText(
                                     title:
                                     //AppString.age,
-                                   '${homeCubit.profileResults!.age}',
+                                   '${homeCubit.profileResults!.userInformation.age}',
                                     style: Style.extraSmall,
                                     fontSize: 12.rSp,
                                   ),

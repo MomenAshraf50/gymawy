@@ -66,7 +66,7 @@ class NutritionBasicData extends StatelessWidget {
                             context: context,
                             color: Colors.transparent,
                             actions: [
-                              if (userId == nutritionEntity!.userId)
+                              if (userId == nutritionEntity!.userInformation.userId)
                                 Padding(
                                   padding: EdgeInsets.only(right: 3.w),
                                   child: defaultActionButton(
@@ -120,7 +120,7 @@ class NutritionBasicData extends StatelessWidget {
                                     ),
                                     verticalSpace(0.5.h),
                                     myText(
-                                      title: 'by ${nutritionEntity!.userName}',
+                                      title: 'by ${nutritionEntity!.userInformation.userName}',
                                       style: Style.extraSmall,
                                     ),
                                     verticalSpace(2.h),
@@ -258,7 +258,7 @@ class NutritionBasicData extends StatelessWidget {
                                         style: Style.extraSmall,
                                       ),
                                     verticalSpace(4.h),
-                                    if (userId! == nutritionEntity!.userId)
+                                    if (userId! == nutritionEntity!.userInformation.userId)
                                       myButton(
                                         text: AppString.delete,
                                         onPressed: () {

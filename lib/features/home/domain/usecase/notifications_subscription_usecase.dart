@@ -20,7 +20,7 @@ class NotificationsSubscriptionUseCase extends UseCase<void,NotificationsSubscri
 class NotificationsSubscriptionParams extends Equatable{
 
   String deviceToken;
-  String userLoggedIn;
+  bool userLoggedIn;
 
 
   NotificationsSubscriptionParams({required this.deviceToken, required this.userLoggedIn});
