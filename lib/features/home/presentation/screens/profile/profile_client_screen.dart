@@ -86,7 +86,7 @@ class ClientProfileScreen extends StatelessWidget {
                                     child: myText(
                                       title:
                                       //'0000000000000000000000000000000000000',
-                                      homeCubit.profileResults!.userInformation.fullName,
+                                      '${homeCubit.profileResults!.userInformation.firstName} ${homeCubit.profileResults!.userInformation.lastName}',
                                       //AppString.userNameProfile,
                                       style: Style.medium,
                                       fontSize: 14.rSp,
@@ -105,7 +105,8 @@ class ClientProfileScreen extends StatelessWidget {
                                             navigateTo(context, EditProfileScreen(
                                               userName: homeCubit.profileResults!.userInformation.userName,
                                               email: homeCubit.profileResults!.userInformation.email,
-                                              fullName: homeCubit.profileResults!.userInformation.fullName,
+                                              firstName: homeCubit.profileResults!.userInformation.firstName,
+                                              lastName: homeCubit.profileResults!.userInformation.lastName,
                                               phone: homeCubit.profileResults!.userInformation.phoneNumber,
                                               bio: homeCubit.profileResults!.userInformation.bio,
                                             ));

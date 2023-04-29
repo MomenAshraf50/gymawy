@@ -51,7 +51,8 @@ class ProfileEntity extends Equatable {
 class UserInformation extends Equatable {
   String userName;
   int userId;
-  String fullName;
+  String firstName;
+  String lastName;
   String profilePicture;
   String bio;
   String phoneNumber;
@@ -65,7 +66,8 @@ class UserInformation extends Equatable {
   UserInformation({
     required this.userName,
     required this.userId,
-    required this.fullName,
+    required this.firstName,
+    required this.lastName,
     required this.profilePicture,
     required this.bio,
     required this.phoneNumber,
@@ -81,15 +83,16 @@ class UserInformation extends Equatable {
     return UserInformation(
       userName: json['username'],
       userId: json['id'],
-          governorate: json['Governorate'],
-      country: json['country'],
-      city: json['city'],
-      bio: json['bio'],
-      email: json['email'],
-      phoneNumber: json['phone'],
-      fullName: '${json['first_name']} ${json['last_name']}',
-      age: json['age'],
-      gender: json['gander'],
+      governorate: json['Governorate'] ?? '',
+      country: json['country'] ??'',
+      city: json['city']??'',
+      bio: json['bio']??'',
+      email: json['email']??'',
+      phoneNumber: json['phone']??'',
+      firstName: json['first_name']??'',
+      lastName: json['last_name']??'',
+      age: json['age'] ?? 0,
+      gender: json['gander']??'',
       profilePicture: json['profile_picture'],
     );
   }
@@ -98,7 +101,7 @@ class UserInformation extends Equatable {
   List<Object?> get props => [
         userName,
         userId,
-        fullName,
+        firstName,
         profilePicture,
         bio,
         phoneNumber,

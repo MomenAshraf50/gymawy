@@ -4,7 +4,6 @@ class CertificateModel extends CertificateEntity {
   CertificateModel({
     required super.ownerName,
     required super.certificateId,
-    required super.ownerId,
     required super.certificateName,
     required super.certificateFile,
     required super.certificateDate,
@@ -17,7 +16,6 @@ class CertificateModel extends CertificateEntity {
     return CertificateModel(
       ownerName: json['owner'] ?? 'UnKnown',
       certificateId: json['certificate_id'],
-      ownerId: json['owner'] ?? 0,
       certificateName: json['certificate_name'] ?? 'UnKnown',
       certificateFile: json['certificate_file'] ?? 'UnKnown',
       certificateDate: json['date'] ?? 'UnKnown',

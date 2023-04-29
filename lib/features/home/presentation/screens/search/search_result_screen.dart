@@ -422,15 +422,15 @@ class SearchResultScreen extends StatelessWidget {
                                                         context,
                                                         ViewCertification(
                                                           certification: homeCubit
-                                                              .certificateResult[
+                                                              .certificateResult![
                                                                   index]
                                                               .certificateFile,
                                                           certificationName: homeCubit
-                                                              .certificateResult[
+                                                              .certificateResult![
                                                                   index]
                                                               .certificateName,
                                                           certificationID: (homeCubit
-                                                                  .certificateResult[
+                                                                  .certificateResult![
                                                                       index]
                                                                   .certificateId)
                                                               .toString(),
@@ -443,14 +443,14 @@ class SearchResultScreen extends StatelessWidget {
                                                       verticalSpace(1.h),
                                                       myText(
                                                           title: homeCubit
-                                                              .certificateResult[
+                                                              .certificateResult![
                                                                   index]
                                                               .certificateName,
                                                           style: Style.medium),
                                                       verticalSpace(1.h),
                                                       myText(
                                                           title: homeCubit
-                                                              .certificateResult[
+                                                              .certificateResult![
                                                                   index]
                                                               .certificateDate,
                                                           style: Style.medium),
@@ -464,7 +464,7 @@ class SearchResultScreen extends StatelessWidget {
                                                   CircularProgressIndicator());
                                     },
                                     itemCount:
-                                        homeCubit.certificateResult.length,
+                                        homeCubit.certificateResult!.length,
                                   ),
                                 ),
                             ],

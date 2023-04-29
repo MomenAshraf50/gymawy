@@ -1,10 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 
 class SearchEntity extends Equatable {
-  String? userName;
-  int? userId;
-  String? profilePicture;
-  String? location;
+  UserInformation userInformation;
 
   ///not required
   String? facebookLink;
@@ -21,10 +19,7 @@ class SearchEntity extends Equatable {
   String? goal;
 
   SearchEntity({
-    required this.userId,
-    required this.userName,
-    required this.profilePicture,
-    required this.location,
+    required this.userInformation,
     this.verification,
     this.bodyFat,
     this.currentWeight,
@@ -41,10 +36,7 @@ class SearchEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        userName,
-        profilePicture,
-        location,
-        userId,
+        userInformation,
         verification,
         bodyFat,
         currentTall,

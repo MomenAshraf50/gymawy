@@ -17,7 +17,8 @@ class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({
     Key? key,
     required this.userName,
-    required this.fullName,
+    required this.firstName,
+    required this.lastName,
     required this.phone,
     required this.email,
     required this.bio,
@@ -25,7 +26,8 @@ class EditProfileScreen extends StatelessWidget {
   }) : super(key: key);
 
   String userName;
-  String fullName;
+  String firstName;
+  String lastName;
   String email;
   String phone;
   double? price;
@@ -36,10 +38,11 @@ class EditProfileScreen extends StatelessWidget {
     HomeCubit homeCubit = HomeCubit.get(context);
     AppBloc appBloc = AppBloc.get(context);
     homeCubit.usernameController.text = userName;
-    homeCubit.fullNameController.text = fullName;
+    homeCubit.firstNameController.text = firstName;
+    homeCubit.lastNameController.text = lastName;
     homeCubit.phoneController.text = phone;
     homeCubit.emailController.text = email;
-    if (isCoachLogin!) {
+    if (isCoachLogin) {
       homeCubit.fixedPriceController.text = price!.toString();
     }
     homeCubit.bioController.text = bio;
@@ -48,6 +51,7 @@ class EditProfileScreen extends StatelessWidget {
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
         if (state is UpdateSuccessState) {
+          homeCubit.profile(id: homeCubit.profileResults!.userInformation.userId);
           Navigator.pop(context);
           designToastDialog(
               context: context, toast: TOAST.success, text: 'Profile Updated');
@@ -86,19 +90,40 @@ class EditProfileScreen extends StatelessWidget {
                                           return null;
                                         },
                                       ),
-                                      DefaultTextField(
-                                        controller:
-                                            homeCubit.fullNameController,
-                                        hint: AppString.fullName,
-                                        svgImg: Assets.images.svg.user,
-                                        validate: (value) {
-                                          if (value!.isEmpty) {
-                                            return 'This field can\'t be empty';
-                                          }
-                                          return null;
-                                        },
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: DefaultTextField(
+                                              controller:
+                                                  homeCubit.firstNameController,
+                                              hint: AppString.firstName,
+                                              svgImg: Assets.images.svg.user,
+                                              validate: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'This field can\'t be empty';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                          ),
+                                          horizontalSpace(5.w),
+                                          Expanded(
+                                            child: DefaultTextField(
+                                              controller:
+                                                  homeCubit.lastNameController,
+                                              hint: AppString.lastName,
+                                              svgImg: Assets.images.svg.user,
+                                              validate: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'This field can\'t be empty';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      if (isCoachLogin!)
+                                      if (isCoachLogin)
                                         DefaultTextField(
                                           controller:
                                               homeCubit.fixedPriceController,
@@ -289,8 +314,10 @@ class EditProfileScreen extends StatelessWidget {
                                             homeCubit.usernameController.text,
                                         email: homeCubit.emailController.text,
                                         phone: homeCubit.phoneController.text,
-                                        fullName:
-                                            homeCubit.fullNameController.text,
+                                        firstName:
+                                            homeCubit.firstNameController.text,
+                                        lastName:
+                                        homeCubit.lastNameController.text,
                                         fixedPrice: double.parse(homeCubit
                                             .fixedPriceController.text),
                                         bio: homeCubit.bioController.text,
@@ -303,8 +330,10 @@ class EditProfileScreen extends StatelessWidget {
                                         password:
                                             homeCubit.passwordController.text,
                                         phone: homeCubit.phoneController.text,
-                                        fullName:
-                                            homeCubit.fullNameController.text,
+                                        firstName:
+                                            homeCubit.firstNameController.text,
+                                        lastName:
+                                        homeCubit.lastNameController.text,
                                         fixedPrice: double.parse(homeCubit
                                             .fixedPriceController.text),
                                         bio: homeCubit.bioController.text,

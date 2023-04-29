@@ -1,41 +1,33 @@
 import 'package:equatable/equatable.dart';
+import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 
 class SubscriptionRequestEntity extends Equatable {
   int subscriptionRequestId;
-  String clientUsername;
-  String clientPic;
-  String coachUsername;
+  UserInformation clientInformation;
+  UserInformation coachInformation;
   String requestState;
   String dateCreated;
   String startDate;
   String endDate;
-  int clientId;
-  int coachId;
 
   SubscriptionRequestEntity({
     required this.subscriptionRequestId,
-    required this.clientUsername,
-    required this.coachUsername,
+    required this.clientInformation,
+    required this.coachInformation,
     required this.requestState,
     required this.dateCreated,
     required this.startDate,
     required this.endDate,
-    required this.clientId,
-    required this.coachId,
-    required this.clientPic
   });
 
   @override
   List<Object?> get props => [
     subscriptionRequestId,
-    clientUsername,
-    clientUsername,
-    clientId,
-    coachId,
+    clientInformation,
+    coachInformation,
     startDate,
     endDate,
     dateCreated,
     requestState,
-    clientPic
   ];
 }

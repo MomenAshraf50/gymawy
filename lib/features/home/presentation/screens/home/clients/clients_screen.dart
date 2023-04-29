@@ -5,7 +5,6 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/features/home/domain/entities/coach_subscriptions_entity.dart';
-import 'package:gymawy/features/home/domain/usecase/update_subscription_status_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/pending_screen.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_client_progress_item.dart';
@@ -80,13 +79,13 @@ class ClientsScreen extends StatelessWidget {
                                     navigateTo(
                                         context,
                                         ClientDetailsScreen(
-                                          clientId: subscriptionRequestEntity[index].clientId,
+                                          clientId: subscriptionRequestEntity[index].clientInformation.userId,
                                         ));
                                   },
                                   child: buildClientProgressItem(
                                     isProgress: false,
-                                    image: NetworkImage(subscriptionRequestEntity[index].clientPic),
-                                    name: subscriptionRequestEntity[index].clientUserName,
+                                    image: NetworkImage(subscriptionRequestEntity[index].clientInformation.profilePicture),
+                                    name: subscriptionRequestEntity[index].clientInformation.userName,
                                   ),
                                 ),
                                 itemCount: subscriptionRequestEntity.length,

@@ -27,7 +27,7 @@ Widget buildExercisesItems({
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 10,
         child: Padding(
-          padding: EdgeInsets.fromLTRB(5.w, 0, 5.w, 0),
+          padding: EdgeInsets.fromLTRB(5.w, 1.h, 5.w, 1.h),
           child: Column(
             children: [
               exerciseDetails(
@@ -78,6 +78,7 @@ Widget buildExercisesItems({
                       style: Style.small,
                       fontWeight: FontWeight.w400,
                       fontSize: 16.rSp,
+                      maxLines: 1,
                       color: homeCubit.isCompleted
                           ? const Color.fromARGB(255, 161, 175, 176)
                           : Colors.green,
