@@ -253,13 +253,14 @@ class AddExerciseScreen extends StatelessWidget {
                                         homeCubit.addExercise(
                                           exerciseName: exerciseNameController.text,
                                           exerciseCategory: homeCubit.selectedValue,
-                                          exerciseVisibility: homeCubit.visibilityExerciseValue!,
+                                          exerciseVisibility: homeCubit.visibilityExerciseValue,
                                           exercisePic: homeCubit.exerciseImageFile!,
                                           exerciseVideo: homeCubit.exerciseVideo!,
                                           context: context,
                                         );
                                         showDialog(
                                           context: context,
+                                          barrierDismissible: false,
                                           builder: (context) {
                                             return BlocBuilder<
                                                 HomeCubit,
@@ -267,6 +268,7 @@ class AddExerciseScreen extends StatelessWidget {
                                               builder: (context, state) {
                                                 if (state is ChangeProgressValueState) {
                                                   return ProgressDialog(
+
                                                     message:
                                                     'Processing... ${((state.countProgress! / state.totalProgress!) * 100).toInt()}%',
                                                     value: state.countProgress! / state.totalProgress!,

@@ -1,18 +1,18 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:gymawy/features/home/domain/entities/update_entity.dart';
+import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/repository/home_base_repository.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/use_case.dart';
 
 class UpdateProfile
-    implements UseCase<UpdateEntity, UpdateProfileParams> {
+    implements UseCase<ProfileEntity, UpdateProfileParams> {
   final HomeBaseRepository repository;
 
   UpdateProfile(this.repository);
 
   @override
-  Future<Either<Failure, UpdateEntity>> call(
+  Future<Either<Failure, ProfileEntity>> call(
       UpdateProfileParams params) async {
     return await repository.updateProfile(
       params: params,
@@ -24,7 +24,8 @@ class UpdateProfileParams extends Equatable {
   final String userName;
   final String email;
   final String phone;
-  final String fullName;
+  final String firstName;
+  final String lastName;
   final String bio;
   final String? goal;
   final double? fixedPrice;
@@ -38,7 +39,8 @@ class UpdateProfileParams extends Equatable {
     required this.userName,
     this.password,
     required this.phone,
-    required this.fullName,
+    required this.firstName,
+    required this.lastName,
     required this.bio,
     this.fixedPrice,
     this.currentWeight,
@@ -51,7 +53,7 @@ class UpdateProfileParams extends Equatable {
         userName,
         email,
         phone,
-        fullName,
+        firstName,
         bio,
       ];
 }

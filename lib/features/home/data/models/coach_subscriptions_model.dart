@@ -1,15 +1,14 @@
 import 'package:gymawy/features/home/domain/entities/coach_subscriptions_entity.dart';
+import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 
 class CoachSubscriptionsModel extends CoachSubscriptionsEntity {
   CoachSubscriptionsModel({
     required super.subscribeId,
-    required super.clientUserName,
-    required super.coachUserName,
+    required super.clientInformation,
     required super.startDate,
     required super.endDate,
     required super.status,
-    required super.clientPic,
-    required super.clientId,
+    required super.coachInformation,
     required super.coachId,
   });
 
@@ -18,12 +17,10 @@ class CoachSubscriptionsModel extends CoachSubscriptionsEntity {
       coachId: json['trainer'],
       startDate: json['start_date'],
       endDate: json['end_date'],
-      clientId: json['client'],
-      clientUserName: json['client_username'],
-      coachUserName: json['trainer_username'],
-      clientPic: json['client_profile_pic'],
+      coachInformation: UserInformation.fromJson(json['trainer_info']),
+      clientInformation: UserInformation.fromJson(json['client_info']),
       status: json['status'],
-      subscribeId: json['SUBSCRIPE_id'],
+      subscribeId: json['id'],
     );
   }
 }

@@ -53,7 +53,6 @@ class PendingScreen extends StatelessWidget {
                         onPressed: ()
                         {
                           Navigator.pop(context);
-                          homeCubit.getSubscriptionRequests(GetSubscriptionsRequestsParams(requestState: 'Accepted'));
                         }
                     ),
                     Expanded(
@@ -65,7 +64,7 @@ class PendingScreen extends StatelessWidget {
                               navigateTo(
                                   context,
                                   ClientDetailsScreen(
-                                    clientId: subscriptionRequestEntity[index].clientId,
+                                    clientId: subscriptionRequestEntity[index].clientInformation.userId,
                                   ));
                             },
                             child: buildClientProgressItem(
@@ -89,8 +88,8 @@ class PendingScreen extends StatelessWidget {
                                       subscriptionRequest: subscriptionRequestEntity[index].subscriptionRequestId,
                                     ));
                               },
-                              image: NetworkImage(subscriptionRequestEntity[index].clientPic),
-                              name: subscriptionRequestEntity[index].clientUsername,
+                              image: NetworkImage(subscriptionRequestEntity[index].clientInformation.profilePicture),
+                              name: '${subscriptionRequestEntity[index].clientInformation.firstName} ${subscriptionRequestEntity[index].clientInformation.lastName}',
                             ),
                           ),
                           itemCount: subscriptionRequestEntity.length,

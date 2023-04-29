@@ -20,6 +20,7 @@ import 'package:gymawy/features/home/data/models/update_coach_model.dart';
 import 'package:gymawy/features/home/data/models/user_plan_model.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/certification_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_user_plan_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
@@ -52,12 +53,12 @@ import '../models/plan_model.dart';
 import '../models/add_nutrition_details_model.dart';
 
 abstract class HomeBaseDataSource {
-  Future<UpdateModel> updateProfile({required UpdateProfileParams params});
+  Future<ProfileModel> updateProfile({required UpdateProfileParams params});
 
-  Future<UpdateModel> updateProfilePicture(
+  Future<ProfileModel> updateProfilePicture(
       {required UpdateProfilePictureParams params});
 
-  Future<UpdateModel> updateCoachSocialLinks(
+  Future<ProfileModel> updateCoachSocialLinks(
       {required UpdateCoachSocialLinksParams params});
 
   Future<List<SearchModel>> search({
@@ -70,10 +71,7 @@ abstract class HomeBaseDataSource {
   });
 
   Future<CertificateModel> certificate({
-    required String id,
-    required String certificateName,
-    required FilePickerResult certificateFile,
-    required String certificateDate,
+    required CertificateParams params
   });
 
   Future<List<CertificateModel>> getCertificate(GetCertificateParams params);
@@ -187,41 +185,41 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   });
 
   @override
-  Future<UpdateModel> updateProfile(
+  Future<ProfileModel> updateProfile(
       {required UpdateProfileParams params}) async {
     final Response f = await dioHelper.put(
-      url: isCoachLogin! ? updateCoachEndPoint : updateClientsEndPoint,
+      url: isCoachLogin ? updateCoachEndPoint : updateClientsEndPoint,
       token: token,
-      data: isCoachLogin!
+      data: isCoachLogin
           ? {
               'username': params.userName,
               'bio': params.bio,
-              'name': params.fullName,
+              'first_name': params.firstName,
+              'last_name': params.lastName,
               'fixed_price_month': params.fixedPrice,
               'phone_number': params.phone,
-              if (params.password != null)
-                'password': params.password,
+              if (params.password != null) 'password': params.password,
               'email': params.email,
             }
           : {
               'username': params.userName,
               'bio': params.bio,
-              'name': params.fullName,
+              'first_name': params.firstName,
+              'last_name': params.lastName,
               'phone_number': params.phone,
-              if (params.password != null)
-                'password': params.password,
+              if (params.password != null) 'password': params.password,
               'email': params.email,
             },
     );
-    return UpdateModel.fromJson(f.data);
+    return ProfileModel.fromJson(f.data);
   }
 
   @override
-  Future<UpdateModel> updateProfilePicture(
+  Future<ProfileModel> updateProfilePicture(
       {required UpdateProfilePictureParams params}) async {
     final Response f = await dioHelper.put(
       token: token,
-      url: isCoachLogin! ? updateCoachEndPoint : updateClientsEndPoint,
+      url: isCoachLogin ? updateCoachEndPoint : updateClientsEndPoint,
       data: FormData.fromMap({
         'profile_picture': await MultipartFile.fromFile(
           params.image.path,
@@ -229,11 +227,11 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       }),
       isMultipart: true,
     );
-    return UpdateModel.fromJson(f.data);
+    return ProfileModel.fromJson(f.data);
   }
 
   @override
-  Future<UpdateModel> updateCoachSocialLinks(
+  Future<ProfileModel> updateCoachSocialLinks(
       {required UpdateCoachSocialLinksParams params}) async {
     final Response f = await dioHelper.put(
       token: token,
@@ -245,7 +243,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
         'instagram_link': params.instagramLink,
       },
     );
-    return UpdateModel.fromJson(f.data);
+    return ProfileModel.fromJson(f.data);
   }
 
   @override
@@ -256,7 +254,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       url: isCoachFilter == false ||
               constClientVariable != null ||
               constClientSearchVariable != null
-          ? registerEndPoint
+          ? registerClientEndPoint
           : registerCoachEndPoint,
       token: token,
       query: constClientVariable == null || constClientSearchVariable != null
@@ -279,8 +277,8 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
       url:
           //'$registerCoachEndPoint$id/',
           //'$registerEndPoint$id/',
-          isCoachLogin == false || isCoach == false
-              ? '$registerEndPoint$id/'
+          !isCoachLogin
+              ? '$registerClientEndPoint$id/'
               : '$registerCoachEndPoint$id/',
     );
     return ProfileModel.fromJson(f.data);
@@ -288,24 +286,24 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
 
   @override
   Future<CertificateModel> certificate({
-    required String id,
-    required String certificateName,
-    required FilePickerResult certificateFile,
-    required String certificateDate,
+    required CertificateParams params
   }) async {
     final Response f = await dioHelper.post(
       token: token,
       url: certificateEndPoint,
       query: {
-        'owner': id,
+        'owner': params.id,
       },
       data: FormData.fromMap({
-        'certificate_name': certificateName,
+        'certificate_name': params.certificateName,
         'certificate_file': await MultipartFile.fromFile(
-            certificateFile.files.first.path!,
+            params.certificateFile.files.first.path!,
             filename:
-                Uri.file(certificateFile.files.first.path!).pathSegments.last),
-        'date': certificateDate,
+                Uri.file(params.certificateFile.files.first.path!).pathSegments.last),
+        'date': params.certificateDate,
+        'certificate_serial': params.certificateSerial,
+        'description': params.certificateDescription,
+        'expiration_date': params.certificateExpirationDate,
       }),
       isMultipart: true,
     );
@@ -351,6 +349,8 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
                   .pathSegments
                   .last),
           'certificate_name': params.certificateName,
+          'description': params.certificateDescription,
+          'expiration_date': params.certificateExpirationDate,
           'date': params.certificateDate
         },
         token: token,
@@ -564,8 +564,8 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             }
           : null,
     );
-    return List<PlanModel>.from((f.data['results'] as List)
-            .map((e) => PlanModel.fromJson(e)));
+    return List<PlanModel>.from(
+        (f.data['results'] as List).map((e) => PlanModel.fromJson(e)));
   }
 
   @override
@@ -579,7 +579,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
           'plan_name': params.planName,
           'visibility': params.planVisibility,
         }));
-    return  PlanModel.fromJson(f.data);
+    return PlanModel.fromJson(f.data);
   }
 
   @override
@@ -787,7 +787,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
         .get(url: subscriptionRequestEndPoint, token: token, query: {
       if (params.requestState != null) 'state': params.requestState,
       if (params.subscriptionRequestId != null)
-        'SubscriptionRequest_id': params.subscriptionRequestId
+        'id': params.subscriptionRequestId
     });
 
     return List<SubscriptionRequestModel>.from((f.data['results'] as List)
@@ -850,7 +850,9 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   Future<void> notificationsSubscription(
       NotificationsSubscriptionParams params) async {
     await dioHelper.post(
-      url: params.userLoggedIn? notificationSubscribeEndPoint : notificationUnSubscribeEndPoint,
+      url: params.userLoggedIn
+          ? notificationSubscribeEndPoint
+          : notificationUnSubscribeEndPoint,
       token: token,
       data: {
         'device_token': params.deviceToken,

@@ -11,6 +11,7 @@ import 'package:gymawy/features/home/domain/entities/subscription_request_entity
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/entities/user_plan_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/certification_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_user_plan_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
@@ -48,13 +49,13 @@ import '../usecase/get_plan_usecase.dart';
 import '../usecase/get_exercise_usecase.dart';
 
 abstract class HomeBaseRepository {
-  Future<Either<Failure, UpdateEntity>> updateProfile(
+  Future<Either<Failure, ProfileEntity>> updateProfile(
       {required UpdateProfileParams params});
 
-  Future<Either<Failure, UpdateEntity>> updateCoachSocialLinks(
+  Future<Either<Failure, ProfileEntity>> updateCoachSocialLinks(
       {required UpdateCoachSocialLinksParams params});
 
-  Future<Either<Failure, UpdateEntity>> updateProfilePicture(
+  Future<Either<Failure, ProfileEntity>> updateProfilePicture(
       {required UpdateProfilePictureParams params});
 
   Future<Either<Failure, List<SearchEntity>>> search({
@@ -67,10 +68,7 @@ abstract class HomeBaseRepository {
   });
 
   Future<Either<Failure, CertificateEntity>> certificate({
-    required String id,
-    required String certificateName,
-    required FilePickerResult certificateFile,
-    required String certificateDate,
+    required CertificateParams params
   });
 
   Future<Either<Failure, List<CertificateEntity>>> getCertificate(

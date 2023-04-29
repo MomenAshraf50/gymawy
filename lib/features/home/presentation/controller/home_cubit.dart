@@ -309,7 +309,8 @@ class HomeCubit extends Cubit<HomeStates> {
   TextEditingController youtubeLinkController = TextEditingController();
 
   TextEditingController usernameController = TextEditingController();
-  TextEditingController fullNameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController fixedPriceController = TextEditingController();
   TextEditingController bioController = TextEditingController();
@@ -320,6 +321,10 @@ class HomeCubit extends Cubit<HomeStates> {
   TextEditingController nameOfPlanController = TextEditingController();
 
   TextEditingController certificateNameController = TextEditingController();
+  TextEditingController certificateSerialController = TextEditingController();
+  TextEditingController certificateDescriptionController = TextEditingController();
+  TextEditingController certificateDateController = TextEditingController();
+  TextEditingController certificateExpirationDateController = TextEditingController();
 
 
   TextEditingController supportTextController = TextEditingController();
@@ -464,17 +469,19 @@ class HomeCubit extends Cubit<HomeStates> {
     required String email,
     String? password,
     required String phone,
-    required String fullName,
+    required String firstName,
+    required String lastName,
     required double fixedPrice,
     required String bio,
   }) async {
     emit(UpdateLoadingState());
     final result = await _updateProfile(UpdateProfileParams(
+      lastName: lastName,
       email: email,
       userName: userName,
       password: password,
       phone: phone,
-      fullName: fullName,
+      firstName: firstName,
       bio: bio,
       fixedPrice: fixedPrice,
 
@@ -586,6 +593,9 @@ class HomeCubit extends Cubit<HomeStates> {
       required String certificateName,
       required FilePickerResult certificateFile,
       required String certificateDate,
+      required String certificateSerial,
+      required String certificateDescription,
+      required String certificateExpirationDate,
       context}) async {
     emit(CertificationLoadingState());
     final result = await _certificateUseCase(CertificateParams(
@@ -593,6 +603,9 @@ class HomeCubit extends Cubit<HomeStates> {
       certificateName: certificateName,
       certificateFile: certificateFile,
       certificateDate: certificateDate,
+      certificateSerial: certificateSerial,
+      certificateDescription: certificateDescription,
+      certificateExpirationDate: certificateExpirationDate,
     ));
     result.fold((failure) {
       emit(CertificationErrorState(mapFailureToMessage(failure)));

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
+import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/core/util/widgets/myButton.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
@@ -25,21 +26,33 @@ class ProfileCoachScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     HomeCubit homeCubit = HomeCubit.get(context);
-    homeCubit.getCertificates(
-        GetCertificateParams(
-          ownerId: homeCubit.profileResults!.userInformation.userId!,
-          ownerName: '',
-        ),
-        context);
+    if(homeCubit.profileResults != null){
+      homeCubit.getCertificates(
+          GetCertificateParams(
+            ownerId: homeCubit.profileResults!.userInformation.userId,
+            ownerName: '',
+          ),
+          context);
+    }
+
     debugPrintFullText('sssssssssssssssssssss${homeCubit.certificateResult}');
 
     int selected = 0;
     return SafeArea(
       child: BlocConsumer<HomeCubit, HomeStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if(state is ProfileSuccessState){
+            homeCubit.getCertificates(
+                GetCertificateParams(
+                  ownerId: homeCubit.profileResults!.userInformation.userId,
+                  ownerName: '',
+                ),
+                context);
+          }
+        },
         builder: (context, state) {
           return Scaffold(
-            body: SingleChildScrollView(
+            body: homeCubit.profileResults == null? const LoadingPage(): SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
@@ -96,7 +109,7 @@ class ProfileCoachScreen extends StatelessWidget {
                                     children: [
                                       myText(
                                         title:
-                                            homeCubit.profileResults!.userInformation.fullName,
+                                            '${homeCubit.profileResults!.userInformation.firstName} ${homeCubit.profileResults!.userInformation.lastName}',
                                         //AppString.userNameProfile,
                                         style: Style.small,
                                       ),
@@ -112,7 +125,7 @@ class ProfileCoachScreen extends StatelessWidget {
                                 verticalSpace(1.h),
                                 Row(
                                   children: [
-                                    if (isCoachLogin!)
+                                    if (isCoachLogin)
                                       Expanded(
                                         child: myButton(
                                             text: AppString.editLinksButton,
@@ -138,10 +151,11 @@ class ProfileCoachScreen extends StatelessWidget {
                                             navigateTo(context,
                                                 EditProfileScreen(
                                                   userName: homeCubit.profileResults!.userInformation.userName,
-                                                  email: homeCubit.profileResults!.userInformation.email!,
-                                                  fullName: homeCubit.profileResults!.userInformation.fullName,
+                                                  email: homeCubit.profileResults!.userInformation.email,
+                                                  firstName: homeCubit.profileResults!.userInformation.firstName,
+                                                  lastName: homeCubit.profileResults!.userInformation.lastName,
                                                   phone: homeCubit.profileResults!.userInformation.phoneNumber,
-                                                  bio: homeCubit.profileResults!.userInformation.bio!,
+                                                  bio: homeCubit.profileResults!.userInformation.bio,
                                                   price: homeCubit.profileResults!.fixedPrice!,
                                                 ));
                                           }),

@@ -100,7 +100,8 @@ class AppString {
   static const planType = 'Fat';
   static const visibility = 'Visibility';
   static const delete = 'Delete';
-  static const addPlan = 'Add Plan';
+  static const addExercisePlan = 'Add Exercise Plan';
+  static const addNutritionPlan = 'Add Nutrition Plan';
   static const nameOfPlan = 'Name Of Plan';
   static const userNameProfile = 'Abdo Saied';
   static const accountType = 'Coach';
@@ -115,7 +116,10 @@ class AppString {
   static const followers = 'Followers';
   static const certifications = 'Certifications';
   static const certificateName = 'Certificate Name';
+  static const certificateSerial = 'Certificate Serial';
+  static const certificateDescription = 'Certificate Description';
   static const certificateDate = 'Certificate Date';
+  static const certificateExpirationDate = 'Certificate Expiration Date';
   static const cv = 'CV';
   static const follow = 'Follow';
   static const contact = 'Contact';

@@ -24,15 +24,21 @@ class UpdateCertificateParams extends Equatable {
   FilePickerResult? certificate;
   int certificateId;
   String certificateName;
+  String certificateSerial;
   String certificateDate;
+  String certificateExpirationDate;
+  String certificateDescription;
 
   UpdateCertificateParams(
       {required this.certificateId,
       required this.certificateName,
+      required this.certificateSerial,
       required this.certificateDate,
+      required this.certificateDescription,
+      required this.certificateExpirationDate,
       required this.isFile,
       this.certificate});
 
   @override
-  List<Object?> get props => [certificateId, certificateName, certificateDate];
+  List<Object?> get props => [certificateId, certificateName,certificateExpirationDate,certificateDescription, certificateSerial,certificateDate];
 }

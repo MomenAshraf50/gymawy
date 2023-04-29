@@ -79,6 +79,9 @@ class AppBloc extends Cubit<AppState> {
           height: 1.5,
         ),
       ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: ColorsManager.mainColor
+      ),
       //primarySwatch: MaterialColor(int.parse('0xff0075ff'), color),
       colorScheme: const ColorScheme(
         primary: ColorsManager.primary,

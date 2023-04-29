@@ -108,7 +108,7 @@ class HomeClientScreen extends StatelessWidget {
                               verticalSpace(1.h),
                               myText(
                                 title:
-                                    '${AppString.helloClient}${homeCubit.profileResults!.userInformation.fullName},',
+                                    '${AppString.helloClient}${homeCubit.profileResults!.userInformation.firstName} ${homeCubit.profileResults!.userInformation.lastName},',
                                 style: Style.small,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 20.rSp,

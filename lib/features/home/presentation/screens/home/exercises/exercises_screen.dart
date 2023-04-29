@@ -50,14 +50,6 @@ class ExercisesScreen extends StatelessWidget {
                         backgroundColor: ColorsManager.white,
                         iconColor: ColorsManager.black,
                       ),
-                      horizontalSpace(5.w),
-                      if (isCoachLogin == true)
-                        defaultActionButton(
-                            icon: Icons.add,
-                            onPressed: () {
-                              navigateTo(context, AddExerciseScreen());
-                            },
-                            backgroundColor: Colors.green)
                     ],
                   ),
                   if (homeCubit.exerciseResult != null)
@@ -99,6 +91,15 @@ class ExercisesScreen extends StatelessWidget {
                 ],
               ),
             ),
+            floatingActionButton: isCoachLogin? FloatingActionButton(
+              onPressed: (){
+                navigateTo(context, AddExerciseScreen());
+              },
+              child: const Icon(
+                Icons.add,
+                color: ColorsManager.white,
+              ),
+            ):Container(),
           ),
         );
       },

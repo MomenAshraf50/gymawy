@@ -19,7 +19,7 @@ class DefaultTextField extends StatelessWidget {
   final Function(String?)? onChanged;
   final TextInputAction textInputAction;
   final TextInputType type;
-  final ValueChanged<String>? onSubmit;
+  final VoidCallback? onSubmit;
   final TextStyle? hintStyle;
   final Color? textFormFillColor;
   final int? maxLines;
@@ -53,6 +53,7 @@ class DefaultTextField extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: margin,
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 20.rSp,vertical: 5.rSp),
       decoration: BoxDecoration(
         color: textFormFillColor,
         borderRadius: BorderRadius.circular(10),
@@ -63,6 +64,7 @@ class DefaultTextField extends StatelessWidget {
         readOnly: disabled,
         obscureText:isPassword,
         onTap: onTap,
+        onEditingComplete: onSubmit,
         style: Theme.of(context).textTheme.displaySmall!.copyWith(
             fontFamily: 'english',
             fontSize: 14.rSp

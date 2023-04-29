@@ -15,6 +15,7 @@ import 'package:gymawy/features/home/domain/entities/subscription_request_entity
 import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/entities/user_plan_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
+import 'package:gymawy/features/home/domain/usecase/certification_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_user_plan_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
@@ -50,7 +51,7 @@ import '../../domain/usecase/get_nutrition_details.dart';
 import '../../domain/usecase/get_nutrition_usecase.dart';
 import '../../domain/usecase/get_plan_usecase.dart';
 
-typedef Call = Future<UpdateEntity> Function();
+typedef Call = Future<ProfileEntity> Function();
 typedef CallSearch = Future<List<SearchEntity>> Function();
 typedef CallProfile = Future<ProfileEntity> Function();
 typedef CallCertification = Future<CertificateEntity> Function();
@@ -96,7 +97,7 @@ class HomeRepository extends HomeBaseRepository {
     required this.remoteDataSource,
   });
 
-  Future<Either<Failure, UpdateEntity>> fetchData(
+  Future<Either<Failure, ProfileEntity>> fetchData(
     Call mainMethod,
   ) async {
     try {
@@ -110,7 +111,7 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, UpdateEntity>> updateProfile(
+  Future<Either<Failure, ProfileEntity>> updateProfile(
       {required UpdateProfileParams params}) async {
     return await fetchData(() {
       return remoteDataSource.updateProfile(params: params);
@@ -118,7 +119,7 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, UpdateEntity>> updateProfilePicture(
+  Future<Either<Failure, ProfileEntity>> updateProfilePicture(
       {required UpdateProfilePictureParams params}) async {
     return await fetchData(() {
       return remoteDataSource.updateProfilePicture(params: params);
@@ -126,7 +127,7 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, UpdateEntity>> updateCoachSocialLinks(
+  Future<Either<Failure, ProfileEntity>> updateCoachSocialLinks(
       {required UpdateCoachSocialLinksParams params}) async {
     return await fetchData(() {
       return remoteDataSource.updateCoachSocialLinks(params: params);
@@ -196,17 +197,11 @@ class HomeRepository extends HomeBaseRepository {
 
   @override
   Future<Either<Failure, CertificateEntity>> certificate({
-    required String id,
-    required String certificateName,
-    required FilePickerResult certificateFile,
-    required String certificateDate,
+    required CertificateParams params
   }) async {
     return await fetchCertificate(() {
       return remoteDataSource.certificate(
-        id: id,
-        certificateName: certificateName,
-        certificateFile: certificateFile,
-        certificateDate: certificateDate,
+        params: params
       );
     });
   }

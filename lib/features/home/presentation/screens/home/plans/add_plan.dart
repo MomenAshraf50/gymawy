@@ -79,11 +79,10 @@ class AddPlan extends StatelessWidget {
                     child: Column(
                       children: [
                         defaultAppBar(
-                            title: isNutrition == true? 'Add Nutrition Plan':AppString.addPlan,
+                            title: isNutrition? AppString.addNutritionPlan:AppString.addExercisePlan,
                             context: context,
                             onPressed: ()
                             {
-                              Navigator.pop(context);
                               Navigator.pop(context);
                             }
                         ),

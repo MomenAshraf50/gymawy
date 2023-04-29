@@ -16,10 +16,7 @@ class CertificateUseCase implements UseCase<CertificateEntity, CertificateParams
   Future<Either<Failure, CertificateEntity>> call(
       CertificateParams params) async {
     return await repository.certificate(
-      id: params.id,
-      certificateName:params.certificateName,
-      certificateFile:params.certificateFile,
-      certificateDate:params.certificateDate
+      params: params
     );
   }
 }
@@ -29,13 +26,19 @@ class CertificateParams extends Equatable {
   final String certificateName;
   final FilePickerResult certificateFile;
   final String certificateDate;
+  final String certificateExpirationDate;
+  final String certificateSerial;
+  final String certificateDescription;
 
 
   const CertificateParams({
     required this.id,
     required this.certificateName,
     required this.certificateFile,
+    required this.certificateExpirationDate,
     required this.certificateDate,
+    required this.certificateSerial,
+    required this.certificateDescription,
   });
 
   @override
@@ -44,5 +47,8 @@ class CertificateParams extends Equatable {
     certificateName,
     certificateFile,
     certificateName,
+    certificateExpirationDate,
+    certificateSerial,
+    certificateDescription
   ];
 }

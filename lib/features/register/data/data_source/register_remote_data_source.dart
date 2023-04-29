@@ -68,8 +68,8 @@ class RegisterRemoteDataSourceImpl
     String? tikTokLink,
   }) async {
     final Response f = await dioHelper.post(
-      url: isCoachRegister == false ? registerEndPoint : registerCoachEndPoint,
-      data: isCoachRegister == false ?
+      url: !isCoachRegister ? registerClientEndPoint : registerCoachEndPoint,
+      data: !isCoachRegister ?
       FormData.fromMap(
           {
             'username': userName,

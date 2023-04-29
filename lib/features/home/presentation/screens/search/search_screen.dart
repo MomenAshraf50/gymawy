@@ -244,16 +244,19 @@ class SearchScreen extends StatelessWidget {
                                         context,
                                         SearchResultScreen(
                                           userId: homeCubit
-                                              .results![index].userId,
+                                              .results![index].userInformation.userId,
                                           name: homeCubit
                                               .results![index]
+                                              .userInformation
                                               .userName,
                                           pic: homeCubit
                                               .results![index]
+                                              .userInformation
                                               .profilePicture,
                                           location: homeCubit
                                               .results![index]
-                                              .location,
+                                              .userInformation
+                                              .city,
                                           bio: homeCubit
                                               .results![index].bio,
                                           verification: homeCubit
@@ -280,7 +283,7 @@ class SearchScreen extends StatelessWidget {
                                     navigateTo(
                                         context,
                                         ClientDetailsScreen(
-                                          clientId: homeCubit.results![index].userId!,
+                                          clientId: homeCubit.results![index].userInformation.userId,
                                         ));
                                   }
                                 },
@@ -307,7 +310,8 @@ class SearchScreen extends StatelessWidget {
                                             NetworkImage(
                                               homeCubit
                                                   .results![index]
-                                                  .profilePicture!,
+                                                  .userInformation
+                                                  .profilePicture,
                                             ),
                                           ),
                                           horizontalSpace(2.w),
@@ -322,7 +326,8 @@ class SearchScreen extends StatelessWidget {
                                               myText(
                                                 title: homeCubit
                                                     .results![index]
-                                                    .userName!,
+                                                    .userInformation
+                                                    .userName,
                                                 //AppString.resultSearchName,
                                                 style:
                                                 Style.extraSmall,
@@ -347,7 +352,8 @@ class SearchScreen extends StatelessWidget {
                                                     title: homeCubit
                                                         .results![
                                                     index]
-                                                        .location!,
+                                                        .userInformation
+                                                        .city,
                                                     //AppString.resultSearchLocation,
                                                     style: Style
                                                         .extraSmall,

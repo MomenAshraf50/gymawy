@@ -1,21 +1,13 @@
-import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
-import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/resources/meals.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
-import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
-import 'package:gymawy/features/home/presentation/screens/home/plans/meal_schedule.dart';
-import 'package:gymawy/features/home/presentation/screens/home/plans/plan_details.dart';
 import 'package:gymawy/features/home/presentation/screens/search/search_screen.dart';
-import 'package:gymawy/features/home/presentation/widgets/build_meals_item.dart';
-import 'package:gymawy/features/home/presentation/widgets/build_plan_items.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_plans_widget.dart';
 import '../../../../../../core/util/resources/colors_manager.dart';
 import 'add_plan.dart';
@@ -33,7 +25,7 @@ class PlansScreen extends StatelessWidget {
       isNutrition: true,
     );
 
-    return SafeArea(child: BlocBuilder<HomeCubit, HomeStates>(
+    return BlocBuilder<HomeCubit, HomeStates>(
       builder: (context, state) {
         return DefaultTabController(
           initialIndex: homeCubit.initialTabIndex,
@@ -60,26 +52,6 @@ class PlansScreen extends StatelessWidget {
                         backgroundColor: ColorsManager.white,
                         iconColor: ColorsManager.black,
                       ),
-                      horizontalSpace(5.w),
-                      if (isCoachLogin == true)
-                        defaultActionButton(
-                            onPressed: () {
-                              if (tabIndex == 0) {
-                                navigateTo(
-                                    context,
-                                    AddPlan(
-                                      isNutrition: true,
-                                    ));
-                              } else {
-                                navigateTo(
-                                    context,
-                                    AddPlan(
-                                      isNutrition: false,
-                                    ));
-                              }
-                            },
-                            backgroundColor: Colors.green,
-                            icon: Icons.add)
                     ]),
               ),
               bottom: TabBar(
@@ -114,9 +86,27 @@ class PlansScreen extends StatelessWidget {
                       isNutrition: false
                   ),
                 ]),
+            floatingActionButton:isCoachLogin? FloatingActionButton(
+              onPressed: (){
+                if (tabIndex == 0) {
+                  navigateTo(
+                      context,
+                      AddPlan(
+                        isNutrition: true,
+                      ));
+                } else {
+                  navigateTo(
+                      context,
+                      AddPlan(
+                        isNutrition: false,
+                      ));
+                }
+              },
+              child: const Icon(Icons.add,color: ColorsManager.white,),
+            ):Container(),
           ),
         );
       },
-    ));
+    );
   }
 }

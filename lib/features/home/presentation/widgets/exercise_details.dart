@@ -5,7 +5,6 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/myText.dart';
 
 Widget exerciseDetails({
-  VoidCallback? onPressed,
   required String exerciseImage,
   required String exerciseName,
   required String exerciseCategory,
@@ -46,7 +45,7 @@ Widget exerciseDetails({
               title: exerciseName,
               style: Style.small,
               fontWeight: FontWeight.w600,
-              fontSize: 16.rSp,
+              fontSize: 14.rSp,
               maxLines: 1,
               letterSpacing: 0.1,
             ),
@@ -104,13 +103,11 @@ Widget exerciseDetails({
         ),
       ),
       const Spacer(),
-      IconButton(
-          onPressed: onPressed,
-          icon: Icon(
-            Icons.arrow_forward_ios_outlined,
-            color: const Color.fromARGB(255, 161, 175, 176),
-            size: 15.rSp,
-          )),
+      Icon(
+        Icons.arrow_forward_ios_outlined,
+        color: const Color.fromARGB(255, 161, 175, 176),
+        size: 15.rSp,
+      )
     ],
   );
 }
