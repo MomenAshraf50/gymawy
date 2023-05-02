@@ -2,16 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import '../resources/colors_manager.dart';
 import '../resources/constants_manager.dart';
-import 'myText.dart';
+import 'default_text.dart';
 
 class ProgressDialog extends Dialog {
-  final double height;
-  final double value;
   final String message;
 
   const ProgressDialog({
-    this.height = 160.0,
-    this.value = 0.0,
     required this.message,
     Key? key,
   }) : super(key: key);
@@ -23,19 +19,18 @@ class ProgressDialog extends Dialog {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       //this right here
       child: SizedBox(
-        height: height,
+        height: 20.h,
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              myText(
+              DefaultText(
                   title: message, align: TextAlign.center, style: Style.medium),
               verticalSpace(5.h),
-              LinearProgressIndicator(
+              const LinearProgressIndicator(
                 color: ColorsManager.mainColor,
-                value: value, backgroundColor: ColorsManager.lightGrey,
               )
             ],
           ),

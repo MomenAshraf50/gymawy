@@ -9,7 +9,7 @@ import 'package:gymawy/features/home/presentation/widgets/exercise_details.dart'
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../../core/util/resources/constants_manager.dart';
-import '../../../../core/util/widgets/myText.dart';
+import '../../../../core/util/widgets/default_text.dart';
 
 Widget buildExercisesItems({
   required String exerciseImage,
@@ -71,7 +71,7 @@ Widget buildExercisesItems({
                           Assets.images.svg.checked_icon),
                     ),
                     horizontalSpace(2.w),
-                    myText(
+                    DefaultText(
                       title: homeCubit.isCompleted
                           ? AppString.markAsCompleted
                           : AppString.completed,

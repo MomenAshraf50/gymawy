@@ -6,7 +6,7 @@ import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/domain/usecase/mark_as_read_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 
@@ -38,7 +38,7 @@ Widget buildNotificationsItem({
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    myText(
+                    DefaultText(
                       title: notificationTitle,
                       style: Style.extraSmall,
                       fontSize: 14.rSp,
@@ -48,13 +48,13 @@ Widget buildNotificationsItem({
                     verticalSpace(0.5.h),
                     Row(
                       children: [
-                        myText(
+                        DefaultText(
                           title: date,
                           style: Style.extraSmall,
                           fontSize: 12.rSp,
                         ),
                         horizontalSpace(0.5.w),
-                        myText(
+                        DefaultText(
                           title: time,
                           style: Style.extraSmall,
                           fontSize: 12.rSp,

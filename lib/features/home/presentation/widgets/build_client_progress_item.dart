@@ -3,8 +3,8 @@ import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 Widget buildClientProgressItem(
@@ -32,7 +32,7 @@ Widget buildClientProgressItem(
                 //const NetworkImage(AppString.networkImage),
               ),
               horizontalSpace(3.w),
-              myText(
+              DefaultText(
                 title: name,
                 //AppString.userNameProfile,
                 style: Style.small,
@@ -54,7 +54,7 @@ Widget buildClientProgressItem(
                   borderWidth: 5.0,
                   direction: Axis.vertical,
                   // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-                  center: myText(
+                  center: DefaultText(
                     title: AppString.progressAmount,
                     style: Style.extraSmall,
                     fontSize: 12.rSp,
@@ -74,7 +74,7 @@ Widget buildClientProgressItem(
           Row(
             children: [
               Expanded(
-                child: myButton(
+                child: DefaultButton(
                   text: 'Decline',
                   onPressed: onPressedDecline,
                   color: ColorsManager.error,
@@ -84,7 +84,7 @@ Widget buildClientProgressItem(
               ),
               horizontalSpace(5.w),
               Expanded(
-                child: myButton(
+                child: DefaultButton(
                     text: 'Accept',
                     onPressed: onPressedAccept,
                     color: ColorsManager.green,

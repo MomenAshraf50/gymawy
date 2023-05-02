@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_share/flutter_share.dart';
 import 'package:gymawy/core/error/failures.dart';
 import 'package:gymawy/core/usecase/use_case.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/add_exercise_details.dart';
@@ -449,6 +450,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   void signOut(context) {
+    sl<CacheHelper>().clear('isCoach');
     sl<CacheHelper>().clear('token').then((value) {
       if (value) {
         token = null;
@@ -681,26 +683,26 @@ class HomeCubit extends Cubit<HomeStates> {
 
   List<DropdownMenuItem<String>> get exerciseItems{
     List<DropdownMenuItem<String>> menuItems = const[
-      DropdownMenuItem(value: "Abs", child: myText(title: "Abs", style: Style.extraSmall)),
-      DropdownMenuItem(value: "core", child: myText(title: "core", style: Style.extraSmall)),
-      DropdownMenuItem(value: "Chest", child: myText(title: "Chest", style: Style.extraSmall)),
-      DropdownMenuItem(value: "back", child: myText(title: "back", style: Style.extraSmall)),
-      DropdownMenuItem(value: "Shoulder", child: myText(title: "Shoulder", style: Style.extraSmall)),
-      DropdownMenuItem(value: "Arms", child: myText(title: "Arms", style: Style.extraSmall)),
-      DropdownMenuItem(value: "Legs", child: myText(title: "Legs", style: Style.extraSmall)),
+      DropdownMenuItem(value: "Abs", child: DefaultText(title: "Abs", style: Style.extraSmall)),
+      DropdownMenuItem(value: "core", child: DefaultText(title: "core", style: Style.extraSmall)),
+      DropdownMenuItem(value: "Chest", child: DefaultText(title: "Chest", style: Style.extraSmall)),
+      DropdownMenuItem(value: "back", child: DefaultText(title: "back", style: Style.extraSmall)),
+      DropdownMenuItem(value: "Shoulder", child: DefaultText(title: "Shoulder", style: Style.extraSmall)),
+      DropdownMenuItem(value: "Arms", child: DefaultText(title: "Arms", style: Style.extraSmall)),
+      DropdownMenuItem(value: "Legs", child: DefaultText(title: "Legs", style: Style.extraSmall)),
     ];
     emit(ExerciseItemsState());
     return menuItems;
   }
 
   List<DropdownMenuItem<String>>? exerciseValue = const[
-  DropdownMenuItem(value: "Abs", child: myText(title: "Abs", style: Style.extraSmall)),
-  DropdownMenuItem(value: "core", child: myText(title: "core", style: Style.extraSmall)),
-  DropdownMenuItem(value: "Chest", child: myText(title: "Chest", style: Style.extraSmall)),
-  DropdownMenuItem(value: "back", child: myText(title: "back", style: Style.extraSmall)),
-  DropdownMenuItem(value: "Shoulder", child: myText(title: "Shoulder", style: Style.extraSmall)),
-  DropdownMenuItem(value: "Arms", child: myText(title: "Arms", style: Style.extraSmall)),
-  DropdownMenuItem(value: "Legs", child: myText(title: "Legs", style: Style.extraSmall)),
+  DropdownMenuItem(value: "Abs", child: DefaultText(title: "Abs", style: Style.extraSmall)),
+  DropdownMenuItem(value: "core", child: DefaultText(title: "core", style: Style.extraSmall)),
+  DropdownMenuItem(value: "Chest", child: DefaultText(title: "Chest", style: Style.extraSmall)),
+  DropdownMenuItem(value: "back", child: DefaultText(title: "back", style: Style.extraSmall)),
+  DropdownMenuItem(value: "Shoulder", child: DefaultText(title: "Shoulder", style: Style.extraSmall)),
+  DropdownMenuItem(value: "Arms", child: DefaultText(title: "Arms", style: Style.extraSmall)),
+  DropdownMenuItem(value: "Legs", child: DefaultText(title: "Legs", style: Style.extraSmall)),
   ];
   void pickExercise()
   {
@@ -712,35 +714,35 @@ class HomeCubit extends Cubit<HomeStates> {
   String selectedDay = 'D1';
 
   List<DropdownMenuItem<String>>? daysValue = const[
-    DropdownMenuItem(value: "D1", child: myText(title: "Day 1", style: Style.extraSmall)),
-    DropdownMenuItem(value: "D2", child: myText(title: "Day 2", style: Style.extraSmall)),
-    DropdownMenuItem(value: "D3", child: myText(title: "Day 3", style: Style.extraSmall)),
-    DropdownMenuItem(value: "D4", child: myText(title: "Day 4", style: Style.extraSmall)),
-    DropdownMenuItem(value: "D5", child: myText(title: "Day 5", style: Style.extraSmall)),
-    DropdownMenuItem(value: "D6", child: myText(title: "Day 6", style: Style.extraSmall)),
-    DropdownMenuItem(value: "D7", child: myText(title: "Day 7", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D1", child: DefaultText(title: "Day 1", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D2", child: DefaultText(title: "Day 2", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D3", child: DefaultText(title: "Day 3", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D4", child: DefaultText(title: "Day 4", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D5", child: DefaultText(title: "Day 5", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D6", child: DefaultText(title: "Day 6", style: Style.extraSmall)),
+    DropdownMenuItem(value: "D7", child: DefaultText(title: "Day 7", style: Style.extraSmall)),
   ];
 
   String selectedNutritionValue = 'Carbohydrates';
 
   List<DropdownMenuItem<String>>? selectedNutritionCat = const[
-    DropdownMenuItem(value: "Carbohydrates", child: myText(title: "Carbohydrates", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Proteins", child: myText(title: "Proteins", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Fats", child: myText(title: "Fats", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Minerals", child: myText(title: "Minerals", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Dietary fibre", child: myText(title: "Dietary fibre", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Fruit", child: myText(title: "Fruit", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Salad vegetables", child: myText(title: "Salad vegetables", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Cooked vegetables", child: myText(title: "Cooked vegetables", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Carbohydrates", child: DefaultText(title: "Carbohydrates", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Proteins", child: DefaultText(title: "Proteins", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Fats", child: DefaultText(title: "Fats", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Minerals", child: DefaultText(title: "Minerals", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Dietary fibre", child: DefaultText(title: "Dietary fibre", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Fruit", child: DefaultText(title: "Fruit", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Salad vegetables", child: DefaultText(title: "Salad vegetables", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Cooked vegetables", child: DefaultText(title: "Cooked vegetables", style: Style.extraSmall)),
   ];
 
   String selectedMealValue = 'Breakfast';
 
   List<DropdownMenuItem<String>>? selectedMeal = const[
-    DropdownMenuItem(value: "Breakfast", child: myText(title: "Breakfast", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Snack", child: myText(title: "Snack", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Lunch", child: myText(title: "Lunch", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Dinner", child: myText(title: "Dinner", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Breakfast", child: DefaultText(title: "Breakfast", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Snack", child: DefaultText(title: "Snack", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Lunch", child: DefaultText(title: "Lunch", style: Style.extraSmall)),
+    DropdownMenuItem(value: "Dinner", child: DefaultText(title: "Dinner", style: Style.extraSmall)),
   ];
 
 
@@ -849,15 +851,25 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  int countProgressValue = 0;
+  int totalProgressValue = 0;
+  late StreamController<double> progressController = StreamController<double>();
+  late Stream<double> progressStream = progressController.stream;
 
   void changeProgressValue({
-  required int countProgressValue,
-  required int totalProgressValue
+  required progressValue,
+  required totalValue
 })
   {
-    emit(ChangeProgressValueState(
-        countProgressValue,totalProgressValue
-    ));
+
+    countProgressValue = progressValue;
+    totalProgressValue =  totalValue;
+    progressController.add(((countProgressValue / totalProgressValue) * 100));
+  }
+
+  void getProgressValue()
+  {
+
   }
 
   List<AddExerciseEntity>? exerciseResult;
@@ -912,7 +924,7 @@ class HomeCubit extends Cubit<HomeStates> {
         required String planVisibility,
       }
       ) async {
-    emit(AddExercisePlanLoadingState());
+    emit(AddPlanLoadingState());
 
     final result = await _addExercisePlanUseCase(AddPlanParams(
         isNutrition: isNutrition,
@@ -921,9 +933,9 @@ class HomeCubit extends Cubit<HomeStates> {
     ));
 
     result.fold((failure) {
-      emit(AddExercisePlanErrorState(mapFailureToMessage(failure)));
+      emit(AddPlanErrorState(mapFailureToMessage(failure)));
     }, (data) {
-      emit(AddExercisePlanSuccessState(data));
+      emit(AddPlanSuccessState(data));
 
     });
   }
@@ -960,7 +972,7 @@ class HomeCubit extends Cubit<HomeStates> {
         required bool isNutrition
       }
       ) async {
-    emit(UpdateExercisePlanLoadingState());
+    emit(UpdatePlanLoadingState());
 
     final result = await _updateExercisePlanUseCase(AddPlanParams(
       isNutrition: isNutrition,
@@ -970,9 +982,9 @@ class HomeCubit extends Cubit<HomeStates> {
     ));
 
     result.fold((failure) {
-      emit(UpdateExercisePlanErrorState(mapFailureToMessage(failure)));
+      emit(UpdatePlanErrorState(mapFailureToMessage(failure)));
     }, (data) {
-      emit(UpdateExercisePlanSuccessState(data));
+      emit(UpdatePlanSuccessState(data));
     });
   }
 

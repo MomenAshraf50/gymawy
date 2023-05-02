@@ -4,7 +4,7 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/back_button.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/presentation/widgets/build_latest_client_activity.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -31,7 +31,7 @@ class ProgressDetailsScreen extends StatelessWidget {
                   backgroundImage: const NetworkImage(AppString.networkImage),
                 ),
                 verticalSpace(1.h),
-                myText(
+                DefaultText(
                   title: AppString.userNameProfile,
                   style: Style.medium,
                   fontSize: 20.rSp,
@@ -55,7 +55,7 @@ class ProgressDetailsScreen extends StatelessWidget {
                 verticalSpace(3.h),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: myText(
+                  child: DefaultText(
                     title: AppString.userNameProfile,
                     style: Style.medium,
                     fontSize: 20.rSp,

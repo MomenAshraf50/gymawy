@@ -20,7 +20,7 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/util/resources/appString.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../../../core/util/resources/goal_data_static.dart';
-import '../../../../core/util/widgets/myText.dart';
+import '../../../../core/util/widgets/default_text.dart';
 import '../../domain/usecase/register_usecase.dart';
 
 class RegisterCubit extends Cubit<RegisterStates>{
@@ -235,25 +235,25 @@ class RegisterCubit extends Cubit<RegisterStates>{
         curve: Curves.ease);
     emit(RegisterPageFatControllerState());
   }
-  myText getText(int val) {
+  DefaultText getText(int val) {
     switch (val) {
       case 0:
         emit(RegisterGetFatTextState());
-        return const myText(title:'3 - 7 ', style: Style.medium);
+        return const DefaultText(title:'3 - 7 ', style: Style.medium);
       case 1:
         emit(RegisterGetFatTextState());
-        return const myText(title:'8 - 16', style: Style.medium);
+        return const DefaultText(title:'8 - 16', style: Style.medium);
       case 2:
         emit(RegisterGetFatTextState());
-        return const myText(title:'17 - 24', style: Style.medium);
+        return const DefaultText(title:'17 - 24', style: Style.medium);
       case 3:
         emit(RegisterGetFatTextState());
-        return const myText(title:'24 - 32', style: Style.medium);
+        return const DefaultText(title:'24 - 32', style: Style.medium);
       case 4:
         emit(RegisterGetFatTextState());
-        return const myText(title:'32+', style: Style.medium);
+        return const DefaultText(title:'32+', style: Style.medium);
       default:
-        return const myText(title:'', style: Style.medium);
+        return const DefaultText(title:'', style: Style.medium);
     }
   }
   int selected = 0;

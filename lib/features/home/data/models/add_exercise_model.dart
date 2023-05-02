@@ -19,7 +19,7 @@ class AddExerciseModel extends AddExerciseEntity {
       makerInformation:  UserInformation.fromJson(json['maker']),
       createdAt:  json['created_at'],
       exerciseName:  json['exercise_name'] ?? 'UnKnown',
-      exerciseId:  json['EXERCICE_id'] ?? 0,
+      exerciseId:  json['id'] ?? 0,
       exerciseCategory:  json['category'] ?? 'UnKnown',
       exerciseVisibility:  json['visibility'] ?? 'UnKnown',
       exercisePic: json['exercise_pic'] ?? 'UnKnown',

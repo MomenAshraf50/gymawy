@@ -12,7 +12,7 @@ import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/default dialog.dart';
 import '../../../../../core/util/widgets/loadingPage.dart';
-import '../../../../../core/util/widgets/myButton.dart';
+import '../../../../../core/util/widgets/default_button.dart';
 import '../../../../../core/util/widgets/myElevatedButton.dart';
 import '../../../../../core/util/widgets/my_icon_button.dart';
 import '../../controller/register_cubit.dart';
@@ -132,7 +132,7 @@ class AddressScreen extends StatelessWidget {
                           },
                         ),
                       verticalSpace(5.h),
-                      myButton(
+                      DefaultButton(
                           elevation: 0.0,
                           color: ColorsManager.mainColor,
                           height: 3.h,

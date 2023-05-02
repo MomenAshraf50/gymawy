@@ -316,7 +316,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
     final Response f = await dioHelper.get(
       url: certificateEndPoint,
       query: {
-        'owner': params.ownerId,
+        'owner__id': params.ownerId,
         //'owner__username': params.ownerName
       },
       token: token,
@@ -401,8 +401,8 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
           //  debugPrintFullText('progress this request is ${count ~/ total * 100}%');
           HomeCubit homeCubit = HomeCubit.get(context);
           homeCubit.changeProgressValue(
-            countProgressValue: count,
-            totalProgressValue: total,
+            progressValue: count,
+            totalValue: total,
           );
         });
 
@@ -464,8 +464,8 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             //  debugPrintFullText('progress this request is ${count ~/ total * 100}%');
             HomeCubit homeCubit = HomeCubit.get(params.context);
             homeCubit.changeProgressValue(
-              countProgressValue: count,
-              totalProgressValue: total,
+              progressValue: count,
+              totalValue: total,
             );
           });
       return AddExerciseModel.fromJson(f.data);
@@ -490,8 +490,8 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             //  debugPrintFullText('progress this request is ${count ~/ total * 100}%');
             HomeCubit homeCubit = HomeCubit.get(params.context);
             homeCubit.changeProgressValue(
-              countProgressValue: count,
-              totalProgressValue: total,
+              progressValue: count,
+              totalValue: total,
             );
           });
       return AddExerciseModel.fromJson(f.data);
@@ -515,8 +515,8 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
             //  debugPrintFullText('progress this request is ${count ~/ total * 100}%');
             HomeCubit homeCubit = HomeCubit.get(params.context);
             homeCubit.changeProgressValue(
-              countProgressValue: count,
-              totalProgressValue: total,
+              progressValue: count,
+              totalValue: total,
             );
           });
       return AddExerciseModel.fromJson(f.data);
@@ -780,6 +780,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
 
     return SubscriptionRequestModel.fromJson(f.data);
   }
+
 
   @override
   Future<List<SubscriptionRequestModel>> getSubscriptionRequests(params) async {

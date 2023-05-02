@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 
-class myText extends StatelessWidget {
-  const myText({Key? key,
+class DefaultText extends StatelessWidget {
+  const DefaultText({Key? key,
     required this.title,
     required this.style,
     this.align,

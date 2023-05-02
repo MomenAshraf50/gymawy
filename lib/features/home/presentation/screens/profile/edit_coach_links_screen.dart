@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/loadingPage.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 
 import '../../../../../core/util/resources/appString.dart';
@@ -44,6 +44,9 @@ class EditCoachLinksScreen extends StatelessWidget {
           Navigator.pop(context);
           designToastDialog(
               context: context, toast: TOAST.success, text: 'Links Updated');
+        }
+        if(state is UpdateErrorState){
+          designToastDialog(context: context, toast: TOAST.error,text: state.failure.toString());
         }
       },
       builder: (context, state) {
@@ -92,7 +95,7 @@ class EditCoachLinksScreen extends StatelessWidget {
                                   hint: AppString.youtubeLink,
                                   svgImg: Assets.images.svg.youtubeSvgrepoCom,
                                 ),
-                                myButton(
+                                DefaultButton(
                                     text: AppString.finish,
                                     onPressed: () {
                                       homeCubit.updateCoachSocialLinks(

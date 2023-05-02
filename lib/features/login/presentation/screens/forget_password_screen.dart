@@ -5,12 +5,12 @@ import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/login/presentation/screens/recovery_password_screen.dart';
 
 import '../../../../core/util/resources/colors_manager.dart';
-import '../../../../core/util/widgets/myButton.dart';
+import '../../../../core/util/widgets/default_button.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
   const ForgetPasswordScreen({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                   verticalSpace(5.h),
                   svgImage(path: Assets.images.svg.forgetPass),
                   verticalSpace(5.h),
-                  const myText(
+                  const DefaultText(
                     title: AppString.enter_register,
                     style: Style.large,
                     fontWeight: FontWeight.w700,
@@ -51,7 +51,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     onChanged: (val) {},
                   ),
                   verticalSpace(10.h),
-                  myButton(
+                  DefaultButton(
                       elevation: 0.0,
                       textOnly: true,
                       color: ColorsManager.mainColor,

@@ -3,7 +3,7 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import '../../../../../../core/util/resources/appString.dart';
 import '../../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../../core/util/widgets/myText.dart';
+import '../../../../../../core/util/widgets/default_text.dart';
 
 class AddClientExerciseScreen extends StatelessWidget {
   const AddClientExerciseScreen({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class AddClientExerciseScreen extends StatelessWidget {
                           ),
                         ),
                         horizontalSpace(5.w),
-                        const myText(
+                        const DefaultText(
                             title: AppString.benchPress, style: Style.medium
                         ),
                         const Spacer(),

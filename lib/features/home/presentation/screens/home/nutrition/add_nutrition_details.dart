@@ -6,8 +6,8 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default%20dialog.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/home/domain/entities/add_nutrition_details_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/add_nutrition_details_usecase.dart';
@@ -79,7 +79,7 @@ class AddNutritionDetails extends StatelessWidget {
                         child: Image.network(nutritionResult!.nutritionPic!),
                       ),
                     ),
-                    const myText(
+                    const DefaultText(
                         title: 'Select Day',
                         style: Style.medium,
                         fontWeight: FontWeight.w600),
@@ -93,7 +93,7 @@ class AddNutritionDetails extends StatelessWidget {
                       },
                     ),
                     verticalSpace(3.h),
-                    const myText(
+                    const DefaultText(
                         title: 'Select Meal',
                         style: Style.medium,
                         fontWeight: FontWeight.w600),
@@ -109,7 +109,7 @@ class AddNutritionDetails extends StatelessWidget {
                     verticalSpace(3.h),
                     Row(
                       children: [
-                        const myText(
+                        const DefaultText(
                             title: 'Meal Time',
                             style: Style.medium,
                             fontWeight: FontWeight.w600),
@@ -138,7 +138,7 @@ class AddNutritionDetails extends StatelessWidget {
                       ],
                     ),
                     verticalSpace(3.h),
-                    myButton(
+                    DefaultButton(
                       text: update ? AppString.update : AppString.done,
                       onPressed: () {
                         if (update) {

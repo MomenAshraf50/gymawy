@@ -4,9 +4,7 @@ import 'package:gymawy/features/home/domain/entities/coach_subscriptions_entity.
 import 'package:gymawy/features/home/domain/entities/notifications_entity.dart';
 import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
-import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/entities/user_plan_entity.dart';
-
 import '../../domain/entities/add_exercise_entity.dart';
 import '../../domain/entities/add_exercise_plan_entity.dart';
 import '../../domain/entities/add_nutrition_details_entity.dart';
@@ -14,18 +12,39 @@ import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/exercise_details_entity.dart';
 import '../../domain/entities/search_entity.dart';
 
-abstract class HomeStates{}
+abstract class HomeStates{
 
-class HomeInitialState extends HomeStates{}
-class ChangeFirstChoiceRadioButtonState extends HomeStates{}
-class ChangeSecondChoiceRadioButtonState extends HomeStates{}
-class ChangeVisibilityPlanState extends HomeStates{}
-class ChangeCompletedState extends HomeStates{}
-class HomeChangeNavBottomScreensState extends HomeStates{}
-class HomeExerciseImagePickedSuccessState extends HomeStates{}
-class HomePlansImageSelectedState extends HomeStates{}
-class HomeExerciseImagePickedErrorState extends HomeStates{}
-class HomeExerciseExampleVideoPlayerInitialized extends HomeStates{}
+}
+
+class HomeInitialState extends HomeStates{
+
+}
+class ChangeFirstChoiceRadioButtonState extends HomeStates{
+
+}
+class ChangeSecondChoiceRadioButtonState extends HomeStates{
+
+}
+class ChangeVisibilityPlanState extends HomeStates{
+
+}
+class ChangeCompletedState extends HomeStates{
+
+}
+class HomeChangeNavBottomScreensState extends HomeStates{
+
+}
+class HomeExerciseImagePickedSuccessState extends HomeStates{
+
+}
+class HomePlansImageSelectedState extends HomeStates{
+
+}
+class HomeExerciseImagePickedErrorState extends HomeStates{
+}
+class HomeExerciseExampleVideoPlayerInitialized extends HomeStates{
+
+}
 class ExerciseExamplePauseAndPlayVideoState extends HomeStates{}
 class GetTextHeightState extends HomeStates{}
 class ChangeCurrentStepState extends HomeStates{}
@@ -169,14 +188,14 @@ class DeleteExerciseErrorState extends HomeStates{
 class ChangeDropDownSelectedValueState extends HomeStates {}
 
 
-class AddExercisePlanLoadingState extends HomeStates{}
-class AddExercisePlanSuccessState extends HomeStates{
+class AddPlanLoadingState extends HomeStates{}
+class AddPlanSuccessState extends HomeStates{
   final AddPlanEntity addExercisePlanEntity;
-  AddExercisePlanSuccessState(this.addExercisePlanEntity);
+  AddPlanSuccessState(this.addExercisePlanEntity);
 }
-class AddExercisePlanErrorState extends HomeStates{
+class AddPlanErrorState extends HomeStates{
   final String failure;
-  AddExercisePlanErrorState(this.failure);
+  AddPlanErrorState(this.failure);
 }
 
 class GetExercisePlanLoadingState extends HomeStates{}
@@ -191,16 +210,16 @@ class GetExercisePlanErrorState extends HomeStates{
   GetExercisePlanErrorState(this.failure);
 }
 
-class UpdateExercisePlanLoadingState extends HomeStates{}
-class UpdateExercisePlanSuccessState extends HomeStates{
+class UpdatePlanLoadingState extends HomeStates{}
+class UpdatePlanSuccessState extends HomeStates{
   final AddPlanEntity updateExercisePlan;
 
-  UpdateExercisePlanSuccessState(this.updateExercisePlan);
+  UpdatePlanSuccessState(this.updateExercisePlan);
 }
-class UpdateExercisePlanErrorState extends HomeStates{
+class UpdatePlanErrorState extends HomeStates{
   final String failure;
 
-  UpdateExercisePlanErrorState(this.failure);
+  UpdatePlanErrorState(this.failure);
 }
 
 class DeleteExercisePlanLoadingState extends HomeStates{}

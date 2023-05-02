@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'extensions_manager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -91,7 +91,7 @@ AppBar defaultAppBar({
   return AppBar(
     backgroundColor: color!,
     centerTitle: true,
-    title: myText(
+    title: DefaultText(
       title:title,
       style: Style.small,
       fontWeight: FontWeight.bold,
@@ -149,86 +149,89 @@ Future<void> designToastDialog({
         textDirection: AppBloc.get(context).isArabic
             ? TextDirection.rtl
             : TextDirection.ltr,
-        child: Container(
-          height: 80.0,
-          color: ColorsManager.white,
-          child: Stack(
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              color: ColorsManager.white,
+              child: Column(
                 children: [
                   Container(
-                    width: 10.0,
-                    height: double.infinity,
+                    width: double.infinity,
+                    height: 1.h,
                     color: chooseColor(toast),
                   ),
-                  horizontalSpace(20.rSp),
-                  CircleAvatar(
-                    radius: 15.0,
-                    backgroundColor: chooseColor(toast),
-                    child: Icon(
-                      chooseIcon(toast),
-                      color: ColorsManager.white,
-                      size: 18.0,
-                    ),
-                  ),
-                  horizontalSpace(20.rSp),
-                  Expanded(
-                    child: Column(
+                  Padding(
+                    padding:  EdgeInsets.all(15.rSp),
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          chooseTitle(toast, context),
-                          style:
-                              Theme.of(context).textTheme.subtitle1!.copyWith(
-                                    color: ColorsManager.darkGrey,
-                                    fontWeight: FontWeightManager.bold,
-                                    fontSize: 18.0.rSp,
-                                  ),
+                        CircleAvatar(
+                          radius: 15.0,
+                          backgroundColor: chooseColor(toast),
+                          child: Icon(
+                            chooseIcon(toast),
+                            color: ColorsManager.white,
+                            size: 18.0,
+                          ),
                         ),
-                        verticalSpace(4.rSp),
-                        Text(
-                          text.isNotEmpty
-                              ? text
-                              : appTranslation().deleteMessage,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.caption!.copyWith(
-                              color: ColorsManager.darkGrey,
-                              fontWeight: FontWeightManager.regular,
-                              fontSize: 14.0.rSp),
+                        horizontalSpace(20.rSp),
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    chooseTitle(toast, context),
+                                    style:
+                                    Theme.of(context).textTheme.subtitle1!.copyWith(
+                                      color: ColorsManager.darkGrey,
+                                      fontWeight: FontWeightManager.bold,
+                                      fontSize: 18.0.rSp,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  if (isDismissible)
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        //navigateAndFinish(context, const MainPage());
+                                      },
+                                      child: const CircleAvatar(
+                                        backgroundColor: ColorsManager.surfaceLight,
+                                        radius: 10.0,
+                                        child: Icon(
+                                          Icons.close,
+                                          size: 10.0,
+                                          color: ColorsManager.textPrimaryBlue,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                              verticalSpace(4.rSp),
+                              Text(
+                                text.isNotEmpty
+                                    ? text
+                                    : appTranslation().deleteMessage,
+                                style: Theme.of(context).textTheme.caption!.copyWith(
+                                    color: ColorsManager.darkGrey,
+                                    fontWeight: FontWeightManager.regular,
+                                    fontSize: 14.0.rSp),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  horizontalSpace(20.rSp),
+
                 ],
               ),
-              if (isDismissible)
-                Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: Padding(
-                    padding: EdgeInsets.all(10.rSp),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                        //navigateAndFinish(context, const MainPage());
-                      },
-                      child: const CircleAvatar(
-                        backgroundColor: ColorsManager.surfaceLight,
-                        radius: 10.0,
-                        child: Icon(
-                          Icons.close,
-                          size: 10.0,
-                          color: ColorsManager.textPrimaryBlue,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     ),

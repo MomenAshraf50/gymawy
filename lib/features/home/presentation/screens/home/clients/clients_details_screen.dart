@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/add_exercise_screen.dart';
@@ -96,7 +96,7 @@ class ClientDetailsScreen extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  myText(
+                                  DefaultText(
                                     title: homeCubit.profileResults!.userInformation.userName,
                                     //AppString.userNameProfile,
                                     style: Style.medium,
@@ -116,7 +116,7 @@ class ClientDetailsScreen extends StatelessWidget {
                                         Icons.location_on_outlined,
                                         size: 15.rSp,
                                       ),
-                                      myText(
+                                      DefaultText(
                                         title:
                                         //AppString.address,
                                         homeCubit.profileResults!.userInformation.governorate,
@@ -126,7 +126,7 @@ class ClientDetailsScreen extends StatelessWidget {
                                     ],
                                   ),
                                   verticalSpace(1.h),
-                                  myText(
+                                  DefaultText(
                                     title:
                                     //AppString.age,
                                    '${homeCubit.profileResults!.userInformation.age}',
@@ -162,7 +162,7 @@ class ClientDetailsScreen extends StatelessWidget {
                                     Assets.images.svg.share,
                                   ),
                                   horizontalSpace(5.w),
-                                  myText(
+                                  DefaultText(
                                     title: AppString.share,
                                     style: Style.medium,
                                     fontSize: 14.rSp,
@@ -176,7 +176,7 @@ class ClientDetailsScreen extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: myButton(
+                                child: DefaultButton(
                                   text: AppString.addMeal,
                                   fontSize: 15.rSp,
                                   onPressed: () {
@@ -187,7 +187,7 @@ class ClientDetailsScreen extends StatelessWidget {
                               ),
                               horizontalSpace(2.w),
                               Expanded(
-                                child: myButton(
+                                child: DefaultButton(
                                   text: AppString.addExercise,
                                   fontSize: 15.rSp,
                                   onPressed: () {

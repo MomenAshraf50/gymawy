@@ -17,7 +17,7 @@ import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
 import '../../../../../core/util/widgets/loadingPage.dart';
-import '../../../../../core/util/widgets/myText.dart';
+import '../../../../../core/util/widgets/default_text.dart';
 import '../../../../../core/util/widgets/default_text_field.dart';
 import '../../controller/home_cubit.dart';
 import '../../controller/home_states.dart';
@@ -94,7 +94,7 @@ class HomeClientScreen extends StatelessWidget {
                                                     BorderRadius.circular(
                                                         7.rSp)),
                                             child: Center(
-                                                child: myText(
+                                                child: DefaultText(
                                               title: '$notificationsNum',
                                               style: Style.extraSmall,
                                               color: ColorsManager.white,
@@ -106,7 +106,7 @@ class HomeClientScreen extends StatelessWidget {
                                 ],
                               ),
                               verticalSpace(1.h),
-                              myText(
+                              DefaultText(
                                 title:
                                     '${AppString.helloClient}${homeCubit.profileResults!.userInformation.firstName} ${homeCubit.profileResults!.userInformation.lastName},',
                                 style: Style.small,
@@ -115,7 +115,7 @@ class HomeClientScreen extends StatelessWidget {
                               ),
                               verticalSpace(1.h),
                               if(!isCoachLogin!)
-                              myText(
+                              DefaultText(
                                 title: AppString.ready,
                                 style: Style.small,
                                 fontWeight: FontWeight.w600,
@@ -183,7 +183,7 @@ class HomeClientScreen extends StatelessWidget {
                                 ],
                               ),
                               verticalSpace(2.h),
-                              const myText(
+                              const DefaultText(
                                 title: AppString.suggestions,
                                 style: Style.extraSmall,
                                 fontWeight: FontWeight.w600,
@@ -243,7 +243,7 @@ class HomeClientScreen extends StatelessWidget {
                                                               .img,
                                                           height: 11.h),
                                                 verticalSpace(2.h),
-                                                myText(
+                                                DefaultText(
                                                   title: homeCubit
                                                       .listSuggestions[index]
                                                       .title,
@@ -313,13 +313,13 @@ class HomeClientScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     verticalSpace(2.h),
-                                    const myText(
+                                    const DefaultText(
                                       title: AppString.todaySession,
                                       style: Style.extraSmall,
                                       fontWeight: FontWeight.w600,
                                     ),
                                     verticalSpace(0.5.h),
-                                    myText(
+                                    DefaultText(
                                       title: AppString.doNotMiss,
                                       style: Style.extraSmall,
                                       fontSize: 12.rSp,
@@ -355,7 +355,7 @@ class HomeClientScreen extends StatelessWidget {
                                                         BorderRadius.circular(
                                                             15)),
                                                 child: Center(
-                                                    child: myText(
+                                                    child: DefaultText(
                                                   title: AppString.daysNum,
                                                   style: Style.extraSmall,
                                                   fontSize: 9.rSp,
@@ -363,14 +363,14 @@ class HomeClientScreen extends StatelessWidget {
                                                 )),
                                               ),
                                               verticalSpace(0.5.h),
-                                              myText(
+                                              DefaultText(
                                                 title:
                                                     AppString.fullBodyExercise,
                                                 style: Style.extraSmall,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 12.rSp,
                                               ),
-                                              myText(
+                                              DefaultText(
                                                 title: AppString.level,
                                                 style: Style.extraSmall,
                                                 fontSize: 12.rSp,
@@ -400,7 +400,7 @@ class HomeClientScreen extends StatelessWidget {
                                                               Assets.images.svg
                                                                   .clock),
                                                           horizontalSpace(1.w),
-                                                          myText(
+                                                          DefaultText(
                                                             title:
                                                                 AppString.clock,
                                                             style: Style
@@ -436,7 +436,7 @@ class HomeClientScreen extends StatelessWidget {
                                                               Assets.images.svg
                                                                   .fire),
                                                           horizontalSpace(1.w),
-                                                          myText(
+                                                          DefaultText(
                                                             title:
                                                                 AppString.cal,
                                                             style: Style
@@ -462,7 +462,7 @@ class HomeClientScreen extends StatelessWidget {
                                                           BorderRadius.circular(
                                                               15)),
                                                   child: Center(
-                                                    child: myText(
+                                                    child: DefaultText(
                                                       title: AppString.startNow,
                                                       style: Style.extraSmall,
                                                       fontSize: 12.rSp,

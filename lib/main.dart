@@ -38,25 +38,29 @@ void main() async
     AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
   }
   await Geolocator.requestPermission();
-  Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  currentLat = position.latitude;
-  currentLng = position.longitude;
-  debugPrintFullText(currentLat.toString());
-  debugPrintFullText(currentLng.toString());
+  bool permission = await Geolocator.isLocationServiceEnabled();
+  if(permission){
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    currentLat = position.latitude;
+    currentLng = position.longitude;
+    debugPrintFullText(currentLat.toString());
+    debugPrintFullText(currentLng.toString());
 
-  List<Placemark> placeMarks = await placemarkFromCoordinates(position.latitude, position.longitude);
-  debugPrintFullText(placeMarks.toString());
-  Placemark placeMark = placeMarks[0];
-  currentCountry = '${placeMark.country}';
-  currentCity = '${placeMark.subAdministrativeArea}';
-  currentGovernment = '${placeMark.administrativeArea}';
+    List<Placemark> placeMarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+    debugPrintFullText(placeMarks.toString());
+    Placemark placeMark = placeMarks[0];
+    currentCountry = '${placeMark.country}';
+    currentCity = '${placeMark.subAdministrativeArea}';
+    currentGovernment = '${placeMark.administrativeArea}';
+  }
+
 
   await di.init();
    bool isRtl = false;
   token = await sl<CacheHelper>().get('token');
   userId = await sl<CacheHelper>().get('userId');
   userName = await sl<CacheHelper>().get('userName');
-  isCoachLogin = await sl<CacheHelper>().get('isCoach');
+  isCoachLogin = await sl<CacheHelper>().get('isCoach') ?? false;
   email = await sl<CacheHelper>().get('email');
   subscriptionID = await sl<CacheHelper>().get('subscriptionID');
   debugPrintFullText('My Current Token => $token');

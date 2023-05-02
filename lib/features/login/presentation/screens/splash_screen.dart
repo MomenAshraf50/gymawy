@@ -5,7 +5,7 @@ import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/presentation/screens/home_layout.dart';
 import 'package:gymawy/features/login/presentation/screens/login_screen.dart';
 
@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Assets.images.svg.icon,
                   color: Colors.white,
                 ),
-                myText(
+                DefaultText(
                   title: AppString.gymAwy ,
                   style: Style.headLarge,
                   fontFamily: 'splash',
@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   fontSize: 100.rSp,
                 ),
                 verticalSpace(5.h),
-                const myText(
+                const DefaultText(
                   title: AppString.no_pain_no_gain ,
                   style: Style.medium,
                   fontFamily: 'splash',

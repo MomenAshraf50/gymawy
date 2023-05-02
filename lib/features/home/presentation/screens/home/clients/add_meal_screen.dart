@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 
 import '../../../../../../core/util/resources/appString.dart';
 import '../../../../../../core/util/resources/constants_manager.dart';
@@ -32,7 +32,7 @@ class AddClientMealScreen extends StatelessWidget {
                             ),
                           ),
                           horizontalSpace(5.w),
-                          const myText(
+                          const DefaultText(
                               title: AppString.mealName, style: Style.medium
                           ),
                           const Spacer(),

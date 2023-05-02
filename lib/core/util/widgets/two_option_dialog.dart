@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import '../resources/colors_manager.dart';
-import 'myButton.dart';
+import 'default_button.dart';
 
 class TwoOptionsDialog extends Dialog {
   final String message;
@@ -41,13 +41,13 @@ class TwoOptionsDialog extends Dialog {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              myText(
+              DefaultText(
                   title: message, align: TextAlign.center, style: Style.medium, fontWeight: FontWeight.w600,),
               const Spacer(),
               Row(
                 children: [
                   Expanded(
-                    child: myButton(
+                    child: DefaultButton(
                       onPressed: popButtonVoidCallback,
                       text: popButtonText,
                       fontSize: 16.rSp,
@@ -56,7 +56,7 @@ class TwoOptionsDialog extends Dialog {
                   ),
                   horizontalSpace(2.h),
                   Expanded(
-                    child: myButton(
+                    child: DefaultButton(
                       onPressed: pushButtonVoidCallback,
                       text: pushButtonText,
                       fontSize: 16.rSp,

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
@@ -6,7 +5,7 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default%20dialog.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
@@ -38,9 +37,9 @@ class ExerciseBasicData extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return SafeArea(
-          child: Scaffold(
-            body: SingleChildScrollView(
+        return Scaffold(
+          body: SafeArea(
+            child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: designApp,
@@ -110,19 +109,19 @@ class ExerciseBasicData extends StatelessWidget {
                       ),
                     ),
                     verticalSpace(5.h),
-                    myText(
+                    DefaultText(
                       title: 'Exercise Category: ${exerciseEntity.exerciseCategory}',
                       style: Style.medium,
                       fontSize: 16.rSp,
                     ),
                     verticalSpace(3.h),
-                    myText(
+                    DefaultText(
                       title: 'Exercise Added by coach: ${exerciseEntity.makerInformation.userName}',
                       style: Style.medium,
                       fontSize: 16.rSp,
                     ),
                     verticalSpace(3.h),
-                    myText(
+                    DefaultText(
                       title: 'Visibility: ${exerciseEntity.exerciseVisibility}',
                       style: Style.medium,
                       fontSize: 16.rSp,
