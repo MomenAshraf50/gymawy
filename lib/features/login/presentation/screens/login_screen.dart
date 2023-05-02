@@ -12,8 +12,8 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/loadingPage.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/presentation/screens/home_layout.dart';
@@ -41,16 +41,16 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginStates>(
       listener: (context, state) {
         if(state is LoginSuccessState){
-          sl<CacheHelper>().put('token', state.token);
-          sl<CacheHelper>().put('userId', state.id);
-          sl<CacheHelper>().put('isCoach', state.isCoach);
-          sl<CacheHelper>().put('email', state.email);
+          sl<CacheHelper>().put('token', state.loginEntity.token);
+          sl<CacheHelper>().put('userId', state.loginEntity.userId);
+          sl<CacheHelper>().put('isCoach', state.loginEntity.isTrainer);
+          sl<CacheHelper>().put('email', state.loginEntity.email);
 
-          userId = state.id;
-          token = state.token;
-          isCoachLogin = state.isCoach;
+          userId = state.loginEntity.userId;
+          token = state.loginEntity.token;
+          isCoachLogin = state.loginEntity.isTrainer;
           homeCubit.profile(
-              id: state.id
+              id: state.loginEntity.userId
           );
           navigateAndFinish(context, const MainScreen());
           debugPrintFullText(token!);
@@ -59,7 +59,6 @@ class LoginScreen extends StatelessWidget {
             userLoggedIn: true
           ));
         }
-        /// Show Error Message مش بيخش الايرور ستيت اساسا
          if(state is LoginErrorState){
           designToastDialog(context: context, toast: TOAST.error,text: state.failure.toString());
         }
@@ -137,10 +136,10 @@ class LoginScreen extends StatelessWidget {
                                       onPressed: () {
                                         navigateTo(context, const ForgetPasswordScreen());
                                       },
-                                      child: myText(title: AppString.forget_password, style: Style.extraSmall,fontSize: 15.rSp,)),
+                                      child: DefaultText(title: AppString.forget_password, style: Style.extraSmall,fontSize: 15.rSp,)),
                                 ),
                                 verticalSpace(2.h),
-                                myButton(
+                                DefaultButton(
                                     elevation: 0.0,
                                     textOnly: false,
                                     iconWidget: svgImage(
@@ -180,7 +179,7 @@ class LoginScreen extends StatelessWidget {
                                       ),
                                       Padding(
                                           padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                          child: const myText(title:AppString.oR,style: Style.extraSmall,)),
+                                          child: const DefaultText(title:AppString.oR,style: Style.extraSmall,)),
                                       Expanded(
                                         child: Container(
                                           height: 0.1.h,
@@ -207,14 +206,14 @@ class LoginScreen extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const myText(title: AppString.dont_have_account, style: Style.extraSmall),
+                                    const DefaultText(title: AppString.dont_have_account, style: Style.extraSmall),
                                     // space10Horizontal,
                                     TextButton(
                                       onPressed: () {
                                         registerCubit.changePage(0,context);
                                         navigateTo(context,  const ChooseYourTypeScreen());
                                       },
-                                      child: const myText(title: AppString.signUp, style: Style.extraSmall,color: ColorsManager.mainColor,fontWeight: FontWeight.w600,),
+                                      child: const DefaultText(title: AppString.signUp, style: Style.extraSmall,color: ColorsManager.mainColor,fontWeight: FontWeight.w600,),
                                     ),
                                   ],
                                 ),

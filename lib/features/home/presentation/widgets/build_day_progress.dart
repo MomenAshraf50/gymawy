@@ -3,7 +3,7 @@ import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 Widget buildDayProgressItems(){
@@ -28,7 +28,7 @@ Widget buildDayProgressItems(){
             borderRadius: BorderRadius.circular(10.rSp),
           ),
         ),
-        const myText(title: 'Sat', style: Style.extraSmall)
+        const DefaultText(title: 'Sat', style: Style.extraSmall)
       ],
     ),
   );

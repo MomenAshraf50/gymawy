@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
 import 'package:gymawy/features/home/presentation/screens/home/nutrition/add_nutrition.dart';
 import '../../../../../../core/util/resources/appString.dart';
 import '../../../../../../core/util/resources/constants_manager.dart';
@@ -40,7 +40,7 @@ class AddMeal extends StatelessWidget {
                       {
                         return Container(
                           margin: EdgeInsets.all(20.rSp),
-                          child: myButton(
+                          child: DefaultButton(
                               text: mealsName[index],
                               onPressed: ()
                               {

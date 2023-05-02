@@ -1,21 +1,33 @@
 
-abstract class LoginStates {}
+import 'package:equatable/equatable.dart';
+import 'package:gymawy/features/login/domain/entities/log_in_entity.dart';
 
-class LoginInitialState extends LoginStates {}
+abstract class LoginStates extends Equatable {}
 
-class LoginLoadingState extends LoginStates {}
+class LoginInitialState extends LoginStates {
+  @override
+  List<Object?> get props => [];
+}
+
+class LoginLoadingState extends LoginStates {
+  @override
+  List<Object?> get props => [];
+}
 
 class LoginSuccessState extends LoginStates {
-  final String token;
-  final int id;
-  final bool isCoach;
-  final String email;
+  LoginEntity loginEntity;
 
-  LoginSuccessState({required this.token,required this.id, required this.isCoach, required this.email});
+
+  LoginSuccessState({required this.loginEntity});
+
+  @override
+  List<Object?> get props => [loginEntity];
 }
 
 class LoginErrorState extends LoginStates {
   final String failure;
 
   LoginErrorState({required this.failure});
+  @override
+  List<Object?> get props => [failure];
 }

@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/resources/meals.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 
 Widget buildMealsDetailsItem(MealDetails mealDetails) => Column(
   children: [
@@ -16,11 +16,11 @@ Widget buildMealsDetailsItem(MealDetails mealDetails) => Column(
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            myText(
+            DefaultText(
               title: mealDetails.mealLabel,
               style: Style.extraSmall,
             ),
-            myText(
+            DefaultText(
               title: mealDetails.mealTime,
               style: Style.extraSmall,
               fontSize: 10.rSp,

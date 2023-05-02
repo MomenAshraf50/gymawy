@@ -3,8 +3,8 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 
-class myButton extends StatelessWidget {
-  myButton(
+class DefaultButton extends StatelessWidget {
+  DefaultButton(
       {Key? key,
       this.width = double.infinity,
       this.height,

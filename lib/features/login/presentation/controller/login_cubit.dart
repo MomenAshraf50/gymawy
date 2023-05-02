@@ -17,7 +17,6 @@ class LoginCubit extends Cubit<LoginStates> {
   void logIn({
     required String email,
     required String password,
-    context
   }) async {
     emit(LoginLoadingState());
 
@@ -34,10 +33,7 @@ class LoginCubit extends Cubit<LoginStates> {
       ));
     }, (data) {
       emit(LoginSuccessState(
-        id: data.userId,
-        token: data.token,
-        isCoach: data.isTrainer,
-        email: data.email,
+        loginEntity: data
       ));
     });
   }

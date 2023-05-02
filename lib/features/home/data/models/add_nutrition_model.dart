@@ -1,3 +1,5 @@
+import 'package:gymawy/features/home/domain/entities/profile_entity.dart';
+
 import '../../domain/entities/add_nutrition_entity.dart';
 
 class AddNutritionModel extends AddNutritionEntity {
@@ -19,7 +21,7 @@ class AddNutritionModel extends AddNutritionEntity {
   factory AddNutritionModel.fromJson(Map<String, dynamic> json) {
     return AddNutritionModel(
       nutritionId: json['id'] ?? 0,
-      userInformation: json['maker'],
+      userInformation: UserInformation.fromJson(json['maker']),
       nutritionName:  json['nutrition_name'] ?? 'UnKnown',
       nutritionCategory:  json['nutrition_category'] ?? 'UnKnown',
       nutritionPic:  json['nutrition_pic'] ?? 'UnKnown',

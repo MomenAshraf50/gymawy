@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/loadingPage.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
@@ -14,7 +14,7 @@ import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../core/util/widgets/myText.dart';
+import '../../../../../core/util/widgets/default_text.dart';
 import '../../../../../core/util/widgets/my_icon_button.dart';
 import 'edit_coach_links_screen.dart';
 import 'edit_profile.dart';
@@ -107,13 +107,13 @@ class ProfileCoachScreen extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      myText(
+                                      DefaultText(
                                         title:
                                             '${homeCubit.profileResults!.userInformation.firstName} ${homeCubit.profileResults!.userInformation.lastName}',
                                         //AppString.userNameProfile,
                                         style: Style.small,
                                       ),
-                                      myText(
+                                      DefaultText(
                                         title: isCoachLogin == false
                                             ? AppString.client
                                             : AppString.coach,
@@ -127,7 +127,7 @@ class ProfileCoachScreen extends StatelessWidget {
                                   children: [
                                     if (isCoachLogin)
                                       Expanded(
-                                        child: myButton(
+                                        child: DefaultButton(
                                             text: AppString.editLinksButton,
                                             height: 4.h,
                                             fontSize: 10.rSp,
@@ -143,7 +143,7 @@ class ProfileCoachScreen extends StatelessWidget {
                                       ),
                                     horizontalSpace(1.w),
                                     Expanded(
-                                      child: myButton(
+                                      child: DefaultButton(
                                           text: AppString.editProfileButton,
                                           height: 4.h,
                                           fontSize: 10.rSp,
@@ -173,7 +173,7 @@ class ProfileCoachScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(Icons.location_on_outlined),
-                      myText(
+                      DefaultText(
                         title: homeCubit.profileResults!.userInformation.governorate,
                         style: Style.small,
                         fontSize: 16.rSp,
@@ -187,12 +187,12 @@ class ProfileCoachScreen extends StatelessWidget {
                         Expanded(
                           child: Column(
                             children: [
-                              myText(
+                              DefaultText(
                                 title: AppString.rating,
                                 style: Style.extraSmall,
                                 fontSize: 16.rSp,
                               ),
-                              myText(
+                              DefaultText(
                                 title: AppString.ratingLabel,
                                 style: Style.extraSmall,
                                 fontSize: 16.rSp,
@@ -208,12 +208,12 @@ class ProfileCoachScreen extends StatelessWidget {
                         Expanded(
                           child: Column(
                             children: [
-                              myText(
+                              DefaultText(
                                 title: AppString.followingNumber,
                                 style: Style.extraSmall,
                                 fontSize: 16.rSp,
                               ),
-                              myText(
+                              DefaultText(
                                 title: AppString.clients,
                                 style: Style.extraSmall,
                                 fontSize: 16.rSp,
@@ -362,10 +362,10 @@ class ProfileCoachScreen extends StatelessWidget {
                                                 children: [
                                                   homeCubit.certificateResultImg!,
                                                   verticalSpace(3.h),
-                                                  myText(
+                                                  DefaultText(
                                                       title: homeCubit.certificateResult[index].certificateName,
                                                       style: Style.medium),
-                                                  myText(title: homeCubit.certificateResult[index].certificateDate,
+                                                  DefaultText(title: homeCubit.certificateResult[index].certificateDate,
                                                       style: Style.medium),
                                                 ],
                                               ),
@@ -377,7 +377,7 @@ class ProfileCoachScreen extends StatelessWidget {
                                                     AddCoachCertifications(
                                                         userId: userId));
                                               },
-                                              child: const myText(
+                                              child: const DefaultText(
                                                   title: 'add more',
                                                   style: Style.medium),
                                             ),
@@ -404,7 +404,7 @@ class ProfileCoachScreen extends StatelessWidget {
                           child: const SizedBox(
                             width: double.infinity,
                             child: Center(
-                              child: myText(
+                              child: DefaultText(
                                 align: TextAlign.center,
                                 title: AppString.getCertifications,
                                 style: Style.medium,

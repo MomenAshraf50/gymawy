@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
-import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/search/search_screen.dart';
@@ -64,11 +63,11 @@ class PlansScreen extends StatelessWidget {
                   },
                   indicatorColor: ColorsManager.mainColor,
                   tabs: const [
-                    myText(
+                    DefaultText(
                       title: 'Nutrition Plan',
                       style: Style.small,
                     ),
-                    myText(
+                    DefaultText(
                       title: 'Exercise Plan',
                       style: Style.small,
                     ),

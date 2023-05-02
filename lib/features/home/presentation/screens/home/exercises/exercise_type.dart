@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:video_player/video_player.dart';
 import '../../../controller/home_cubit.dart';
@@ -92,13 +92,13 @@ class ExerciseType extends StatelessWidget {
                             ),
                           ),
                           verticalSpace(2.h),
-                          myText(
+                          DefaultText(
                             title: 'Exercise Category: $cat',
                             style: Style.medium,
                             fontSize: 16.rSp,
                           ),
                           verticalSpace(3.h),
-                          myText(
+                          DefaultText(
                             title: 'Exercise Added by coach: $makerName',
                             style: Style.medium,
                             fontSize: 16.rSp,
@@ -110,19 +110,19 @@ class ExerciseType extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const myText(
+                                    const DefaultText(
                                       title: AppString.sets,
                                       style: Style.medium,
                                       fontWeight: FontWeight.w400,
                                     ),
                                     verticalSpace(2.h),
-                                    const myText(
+                                    const DefaultText(
                                       title: AppString.reps,
                                       style: Style.medium,
                                       fontWeight: FontWeight.w400,
                                     ),
                                     verticalSpace(2.h),
-                                    const myText(
+                                    const DefaultText(
                                       title: AppString.rest,
                                       style: Style.medium,
                                       fontWeight: FontWeight.w400,
@@ -135,19 +135,19 @@ class ExerciseType extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    myText(
+                                    DefaultText(
                                       title: '$sets',
                                       style: Style.extraSmall,
                                       fontWeight: FontWeight.w300,
                                     ),
                                     verticalSpace(2.h),
-                                    myText(
+                                    DefaultText(
                                       title: '$reps',
                                       style: Style.extraSmall,
                                       fontWeight: FontWeight.w300,
                                     ),
                                     verticalSpace(2.h),
-                                    myText(
+                                    DefaultText(
                                       title: '$rest Sec',
                                       style: Style.extraSmall,
                                       fontWeight: FontWeight.w300,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 
 
 Widget buildCard({required String title, required String image,required BuildContext context}) {
@@ -20,7 +20,7 @@ Widget buildCard({required String title, required String image,required BuildCon
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           svgImage(path: image),
-          myText(
+          DefaultText(
             title: title,
             style: Style.large,
           ),

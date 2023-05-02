@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/clients_details_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/home/nutrition/nutrition_basic_data.dart';
@@ -45,6 +45,9 @@ class SearchScreen extends StatelessWidget {
             body: WillPopScope(
               onWillPop: () async {
                 Navigator.pop(context);
+                if(isNutritionPlan != null){
+                  homeCubit.getPlan(isNutrition: isNutritionPlan!);
+                }
                 clientsScreen = null;
                 constClientSearchVariable = null;
                 plans = null;
@@ -55,6 +58,7 @@ class SearchScreen extends StatelessWidget {
                 constNutritionSearchVariable = null;
                 isNutritionPlan = null;
                 homeCubit.searchController.clear();
+
                 return false;
               },
               child: HideKeyboardPage(
@@ -81,6 +85,9 @@ class SearchScreen extends StatelessWidget {
                             context: context,
                             onPressed: () {
                               Navigator.pop(context);
+                              if(isNutritionPlan != null){
+                                homeCubit.getPlan(isNutrition: isNutritionPlan!);
+                              }
                               clientsScreen = null;
                               constClientSearchVariable = null;
                               plans = null;
@@ -179,7 +186,7 @@ class SearchScreen extends StatelessWidget {
                                             PlanDetails(
                                               planId:isNutritionPlan == true ? homeCubit.planResult![index].planId : homeCubit.planResult![index].planId,
                                               ownerUserId: homeCubit.planResult![index].makerInformation.userId,
-                                              isNutrition: isNutritionPlan,
+                                              isNutrition: isNutritionPlan!,
                                               planName: homeCubit.planResult![index].planName,
                                               planVisibility: homeCubit.planResult![index].planVisibility,
                                             ));
@@ -323,7 +330,7 @@ class SearchScreen extends StatelessWidget {
                                             CrossAxisAlignment
                                                 .start,
                                             children: [
-                                              myText(
+                                              DefaultText(
                                                 title: homeCubit
                                                     .results![index]
                                                     .userInformation
@@ -348,7 +355,7 @@ class SearchScreen extends StatelessWidget {
                                                     Icons.location_on,
                                                     size: 15.rSp,
                                                   ),
-                                                  myText(
+                                                  DefaultText(
                                                     title: homeCubit
                                                         .results![
                                                     index]

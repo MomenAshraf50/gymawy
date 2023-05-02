@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 
 Widget exerciseDetails({
   required String exerciseImage,
@@ -41,7 +41,7 @@ Widget exerciseDetails({
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            myText(
+            DefaultText(
               title: exerciseName,
               style: Style.small,
               fontWeight: FontWeight.w600,
@@ -50,7 +50,7 @@ Widget exerciseDetails({
               letterSpacing: 0.1,
             ),
             verticalSpace(0.5.h),
-                myText(
+                DefaultText(
                   title: exerciseCategory,
                   letterSpacing: 0.1,
                   style: Style.extraSmall,
@@ -62,17 +62,17 @@ Widget exerciseDetails({
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
-                    myText(
+                    DefaultText(
                       letterSpacing: 0.1,
                       title: AppString.sets,
                       style: Style.extraSmall,
                     ),
-                    myText(
+                    DefaultText(
                       letterSpacing: 0.1,
                       title: AppString.reps,
                       style: Style.extraSmall,
                     ),
-                    myText(
+                    DefaultText(
                       letterSpacing: 0.1,
                       title: AppString.rest,
                       style: Style.extraSmall,
@@ -83,15 +83,15 @@ Widget exerciseDetails({
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children:  [
-                    myText(
+                    DefaultText(
                       title: '$sets',
                       style: Style.extraSmall,
                     ),
-                    myText(
+                    DefaultText(
                       title: '$reps',
                       style: Style.extraSmall,
                     ),
-                    myText(
+                    DefaultText(
                       title: '$rest Sec',
                       style: Style.extraSmall,
                     ),

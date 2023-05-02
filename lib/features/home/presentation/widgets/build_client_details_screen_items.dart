@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import '../../../../core/util/resources/constants_manager.dart';
-import '../../../../core/util/widgets/myText.dart';
+import '../../../../core/util/widgets/default_text.dart';
 
 Widget buildClientDetailsScreenItems(
 {
@@ -26,7 +26,7 @@ Widget buildClientDetailsScreenItems(
           //Assets.images.svg.completed_tasks
           ),
           horizontalSpace(5.w),
-          myText(
+          DefaultText(
             title: title,
             //AppString.completed,
             style: Style.medium,
@@ -34,7 +34,7 @@ Widget buildClientDetailsScreenItems(
             fontWeight: FontWeight.w600,
           ),
           const Spacer(),
-          myText(
+          DefaultText(
             fontSize: 14.rSp,
             title: titleResult,
             style: Style.medium,

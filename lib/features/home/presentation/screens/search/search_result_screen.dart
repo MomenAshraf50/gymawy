@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default%20dialog.dart';
 import 'package:gymawy/core/util/widgets/loadingPage.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
 import 'package:gymawy/features/home/domain/usecase/get_subscriptions_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/subscription_request_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
@@ -14,7 +14,7 @@ import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../core/util/widgets/myText.dart';
+import '../../../../../core/util/widgets/default_text.dart';
 import '../../../../../core/util/widgets/my_icon_button.dart';
 import '../../../domain/entities/subscription_request_entity.dart';
 import '../../../domain/usecase/delete_subscriptionRequest_usecase.dart';
@@ -156,18 +156,18 @@ class SearchResultScreen extends StatelessWidget {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            myText(
+                                            DefaultText(
                                               title:
                                               name!,
                                               style: Style.small,
                                             ),
                                             if (verification == null)
-                                              const myText(
+                                              const DefaultText(
                                                 title: AppString.client,
                                                 style: Style.small,
                                               ),
                                             if (verification != null)
-                                              const myText(
+                                              const DefaultText(
                                                 title: AppString.coach,
                                                 style: Style.small,
                                               ),
@@ -176,7 +176,7 @@ class SearchResultScreen extends StatelessWidget {
                                       ),
                                       verticalSpace(1.h),
                                       if (!isCoachLogin! && verification != null && subscriptionRequestResult!.isEmpty)
-                                        myButton(
+                                        DefaultButton(
                                             text:AppString.subscribe,
                                             color:ColorsManager.mainColor,
                                             height: 4.h,
@@ -192,7 +192,7 @@ class SearchResultScreen extends StatelessWidget {
 
 
                                       if (!isCoachLogin! && verification != null && subscriptionRequestResult!.isNotEmpty && subscriptionRequestResult![0].requestState != 'Accepted')
-                                        myButton(
+                                        DefaultButton(
                                             text: subscriptionRequestResult![0].requestState == 'Pending'?
                                             'Pending' : AppString.subscribe,
                                             color: subscriptionRequestResult![0].requestState == 'Pending'?
@@ -233,7 +233,7 @@ class SearchResultScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(Icons.location_on_outlined),
-                            myText(
+                            DefaultText(
                               title: location!,
                               style: Style.small,
                               fontSize: 16.rSp,
@@ -251,12 +251,12 @@ class SearchResultScreen extends StatelessWidget {
                                       Expanded(
                                         child: Column(
                                           children: [
-                                            myText(
+                                            DefaultText(
                                               title: AppString.rating,
                                               style: Style.extraSmall,
                                               fontSize: 16.rSp,
                                             ),
-                                            myText(
+                                            DefaultText(
                                               title: AppString.ratingLabel,
                                               style: Style.extraSmall,
                                               fontSize: 16.rSp,
@@ -275,12 +275,12 @@ class SearchResultScreen extends StatelessWidget {
                               Expanded(
                                 child: Column(
                                   children: [
-                                    myText(
+                                    DefaultText(
                                       title: AppString.followingNumber,
                                       style: Style.extraSmall,
                                       fontSize: 16.rSp,
                                     ),
-                                    myText(
+                                    DefaultText(
                                       title: AppString.following,
                                       style: Style.extraSmall,
                                       fontSize: 16.rSp,
@@ -296,12 +296,12 @@ class SearchResultScreen extends StatelessWidget {
                               Expanded(
                                 child: Column(
                                   children: [
-                                    myText(
+                                    DefaultText(
                                       title: AppString.followersNumber,
                                       style: Style.extraSmall,
                                       fontSize: 16.rSp,
                                     ),
-                                    myText(
+                                    DefaultText(
                                       title: AppString.followers,
                                       style: Style.extraSmall,
                                       fontSize: 16.rSp,
@@ -441,14 +441,14 @@ class SearchResultScreen extends StatelessWidget {
                                                       homeCubit
                                                           .certificateResultImg!,
                                                       verticalSpace(1.h),
-                                                      myText(
+                                                      DefaultText(
                                                           title: homeCubit
                                                               .certificateResult![
                                                                   index]
                                                               .certificateName,
                                                           style: Style.medium),
                                                       verticalSpace(1.h),
-                                                      myText(
+                                                      DefaultText(
                                                           title: homeCubit
                                                               .certificateResult![
                                                                   index]

@@ -5,7 +5,7 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default%20dialog.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
 import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/home/domain/entities/add_exercise_entity.dart';
 import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
@@ -118,7 +118,7 @@ class AddExerciseDetails extends StatelessWidget {
                         },
                       ),
                       verticalSpace(10.h),
-                      myButton(
+                      DefaultButton(
                           text:update? AppString.update:AppString.addExercise,
                           onPressed: () {
                             if(update){

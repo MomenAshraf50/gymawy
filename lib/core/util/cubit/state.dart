@@ -1,28 +1,61 @@
-import 'package:meta/meta.dart';
 
-@immutable
-abstract class AppState{}
+import 'package:equatable/equatable.dart';
 
-class Empty extends AppState {}
+abstract class AppState extends Equatable{}
 
-class Loading extends AppState {}
+class Empty extends AppState {
+  @override
+  List<Object?> get props => [];
+}
 
-class Loaded extends AppState {}
+class Loading extends AppState {
+  @override
+  List<Object?> get props => [];
+}
 
-class ThemeLoaded extends AppState {}
+class Loaded extends AppState {
+  @override
+  List<Object?> get props => [];
+}
 
-class ThemeChanged extends AppState {}
+class ThemeLoaded extends AppState {
+  @override
+  List<Object?> get props => [];
+}
 
-class LanguageLoaded extends AppState {}
+class ThemeChanged extends AppState {
+  @override
+  List<Object?> get props => [];
+}
 
-class ChangeLanguage extends AppState {}
+class LanguageLoaded extends AppState {
+  @override
+  List<Object?> get props => [];
+}
 
-class ConnectivityChanged extends AppState {}
+class ChangeLanguage extends AppState {
+  @override
+  List<Object?> get props => [];
+}
 
-class ConnectivityChangedError extends AppState {}
+class ConnectivityChanged extends AppState {
+  @override
+  List<Object?> get props => [];
+}
 
-class ChangePasswordVisibilityState extends AppState{}
-class ChangeConfirmPasswordVisibilityState extends AppState{}
+class ConnectivityChangedError extends AppState {
+  @override
+  List<Object?> get props => [];
+}
+
+class ChangePasswordVisibilityState extends AppState{
+  @override
+  List<Object?> get props => [];
+}
+class ChangeConfirmPasswordVisibilityState extends AppState{
+  @override
+  List<Object?> get props => [];
+}
 
 
 

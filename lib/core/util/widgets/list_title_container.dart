@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'myText.dart';
+import 'default_text.dart';
 
 class myListTitle extends StatelessWidget {
   const myListTitle({Key? key,
@@ -37,7 +37,7 @@ class myListTitle extends StatelessWidget {
         svgImage(path: svgImg! ,
           color: ColorsManager.iconColor,):
         Icon(icon),
-        title: myText(
+        title: DefaultText(
           title: title,
           style: styleText ?? Style.small,
         ),

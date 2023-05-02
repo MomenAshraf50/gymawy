@@ -15,7 +15,7 @@ class NutritionDetailsModel extends NutritionDetailsEntity {
     return NutritionDetailsModel(
       nutritionDetailId: json['id'],
       day: json['day'],
-      nutritionModel: AddNutritionModel.fromJson(json['nutritions']),
+      nutritionModel: AddNutritionModel.fromJson(json['nutrition_info']),
       planId: json['nutrition_plan'],
       mealTime: json['meal_time'],
       meal: json['meal'],

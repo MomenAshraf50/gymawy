@@ -8,9 +8,9 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/resources/goal_data_static.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
 import 'package:gymawy/core/util/widgets/myElevatedButton.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/login/presentation/screens/login_screen.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
@@ -82,14 +82,14 @@ class GoalScreen extends StatelessWidget {
                   start: 15.0,
                   top: 15.0,
                 ),
-                child: myText(
+                child: DefaultText(
                   title: AppString.what_is_goal,
                   style: Style.large,
                   align: TextAlign.center,
                 ),
               ),
               verticalSpace(1.h),
-              const myText(
+              const DefaultText(
                   title: AppString.i_will_help_us_to_choose_a_best_program,
                   style: Style.medium,
                   align: TextAlign.center),
@@ -131,7 +131,7 @@ class GoalScreen extends StatelessWidget {
                   start: 15.0,
                   top: 15.0,
                 ),
-                child: myButton(
+                child: DefaultButton(
                   elevation: 0.0,
                   textOnly: true,
                   color: ColorsManager.mainColor,

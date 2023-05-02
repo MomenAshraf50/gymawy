@@ -6,7 +6,7 @@ import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/home/domain/entities/certificate_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/update_certificate.dart';
@@ -14,7 +14,7 @@ import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:mime/mime.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../core/util/widgets/myButton.dart';
+import '../../../../../core/util/widgets/default_button.dart';
 import '../../../domain/usecase/get_certifications.dart';
 import '../../controller/home_cubit.dart';
 
@@ -71,6 +71,12 @@ class AddCoachCertifications extends StatelessWidget {
               toast: TOAST.success,
               text: 'Certification Updated Successfully');
         }
+        if(state is UpdateCertificateErrorState){
+          designToastDialog(context: context, toast: TOAST.error,text: state.failure);
+        }
+        if(state is CertificationErrorState){
+          designToastDialog(context: context, toast: TOAST.error,text: state.failure);
+        }
       },
       builder: (context, state) {
         return Scaffold(
@@ -122,7 +128,7 @@ class AddCoachCertifications extends StatelessWidget {
                                             SvgPicture.asset(
                                                 Assets.images.svg.upload),
                                             verticalSpace(2.h),
-                                            myButton(
+                                            DefaultButton(
                                                 text: AppString.browseFile,
                                                 fontSize: 14.rSp,
                                                 width: 5.w,
@@ -145,7 +151,7 @@ class AddCoachCertifications extends StatelessWidget {
                                           height: 6.h,
                                         ),
                                         horizontalSpace(5.w),
-                                        myText(
+                                        DefaultText(
                                           title:
                                               '${homeCubit.certificationPdf!.files.first.size ~/ 1024} kB',
                                           //AppString.certificationSize,
@@ -175,6 +181,7 @@ class AddCoachCertifications extends StatelessWidget {
                                     if (value!.isEmpty) {
                                       return 'isEmpty';
                                     }
+                                    return null;
                                   },
                                   controller:
                                       homeCubit.certificateNameController,
@@ -185,6 +192,7 @@ class AddCoachCertifications extends StatelessWidget {
                                     if (value!.isEmpty) {
                                       return 'isEmpty';
                                     }
+                                    return null;
                                   },
                                   controller:
                                       homeCubit.certificateSerialController,
@@ -196,6 +204,7 @@ class AddCoachCertifications extends StatelessWidget {
                                     if (value!.isEmpty) {
                                       return 'isEmpty';
                                     }
+                                    return null;
                                   },
                                   controller: homeCubit
                                       .certificateDescriptionController,
@@ -217,6 +226,7 @@ class AddCoachCertifications extends StatelessWidget {
                                     if (value!.isEmpty) {
                                       return 'isEmpty';
                                     }
+                                    return null;
                                   },
                                   controller:
                                       homeCubit.certificateDateController,
@@ -240,6 +250,7 @@ class AddCoachCertifications extends StatelessWidget {
                                     if (value!.isEmpty) {
                                       return 'isEmpty';
                                     }
+                                    return null;
                                   },
                                   controller: homeCubit
                                       .certificateExpirationDateController,
@@ -248,7 +259,7 @@ class AddCoachCertifications extends StatelessWidget {
                               ],
                             ),
                           verticalSpace(4.h),
-                          myButton(
+                          DefaultButton(
                               text: certificateEntity != null
                                   ? AppString.update
                                   : AppString.finish,

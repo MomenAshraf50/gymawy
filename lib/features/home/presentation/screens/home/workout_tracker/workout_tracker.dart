@@ -5,7 +5,7 @@ import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/presentation/screens/home/workout_tracker/exercise_example.dart';
 import 'package:gymawy/features/home/presentation/widgets/main_data.dart';
 
@@ -89,14 +89,14 @@ class WorkoutTrackerScreen extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              myText(
+                              DefaultText(
                                   title: AppString.dayOfToday,
                                   style: Style.extraSmall,
                                   fontSize: 12.rSp,
                                   color: ColorsManager.darkGrey.withOpacity(0.8),
                               ),
                               const Spacer(),
-                              myText(
+                              DefaultText(
                                 title: AppString.percent,
                                 style: Style.extraSmall,
                                 fontSize: 10.rSp,
@@ -110,7 +110,7 @@ class WorkoutTrackerScreen extends StatelessWidget {
                             ],
                           ),
                           verticalSpace(1.h),
-                          myText(
+                          DefaultText(
                             title: AppString.statuesBody,
                             style: Style.extraSmall,
                             fontSize: 12.rSp,
@@ -147,7 +147,7 @@ class WorkoutTrackerScreen extends StatelessWidget {
                   padding: EdgeInsets.all(20.rSp),
                   child: Row(
                     children: [
-                      myText(
+                      DefaultText(
                           title: AppString.dailyWorkoutSchedule,
                           style: Style.small,
                            color: ColorsManager.white,
@@ -169,7 +169,7 @@ class WorkoutTrackerScreen extends StatelessWidget {
                               horizontal: 5.w,
                               vertical: 1.h
                             ),
-                            child: myText(
+                            child: DefaultText(
                               title: AppString.check,
                               style: Style.small,
                               color: ColorsManager.white,

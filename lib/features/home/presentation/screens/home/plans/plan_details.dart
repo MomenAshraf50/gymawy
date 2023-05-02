@@ -5,7 +5,7 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
 import 'package:gymawy/core/util/widgets/two_option_dialog.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_exercise_details_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
@@ -30,14 +30,14 @@ class PlanDetails extends StatelessWidget {
       required this.ownerUserId,
       this.planVisibility,
       this.planName,
-      this.isNutrition})
+      required this.isNutrition})
       : super(key: key);
 
   int? planId;
   int ownerUserId;
   String? planName;
   String? planVisibility;
-  bool? isNutrition;
+  bool isNutrition;
 
   List<NutritionDetailsEntity>? nutritionResults;
 
@@ -50,12 +50,10 @@ class PlanDetails extends StatelessWidget {
     debugPrintFullText('$planName');
     debugPrintFullText('$isNutrition');
 
-    if (isNutrition == false) {
-      homeCubit.getExercisePlanDetails(planId!);
-    }
-
-    if (isNutrition == true) {
+    if (isNutrition) {
       homeCubit.getNutritionPlanDetails(planId!);
+    } else {
+      homeCubit.getExercisePlanDetails(planId!);
     }
 
     return SafeArea(
@@ -65,7 +63,7 @@ class PlanDetails extends StatelessWidget {
             if (state is DeleteExercisePlanSuccessState) {
               Navigator.pop(context);
               Navigator.pop(context);
-              homeCubit.getPlan(isNutrition: isNutrition!);
+              homeCubit.getPlan(isNutrition: isNutrition);
               designToastDialog(
                   context: context,
                   toast: TOAST.success,
@@ -98,7 +96,7 @@ class PlanDetails extends StatelessWidget {
               onWillPop: () async {
                 Navigator.pop(context);
                 homeCubit.getPlan(
-                  isNutrition: isNutrition!,
+                  isNutrition: isNutrition,
                 );
                 return false;
               },
@@ -112,47 +110,52 @@ class PlanDetails extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                         homeCubit.getPlan(
-                          isNutrition: isNutrition!,
+                          isNutrition: isNutrition,
                         );
                       },
                       actions: [
                         if (userId == ownerUserId)
-                          defaultActionButton(
-                            onPressed: () {
-                              navigateTo(
-                                  context,
-                                  AddPlan(
-                                    isNutrition: isNutrition!,
-                                    planId: planId,
-                                    planName: planName,
-                                    planVisibility: planVisibility,
-                                  ));
-                            },
-                            icon: Icons.edit,
-                            backgroundColor: ColorsManager.white,
-                            iconColor: ColorsManager.black,
-                          ),
-                        if (userId == ownerUserId)
-                          defaultActionButton(
-                            onPressed: () {
-                              isNutrition == false
-                                  ? navigateTo(
+                          Row(
+                            children: [
+                              defaultActionButton(
+                                onPressed: () {
+                                  navigateTo(
                                       context,
-                                      ExercisesScreen(
-                                        isAddExercise: true,
+                                      AddPlan(
+                                        isNutrition: isNutrition,
                                         planId: planId,
-                                      ))
-                                  : navigateTo(
-                                      context,
-                                      NutritionScreen(
-                                        isAddNutrition: true,
-                                        planId: planId,
+                                        planName: planName,
+                                        planVisibility: planVisibility,
                                       ));
-                            },
-                            icon: Icons.add,
-                            backgroundColor: Colors.green,
-                            iconColor: ColorsManager.white,
+                                },
+                                icon: Icons.edit,
+                                backgroundColor: ColorsManager.white,
+                                iconColor: ColorsManager.black,
+                              ),
+                              horizontalSpace(3.w),
+                              defaultActionButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return DefaultDialog(
+                                          message: 'Are you sure to delete this plan',
+                                          pushButtonText: 'yes',
+                                          buttonColor: ColorsManager.error,
+                                          pushButtonVoidCallback: () {
+                                            homeCubit.deletePlan(
+                                                DeletePlanParams(planId!, isNutrition));
+                                          },
+                                        );
+                                      });
+                                },
+                                icon: Icons.delete,
+                                backgroundColor: ColorsManager.redPrimary,
+                                iconColor: ColorsManager.white,
+                              )
+                            ],
                           ),
+
                       ],
                     ),
                     verticalSpace(2.h),
@@ -183,7 +186,8 @@ class PlanDetails extends StatelessWidget {
                                                       index],
                                                   planId: homeCubit
                                                       .exerciseDetailsResult![
-                                                  index].planId,
+                                                          index]
+                                                      .planId,
                                                 ));
                                           },
                                           popButtonVoidCallback: () {
@@ -193,7 +197,7 @@ class PlanDetails extends StatelessWidget {
                                                         .exerciseDetailsResult![
                                                             index]
                                                         .exerciseDetailId,
-                                                    isNutrition!));
+                                                    isNutrition));
                                           });
                                     },
                                   );
@@ -271,8 +275,10 @@ class PlanDetails extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onLongPress: () {
-                                debugPrintFullText(
-                                    nutritionResults![index].nutritionModel.userInformation.userName);
+                                debugPrintFullText(nutritionResults![index]
+                                    .nutritionModel
+                                    .userInformation
+                                    .userName);
                                 debugPrintFullText('$userName');
 
                                 if (userId == ownerUserId) {
@@ -299,7 +305,7 @@ class PlanDetails extends StatelessWidget {
                                                 DeleteExercisePlanDetailsParams(
                                                     nutritionResults![index]
                                                         .nutritionDetailId,
-                                                    isNutrition!));
+                                                    isNutrition));
                                           });
                                     },
                                   );
@@ -335,36 +341,35 @@ class PlanDetails extends StatelessWidget {
                           physics: const BouncingScrollPhysics(),
                         ),
                       ),
-                    verticalSpace(4.h),
-                    if (userId == ownerUserId)
-                      myButton(
-                        text: AppString.delete,
-                        textOnly: true,
-                        color: ColorsManager.redPrimary,
-                        width: double.infinity,
-                        radius: 40.h,
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return DefaultDialog(
-                                  message: 'Are you sure to delete this plan',
-                                  pushButtonText: 'yes',
-                                  buttonColor: ColorsManager.error,
-                                  pushButtonVoidCallback: () {
-                                    homeCubit.deletePlan(DeletePlanParams(
-                                        planId!, isNutrition!));
-                                  },
-                                );
-                              });
-                        },
-                      ),
                   ],
                 ),
               ),
             );
           },
         ),
+        floatingActionButton: userId == ownerUserId
+            ? FloatingActionButton(
+                onPressed: () {
+                  isNutrition == false
+                      ? navigateTo(
+                      context,
+                      ExercisesScreen(
+                        isAddExercise: true,
+                        planId: planId,
+                      ))
+                      : navigateTo(
+                      context,
+                      NutritionScreen(
+                        isAddNutrition: true,
+                        planId: planId,
+                      ));
+                },
+                child: const Icon(
+                  Icons.add,
+                  color: ColorsManager.white,
+                ),
+              )
+            : Container(),
       ),
     );
   }

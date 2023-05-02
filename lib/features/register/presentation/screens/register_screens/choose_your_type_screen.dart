@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
 import 'package:gymawy/features/register/presentation/screens/register_layout.dart';
@@ -30,7 +30,7 @@ class ChooseYourTypeScreen extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const myText(
+                  const DefaultText(
                       title: AppString.select_type,
                       align: TextAlign.center,
                       fontWeight: FontWeight.w800,

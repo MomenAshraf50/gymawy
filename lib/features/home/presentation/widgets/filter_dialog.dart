@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 
 class FilterDialog extends StatelessWidget {
@@ -33,7 +33,7 @@ class FilterDialog extends StatelessWidget {
               height: 5.h,
               child: Row(
                 children: [
-                  myText(
+                  DefaultText(
                     title: firstFilterTitle,
                     style: Style.extraSmall,
                     fontWeight: FontWeight.w600,
@@ -66,7 +66,7 @@ class FilterDialog extends StatelessWidget {
               height: 5.h,
               child: Row(
                 children: [
-                  myText(
+                  DefaultText(
                     title: secondFilterTitle,
                     style: Style.extraSmall,
                     fontWeight: FontWeight.w600,

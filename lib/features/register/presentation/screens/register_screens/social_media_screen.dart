@@ -9,7 +9,7 @@ import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../core/util/widgets/myButton.dart';
+import '../../../../../core/util/widgets/default_button.dart';
 import '../../../../../core/util/widgets/myElevatedButton.dart';
 import '../../../../../core/util/widgets/default_text_field.dart';
 import '../../controller/register_cubit.dart';
@@ -89,7 +89,7 @@ class SocialMediaScreen extends StatelessWidget {
                   svgImg: Assets.images.svg.tiktok,
                 ),
                 verticalSpace(2.h),
-                myButton(
+                DefaultButton(
                   elevation: 0.0,
                   textOnly: true,
                   color: ColorsManager.mainColor,

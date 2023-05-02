@@ -7,9 +7,9 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/constants_manager.dart';
-import '../../../../../core/util/widgets/myButton.dart';
+import '../../../../../core/util/widgets/default_button.dart';
 import '../../../../../core/util/widgets/myElevatedButton.dart';
-import '../../../../../core/util/widgets/myText.dart';
+import '../../../../../core/util/widgets/default_text.dart';
 import '../../controller/register_cubit.dart';
 
 class SelectFatScreen extends StatelessWidget {
@@ -43,8 +43,8 @@ class SelectFatScreen extends StatelessWidget {
             Expanded(
               child: Column(
                 children: const [
-                  myText(title: AppString.select_fat, style: Style.large),
-                  myText(
+                  DefaultText(title: AppString.select_fat, style: Style.large),
+                  DefaultText(
                     title: AppString.it_will_help,
                     style: Style.small,
                     align: TextAlign.center,
@@ -100,7 +100,7 @@ class SelectFatScreen extends StatelessWidget {
 
                     Padding(
                       padding: designApp,
-                      child: myButton(
+                      child: DefaultButton(
                           elevation: 0.0,
                           color: ColorsManager.mainColor,
                           height: 3.h,

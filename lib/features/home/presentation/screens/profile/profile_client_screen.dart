@@ -4,8 +4,8 @@ import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/add_exercise_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/add_meal_screen.dart';
 import '../../../../../../core/util/resources/assets.gen.dart';
@@ -83,7 +83,7 @@ class ClientProfileScreen extends StatelessWidget {
                                 children: [
                                   SizedBox(
                                     width: 40.w,
-                                    child: myText(
+                                    child: DefaultText(
                                       title:
                                       //'0000000000000000000000000000000000000',
                                       '${homeCubit.profileResults!.userInformation.firstName} ${homeCubit.profileResults!.userInformation.lastName}',
@@ -117,7 +117,7 @@ class ClientProfileScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              myText(
+                              DefaultText(
                                 title: AppString.followersNumber,
                                 style: Style.medium,
                                 fontSize: 14.rSp,
@@ -135,7 +135,7 @@ class ClientProfileScreen extends StatelessWidget {
                                     Icons.location_on_outlined,
                                     size: 15.rSp,
                                   ),
-                                  myText(
+                                  DefaultText(
                                     title: homeCubit.profileResults!.userInformation.governorate,
                                     //AppString.address,
                                     style: Style.extraSmall,
@@ -143,7 +143,7 @@ class ClientProfileScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              myText(
+                              DefaultText(
                                 title: '${homeCubit.profileResults!.userInformation.age} Years old',
                                 //AppString.age,
                                 style: Style.extraSmall,

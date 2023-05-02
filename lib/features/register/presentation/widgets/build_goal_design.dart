@@ -3,7 +3,7 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/resources/goal_data_static.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:lottie/lottie.dart';
 
 Widget buildDesign({
@@ -43,14 +43,14 @@ Widget buildDesign({
             Expanded(
               child: Column(
                 children: [
-                  myText(
+                  DefaultText(
                     title: model.title,
                     style: Style.medium,
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
                   ),
                   verticalSpace(1.h),
-                  myText(
+                  DefaultText(
                       title: model.body,
                       style: Style.extraSmall,
                       maxLines: 4,

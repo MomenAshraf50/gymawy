@@ -11,8 +11,8 @@ import 'package:gymawy/core/util/widgets/default%20dialog.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/list_title_container.dart';
 import 'package:gymawy/core/util/widgets/loadingPage.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/core/util/widgets/my_icon_button.dart';
 import 'package:gymawy/features/login/presentation/screens/login_screen.dart';
@@ -106,10 +106,10 @@ class CompleteProfileScreen extends StatelessWidget {
                             children: [
                               svgImage(path: Assets.images.svg.couch,height: 25.h),
                               verticalSpace(2.h),
-                              const myText(
+                              const DefaultText(
                                   title: AppString.lets_complate, style: Style.large),
                               verticalSpace(2.h),
-                              const myText(
+                              const DefaultText(
                                   title: AppString.will_help, style: Style.small),
                               verticalSpace(2.h),
                               myListTitle(
@@ -279,7 +279,7 @@ class CompleteProfileScreen extends StatelessWidget {
                                   },
                                 ),
                               verticalSpace(2.h),
-                              myButton(
+                              DefaultButton(
                                   elevation: 0.0,
                                   iconWidget: svgImage(
                                     path: Assets.images.svg.login,

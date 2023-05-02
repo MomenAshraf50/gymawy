@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/domain/usecase/notifications_subscription_usecase.dart';
 import 'package:gymawy/features/home/presentation/screens/settings/notifications_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/settings/support_screen.dart';
@@ -36,14 +36,14 @@ Widget buildSettingsItem({required String text,required String iconPath,required
           SvgPicture.asset(iconPath),
           horizontalSpace(10.w),
           text == 'Log Out'
-              ?  myText(
+              ?  DefaultText(
             title: AppString.logOut ,
             style: Style.small,
             fontWeight: FontWeight.w400,
             color: Colors.red,
             fontSize: 20.rSp,
           )
-              :  myText(
+              :  DefaultText(
             title: text ,
             style: Style.small,
             fontWeight: FontWeight.w400,

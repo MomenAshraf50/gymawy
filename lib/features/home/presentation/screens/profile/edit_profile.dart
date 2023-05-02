@@ -5,7 +5,7 @@ import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
 import 'package:gymawy/core/util/widgets/loadingPage.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/register/presentation/widgets/creat_account_widgets.dart';
 import '../../../../../core/util/resources/appString.dart';
@@ -55,6 +55,9 @@ class EditProfileScreen extends StatelessWidget {
           Navigator.pop(context);
           designToastDialog(
               context: context, toast: TOAST.success, text: 'Profile Updated');
+        }
+        if(state is UpdateErrorState){
+          designToastDialog(context: context, toast: TOAST.error,text: state.failure);
         }
       },
       builder: (context, state) {
@@ -299,7 +302,7 @@ class EditProfileScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            myButton(
+                            DefaultButton(
                                 text: AppString.finish,
                                 onPressed: () {
                                   debugPrintFullText(
@@ -309,6 +312,8 @@ class EditProfileScreen extends StatelessWidget {
                                             .passwordController.text.isEmpty &&
                                         homeCubit.confirmPasswordController.text
                                             .isEmpty) {
+                                      debugPrintFullText('no password');
+                                      debugPrintFullText(homeCubit.passwordController.text);
                                       homeCubit.updateProfile(
                                         userName:
                                             homeCubit.usernameController.text,
@@ -322,7 +327,9 @@ class EditProfileScreen extends StatelessWidget {
                                             .fixedPriceController.text),
                                         bio: homeCubit.bioController.text,
                                       );
-                                    } else if (homeCubit.isPasswordMach()) {
+                                    } else if (homeCubit.isPasswordMach())
+                                    {
+                                      debugPrintFullText('password');
                                       homeCubit.updateProfile(
                                         userName:
                                             homeCubit.usernameController.text,

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 
-import 'myButton.dart';
+import 'default_button.dart';
 import 'my_icon_button.dart';
 
 class DefaultDialog extends Dialog {
@@ -46,7 +46,7 @@ class DefaultDialog extends Dialog {
                 children: [
                   Expanded(
                     flex: 4,
-                    child: myText(
+                    child: DefaultText(
                         title: message, align: TextAlign.center, style: Style.medium
                     ),
                   ),
@@ -62,7 +62,7 @@ class DefaultDialog extends Dialog {
               ),
               const Spacer(),
               Expanded(
-                child: myButton(
+                child: DefaultButton(
                   color: buttonColor,
                   onPressed: pushButtonVoidCallback,
                   text: pushButtonText,

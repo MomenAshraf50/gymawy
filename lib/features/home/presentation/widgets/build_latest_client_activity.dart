@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 
 Widget buildLatestActivityItem(
     {required String img,
@@ -29,9 +29,9 @@ Widget buildLatestActivityItem(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  myText(title: notificationTitle, style: Style.extraSmall,maxLines: 1,),
+                  DefaultText(title: notificationTitle, style: Style.extraSmall,maxLines: 1,),
                   verticalSpace(0.5.h),
-                  myText(title:notificationTime, style: Style.extraSmall,fontSize: 8.rSp,)
+                  DefaultText(title:notificationTime, style: Style.extraSmall,fontSize: 8.rSp,)
                 ],
               ),
             )

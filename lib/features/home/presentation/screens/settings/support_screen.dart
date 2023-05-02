@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
 import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:mailer/mailer.dart';
@@ -31,7 +31,7 @@ class SupportScreen extends StatelessWidget {
                 maxLines: 10,
             ),
             verticalSpace(5.h),
-            myButton(
+            DefaultButton(
                 text: 'Send your Question',
                 onPressed: ()
                async {

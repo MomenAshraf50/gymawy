@@ -8,8 +8,8 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default_action_button.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
-import 'package:gymawy/core/util/widgets/myButton.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_button.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/core/util/widgets/default_text_field.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
@@ -35,12 +35,12 @@ class CreateAccountScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     if (registerCubit.isCoach)
-                      const myText(
+                      const DefaultText(
                         title: AppString.hey_coach,
                         style: Style.small,
                         fontWeight: FontWeight.bold,
                       ),
-                    const myText(
+                    const DefaultText(
                       title: AppString.create_your_account,
                       style: Style.small,
                       fontWeight: FontWeight.bold,
@@ -256,7 +256,7 @@ class CreateAccountScreen extends StatelessWidget {
                       ),
                     ),
                     verticalSpace(2.h),
-                    myButton(
+                    DefaultButton(
                         elevation: 0.0,
                         color: ColorsManager.mainColor,
                         height: 3.h,

@@ -8,11 +8,11 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/back_button.dart';
 import 'package:gymawy/core/util/widgets/hideKeyboard.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/core/util/widgets/default_text_field.dart';
 
 import '../../../../core/util/resources/colors_manager.dart';
-import '../../../../core/util/widgets/myButton.dart';
+import '../../../../core/util/widgets/default_button.dart';
 
 class RecoveryPasswordScreen extends StatelessWidget {
   const RecoveryPasswordScreen({Key? key}) : super(key: key);
@@ -38,7 +38,7 @@ class RecoveryPasswordScreen extends StatelessWidget {
                       defaultAppBar(
                           title: AppString.new_password, context: context),
                       verticalSpace(5.h),
-                      const myText(
+                      const DefaultText(
                         title: AppString.new_password_title,
                         style: Style.medium,
                         maxLines: 3,
@@ -72,7 +72,7 @@ class RecoveryPasswordScreen extends StatelessWidget {
                         onChanged: (val) {},
                       ),
                       verticalSpace(20.h),
-                      myButton(
+                      DefaultButton(
                           elevation: 0.0,
                           textOnly: true,
                           color: ColorsManager.mainColor,

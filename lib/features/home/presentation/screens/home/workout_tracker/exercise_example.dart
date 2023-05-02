@@ -6,7 +6,7 @@ import 'package:gymawy/core/util/resources/assets.gen.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/back_button.dart';
-import 'package:gymawy/core/util/widgets/myText.dart';
+import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:video_player/video_player.dart';
@@ -66,14 +66,14 @@ class ExerciseExampleScreen extends StatelessWidget {
                             ],
                           ),
                           verticalSpace(2.h),
-                          const myText(
+                          const DefaultText(
                             title: AppString.jumpingJacks,
                             style: Style.small,
                           ),
                           verticalSpace(1.h),
                           Row(
                             children: [
-                              const myText(
+                              const DefaultText(
                                 title: AppString.exerciseLevel,
                                 style: Style.extraSmall,
                               ),
@@ -84,25 +84,25 @@ class ExerciseExampleScreen extends StatelessWidget {
                                 color: Colors.grey,
                               ),
                               horizontalSpace(2.w),
-                              const myText(
+                              const DefaultText(
                                 title: '390 ${AppString.caloriesBurn}',
                                 style: Style.extraSmall,
                               )
                             ],
                           ),
                           verticalSpace(3.h),
-                          const myText(
+                          const DefaultText(
                             title: AppString.descriptions,
                             style: Style.small,
                           ),
                           verticalSpace(2.h),
-                          const myText(
+                          const DefaultText(
                             title:
                                 'A jumping jack, also known as a star jump and called a side-straddle hop in the US military, is a physical jumping exercise performed by jumping to a position with the legs spread wide',
                             style: Style.extraSmall,
                           ),
                           verticalSpace(3.h),
-                          const myText(
+                          const DefaultText(
                             title: AppString.howToDoIt,
                             style: Style.small,
                           ),
@@ -110,22 +110,22 @@ class ExerciseExampleScreen extends StatelessWidget {
                           Stepper(
                             steps: const [
                               Step(
-                                title: myText(
+                                title: DefaultText(
                                   title: 'Spread Your Arms',
                                   style: Style.small,
                                 ),
-                                content: myText(
+                                content: DefaultText(
                                   title: 'To make the gestures feel more relaxed, stretch your arms as you start this movement. No bending of hands.',
                                   style: Style.extraSmall,
                                 ),
                                 isActive: true
                               ),
                               Step(
-                                title: myText(
+                                title: DefaultText(
                                   title: 'Rest at The Toe',
                                   style: Style.small,
                                 ),
-                                content: myText(
+                                content: DefaultText(
                                   title: 'The basis of this movement is jumping. Now, what needs to be considered is that you have to use the tips of your feet',
                                   style: Style.extraSmall,
                                 ),
@@ -133,11 +133,11 @@ class ExerciseExampleScreen extends StatelessWidget {
 
                               ),
                               Step(
-                                title: myText(
+                                title: DefaultText(
                                   title: 'Adjust Foot Movement',
                                   style: Style.small,
                                 ),
-                                content: myText(
+                                content: DefaultText(
                                   title: 'Jumping Jack is not just an ordinary jump. But, you also have to pay close attention to leg movements.',
                                   style: Style.extraSmall,
                                 ),
@@ -145,11 +145,11 @@ class ExerciseExampleScreen extends StatelessWidget {
 
                               ),
                               Step(
-                                title: myText(
+                                title: DefaultText(
                                   title: 'Clapping Both Hands',
                                   style: Style.small,
                                 ),
-                                content: myText(
+                                content: DefaultText(
                                   title: 'This cannot be taken lightly. You see, without realizing it, the clapping of your hands helps you to keep your rhythm while doing the Jumping Jack',
                                   style: Style.extraSmall,
                                 ),
