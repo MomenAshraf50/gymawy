@@ -75,7 +75,7 @@ abstract class HomeBaseRepository {
       GetCertificateParams params);
 
   Future<Either<Failure, void>> deleteCertificate({
-    required String certificateId,
+    required int certificateId,
   });
 
   Future<Either<Failure, CertificateEntity>> updateCertificate(

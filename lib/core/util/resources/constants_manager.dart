@@ -36,6 +36,8 @@ Widget svgImage({required String path,Color? color,double? height,double? width}
 }
 
 String? token = '';
+bool locationPermission = false;
+bool locationServiceEnabled = false;
 String? deviceToken = '';
 String? email = '';
 String? userName = '';
@@ -339,6 +341,7 @@ String? facebookLinkRegister = '';
 String? instagramLinkRegister = '';
 String? youtubeLinkRegister = '';
 String? tiktokLinkRegister = '';
+int? experienceRegister = 0;
 bool isCoachRegister = false;
 
 bool isCoachFilter = false;

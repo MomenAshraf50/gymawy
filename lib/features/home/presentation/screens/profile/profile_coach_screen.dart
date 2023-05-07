@@ -4,12 +4,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/core/util/widgets/default_button.dart';
+import 'package:gymawy/core/util/widgets/two_option_dialog.dart';
 import 'package:gymawy/features/home/domain/usecase/get_certifications.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/profile/add_coach_certifications.dart';
-import 'package:gymawy/features/home/presentation/screens/profile/social_web_view.dart';
-import 'package:gymawy/features/home/presentation/screens/profile/view_certification.dart';
 import '../../../../../core/util/resources/appString.dart';
 import '../../../../../core/util/resources/assets.gen.dart';
 import '../../../../../core/util/resources/colors_manager.dart';
@@ -24,15 +23,13 @@ class ProfileCoachScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     HomeCubit homeCubit = HomeCubit.get(context);
-    if(homeCubit.profileResults != null){
+    if (homeCubit.profileResults != null) {
       homeCubit.getCertificates(
           GetCertificateParams(
             ownerId: homeCubit.profileResults!.userInformation.userId,
             ownerName: '',
-          ),
-          context);
+          ));
     }
 
     debugPrintFullText('sssssssssssssssssssss${homeCubit.certificateResult}');
@@ -41,18 +38,26 @@ class ProfileCoachScreen extends StatelessWidget {
     return SafeArea(
       child: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, state) {
-          if(state is ProfileSuccessState){
+          if (state is ProfileSuccessState) {
             homeCubit.getCertificates(
                 GetCertificateParams(
                   ownerId: homeCubit.profileResults!.userInformation.userId,
                   ownerName: '',
-                ),
-                context);
+                ));
+          }
+          if(state is DeleteCertificateSuccessState){
+            Navigator.pop(context);
+            homeCubit.getCertificates(GetCertificateParams(
+              ownerId: homeCubit.profileResults!.userInformation.userId,
+              ownerName: '',
+            ));
           }
         },
         builder: (context, state) {
           return Scaffold(
-            body: homeCubit.profileResults == null? const LoadingPage(): SingleChildScrollView(
+            body: homeCubit.profileResults == null
+                ? const LoadingPage()
+                : SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
@@ -70,16 +75,16 @@ class ProfileCoachScreen extends StatelessWidget {
                                 alignment: Alignment.topCenter,
                                 child: homeCubit.profileImageFile != null
                                     ? CircleAvatar(
-                                        radius: 60.rSp,
-                                        backgroundImage: FileImage(
-                                            homeCubit.profileImageFile!),
-                                      )
+                                  radius: 60.rSp,
+                                  backgroundImage: FileImage(
+                                      homeCubit.profileImageFile!),
+                                )
                                     : CircleAvatar(
-                                        radius: 60.rSp,
-                                        backgroundImage: NetworkImage(
-                                            homeCubit.profileResults!
-                                                .userInformation.profilePicture),
-                                      ),
+                                  radius: 60.rSp,
+                                  backgroundImage: NetworkImage(
+                                      homeCubit.profileResults!
+                                          .userInformation.profilePicture),
+                                ),
                               ),
                               IconButton(
                                 onPressed: () {
@@ -102,14 +107,18 @@ class ProfileCoachScreen extends StatelessWidget {
                               children: [
                                 Padding(
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 10.rSp),
+                                  EdgeInsets.symmetric(horizontal: 10.rSp),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       DefaultText(
                                         title:
-                                            '${homeCubit.profileResults!.userInformation.firstName} ${homeCubit.profileResults!.userInformation.lastName}',
+                                        '${homeCubit.profileResults!
+                                            .userInformation
+                                            .firstName} ${homeCubit
+                                            .profileResults!.userInformation
+                                            .lastName}',
                                         //AppString.userNameProfile,
                                         style: Style.small,
                                       ),
@@ -134,10 +143,18 @@ class ProfileCoachScreen extends StatelessWidget {
                                             onPressed: () {
                                               navigateTo(context,
                                                   EditCoachLinksScreen(
-                                                    facebookLink: homeCubit.profileResults!.facebookLink!,
-                                                    tiktokLink: homeCubit.profileResults!.tiktokLink!,
-                                                    instagramLink: homeCubit.profileResults!.instagramLink!,
-                                                    youtubeLink: homeCubit.profileResults!.youtubeLink!,
+                                                    facebookLink: homeCubit
+                                                        .profileResults!
+                                                        .facebookLink!,
+                                                    tiktokLink: homeCubit
+                                                        .profileResults!
+                                                        .tiktokLink!,
+                                                    instagramLink: homeCubit
+                                                        .profileResults!
+                                                        .instagramLink!,
+                                                    youtubeLink: homeCubit
+                                                        .profileResults!
+                                                        .youtubeLink!,
                                                   ));
                                             }),
                                       ),
@@ -150,13 +167,28 @@ class ProfileCoachScreen extends StatelessWidget {
                                           onPressed: () {
                                             navigateTo(context,
                                                 EditProfileScreen(
-                                                  userName: homeCubit.profileResults!.userInformation.userName,
-                                                  email: homeCubit.profileResults!.userInformation.email,
-                                                  firstName: homeCubit.profileResults!.userInformation.firstName,
-                                                  lastName: homeCubit.profileResults!.userInformation.lastName,
-                                                  phone: homeCubit.profileResults!.userInformation.phoneNumber,
-                                                  bio: homeCubit.profileResults!.userInformation.bio,
-                                                  price: homeCubit.profileResults!.fixedPrice!,
+                                                  userName: homeCubit
+                                                      .profileResults!
+                                                      .userInformation.userName,
+                                                  email: homeCubit
+                                                      .profileResults!
+                                                      .userInformation.email,
+                                                  firstName: homeCubit
+                                                      .profileResults!
+                                                      .userInformation
+                                                      .firstName,
+                                                  lastName: homeCubit
+                                                      .profileResults!
+                                                      .userInformation.lastName,
+                                                  phone: homeCubit
+                                                      .profileResults!
+                                                      .userInformation
+                                                      .phoneNumber,
+                                                  bio: homeCubit.profileResults!
+                                                      .userInformation.bio,
+                                                  price: homeCubit
+                                                      .profileResults!
+                                                      .fixedPrice!,
                                                 ));
                                           }),
                                     )
@@ -174,7 +206,8 @@ class ProfileCoachScreen extends StatelessWidget {
                     children: [
                       const Icon(Icons.location_on_outlined),
                       DefaultText(
-                        title: homeCubit.profileResults!.userInformation.governorate,
+                        title: homeCubit.profileResults!.userInformation
+                            .governorate,
                         style: Style.small,
                         fontSize: 16.rSp,
                       ),
@@ -234,48 +267,33 @@ class ProfileCoachScreen extends StatelessWidget {
                                   Assets.images.svg.facebook_icon,
                                 ),
                                 onPressed: () {
-                                  navigateTo(
-                                      context,
-                                      SocialWebView(
-                                        socialUrl: homeCubit
-                                            .profileResults!.facebookLink!,
-                                      ));
+                                  homeCubit.launch(Uri.parse(
+                                      homeCubit.profileResults!.facebookLink!));
                                 })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon:
-                                    SvgPicture.asset(Assets.images.svg.tiktok),
+                                SvgPicture.asset(Assets.images.svg.tiktok),
                                 onPressed: () {
-                                  navigateTo(
-                                      context,
-                                      SocialWebView(
-                                        socialUrl: homeCubit
-                                            .profileResults!.tiktokLink!,
-                                      ));
+                                  homeCubit.launch(Uri.parse(
+                                      homeCubit.profileResults!.tiktokLink!));
                                 })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon: SvgPicture.asset(
                                     Assets.images.svg.instagram),
                                 onPressed: () {
-                                  navigateTo(
-                                      context,
-                                      SocialWebView(
-                                        socialUrl: homeCubit
-                                            .profileResults!.instagramLink!,
-                                      ));
+                                  homeCubit.launch(Uri.parse(
+                                      homeCubit.profileResults!
+                                          .instagramLink!));
                                 })),
                         Expanded(
                             child: DefaultIconButton(
                                 icon:
-                                    SvgPicture.asset(Assets.images.svg.youtube),
+                                SvgPicture.asset(Assets.images.svg.youtube),
                                 onPressed: () {
-                                  navigateTo(
-                                      context,
-                                      SocialWebView(
-                                        socialUrl: homeCubit
-                                            .profileResults!.youtubeLink!,
-                                      ));
+                                  homeCubit.launch(Uri.parse(
+                                      homeCubit.profileResults!.youtubeLink!));
                                 })),
                       ],
                     ),
@@ -301,91 +319,109 @@ class ProfileCoachScreen extends StatelessWidget {
                           }
                           return homeCubit.certificateResultImg != null
                               ? InkWell(
-                                  onLongPress: () {
+                            onLongPress: () {
+
+                              showDialog(context: context,
+                                builder: (context) =>
+                                    TwoOptionsDialog(message: 'Choose Action',
+                                        popButtonText: AppString.update,
+                                        pushButtonText: AppString.delete,
+                                        pushButtonVoidCallback: (){
+                                      homeCubit.deleteCertificate(certificateId: homeCubit.certificateResult[index].certificateId);
+                                        },
+                                        popButtonVoidCallback: (){
+                                          navigateTo(
+                                              context,
+                                              AddCoachCertifications(
+                                                userId: userId,
+                                                certificateEntity: homeCubit
+                                                    .certificateResult[index],
+                                              ));
+                                        }),);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.all(9.rSp),
+                              decoration: BoxDecoration(
+                                boxShadow: const [
+                                  // selected == index ?
+                                  BoxShadow(
+                                    color: ColorsManager.mainColor,
+                                    spreadRadius: 0,
+                                    blurRadius: 4,
+                                  )
+                                  // : const BoxShadow(),
+                                ],
+                                borderRadius: BorderRadius.circular(10),
+                                // border: Border.all(color: Colors.orange),
+                                gradient: const LinearGradient(
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  colors: [
+                                    ColorsManager.whiteColor,
+                                    ColorsManager.whiteColor,
+                                  ],
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(10.rSp),
+                                child: index !=
+                                    homeCubit
+                                        .certificateResult.length
+                                    ? InkWell(
+                                  onTap: () {
+                                    // navigateTo(
+                                    //     context,
+                                    //     ViewCertification(
+                                    //       certification: homeCubit
+                                    //           .certificateResult[
+                                    //               index]
+                                    //           .certificateFile,
+                                    //       certificationName: homeCubit
+                                    //           .certificateResult[
+                                    //               index]
+                                    //           .certificateName,
+                                    //       certificationID: (homeCubit
+                                    //               .certificateResult[
+                                    //                   index]
+                                    //               .certificateId)
+                                    //           .toString(),
+                                    //     ));
+                                    homeCubit.launch(Uri.parse(
+                                        homeCubit.certificateResult[index]
+                                            .certificateFile));
+                                  },
+                                  child: Column(
+                                    children: [
+                                      homeCubit.certificateResultImg!,
+                                      verticalSpace(3.h),
+                                      DefaultText(
+                                          title: homeCubit
+                                              .certificateResult[index]
+                                              .certificateName,
+                                          style: Style.medium),
+                                      DefaultText(title: homeCubit
+                                          .certificateResult[index]
+                                          .certificateDate,
+                                          style: Style.medium),
+                                    ],
+                                  ),
+                                )
+                                    : TextButton(
+                                  onPressed: () {
                                     navigateTo(
                                         context,
                                         AddCoachCertifications(
-                                          userId: userId,
-                                          certificateEntity: homeCubit
-                                              .certificateResult[index],
-                                        ));
+                                            userId: userId));
                                   },
-                                  child: Container(
-                                    margin: EdgeInsets.all(9.rSp),
-                                    decoration: BoxDecoration(
-                                      boxShadow: const [
-                                        // selected == index ?
-                                        BoxShadow(
-                                          color: ColorsManager.mainColor,
-                                          spreadRadius: 0,
-                                          blurRadius: 4,
-                                        )
-                                        // : const BoxShadow(),
-                                      ],
-                                      borderRadius: BorderRadius.circular(10),
-                                      // border: Border.all(color: Colors.orange),
-                                      gradient: const LinearGradient(
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.topRight,
-                                        colors: [
-                                          ColorsManager.whiteColor,
-                                          ColorsManager.whiteColor,
-                                        ],
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(10.rSp),
-                                      child: index !=
-                                              homeCubit
-                                                  .certificateResult.length
-                                          ? InkWell(
-                                              onTap: () {
-                                                navigateTo(
-                                                    context,
-                                                    ViewCertification(
-                                                      certification: homeCubit
-                                                          .certificateResult[
-                                                              index]
-                                                          .certificateFile,
-                                                      certificationName: homeCubit
-                                                          .certificateResult[
-                                                              index]
-                                                          .certificateName,
-                                                      certificationID: (homeCubit
-                                                              .certificateResult[
-                                                                  index]
-                                                              .certificateId)
-                                                          .toString(),
-                                                    ));
-                                              },
-                                              child: Column(
-                                                children: [
-                                                  homeCubit.certificateResultImg!,
-                                                  verticalSpace(3.h),
-                                                  DefaultText(
-                                                      title: homeCubit.certificateResult[index].certificateName,
-                                                      style: Style.medium),
-                                                  DefaultText(title: homeCubit.certificateResult[index].certificateDate,
-                                                      style: Style.medium),
-                                                ],
-                                              ),
-                                            )
-                                          : TextButton(
-                                              onPressed: () {
-                                                navigateTo(
-                                                    context,
-                                                    AddCoachCertifications(
-                                                        userId: userId));
-                                              },
-                                              child: const DefaultText(
-                                                  title: 'add more',
-                                                  style: Style.medium),
-                                            ),
-                                    ),
-                                  ),
-                                )
+                                  child: const DefaultText(
+                                      title: 'add more',
+                                      style: Style.medium),
+                                ),
+                              ),
+                            ),
+                          )
                               : const Center(
-                                  child: CircularProgressIndicator());
+                              child: CircularProgressIndicator());
                         },
                         itemCount: homeCubit.certificateResult.length + 1,
                       ),

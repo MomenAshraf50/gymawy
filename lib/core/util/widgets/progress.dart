@@ -30,6 +30,7 @@ class ProgressDialog extends Dialog {
                   title: message, align: TextAlign.center, style: Style.medium),
               verticalSpace(5.h),
               const LinearProgressIndicator(
+                backgroundColor: ColorsManager.white,
                 color: ColorsManager.mainColor,
               )
             ],

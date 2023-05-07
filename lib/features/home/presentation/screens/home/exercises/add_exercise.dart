@@ -41,8 +41,9 @@ class AddExerciseScreen extends StatelessWidget {
         if (state is UpdateExerciseSuccessState) {
           Navigator.pop(context);
           Navigator.pop(context);
-          Navigator.pop(context);
           homeCubit.getExercise();
+          homeCubit.exerciseVideo = null;
+          homeCubit.exerciseImageFile = null;
           designToastDialog(
               context: context,
               toast: TOAST.success,
@@ -338,7 +339,7 @@ class AddExerciseScreen extends StatelessWidget {
                                               builder: (context) {
                                                 return DefaultDialog(
                                                   message:
-                                                      'Are you sure to update Exerxise',
+                                                      'Are you sure to update Exercise',
                                                   pushButtonText: 'Okay',
                                                   pushButtonVoidCallback: () {
                                                     homeCubit.updateExercise(AddExerciseParams(
@@ -372,7 +373,7 @@ class AddExerciseScreen extends StatelessWidget {
                                               builder: (context) {
                                                 return DefaultDialog(
                                                   message:
-                                                      'Are you sure to update Exerxise',
+                                                      'Are you sure to update Exercise',
                                                   pushButtonText: 'Okay',
                                                   pushButtonVoidCallback: () {
                                                     homeCubit.updateExercise(
@@ -397,22 +398,15 @@ class AddExerciseScreen extends StatelessWidget {
                                                     showDialog(
                                                       context: context,
                                                       builder: (context) {
-                                                        return BlocBuilder<
-                                                            HomeCubit,
-                                                            HomeStates>(
-                                                          builder:
-                                                              (context, state) {
-                                                               return StreamBuilder<double>(
-                                                                  stream: homeCubit.progressStream,
-                                                                  builder: (context, snapshot) {
-                                                                    return ProgressDialog(
-                                                                      message:
-                                                                      'Processing... ${(snapshot.data ?? 0).toInt()}%',
-                                                                    );
-                                                                  },
-                                                                );
-                                                          },
-                                                        );
+                                                        return StreamBuilder<double>(
+                                                           stream: homeCubit.progressStream,
+                                                           builder: (context, snapshot) {
+                                                             return ProgressDialog(
+                                                               message:
+                                                               'Processing... ${(snapshot.data ?? 0).toInt()}%',
+                                                             );
+                                                           },
+                                                         );
                                                       },
                                                     );
                                                   },
@@ -428,7 +422,7 @@ class AddExerciseScreen extends StatelessWidget {
                                               builder: (context) {
                                                 return DefaultDialog(
                                                   message:
-                                                      'Are you sure to update Exerxise',
+                                                      'Are you sure to update Exercise',
                                                   pushButtonText: 'Okay',
                                                   pushButtonVoidCallback: () {
                                                     homeCubit.updateExercise(
@@ -452,6 +446,20 @@ class AddExerciseScreen extends StatelessWidget {
                                                       exerciseVideo: homeCubit
                                                           .exerciseVideo,
                                                     ));
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return StreamBuilder<double>(
+                                                          stream: homeCubit.progressStream,
+                                                          builder: (context, snapshot) {
+                                                            return ProgressDialog(
+                                                              message:
+                                                              'Processing... ${(snapshot.data ?? 0).toInt()}%',
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                    );
                                                   },
                                                 );
                                               },
@@ -462,7 +470,7 @@ class AddExerciseScreen extends StatelessWidget {
                                               builder: (context) {
                                                 return DefaultDialog(
                                                   message:
-                                                      'Are you sure to update Exerxise',
+                                                      'Are you sure to update Exercise',
                                                   pushButtonText: 'Okay',
                                                   pushButtonVoidCallback: () {
                                                     homeCubit.updateExercise(

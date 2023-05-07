@@ -20,8 +20,6 @@ import '../../../domain/entities/subscription_request_entity.dart';
 import '../../../domain/usecase/delete_subscriptionRequest_usecase.dart';
 import '../../../domain/usecase/get_certifications.dart';
 import '../../controller/home_cubit.dart';
-import '../profile/social_web_view.dart';
-import '../profile/view_certification.dart';
 
 class SearchResultScreen extends StatelessWidget {
   SearchResultScreen(
@@ -63,23 +61,18 @@ class SearchResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
-    homeCubit.getCertificates(
-        GetCertificateParams(
-          ownerId: userId!,
-          ownerName: '',),
-        context);
-
+    homeCubit.getCertificates(GetCertificateParams(
+      ownerId: userId!,
+      ownerName: '',
+    ));
 
     List<SubscriptionRequestEntity>? subscriptionRequestResult;
 
-    if(subscriptionID != 0) {
-      homeCubit.getSubscriptionRequests(
-          GetSubscriptionsRequestsParams(
-            subscriptionRequestId: subscriptionID,
-          )
-      );
+    if (subscriptionID != 0) {
+      homeCubit.getSubscriptionRequests(GetSubscriptionsRequestsParams(
+        subscriptionRequestId: subscriptionID,
+      ));
     }
-
 
     int selected = 0;
     return SafeArea(
@@ -91,21 +84,21 @@ class SearchResultScreen extends StatelessWidget {
                   context: context,
                   toast: TOAST.success,
                   text: AppString.subscribeRequest);
-              sl<CacheHelper>().put('subscriptionID', state.subscriptionRequestEntity.subscriptionRequestId);
-              subscriptionID = state.subscriptionRequestEntity.subscriptionRequestId;
+              sl<CacheHelper>().put('subscriptionID',
+                  state.subscriptionRequestEntity.subscriptionRequestId);
+              subscriptionID =
+                  state.subscriptionRequestEntity.subscriptionRequestId;
 
               debugPrintFullText('${subscriptionRequestResult!}');
-              homeCubit.getSubscriptionRequests(
-                  GetSubscriptionsRequestsParams(
-                    subscriptionRequestId: state.subscriptionRequestEntity.subscriptionRequestId,
-                  )
-              );
+              homeCubit.getSubscriptionRequests(GetSubscriptionsRequestsParams(
+                subscriptionRequestId:
+                    state.subscriptionRequestEntity.subscriptionRequestId,
+              ));
             }
-            if(state is GetSubscriptionRequestSuccessState) {
+            if (state is GetSubscriptionRequestSuccessState) {
               subscriptionRequestResult = state.subscriptionRequestEntity;
             }
-            if(state is DeleteSubscriptionRequestSuccessState)
-            {
+            if (state is DeleteSubscriptionRequestSuccessState) {
               Navigator.pop(context);
               Navigator.pop(context);
               designToastDialog(
@@ -136,8 +129,7 @@ class SearchResultScreen extends StatelessWidget {
                                   alignment: Alignment.topCenter,
                                   child: CircleAvatar(
                                     radius: 60.rSp,
-                                    backgroundImage: NetworkImage(
-                                        pic!),
+                                    backgroundImage: NetworkImage(pic!),
                                   ),
                                 ),
                               ),
@@ -157,8 +149,7 @@ class SearchResultScreen extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             DefaultText(
-                                              title:
-                                              name!,
+                                              title: name!,
                                               style: Style.small,
                                             ),
                                             if (verification == null)
@@ -175,49 +166,65 @@ class SearchResultScreen extends StatelessWidget {
                                         ),
                                       ),
                                       verticalSpace(1.h),
-                                      if (!isCoachLogin! && verification != null && subscriptionRequestResult!.isEmpty)
+                                      if (!isCoachLogin &&
+                                          verification != null &&
+                                          subscriptionRequestResult!.isEmpty)
                                         DefaultButton(
-                                            text:AppString.subscribe,
-                                            color:ColorsManager.mainColor,
+                                            text: AppString.subscribe,
+                                            color: ColorsManager.mainColor,
                                             height: 4.h,
                                             fontSize: 10.rSp,
                                             onPressed: () {
-                                                homeCubit.subscriptionRequest(
-                                                    SubscriptionRequestParams(
-                                                      coachId: userId!,
-                                                      isUpdate: false,
-                                                    ));
+                                              homeCubit.subscriptionRequest(
+                                                  SubscriptionRequestParams(
+                                                coachId: userId!,
+                                                isUpdate: false,
+                                              ));
                                             }),
-
-
-
-                                      if (!isCoachLogin! && verification != null && subscriptionRequestResult!.isNotEmpty && subscriptionRequestResult![0].requestState != 'Accepted')
+                                      if (!isCoachLogin &&
+                                          verification != null &&
+                                          subscriptionRequestResult!
+                                              .isNotEmpty &&
+                                          subscriptionRequestResult![0]
+                                                  .requestState !=
+                                              'Accepted')
                                         DefaultButton(
-                                            text: subscriptionRequestResult![0].requestState == 'Pending'?
-                                            'Pending' : AppString.subscribe,
-                                            color: subscriptionRequestResult![0].requestState == 'Pending'?
-                                            ColorsManager.regularGrey : ColorsManager.mainColor,
+                                            text: subscriptionRequestResult![0]
+                                                        .requestState ==
+                                                    'Pending'
+                                                ? 'Pending'
+                                                : AppString.subscribe,
+                                            color: subscriptionRequestResult![0]
+                                                        .requestState ==
+                                                    'Pending'
+                                                ? ColorsManager.regularGrey
+                                                : ColorsManager.mainColor,
                                             height: 4.h,
                                             fontSize: 10.rSp,
                                             onPressed: () {
-                                              if(subscriptionRequestResult![0].requestState == 'Pending')
-                                              {
+                                              if (subscriptionRequestResult![0]
+                                                      .requestState ==
+                                                  'Pending') {
                                                 showDialog(
                                                   context: context,
                                                   builder: (context) {
                                                     return DefaultDialog(
-                                                        message: 'Delete your request',
+                                                        message:
+                                                            'Delete your request',
                                                         pushButtonText: 'Yes',
-                                                        buttonColor: ColorsManager.redPrimary,
-                                                        pushButtonVoidCallback: ()
-                                                        {
-                                                          homeCubit.deleteSubscriptionRequest(
-                                                              DeleteSubscriptionRequestParams(
-                                                                subscriptionRequestResult![0].subscriptionRequestId,
-                                                              )
-                                                          );
-                                                        }
-                                                    );
+                                                        buttonColor:
+                                                            ColorsManager
+                                                                .redPrimary,
+                                                        pushButtonVoidCallback:
+                                                            () {
+                                                          homeCubit
+                                                              .deleteSubscriptionRequest(
+                                                                  DeleteSubscriptionRequestParams(
+                                                            subscriptionRequestResult![
+                                                                    0]
+                                                                .subscriptionRequestId,
+                                                          ));
+                                                        });
                                                   },
                                                 );
                                               }
@@ -325,49 +332,37 @@ class SearchResultScreen extends StatelessWidget {
                                               Assets.images.svg.facebook_icon,
                                             ),
                                             onPressed: () {
-                                              navigateTo(
-                                                  context,
-                                                  SocialWebView(
-                                                    socialUrl: facebookLink!,
-                                                  ));
+                                              homeCubit.launch(
+                                                  Uri.parse(facebookLink!));
                                             })),
                                     Expanded(
                                         child: DefaultIconButton(
                                             icon: SvgPicture.asset(
                                                 Assets.images.svg.tiktok),
                                             onPressed: () {
-                                              navigateTo(
-                                                  context,
-                                                  SocialWebView(
-                                                    socialUrl: tiktokLink!,
-                                                  ));
+                                              homeCubit.launch(
+                                                  Uri.parse(tiktokLink!));
                                             })),
                                     Expanded(
                                         child: DefaultIconButton(
                                             icon: SvgPicture.asset(
                                                 Assets.images.svg.instagram),
                                             onPressed: () {
-                                              navigateTo(
-                                                  context,
-                                                  SocialWebView(
-                                                    socialUrl: instagramLink!,
-                                                  ));
+                                              homeCubit.launch(
+                                                  Uri.parse(instagramLink!));
                                             })),
                                     Expanded(
                                         child: DefaultIconButton(
                                             icon: SvgPicture.asset(
                                                 Assets.images.svg.youtube),
                                             onPressed: () {
-                                              navigateTo(
-                                                  context,
-                                                  SocialWebView(
-                                                    socialUrl: youtubeLink!,
-                                                  ));
+                                              homeCubit.launch(
+                                                  Uri.parse(youtubeLink!));
                                             })),
                                   ],
                                 ),
                               ),
-                              if (homeCubit.certificateResult != null)
+                              if (homeCubit.certificateResult.isNotEmpty)
                                 SizedBox(
                                   height: 25.h,
                                   child: PageView.builder(
@@ -418,23 +413,10 @@ class SearchResultScreen extends StatelessWidget {
                                                 padding: EdgeInsets.all(10.rSp),
                                                 child: InkWell(
                                                   onTap: () {
-                                                    navigateTo(
-                                                        context,
-                                                        ViewCertification(
-                                                          certification: homeCubit
-                                                              .certificateResult![
-                                                                  index]
-                                                              .certificateFile,
-                                                          certificationName: homeCubit
-                                                              .certificateResult![
-                                                                  index]
-                                                              .certificateName,
-                                                          certificationID: (homeCubit
-                                                                  .certificateResult![
-                                                                      index]
-                                                                  .certificateId)
-                                                              .toString(),
-                                                        ));
+                                                    homeCubit.launch(Uri.parse(
+                                                        homeCubit
+                                                            .certificateResult[index]
+                                                            .certificateFile));
                                                   },
                                                   child: Column(
                                                     children: [
@@ -443,14 +425,14 @@ class SearchResultScreen extends StatelessWidget {
                                                       verticalSpace(1.h),
                                                       DefaultText(
                                                           title: homeCubit
-                                                              .certificateResult![
+                                                              .certificateResult[
                                                                   index]
                                                               .certificateName,
                                                           style: Style.medium),
                                                       verticalSpace(1.h),
                                                       DefaultText(
                                                           title: homeCubit
-                                                              .certificateResult![
+                                                              .certificateResult[
                                                                   index]
                                                               .certificateDate,
                                                           style: Style.medium),
@@ -464,7 +446,7 @@ class SearchResultScreen extends StatelessWidget {
                                                   CircularProgressIndicator());
                                     },
                                     itemCount:
-                                        homeCubit.certificateResult!.length,
+                                        homeCubit.certificateResult.length,
                                   ),
                                 ),
                             ],

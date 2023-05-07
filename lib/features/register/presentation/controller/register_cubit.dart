@@ -4,15 +4,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/features/register/presentation/controller/register_states.dart';
-import 'package:gymawy/features/register/presentation/screens/register_screens/address_screen.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/complete_profile_screen.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/create_account_screen.dart';
-import 'package:gymawy/features/register/presentation/screens/register_screens/goal_screen.dart';
-import 'package:gymawy/features/register/presentation/screens/register_screens/select_fat_screen.dart';
 import 'package:gymawy/features/register/presentation/screens/register_screens/social_media_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -47,6 +45,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
   TextEditingController genderController = TextEditingController();
   TextEditingController currencyController = TextEditingController();
   TextEditingController pricePerMonth = TextEditingController();
+  TextEditingController experienceController = TextEditingController();
   TextEditingController dataOfBirth = TextEditingController();
   TextEditingController currentWeightController = TextEditingController();
   TextEditingController currentTallController = TextEditingController();
@@ -298,6 +297,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
     int? currentTall,
     int? fixedPrice,
     required String age,
+    int? experience,
     String? facebookLink,
     String? instagramLink,
     String? youTubeLink,
@@ -322,7 +322,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
       city: city,
       password: password,
       confirmPassword: confirmPassword,
-      age: age!,
+      age: age,
     ) :
         RegisterParams(
           userName: userName,
@@ -336,15 +336,16 @@ class RegisterCubit extends Cubit<RegisterStates>{
           gander: gander,
           country: country,
           governorate: governorate,
-          city: '',
+          city: city,
           password: password,
           confirmPassword: confirmPassword,
           fixedPrice: fixedPrice!,
+          experience: experience!,
           facebookLink: facebookLink!,
           youTubeLink: youTubeLink!,
           tikTokLink: tikTokLink!,
           instagramLink: instagramLink!,
-          age: age!,
+          age: age,
         )
     );
 
@@ -436,4 +437,36 @@ class RegisterCubit extends Cubit<RegisterStates>{
     currentGovernment = '${placeMark.administrativeArea}';
     emit(GetPlaceState());
   }
+
+  bool locationPermission = false;
+  bool locationServiceEnabled = false;
+
+  void getPermission() async{
+    await Geolocator.requestPermission().then((value){
+      if(value.name == 'denied' || value.name == 'deniedForever'|| value.name =='unableToDetermine'){
+        locationPermission = false;
+      }else{
+        locationPermission = true;
+      }
+    });
+
+    locationServiceEnabled = await Geolocator.isLocationServiceEnabled();
+  }
+
+  Future<void> getLocation()async{
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    currentLat = position.latitude;
+    currentLng = position.longitude;
+    debugPrintFullText(currentLat.toString());
+    debugPrintFullText(currentLng.toString());
+
+    List<Placemark> placeMarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+    debugPrintFullText(placeMarks.toString());
+    Placemark placeMark = placeMarks[0];
+    countryRegister = '${placeMark.country}';
+    cityRegister = '${placeMark.subAdministrativeArea}';
+    governmentRegister = '${placeMark.administrativeArea}';
+    emit(GetLocationState());
+  }
+
 }

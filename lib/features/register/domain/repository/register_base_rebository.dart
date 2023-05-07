@@ -36,6 +36,7 @@ abstract class RegisterBaseRepository {
     int? currentTall,
     int? bodyFat,
     int? fixedPrice,
+    int? experience,
     String? facebookLink,
     String? instagramLink,
     String? youTubeLink,

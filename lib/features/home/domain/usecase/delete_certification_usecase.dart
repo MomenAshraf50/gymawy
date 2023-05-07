@@ -19,7 +19,7 @@ class DeleteCertificateUseCase implements UseCase<void, DeleteCertificateParams>
 }
 
 class DeleteCertificateParams extends Equatable {
-  final String certificateId;
+  final int certificateId;
 
 
   const DeleteCertificateParams({

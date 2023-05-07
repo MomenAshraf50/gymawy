@@ -1,10 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gymawy/core/util/resources/bloc_observer_manager.dart';
 import 'package:gymawy/features/login/presentation/screens/splash_screen.dart';
 import 'package:gymawy/features/register/presentation/controller/register_cubit.dart';
@@ -34,29 +32,11 @@ void main() async
   });
 
 
-  if (defaultTargetPlatform == TargetPlatform.android) {
-    AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
-  }
-  await Geolocator.requestPermission();
-  bool permission = await Geolocator.isLocationServiceEnabled();
-  if(permission){
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    currentLat = position.latitude;
-    currentLng = position.longitude;
-    debugPrintFullText(currentLat.toString());
-    debugPrintFullText(currentLng.toString());
 
-    List<Placemark> placeMarks = await placemarkFromCoordinates(position.latitude, position.longitude);
-    debugPrintFullText(placeMarks.toString());
-    Placemark placeMark = placeMarks[0];
-    currentCountry = '${placeMark.country}';
-    currentCity = '${placeMark.subAdministrativeArea}';
-    currentGovernment = '${placeMark.administrativeArea}';
-  }
 
 
   await di.init();
-   bool isRtl = false;
+  bool isRtl = false;
   token = await sl<CacheHelper>().get('token');
   userId = await sl<CacheHelper>().get('userId');
   userName = await sl<CacheHelper>().get('userName');
@@ -137,6 +117,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             themeMode:ThemeMode.light,
             theme: AppBloc.get(context).lightTheme,
+
 
             // initialRoute: Routes.splash,
             // routes: Routes.routes,

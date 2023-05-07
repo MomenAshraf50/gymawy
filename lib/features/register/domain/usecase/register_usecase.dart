@@ -32,6 +32,7 @@ class RegisterUseCase
       city: params.city,
       age: params.age,
       fixedPrice: params.fixedPrice,
+      experience: params.experience,
       facebookLink: params.facebookLink,
       instagramLink: params.instagramLink,
       youTubeLink: params.youTubeLink,
@@ -57,6 +58,7 @@ class RegisterParams extends Equatable {
   final String confirmPassword;
   final String age;
   final int? fixedPrice;
+  final int? experience;
   final String? facebookLink;
   final String? instagramLink;
   final String? youTubeLink;
@@ -80,6 +82,7 @@ class RegisterParams extends Equatable {
     required this.confirmPassword,
     required this.age,
      this.fixedPrice,
+     this.experience,
      this.facebookLink,
      this.instagramLink,
      this.youTubeLink,
