@@ -1,4 +1,3 @@
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
@@ -34,12 +33,6 @@ class CreateAccountScreen extends StatelessWidget {
                 key: formKey,
                 child: Column(
                   children: [
-                    if (registerCubit.isCoach)
-                      const DefaultText(
-                        title: AppString.hey_coach,
-                        style: Style.small,
-                        fontWeight: FontWeight.bold,
-                      ),
                     const DefaultText(
                       title: AppString.create_your_account,
                       style: Style.small,
@@ -50,73 +43,78 @@ class CreateAccountScreen extends StatelessWidget {
                       alignment: AlignmentDirectional.bottomEnd,
                       children: [
                         registerCubit.imageFile == null
-                            ? svgImage(path: Assets.images.svg.group2584,height: 16.h,width: 16.w)
+                            ? svgImage(
+                                path: Assets.images.svg.group2584,
+                                height: 16.h,
+                                width: 16.w)
                             : CircleAvatar(
                                 radius: 70.rSp,
                                 backgroundImage:
                                     FileImage(registerCubit.imageFile!),
                               ),
                         defaultActionButton(
-                          backgroundColor: ColorsManager.mainColor,
-                          icon: Icons.add,
-                          onPressed: (){
-                            registerCubit.selectImage(context);
-                          }
-                        ),
+                            backgroundColor: ColorsManager.mainColor,
+                            icon: Icons.add,
+                            onPressed: () {
+                              registerCubit.selectImage(context);
+                            }),
                       ],
                     ),
                     verticalSpace(5.h),
                     DefaultTextField(
-                        svgImg: Assets.images.svg.user,
-                        validate: (String? value) {
-                          if (value!.isEmpty) {
-                            return 'isEmpty';
-                          }
-                        },
-                        controller: registerCubit.userNameController,
-                        hint: AppString.userName,
+                      svgImg: Assets.images.svg.user,
+                      validate: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'isEmpty';
+                        }
+                        return null;
+                      },
+                      controller: registerCubit.userNameController,
+                      hint: AppString.userName,
                     ),
                     Row(
                       children: [
                         Expanded(
                           child: DefaultTextField(
-                              svgImg: Assets.images.svg.user,
-                              validate: (String? value) {
-                                if (value!.isEmpty) {
-                                  return 'isEmpty';
-                                }
-                              },
-                              controller: registerCubit.userFirstNameController,
-                              hint: AppString.firstName,
+                            svgImg: Assets.images.svg.user,
+                            validate: (String? value) {
+                              if (value!.isEmpty) {
+                                return 'isEmpty';
+                              }
+                              return null;
+                            },
+                            controller: registerCubit.userFirstNameController,
+                            hint: AppString.firstName,
                           ),
                         ),
                         horizontalSpace(5.w),
                         Expanded(
                           child: DefaultTextField(
-                              svgImg: Assets.images.svg.user,
-                              validate: (String? value) {
-                                if (value!.isEmpty) {
-                                  return 'isEmpty';
-                                }
-                              },
-                              controller: registerCubit.userLastNameController,
-                              hint: AppString.lastName,
+                            svgImg: Assets.images.svg.user,
+                            validate: (String? value) {
+                              if (value!.isEmpty) {
+                                return 'isEmpty';
+                              }
+                              return null;
+                            },
+                            controller: registerCubit.userLastNameController,
+                            hint: AppString.lastName,
                           ),
                         ),
                       ],
                     ),
                     DefaultTextField(
-                        svgImg: Assets.images.svg.age,
-                        validate: (String? value) {
-                          if (value!.isEmpty) {
-                            return 'isEmpty';
-                          }
-                        },
-                        controller: registerCubit.userAgeController,
-                        hint: AppString.userAge,
-                        type: TextInputType.number,
+                      svgImg: Assets.images.svg.age,
+                      validate: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'isEmpty';
+                        }
+                        return null;
+                      },
+                      controller: registerCubit.userAgeController,
+                      hint: AppString.userAge,
+                      type: TextInputType.number,
                     ),
-
                     DefaultTextField(
                       svgImg: Assets.images.svg.email,
                       validate: (String? value) {
@@ -128,6 +126,7 @@ class CreateAccountScreen extends StatelessWidget {
                         } else if (!emailValid) {
                           return 'Incorrect email format';
                         }
+                        return null;
                       },
                       controller: registerCubit.emailController,
                       hint: AppString.email,
@@ -138,20 +137,22 @@ class CreateAccountScreen extends StatelessWidget {
                         if (value!.isEmpty) {
                           return 'isEmpty';
                         }
+                        return null;
                       },
                       controller: registerCubit.bioController,
                       hint: AppString.bio,
                     ),
                     DefaultTextField(
-                        svgImg: Assets.images.svg.phone,
-                        validate: (String? value) {
-                          if (value!.isEmpty) {
-                            return 'isEmpty';
-                          }
-                        },
-                        controller: registerCubit.phoneController,
-                        hint: AppString.phone,
-                        type: TextInputType.number,
+                      svgImg: Assets.images.svg.phone,
+                      validate: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'isEmpty';
+                        }
+                        return null;
+                      },
+                      controller: registerCubit.phoneController,
+                      hint: AppString.phone,
+                      type: TextInputType.number,
                     ),
                     DefaultTextField(
                         isPassword: true,
@@ -163,6 +164,7 @@ class CreateAccountScreen extends StatelessWidget {
                           if (value!.isEmpty) {
                             return 'isEmpty';
                           }
+                          return null;
                         },
                         controller: registerCubit.passwordController,
                         hint: AppString.password),
@@ -173,6 +175,7 @@ class CreateAccountScreen extends StatelessWidget {
                           if (value!.isEmpty) {
                             return 'isEmpty';
                           }
+                          return null;
                         },
                         onChanged: (val) {
                           registerCubit.matchPassword();
@@ -180,8 +183,9 @@ class CreateAccountScreen extends StatelessWidget {
                         controller: registerCubit.confirmPasswordController,
                         hint: AppString.confirm_password),
                     Visibility(
-                      visible: registerCubit.passwordController.text.isNotEmpty &&
-                          !registerCubit.isPasswordValid(),
+                      visible:
+                          registerCubit.passwordController.text.isNotEmpty &&
+                              !registerCubit.isPasswordValid(),
                       child: Container(
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -210,13 +214,15 @@ class CreateAccountScreen extends StatelessWidget {
                                   child: validationRow(
                                       condition: registerCubit
                                           .isPasswordHasSpecialCharacter,
-                                      message: "Contains one special character"),
+                                      message:
+                                          "Contains one special character"),
                                 ),
                                 Container(
                                   child: validationRow(
-                                      condition:
-                                          registerCubit.isPasswordEightCharacters,
-                                      message: "Contains at least 8 characters"),
+                                      condition: registerCubit
+                                          .isPasswordEightCharacters,
+                                      message:
+                                          "Contains at least 8 characters"),
                                 ),
                               ],
                             ),
@@ -225,7 +231,9 @@ class CreateAccountScreen extends StatelessWidget {
                       ),
                     ),
                     Visibility(
-                      visible: !registerCubit.isPasswordMach(),
+                      visible: registerCubit
+                              .confirmPasswordController.text.isNotEmpty &&
+                          !registerCubit.isPasswordMach(),
                       child: Container(
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -246,7 +254,8 @@ class CreateAccountScreen extends StatelessWidget {
                               children: [
                                 Container(
                                   child: validationRow(
-                                      condition: registerCubit.isPasswordNotMach,
+                                      condition:
+                                          registerCubit.isPasswordNotMach,
                                       message: "password does not match"),
                                 ),
                               ],
@@ -262,28 +271,44 @@ class CreateAccountScreen extends StatelessWidget {
                         height: 3.h,
                         text: AppString.next,
                         onPressed: () {
-                          if(formKey.currentState!.validate()){
-                            if(registerCubit.imageFile != null && registerCubit.isPasswordValid()){
-                              registerCubit.nextPage(true, context,);
-                              userPicRegister= registerCubit.imageFile;
-                              userNameRegister = registerCubit.userNameController.text;
-                              firstNameRegister = registerCubit.userFirstNameController.text;
-                              lastNameRegister = registerCubit.userLastNameController.text;
-                              fullNameRegister = '${registerCubit.userFirstNameController.text} ${registerCubit.userLastNameController.text}';
-                              ageRegister = registerCubit.userAgeController.text;
-                              emailRegister = registerCubit.emailController.text;
-                              phoneRegister = registerCubit.phoneController.text;
-                              passwordRegister = registerCubit.passwordController.text;
-                              confirmPasswordRegister = registerCubit.confirmPasswordController.text;
-                              bio = registerCubit.bioController.text;
-                            }else{
-                              designToastDialog(
-                                  context: context,
-                                  toast: TOAST.error,
-                                  text: 'Please complete your data'
-                              );
+                          if(registerCubit.imageFile != null){
+                            if (formKey.currentState!.validate()) {
+                              if (registerCubit.isPasswordValid()) {
+                                registerCubit.nextPage(
+                                  true,
+                                  context,
+                                );
+                                userPicRegister = registerCubit.imageFile;
+                                userNameRegister =
+                                    registerCubit.userNameController.text;
+                                firstNameRegister =
+                                    registerCubit.userFirstNameController.text;
+                                lastNameRegister =
+                                    registerCubit.userLastNameController.text;
+                                fullNameRegister =
+                                '${registerCubit.userFirstNameController.text} ${registerCubit.userLastNameController.text}';
+                                ageRegister =
+                                    registerCubit.userAgeController.text;
+                                emailRegister =
+                                    registerCubit.emailController.text;
+                                phoneRegister =
+                                    registerCubit.phoneController.text;
+                                passwordRegister =
+                                    registerCubit.passwordController.text;
+                                confirmPasswordRegister =
+                                    registerCubit.confirmPasswordController.text;
+                                bio = registerCubit.bioController.text;
+                              } else {
+                                designToastDialog(
+                                    context: context,
+                                    toast: TOAST.error,
+                                    text: 'Please complete your data');
+                              }
                             }
+                          }else {
+                            designToastDialog(context: context, toast: TOAST.warning,text: 'Please select profile picture');
                           }
+
                         }),
                   ],
                 ),

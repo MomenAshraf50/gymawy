@@ -36,6 +36,7 @@ import 'package:gymawy/features/home/domain/usecase/update_subscription_status_u
 import 'package:gymawy/features/home/domain/usecase/user_plan_usecase.dart';
 import 'package:gymawy/features/home/presentation/screens/qr_code/qr_code_screen.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/network/local/cache_helper.dart';
@@ -113,9 +114,6 @@ class HomeCubit extends Cubit<HomeStates> {
   final GetUserPlanUseCase _getUserPlanUseCase;
   final DeleteUserPlanUseCase _deleteUserPlanUseCase;
 
-
-
-
   HomeCubit({
     required UpdateProfilePicture updateProfilePicture,
     required UpdateProfile updateProfile,
@@ -156,7 +154,6 @@ class HomeCubit extends Cubit<HomeStates> {
     required UserPlanUseCase userPlanUseCase,
     required GetUserPlanUseCase getUserPlanUseCase,
     required DeleteUserPlanUseCase deleteUserPlanUseCase,
-
   })  : _updateProfilePicture = updateProfilePicture,
         _updateProfile = updateProfile,
         _updateCoachSocialLinks = updateCoachSocialLinks,
@@ -248,21 +245,21 @@ class HomeCubit extends Cubit<HomeStates> {
       title: AppString.nutrition,
       img: Assets.images.svg.meal,
     ),
-    if(isCoachLogin == true)
-    Suggestions(
-      title: AppString.clients,
-      img: Assets.images.svg.clients,
-    ),
-    if(isCoachLogin == true)
+    if (isCoachLogin == true)
       Suggestions(
-      title: AppString.clientProgress,
-      img: Assets.images.svg.clients,
-    ),
-    if(isCoachLogin == false)
+        title: AppString.clients,
+        img: Assets.images.svg.clients,
+      ),
+    if (isCoachLogin == true)
       Suggestions(
-      title: AppString.workoutTracker,
-      img: Assets.images.svg.clients,
-    )
+        title: AppString.clientProgress,
+        img: Assets.images.svg.clients,
+      ),
+    if (isCoachLogin == false)
+      Suggestions(
+        title: AppString.workoutTracker,
+        img: Assets.images.svg.clients,
+      )
   ];
 
   bool isCompleted = false;
@@ -323,13 +320,13 @@ class HomeCubit extends Cubit<HomeStates> {
 
   TextEditingController certificateNameController = TextEditingController();
   TextEditingController certificateSerialController = TextEditingController();
-  TextEditingController certificateDescriptionController = TextEditingController();
+  TextEditingController certificateDescriptionController =
+      TextEditingController();
   TextEditingController certificateDateController = TextEditingController();
-  TextEditingController certificateExpirationDateController = TextEditingController();
-
+  TextEditingController certificateExpirationDateController =
+      TextEditingController();
 
   TextEditingController supportTextController = TextEditingController();
-
 
   String? year;
   String? month;
@@ -345,6 +342,7 @@ class HomeCubit extends Cubit<HomeStates> {
   bool isPasswordHasSpecialCharacter = false;
   bool isPasswordHasUpperAndLower = false;
   bool isPasswordMatch = false;
+
   matchPassword() {
     if (passwordController.text == confirmPasswordController.text) {
       isPasswordMatch = true;
@@ -423,14 +421,14 @@ class HomeCubit extends Cubit<HomeStates> {
   late VideoPlayerController videoPlayerController;
 
   void initializeVideoPlayerController({
-  required String video,
+    required String video,
   }) async {
     videoPlayerController = VideoPlayerController.network(
-       // 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'
+      // 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'
       video,
       //videoPlayerOptions: VideoPlayerOptions(mixWithOthers: false,allowBackgroundPlayback: true),
     );
-   await videoPlayerController.initialize().then((value) {
+    await videoPlayerController.initialize().then((value) {
       emit(HomeExerciseExampleVideoPlayerInitialized());
     });
   }
@@ -465,8 +463,7 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void
-  updateProfile({
+  void updateProfile({
     required String userName,
     required String email,
     String? password,
@@ -486,7 +483,6 @@ class HomeCubit extends Cubit<HomeStates> {
       firstName: firstName,
       bio: bio,
       fixedPrice: fixedPrice,
-
     ));
 
     result.fold((failure) {
@@ -553,13 +549,11 @@ class HomeCubit extends Cubit<HomeStates> {
 
   ProfileEntity? profileResults;
 
-  void profile({required int id,bool? isCoach , context}) async {
+  void profile({required int id, bool? isCoach, context}) async {
     emit(ProfileLoadingState());
 
-    final result = await _profileUseCase(ProfileParams(
-      id: id,
-      isCoach: isCoach
-    ));
+    final result =
+        await _profileUseCase(ProfileParams(id: id, isCoach: isCoach));
 
     result.fold((failure) {
       emit(ProfileErrorState(mapFailureToMessage(failure)));
@@ -571,6 +565,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   FilePickerResult? certificationPdf;
   Widget? certificationImage;
+
   void selectCertificationPdf() async {
     certificationPdf = await FilePicker.platform.pickFiles(
       allowMultiple: false,
@@ -590,8 +585,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   void certificate(
-      {
-      required String id,
+      {required String id,
       required String certificateName,
       required FilePickerResult certificateFile,
       required String certificateDate,
@@ -619,7 +613,7 @@ class HomeCubit extends Cubit<HomeStates> {
   List<CertificateEntity> certificateResult = [];
   Widget? certificateResultImg;
 
-  void getCertificates(GetCertificateParams params, index) async {
+  void getCertificates(GetCertificateParams params) async {
     certificateResult = [];
     emit(GetCertificateLoadingState());
     final result = await _getCertificateUseCase(params);
@@ -631,25 +625,16 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void convertCertificateToImg(index)
-  async
-  {
-    certificateResultImg = await FilePreview.getThumbnail(certificateResult[index].certificateFile);
+  void convertCertificateToImg(index) async {
+    certificateResultImg = await FilePreview.getThumbnail(
+        certificateResult[index].certificateFile);
     emit(ConvertCertificateToImgState());
   }
 
-
-
-  void deleteCertificate(
-      {
-        required String certificateId,
-        context
-      }) async {
+  void deleteCertificate({required int certificateId, context}) async {
     emit(DeleteCertificateLoadingState());
-    final result = await _deleteCertificateUseCase(DeleteCertificateParams(
-        certificateId: certificateId
-    )
-    );
+    final result = await _deleteCertificateUseCase(
+        DeleteCertificateParams(certificateId: certificateId));
     result.fold((failure) {
       emit(DeleteCertificateErrorState(mapFailureToMessage(failure)));
     }, (data) {
@@ -657,7 +642,7 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void updateCertificate(UpdateCertificateParams params) async{
+  void updateCertificate(UpdateCertificateParams params) async {
     emit(UpdateCertificateLoadingState());
 
     final result = await _updateCertificateUseCase(params);
@@ -669,105 +654,174 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-
   bool? isVisibilityExerciseIcon = false;
   String visibilityExerciseValue = 'private';
 
   void visibilityExercise() {
     isVisibilityExerciseIcon = !isVisibilityExerciseIcon!;
-    isVisibilityExerciseIcon == true ? visibilityExerciseValue = 'public': visibilityExerciseValue = 'private';
+    isVisibilityExerciseIcon == true
+        ? visibilityExerciseValue = 'public'
+        : visibilityExerciseValue = 'private';
     debugPrintFullText('isVisibilityExerciseIcon is $isVisibilityExerciseIcon');
     debugPrintFullText('visibilityExerciseValue is $visibilityExerciseValue');
     emit(ChangeVisibilityExerciseState());
   }
 
-  List<DropdownMenuItem<String>> get exerciseItems{
-    List<DropdownMenuItem<String>> menuItems = const[
-      DropdownMenuItem(value: "Abs", child: DefaultText(title: "Abs", style: Style.extraSmall)),
-      DropdownMenuItem(value: "core", child: DefaultText(title: "core", style: Style.extraSmall)),
-      DropdownMenuItem(value: "Chest", child: DefaultText(title: "Chest", style: Style.extraSmall)),
-      DropdownMenuItem(value: "back", child: DefaultText(title: "back", style: Style.extraSmall)),
-      DropdownMenuItem(value: "Shoulder", child: DefaultText(title: "Shoulder", style: Style.extraSmall)),
-      DropdownMenuItem(value: "Arms", child: DefaultText(title: "Arms", style: Style.extraSmall)),
-      DropdownMenuItem(value: "Legs", child: DefaultText(title: "Legs", style: Style.extraSmall)),
+  List<DropdownMenuItem<String>> get exerciseItems {
+    List<DropdownMenuItem<String>> menuItems = const [
+      DropdownMenuItem(
+          value: "Abs",
+          child: DefaultText(title: "Abs", style: Style.extraSmall)),
+      DropdownMenuItem(
+          value: "core",
+          child: DefaultText(title: "core", style: Style.extraSmall)),
+      DropdownMenuItem(
+          value: "Chest",
+          child: DefaultText(title: "Chest", style: Style.extraSmall)),
+      DropdownMenuItem(
+          value: "back",
+          child: DefaultText(title: "back", style: Style.extraSmall)),
+      DropdownMenuItem(
+          value: "Shoulder",
+          child: DefaultText(title: "Shoulder", style: Style.extraSmall)),
+      DropdownMenuItem(
+          value: "Arms",
+          child: DefaultText(title: "Arms", style: Style.extraSmall)),
+      DropdownMenuItem(
+          value: "Legs",
+          child: DefaultText(title: "Legs", style: Style.extraSmall)),
     ];
     emit(ExerciseItemsState());
     return menuItems;
   }
 
-  List<DropdownMenuItem<String>>? exerciseValue = const[
-  DropdownMenuItem(value: "Abs", child: DefaultText(title: "Abs", style: Style.extraSmall)),
-  DropdownMenuItem(value: "core", child: DefaultText(title: "core", style: Style.extraSmall)),
-  DropdownMenuItem(value: "Chest", child: DefaultText(title: "Chest", style: Style.extraSmall)),
-  DropdownMenuItem(value: "back", child: DefaultText(title: "back", style: Style.extraSmall)),
-  DropdownMenuItem(value: "Shoulder", child: DefaultText(title: "Shoulder", style: Style.extraSmall)),
-  DropdownMenuItem(value: "Arms", child: DefaultText(title: "Arms", style: Style.extraSmall)),
-  DropdownMenuItem(value: "Legs", child: DefaultText(title: "Legs", style: Style.extraSmall)),
+  List<DropdownMenuItem<String>>? exerciseValue = const [
+    DropdownMenuItem(
+        value: "Abs",
+        child: DefaultText(title: "Abs", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "core",
+        child: DefaultText(title: "core", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Chest",
+        child: DefaultText(title: "Chest", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "back",
+        child: DefaultText(title: "back", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Shoulder",
+        child: DefaultText(title: "Shoulder", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Arms",
+        child: DefaultText(title: "Arms", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Legs",
+        child: DefaultText(title: "Legs", style: Style.extraSmall)),
   ];
-  void pickExercise()
-  {
+
+  void pickExercise() {
     exerciseValue;
     emit(ExerciseItemsState());
   }
+
   String selectedValue = 'Abs';
 
   String selectedDay = 'D1';
 
-  List<DropdownMenuItem<String>>? daysValue = const[
-    DropdownMenuItem(value: "D1", child: DefaultText(title: "Day 1", style: Style.extraSmall)),
-    DropdownMenuItem(value: "D2", child: DefaultText(title: "Day 2", style: Style.extraSmall)),
-    DropdownMenuItem(value: "D3", child: DefaultText(title: "Day 3", style: Style.extraSmall)),
-    DropdownMenuItem(value: "D4", child: DefaultText(title: "Day 4", style: Style.extraSmall)),
-    DropdownMenuItem(value: "D5", child: DefaultText(title: "Day 5", style: Style.extraSmall)),
-    DropdownMenuItem(value: "D6", child: DefaultText(title: "Day 6", style: Style.extraSmall)),
-    DropdownMenuItem(value: "D7", child: DefaultText(title: "Day 7", style: Style.extraSmall)),
+  List<DropdownMenuItem<String>>? daysValue = const [
+    DropdownMenuItem(
+        value: "D1",
+        child: DefaultText(title: "Day 1", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "D2",
+        child: DefaultText(title: "Day 2", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "D3",
+        child: DefaultText(title: "Day 3", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "D4",
+        child: DefaultText(title: "Day 4", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "D5",
+        child: DefaultText(title: "Day 5", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "D6",
+        child: DefaultText(title: "Day 6", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "D7",
+        child: DefaultText(title: "Day 7", style: Style.extraSmall)),
   ];
 
   String selectedNutritionValue = 'Carbohydrates';
 
-  List<DropdownMenuItem<String>>? selectedNutritionCat = const[
-    DropdownMenuItem(value: "Carbohydrates", child: DefaultText(title: "Carbohydrates", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Proteins", child: DefaultText(title: "Proteins", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Fats", child: DefaultText(title: "Fats", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Minerals", child: DefaultText(title: "Minerals", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Dietary fibre", child: DefaultText(title: "Dietary fibre", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Fruit", child: DefaultText(title: "Fruit", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Salad vegetables", child: DefaultText(title: "Salad vegetables", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Cooked vegetables", child: DefaultText(title: "Cooked vegetables", style: Style.extraSmall)),
+  List<DropdownMenuItem<String>>? selectedNutritionCat = const [
+    DropdownMenuItem(
+        value: "Carbohydrates",
+        child: DefaultText(title: "Carbohydrates", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Proteins",
+        child: DefaultText(title: "Proteins", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Fats",
+        child: DefaultText(title: "Fats", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Minerals",
+        child: DefaultText(title: "Minerals", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Dietary fibre",
+        child: DefaultText(title: "Dietary fibre", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Fruit",
+        child: DefaultText(title: "Fruit", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Salad vegetables",
+        child: DefaultText(title: "Salad vegetables", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Cooked vegetables",
+        child:
+            DefaultText(title: "Cooked vegetables", style: Style.extraSmall)),
   ];
 
   String selectedMealValue = 'Breakfast';
 
-  List<DropdownMenuItem<String>>? selectedMeal = const[
-    DropdownMenuItem(value: "Breakfast", child: DefaultText(title: "Breakfast", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Snack", child: DefaultText(title: "Snack", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Lunch", child: DefaultText(title: "Lunch", style: Style.extraSmall)),
-    DropdownMenuItem(value: "Dinner", child: DefaultText(title: "Dinner", style: Style.extraSmall)),
+  List<DropdownMenuItem<String>>? selectedMeal = const [
+    DropdownMenuItem(
+        value: "Breakfast",
+        child: DefaultText(title: "Breakfast", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Snack",
+        child: DefaultText(title: "Snack", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Lunch",
+        child: DefaultText(title: "Lunch", style: Style.extraSmall)),
+    DropdownMenuItem(
+        value: "Dinner",
+        child: DefaultText(title: "Dinner", style: Style.extraSmall)),
   ];
 
-
-  void changeDropDownSelectedValue(String value){
+  void changeDropDownSelectedValue(String value) {
     selectedValue = value;
     emit(ChangeDropDownSelectedValueState());
   }
 
-  void changeDropDownSelectedMeal(String value){
+  void changeDropDownSelectedMeal(String value) {
     selectedMealValue = value;
     emit(ChangeDropDownSelectedValueState());
   }
 
-  void changeDropDownSelectedDay(String value){
+  void changeDropDownSelectedDay(String value) {
     selectedDay = value;
     emit(ChangeDropDownSelectedValueState());
   }
 
-  void changeDropDownSelectedNutritionCValue(String value){
+  void changeDropDownSelectedNutritionCValue(String value) {
     selectedNutritionValue = value;
     emit(ChangeDropDownSelectedValueState());
   }
 
   FilePickerResult? exerciseVideo;
   Widget? exercisePreVideo;
+
   void selectExerciseVideo() async {
     exerciseVideo = await FilePicker.platform.pickFiles(
       allowMultiple: false,
@@ -822,16 +876,14 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(PickExerciseVideoState());
   }
 
-  void addExercise(
-      {
-        required String exerciseName,
-        required String exerciseCategory,
-        required String exerciseVisibility,
-        required File exercisePic,
-        required FilePickerResult exerciseVideo,
-        required BuildContext context,
-      }
-      ) async {
+  void addExercise({
+    required String exerciseName,
+    required String exerciseCategory,
+    required String exerciseVisibility,
+    required File exercisePic,
+    required FilePickerResult exerciseVideo,
+    required BuildContext context,
+  }) async {
     emit(AddExerciseLoadingState());
 
     final result = await _addExerciseUseCase(AddExerciseParams(
@@ -840,14 +892,12 @@ class HomeCubit extends Cubit<HomeStates> {
         exerciseVisibility: exerciseVisibility,
         exercisePic: exercisePic,
         exerciseVideo: exerciseVideo,
-        context: context
-    ));
+        context: context));
 
     result.fold((failure) {
       emit(AddExerciseErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(AddExerciseSuccessState(data));
-
     });
   }
 
@@ -856,42 +906,31 @@ class HomeCubit extends Cubit<HomeStates> {
   late StreamController<double> progressController = StreamController<double>();
   late Stream<double> progressStream = progressController.stream;
 
-  void changeProgressValue({
-  required progressValue,
-  required totalValue
-})
-  {
-
+  void changeProgressValue({required progressValue, required totalValue}) {
     countProgressValue = progressValue;
-    totalProgressValue =  totalValue;
+    totalProgressValue = totalValue;
     progressController.add(((countProgressValue / totalProgressValue) * 100));
   }
 
-  void getProgressValue()
-  {
-
-  }
+  void getProgressValue() {}
 
   List<AddExerciseEntity>? exerciseResult;
-  void getExercise({
-    String? searchExercise
-}) async {
+
+  void getExercise({String? searchExercise}) async {
     emit(GetExerciseLoadingState());
 
-    final result = await _getExerciseUseCase(GetExerciseParams(
-        searchExercise: searchExercise
-    ));
+    final result = await _getExerciseUseCase(
+        GetExerciseParams(searchExercise: searchExercise));
 
     result.fold((failure) {
       emit(GetExerciseErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(GetExerciseSuccessState(data));
       exerciseResult = data;
-
     });
   }
 
-  void updateExercise(AddExerciseParams params) async{
+  void updateExercise(AddExerciseParams params) async {
     emit(UpdateExerciseLoadingState());
 
     final result = await _updateExerciseUseCase(params);
@@ -903,50 +942,44 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void deleteExercise(DeleteExerciseParams params) async{
+  void deleteExercise(DeleteExerciseParams params) async {
     emit(DeleteExerciseLoadingState());
 
     final result = await _deleteExerciseUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(DeleteExerciseErrorState(mapFailureToMessage(failure)));
-    }, (r){
+    }, (r) {
       emit(DeleteExerciseSuccessState());
     });
-
   }
 
-
-  void addPlan(
-      {
-        required bool isNutrition,
-        required String planName,
-        required String planVisibility,
-      }
-      ) async {
+  void addPlan({
+    required bool isNutrition,
+    required String planName,
+    required String planVisibility,
+  }) async {
     emit(AddPlanLoadingState());
 
     final result = await _addExercisePlanUseCase(AddPlanParams(
-        isNutrition: isNutrition,
-        planName: planName,
-        planVisibility: planVisibility,
+      isNutrition: isNutrition,
+      planName: planName,
+      planVisibility: planVisibility,
     ));
 
     result.fold((failure) {
       emit(AddPlanErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(AddPlanSuccessState(data));
-
     });
   }
 
   List<AddPlanEntity>? planResult;
-  void getPlan(
-    {
-      String? searchPlan,
-      required bool isNutrition,
-    }
-      ) async {
+
+  void getPlan({
+    String? searchPlan,
+    required bool isNutrition,
+  }) async {
     planResult = null;
     emit(GetExercisePlanLoadingState());
 
@@ -960,18 +993,14 @@ class HomeCubit extends Cubit<HomeStates> {
     }, (data) {
       emit(GetExercisePlanSuccessState(data));
       planResult = data;
-
     });
   }
 
   void updatePlan(
-      {
-        required String planName,
-        required String planVisibility,
-        required int planId,
-        required bool isNutrition
-      }
-      ) async {
+      {required String planName,
+      required String planVisibility,
+      required int planId,
+      required bool isNutrition}) async {
     emit(UpdatePlanLoadingState());
 
     final result = await _updateExercisePlanUseCase(AddPlanParams(
@@ -988,41 +1017,41 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void deletePlan(DeletePlanParams params) async{
+  void deletePlan(DeletePlanParams params) async {
     emit(DeleteExercisePlanLoadingState());
 
     final result = await _deleteExercisePlanUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(DeleteExercisePlanErrorState(mapFailureToMessage(failure)));
-    }, (r){
+    }, (r) {
       emit(DeleteExercisePlanSuccessState());
     });
-
   }
 
   ExerciseDetailsEntity? exerciseDetailsEntity;
 
-  void addExerciseDetails(ExerciseDetailsParams params)async{
+  void addExerciseDetails(ExerciseDetailsParams params) async {
     emit(AddExerciseDetailsLoadingState());
 
     final result = await _addExerciseDetailsUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(AddExerciseDetailsErrorState(mapFailureToMessage(failure)));
-    }, (data){
+    }, (data) {
       exerciseDetailsEntity = data;
       emit(AddExerciseDetailsSuccessState());
     });
   }
 
-
   List<ExerciseDetailsEntity>? exerciseDetailsResult;
+
   void getExercisePlanDetails(int exercisePlanId) async {
     emit(GetExerciseDetailsLoadingState());
     exerciseDetailsResult = [];
 
-    final result = await _getExercisePlanDetailsUseCase( GetExercisePlanDetailsParams(exercisePlanId));
+    final result = await _getExercisePlanDetailsUseCase(
+        GetExercisePlanDetailsParams(exercisePlanId));
 
     result.fold((failure) {
       emit(GetExerciseDetailsErrorState(mapFailureToMessage(failure)));
@@ -1032,18 +1061,16 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-
-  void deleteExercisePlanDetails(DeleteExercisePlanDetailsParams params) async{
+  void deleteExercisePlanDetails(DeleteExercisePlanDetailsParams params) async {
     emit(DeleteExercisePlanDetailsLoadingState());
 
     final result = await _deleteExercisePlanDetailsUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(DeleteExercisePlanDetailsErrorState(mapFailureToMessage(failure)));
-    }, (r){
+    }, (r) {
       emit(DeleteExercisePlanDetailsSuccessState());
     });
-
   }
 
   Future<void> share() async {
@@ -1051,37 +1078,32 @@ class HomeCubit extends Cubit<HomeStates> {
         title: 'Share Gymmawy',
         text: 'Share Gymmawy',
         linkUrl: 'https://flutter.dev/',
-        chooserTitle: 'Share link via'
-    );
+        chooserTitle: 'Share link via');
   }
-
 
   List? component;
   List? quantity;
 
-  void components(Map componentNutrition)
-  {
+  void components(Map componentNutrition) {
     component = componentNutrition.keys.toList();
     quantity = componentNutrition.values.toList();
     emit(ComponentsStates());
   }
 
-  void addNutrition(
-      {
-        int? nutritionId,
-        required bool update,
-        required double calories,
-        required double carb,
-        required double fat,
-        required double protein,
-        required String nutritionName,
-        required String nutritionCategory,
-        required String nutritionVisibility,
-        File? nutritionPic,
-        String? howToPrepare,
-        required Map component,
-      }
-      ) async {
+  void addNutrition({
+    int? nutritionId,
+    required bool update,
+    required double calories,
+    required double carb,
+    required double fat,
+    required double protein,
+    required String nutritionName,
+    required String nutritionCategory,
+    required String nutritionVisibility,
+    File? nutritionPic,
+    String? howToPrepare,
+    required Map component,
+  }) async {
     emit(AddNutritionLoadingState());
 
     final result = await _addNutritionUseCase(AddNutritionParams(
@@ -1090,7 +1112,7 @@ class HomeCubit extends Cubit<HomeStates> {
       calories: calories,
       carb: carb,
       fat: fat,
-      protein:protein ,
+      protein: protein,
       nutritionName: nutritionName,
       nutritionPic: nutritionPic,
       nutritionCategory: nutritionCategory,
@@ -1103,18 +1125,12 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(AddNutritionErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(AddNutritionSuccessState(data));
-
     });
   }
 
-
-
-
-
   List<AddNutritionEntity>? nutritionResult;
-  void getNutrition({
-  String? search
-    }) async {
+
+  void getNutrition({String? search}) async {
     emit(GetNutritionLoadingState());
 
     final result = await _getNutritionUseCase(GetNutritionParams(
@@ -1126,31 +1142,29 @@ class HomeCubit extends Cubit<HomeStates> {
     }, (data) {
       emit(GetNutritionSuccessState(data));
       nutritionResult = data;
-
     });
   }
 
-  void deleteNutrition(DeleteNutritionParams params)async {
+  void deleteNutrition(DeleteNutritionParams params) async {
     emit(DeleteNutritionLoadingState());
 
     final result = await _deleteNutritionUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(DeleteNutritionErrorState(mapFailureToMessage(failure)));
-    }, (data){
+    }, (data) {
       emit(DeleteNutritionSuccessState());
     });
   }
 
-
-  void addNutritionDetails(NutritionDetailsParams params)async{
+  void addNutritionDetails(NutritionDetailsParams params) async {
     emit(AddNutritionDetailsLoadingState());
 
     final result = await _addNutritionDetailsUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(AddNutritionDetailsErrorState(mapFailureToMessage(failure)));
-    }, (data){
+    }, (data) {
       emit(AddNutritionDetailsSuccessState());
     });
   }
@@ -1158,7 +1172,8 @@ class HomeCubit extends Cubit<HomeStates> {
   void getNutritionPlanDetails(int nutritionPlanId) async {
     emit(GetNutritionDetailsLoadingState());
 
-    final result = await _getNutritionPlanDetailsUseCase(GetNutritionPlanDetailsParams(nutritionPlanId));
+    final result = await _getNutritionPlanDetailsUseCase(
+        GetNutritionPlanDetailsParams(nutritionPlanId));
 
     result.fold((failure) {
       emit(GetNutritionDetailsErrorState(mapFailureToMessage(failure)));
@@ -1167,66 +1182,64 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-
-  void subscriptionRequest(SubscriptionRequestParams params)async {
+  void subscriptionRequest(SubscriptionRequestParams params) async {
     emit(SubscriptionRequestLoadingState());
     final result = await _subscriptionRequestUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(SubscriptionRequestErrorState(mapFailureToMessage(failure)));
-    }, (data){
+    }, (data) {
       emit(SubscriptionRequestSuccessState(data));
     });
   }
 
-  void getSubscriptionRequests(GetSubscriptionsRequestsParams params)async {
+  void getSubscriptionRequests(GetSubscriptionsRequestsParams params) async {
     emit(GetSubscriptionRequestLoadingState());
     final result = await _getSubscriptionUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(GetSubscriptionRequestErrorState(mapFailureToMessage(failure)));
-    }, (data){
+    }, (data) {
       emit(GetSubscriptionRequestSuccessState(data));
     });
   }
 
-
-  void deleteSubscriptionRequest(DeleteSubscriptionRequestParams params)async {
+  void deleteSubscriptionRequest(DeleteSubscriptionRequestParams params) async {
     emit(DeleteSubscriptionRequestLoadingState());
 
     final result = await _deleteSubscriptionRequestUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(DeleteSubscriptionRequestErrorState(mapFailureToMessage(failure)));
-    }, (data){
+    }, (data) {
       emit(DeleteSubscriptionRequestSuccessState());
     });
   }
 
-  void getNotifications() async{
+  void getNotifications() async {
     emit(GetNotificationsLoadingState());
     final result = await _getNotificationsUseCase(NoParams());
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(GetNotificationsErrorState(mapFailureToMessage(failure)));
-    } , (data){
+    }, (data) {
       emit(GetNotificationsSuccessState(data));
     });
   }
 
-  void markAsRead(MarkAsReadParams params)async {
+  void markAsRead(MarkAsReadParams params) async {
     emit(MarkAsReadLoadingState());
 
     final result = await _markAsReadUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(MarkAsReadErrorState(mapFailureToMessage(failure)));
-    }, (data){
+    }, (data) {
       emit(MarkAsReadSuccessState());
     });
   }
 
-  void getCoachSubscriptions()async {
+  void getCoachSubscriptions() async {
     emit(GetCoachSubscriptionsLoadingState());
 
     final result = await _getCoachSubscriptionsUseCase(NoParams());
@@ -1238,7 +1251,7 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void updateSubscriptionStatus(UpdateSubscriptionStatusParams params)async {
+  void updateSubscriptionStatus(UpdateSubscriptionStatusParams params) async {
     emit(UpdateSubscriptionStatusLoadingState());
 
     final result = await _updateSubscriptionStatusUseCase(params);
@@ -1250,80 +1263,90 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void notificationsSubscription(NotificationsSubscriptionParams params)async{
+  void notificationsSubscription(NotificationsSubscriptionParams params) async {
     emit(NotificationsSubscriptionLoadingState());
     final result = await _notificationsSubscriptionUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(NotificationsSubscriptionErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(NotificationsSubscriptionSuccessState());
     });
   }
 
-  void bodyMeasurements(BodyMeasurementsParams params) async{
+  void bodyMeasurements(BodyMeasurementsParams params) async {
     emit(BodyMeasurementsLoadingState());
     final result = await _bodyMeasurementsUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(BodyMeasurementsErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(BodyMeasurementsSuccessState(data));
     });
   }
 
-  void getBodyMeasurements(GetBodyMeasurementsParams params) async{
+  void getBodyMeasurements(GetBodyMeasurementsParams params) async {
     emit(GetBodyMeasurementsLoadingState());
     final result = await _getBodyMeasurementsUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(GetBodyMeasurementsErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(GetBodyMeasurementsSuccessState(data));
     });
   }
 
-  void deleteBodyMeasurements() async{
+  void deleteBodyMeasurements() async {
     emit(DeleteBodyMeasurementsLoadingState());
     final result = await _deleteBodyMeasurementsUseCase(NoParams());
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(DeleteBodyMeasurementsErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(DeleteBodyMeasurementsSuccessState());
     });
   }
 
-  void userPlan(UserPlanParams params) async{
+  void userPlan(UserPlanParams params) async {
     emit(UserPlanLoadingState());
     final result = await _userPlanUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(UserPlanErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(UserPlanSuccessState(data));
     });
   }
 
-  void getUserPlan() async{
+  void getUserPlan() async {
     emit(GetUserPlanLoadingState());
     final result = await _getUserPlanUseCase(NoParams());
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(GetUserPlanErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(GetUserPlanSuccessState(data));
     });
   }
 
-  void deleteUserPlan(DeleteUserPlanParams params)async{
+  void deleteUserPlan(DeleteUserPlanParams params) async {
     emit(DeleteUserPlanLoadingState());
     final result = await _deleteUserPlanUseCase(params);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(DeleteUserPlanErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(DeleteUserPlanSuccessState());
+    });
+  }
+
+  Future<void> launch(Uri link) async {
+    await launchUrl(
+      link,
+      mode: LaunchMode.externalApplication,
+
+    ).catchError((error) {
+      throw Exception(error);
     });
   }
 }

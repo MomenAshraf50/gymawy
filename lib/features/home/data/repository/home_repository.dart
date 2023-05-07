@@ -242,7 +242,7 @@ class HomeRepository extends HomeBaseRepository {
 
   @override
   Future<Either<Failure, void>> deleteCertificate({
-    required String certificateId,
+    required int certificateId,
   }) async {
     return await fetchDeleteCertificate(() {
       return remoteDataSource.deleteCertificate(certificateId: certificateId);

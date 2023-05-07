@@ -38,6 +38,7 @@ class SettingsScreen extends StatelessWidget {
                     }
                     if (state is NotificationsSubscriptionLoadingState) {
                       showDialog(
+                        barrierDismissible: false,
                           context: context,
                           builder: (context) => Dialog(
                                 child: SizedBox(

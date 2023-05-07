@@ -45,8 +45,7 @@ class AddCoachCertifications extends StatelessWidget {
               GetCertificateParams(
                 ownerId: userId!,
                 ownerName: '',
-              ),
-              context);
+              ));
           designToastDialog(
               context: context,
               toast: TOAST.success,
@@ -64,8 +63,7 @@ class AddCoachCertifications extends StatelessWidget {
               GetCertificateParams(
                 ownerId: userId!,
                 ownerName: '',
-              ),
-              context);
+              ));
           designToastDialog(
               context: context,
               toast: TOAST.success,

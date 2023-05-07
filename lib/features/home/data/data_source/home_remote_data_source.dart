@@ -77,7 +77,7 @@ abstract class HomeBaseDataSource {
   Future<List<CertificateModel>> getCertificate(GetCertificateParams params);
 
   Future<void> deleteCertificate({
-    required String certificateId,
+    required int certificateId,
   });
 
   Future<CertificateModel> updateCertificate(UpdateCertificateParams params);
@@ -327,7 +327,7 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
 
   @override
   Future<void> deleteCertificate({
-    required String certificateId,
+    required int certificateId,
   }) async {
     final Response f = await dioHelper.delete(
       token: token,

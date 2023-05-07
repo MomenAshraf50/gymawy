@@ -14,7 +14,7 @@ abstract class DioHelper {
     String? token,
     ProgressCallback? progressCallback,
     CancelToken? cancelToken,
-    int? timeOut,
+    Duration? timeOut,
     bool isMultipart = false,
   });
 
@@ -25,7 +25,7 @@ abstract class DioHelper {
     dynamic query,
     String? token,
     CancelToken? cancelToken,
-    int? timeOut,
+    Duration? timeOut,
     bool isMultipart = false,
   });
 
@@ -36,7 +36,7 @@ abstract class DioHelper {
     dynamic query,
     String? token,
     CancelToken? cancelToken,
-    int? timeOut,
+    Duration? timeOut,
     bool isMultipart = false,
   });
 
@@ -48,7 +48,7 @@ abstract class DioHelper {
     String? token,
     ProgressCallback? progressCallback,
     CancelToken? cancelToken,
-    int? timeOut,
+    Duration? timeOut,
     bool isMultipart = false,
 
   });
@@ -61,7 +61,7 @@ abstract class DioHelper {
     String? token,
     ProgressCallback? progressCallback,
     CancelToken? cancelToken,
-    int? timeOut,
+    Duration? timeOut,
     bool isMultipart = false,
 
   });
@@ -72,7 +72,7 @@ class DioImpl extends DioHelper {
     BaseOptions(
       baseUrl: baseUrl,
       receiveDataWhenStatusError: true,
-      connectTimeout: 9000,
+      connectTimeout: const Duration(seconds: 20),
     ),
   );
 
@@ -85,7 +85,7 @@ class DioImpl extends DioHelper {
     String? token,
     ProgressCallback? progressCallback,
     CancelToken? cancelToken,
-    int? timeOut,
+    Duration? timeOut,
     bool isMultipart = false,
   }) async {
     if (timeOut != null) {
@@ -139,7 +139,7 @@ class DioImpl extends DioHelper {
     dynamic query,
     String? token,
     CancelToken? cancelToken,
-    int? timeOut,
+    Duration? timeOut,
     bool isMultipart = false,
   }) async {
     if (timeOut != null) {
@@ -187,7 +187,7 @@ class DioImpl extends DioHelper {
     dynamic query,
     String? token,
     CancelToken? cancelToken,
-    int? timeOut,
+    Duration? timeOut,
     bool isMultipart = false,
   }) async {
     if (timeOut != null) {
@@ -237,7 +237,7 @@ class DioImpl extends DioHelper {
     String? token,
     ProgressCallback? progressCallback,
     CancelToken? cancelToken,
-    int? timeOut,
+    Duration? timeOut,
     bool isMultipart = false,
   }) async {
     if (timeOut != null) {
@@ -288,7 +288,7 @@ class DioImpl extends DioHelper {
     String? token,
     ProgressCallback? progressCallback,
     CancelToken? cancelToken,
-    int? timeOut,
+    Duration? timeOut,
     bool isMultipart = false,
   }) async {
     if (timeOut != null) {
@@ -367,7 +367,7 @@ extension on DioHelper {
         throw ServerException(
           // error: e.error.toString(),
           // code: 500,
-          message: e.message,
+          message: e.message ?? 'Something went wrong',
         );
       }
     } catch (e) {

@@ -28,6 +28,7 @@ class AppString {
   static const choose_gender = 'choose gender';
   static const date_of_brith = 'Date of Brith';
   static const price_of_month = 'Price per Month';
+  static const experience = 'Years of experience';
   static const select_currency = 'Select Currency';
   static const send = 'send';
   static const next = 'Next';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
+import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 
 class DefaultTextField extends StatelessWidget {
@@ -50,50 +51,69 @@ class DefaultTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: margin,
-      padding: EdgeInsetsDirectional.symmetric(horizontal: 20.rSp,vertical: 5.rSp),
-      decoration: BoxDecoration(
-        color: textFormFillColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: TextFormField(
-        keyboardType: type,
-        textInputAction: textInputAction,
-        readOnly: disabled,
-        obscureText:isPassword,
-        onTap: onTap,
-        onEditingComplete: onSubmit,
-        style: Theme.of(context).textTheme.displaySmall!.copyWith(
-            fontFamily: 'english',
-            fontSize: 14.rSp
-        ),
-        maxLines: maxLines,
-        onChanged: onChanged,
-        validator: validate,
-        controller: controller,
-        autocorrect: true,
-        cursorColor: ColorsManager.mainColor,
-        decoration: InputDecoration(
-          suffixIcon: suffixIcon,
-          prefixIcon: svgImg != null
-              ? Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SvgPicture.asset(
-              svgImg!,
-              height: 24,
-              width: 24,
-              // fit: BoxFit.scaleDown,
-            ),
-          )
-              : null,
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          border: InputBorder.none,
-          hintText: hint,
-          hintStyle: hintStyle,
-        ),
-      ),
-    );
+    return Material(
+        color: Colors.white,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          margin: margin,
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 10.rSp,vertical: 5.rSp),
+          decoration: BoxDecoration(
+            color: textFormFillColor,
+            borderRadius: BorderRadius.circular(10.rSp),
+          ),
+          child: Row(
+            children: [
+              if(svgImg != null)
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: SvgPicture.asset(
+                  svgImg!,
+                  height: 4.h,
+                  width: 8.w,
+                  // fit: BoxFit.scaleDown,
+                ),
+              ),
+              horizontalSpace(3.w),
+              Expanded(
+                child: TextFormField(
+                  keyboardType: type,
+                  textInputAction: textInputAction,
+                  readOnly: disabled,
+                  obscureText:isPassword,
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                      fontFamily: 'english',
+                      fontSize: 14.rSp
+                  ),
+                  maxLines: maxLines,
+                  onChanged: onChanged,
+                  onEditingComplete: onSubmit,
+                  onTap: onTap,
+                  validator: validate,
+                  controller: controller,
+                  autocorrect: true,
+                  cursorColor: ColorsManager.mainColor,
+                  decoration: InputDecoration(
+                    suffixIcon: suffixIcon,
+                    // prefixIcon: svgImg != null
+                    //     ? FittedBox(
+                    //   fit: BoxFit.scaleDown,
+                    //       child: SvgPicture.asset(
+                    //         svgImg!,
+                    //         height: 4.h,
+                    //         width: 8.w,
+                    //         // fit: BoxFit.scaleDown,
+                    //       ),
+                    //     )
+                    //     : null,
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    border: InputBorder.none,
+                    hintText: hint,
+                    hintStyle: hintStyle,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 }
