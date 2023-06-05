@@ -16,27 +16,20 @@ class RegisterUseCase
   Future<Either<Failure, RegisterEntity>> call(
       RegisterParams params) async {
     return await repository.register(
+      gander: params.gander,
       userName: params.userName,
       firstName: params.firstName,
       lastName: params.lastName,
-      fullName: params.fullName,
       password: params.password,
       confirmPassword: params.confirmPassword,
       email: params.email,
       phoneNumber: params.phoneNumber,
-      bio: params.bio,
-      gander: params.gander,
       profilePicture: params.profilePicture,
-      country: params.country,
-      governorate: params.governorate,
-      city: params.city,
       age: params.age,
       fixedPrice: params.fixedPrice,
       experience: params.experience,
-      facebookLink: params.facebookLink,
-      instagramLink: params.instagramLink,
-      youTubeLink: params.youTubeLink,
-      tikTokLink: params.tikTokLink,
+      city: params.city,
+      country: params.country,
     );
   }
 }
@@ -45,48 +38,34 @@ class RegisterParams extends Equatable {
   final String userName;
   final String firstName;
   final String lastName;
-  final String fullName;
   final String email;
   final File profilePicture;
-  final String bio;
   final String phoneNumber;
-  final String gander;
-  final String country;
-  final String governorate;
-  final String city;
   final String password;
   final String confirmPassword;
   final String age;
+  final String gander;
+  final String city;
+  final String country;
   final int? fixedPrice;
   final int? experience;
-  final String? facebookLink;
-  final String? instagramLink;
-  final String? youTubeLink;
-  final String? tikTokLink;
 
 
   const  RegisterParams({
     required this.userName,
     required this.firstName,
     required this.lastName,
-    required this.fullName,
     required this.email,
     required this.profilePicture,
-    required this.bio,
     required this.phoneNumber,
-    required this.gander,
-    required this.country,
-    required this.governorate,
-    required this.city,
     required this.password,
     required this.confirmPassword,
     required this.age,
+    required this.gander,
+    required this.city,
+    required this.country,
      this.fixedPrice,
      this.experience,
-     this.facebookLink,
-     this.instagramLink,
-     this.youTubeLink,
-     this.tikTokLink,
   });
 
   @override
@@ -94,17 +73,14 @@ class RegisterParams extends Equatable {
     userName,
     firstName,
     lastName,
-    fullName,
     password,
     confirmPassword,
     email,
     phoneNumber,
-    bio,
-    gander,
     profilePicture,
-    country,
-    governorate,
-    city,
     age,
+    gander,
+    city,
+    country
   ];
 }

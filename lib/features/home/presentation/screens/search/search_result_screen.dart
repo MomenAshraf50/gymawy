@@ -39,7 +39,8 @@ class SearchResultScreen extends StatelessWidget {
       this.currentWeight,
       this.goal,
       this.bio,
-      this.age})
+      this.age
+      })
       : super(key: key);
   int? userId;
   String? pic;
@@ -60,6 +61,7 @@ class SearchResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrintFullText('bio issssssssssssssssssssssssssssssss $bio');
     HomeCubit homeCubit = HomeCubit.get(context);
     homeCubit.getCertificates(GetCertificateParams(
       ownerId: userId!,
@@ -149,19 +151,26 @@ class SearchResultScreen extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             DefaultText(
-                                              title: name!,
+                                              title: '${verification == null? AppString.client :AppString.coach}, ${name!}',
                                               style: Style.small,
                                             ),
-                                            if (verification == null)
-                                              const DefaultText(
-                                                title: AppString.client,
-                                                style: Style.small,
-                                              ),
-                                            if (verification != null)
-                                              const DefaultText(
-                                                title: AppString.coach,
-                                                style: Style.small,
-                                              ),
+                                            // verticalSpace(1.h),
+                                            // if (verification == null)
+                                            //   const DefaultText(
+                                            //     title: AppString.client,
+                                            //     style: Style.small,
+                                            //   ),
+                                            // if (verification != null)
+                                            //   const DefaultText(
+                                            //     title: AppString.coach,
+                                            //     style: Style.small,
+                                            //   ),
+                                            verticalSpace(1.h),
+                                            DefaultText(
+                                              title: bio!,
+                                              style: Style.small,
+                                            ),
+
                                           ],
                                         ),
                                       ),

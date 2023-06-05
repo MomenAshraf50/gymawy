@@ -114,7 +114,7 @@ class HomeClientScreen extends StatelessWidget {
                                 fontSize: 20.rSp,
                               ),
                               verticalSpace(1.h),
-                              if(!isCoachLogin!)
+                              if(!isCoachLogin)
                               DefaultText(
                                 title: AppString.ready,
                                 style: Style.small,

@@ -28,7 +28,7 @@ class MainScreen extends StatelessWidget {
             CurvedNavigationBar(
                 key: bottomNavigationKey,
                 index: homeCubit.currentNavIndex,
-                height: 8.h,
+                height: 7.h,
                 items:  const <Widget>
                 [
                   Icon(Icons.home),

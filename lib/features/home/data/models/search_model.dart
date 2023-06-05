@@ -21,7 +21,7 @@ class SearchModel extends SearchEntity {
   });
 
   factory SearchModel.fromJson(Map<String, dynamic> json) {
-    return isCoachFilter == false || constClientVariable != null
+    return isCoachFilter == false || constClientVariable == null
         ? SearchModel(
       userInformation: UserInformation.fromJson(json['user']),
             age: json['age'] ?? 0,

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
+import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default_text.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 
 class FilterDialog extends StatelessWidget {
-  FilterDialog({
+  const FilterDialog({
     Key? key,
     required this.firstFilterTitle,
     required this.secondFilterTitle,
@@ -14,16 +15,17 @@ class FilterDialog extends StatelessWidget {
     required this.onTapSecondChoice
   }) : super(key: key);
 
-  String firstFilterTitle;
-  String secondFilterTitle;
+  final String firstFilterTitle;
+  final String secondFilterTitle;
 
-  VoidCallback onTapFirstChoice;
-  VoidCallback onTapSecondChoice;
+  final VoidCallback onTapFirstChoice;
+  final VoidCallback onTapSecondChoice;
 
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
     return AlertDialog(
+      backgroundColor: ColorsManager.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       title: Column(
         children: [

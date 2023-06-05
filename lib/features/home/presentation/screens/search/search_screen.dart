@@ -212,15 +212,9 @@ class SearchScreen extends StatelessWidget {
                                   : exercises != null
                                       ? InkWell(
                                           child: buildExercisesItems(
-                                            exerciseImage: homeCubit
-                                                .exerciseResult![index]
-                                                .exercisePic,
-                                            exerciseName: homeCubit
-                                                .exerciseResult![index]
-                                                .exerciseName,
-                                            exerciseCategory: homeCubit
-                                                .exerciseResult![index]
-                                                .exerciseCategory,
+                                            exerciseImage: homeCubit.exerciseResult![index].exercisePic,
+                                            exerciseName: homeCubit.exerciseResult![index].exerciseName,
+                                            exerciseCategory: homeCubit.exerciseResult![index].exerciseCategory,
                                           ),
                                           onTap: () {
                                             navigateTo(
@@ -250,40 +244,17 @@ class SearchScreen extends StatelessWidget {
                                     navigateTo(
                                         context,
                                         SearchResultScreen(
-                                          userId: homeCubit
-                                              .results![index].userInformation.userId,
-                                          name: homeCubit
-                                              .results![index]
-                                              .userInformation
-                                              .userName,
-                                          pic: homeCubit
-                                              .results![index]
-                                              .userInformation
-                                              .profilePicture,
-                                          location: homeCubit
-                                              .results![index]
-                                              .userInformation
-                                              .city,
-                                          bio: homeCubit
-                                              .results![index].bio,
-                                          verification: homeCubit
-                                              .results![index]
-                                              .verification,
-                                          facebookLink: homeCubit
-                                              .results![index]
-                                              .facebookLink,
-                                          fixedPrice: homeCubit
-                                              .results![index]
-                                              .fixedPrice,
-                                          instagramLink: homeCubit
-                                              .results![index]
-                                              .instagramLink,
-                                          tiktokLink: homeCubit
-                                              .results![index]
-                                              .tiktokLink,
-                                          youtubeLink: homeCubit
-                                              .results![index]
-                                              .youtubeLink,
+                                          userId: homeCubit.results![index].userInformation.userId,
+                                          name: homeCubit.results![index].userInformation.userName,
+                                          pic: homeCubit.results![index].userInformation.profilePicture,
+                                          location: homeCubit.results![index].userInformation.city,
+                                          bio: homeCubit.results![index].userInformation.bio,
+                                          verification: homeCubit.results![index].verification,
+                                          facebookLink: homeCubit.results![index].facebookLink,
+                                          fixedPrice: homeCubit.results![index].fixedPrice,
+                                          instagramLink: homeCubit.results![index].instagramLink,
+                                          tiktokLink: homeCubit.results![index].tiktokLink,
+                                          youtubeLink: homeCubit.results![index].youtubeLink,
                                         ));
                                   }
                                   if (clientsScreen != null) {

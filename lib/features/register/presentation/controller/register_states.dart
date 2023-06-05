@@ -38,6 +38,8 @@ class GetLocationIdState extends RegisterStates{}
 class GetPlaceState extends RegisterStates{}
 class GetLocationState extends RegisterStates{}
 
+class ChangeDateState extends RegisterStates{}
+
 // class RegisterCoachLoadingState extends RegisterStates {}
 //
 // class RegisterCoachSuccessState extends RegisterStates {

@@ -47,6 +47,7 @@ class AppBloc extends Cubit<AppState> {
     family = 'Sofia';
 
     lightTheme = ThemeData(
+      //useMaterial3: true,
       scaffoldBackgroundColor: ColorsManager.white,
       timePickerTheme: TimePickerThemeData(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),

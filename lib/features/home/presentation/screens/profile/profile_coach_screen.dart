@@ -114,7 +114,9 @@ class ProfileCoachScreen extends StatelessWidget {
                                     children: [
                                       DefaultText(
                                         title:
-                                        '${homeCubit.profileResults!
+                                        '${isCoachLogin == false
+                                            ? AppString.client
+                                            : AppString.coach}, ${homeCubit.profileResults!
                                             .userInformation
                                             .firstName} ${homeCubit
                                             .profileResults!.userInformation
@@ -122,16 +124,24 @@ class ProfileCoachScreen extends StatelessWidget {
                                         //AppString.userNameProfile,
                                         style: Style.small,
                                       ),
+                                      // verticalSpace(1.h),
+                                      // DefaultText(
+                                      //   title: isCoachLogin == false
+                                      //       ? AppString.client
+                                      //       : AppString.coach,
+                                      //   style: Style.small,
+                                      // ),
+                                      verticalSpace(2.h),
                                       DefaultText(
-                                        title: isCoachLogin == false
-                                            ? AppString.client
-                                            : AppString.coach,
+                                        title: homeCubit.profileResults!.userInformation.bio,
+                                        //AppString.userNameProfile,
                                         style: Style.small,
                                       ),
+
                                     ],
                                   ),
                                 ),
-                                verticalSpace(1.h),
+                                verticalSpace(2.h),
                                 Row(
                                   children: [
                                     if (isCoachLogin)
@@ -167,28 +177,13 @@ class ProfileCoachScreen extends StatelessWidget {
                                           onPressed: () {
                                             navigateTo(context,
                                                 EditProfileScreen(
-                                                  userName: homeCubit
-                                                      .profileResults!
-                                                      .userInformation.userName,
-                                                  email: homeCubit
-                                                      .profileResults!
-                                                      .userInformation.email,
-                                                  firstName: homeCubit
-                                                      .profileResults!
-                                                      .userInformation
-                                                      .firstName,
-                                                  lastName: homeCubit
-                                                      .profileResults!
-                                                      .userInformation.lastName,
-                                                  phone: homeCubit
-                                                      .profileResults!
-                                                      .userInformation
-                                                      .phoneNumber,
-                                                  bio: homeCubit.profileResults!
-                                                      .userInformation.bio,
-                                                  price: homeCubit
-                                                      .profileResults!
-                                                      .fixedPrice!,
+                                                  userName: homeCubit.profileResults!.userInformation.userName,
+                                                  email: homeCubit.profileResults!.userInformation.email,
+                                                  firstName: homeCubit.profileResults!.userInformation.firstName,
+                                                  lastName: homeCubit.profileResults!.userInformation.lastName,
+                                                  phone: homeCubit.profileResults!.userInformation.phoneNumber,
+                                                  bio: homeCubit.profileResults!.userInformation.bio,
+                                                  price: homeCubit.profileResults!.fixedPrice!,
                                                 ));
                                           }),
                                     )
@@ -206,8 +201,7 @@ class ProfileCoachScreen extends StatelessWidget {
                     children: [
                       const Icon(Icons.location_on_outlined),
                       DefaultText(
-                        title: homeCubit.profileResults!.userInformation
-                            .governorate,
+                        title: homeCubit.profileResults!.userInformation.governorate,
                         style: Style.small,
                         fontSize: 16.rSp,
                       ),
