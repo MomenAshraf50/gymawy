@@ -29,6 +29,7 @@ class AddNutritionDetails extends StatelessWidget {
   int? planId;
   var formKey = GlobalKey<FormState>();
   bool update;
+  List<String> hours = ['0','1','2','3','4','5','6','7','8','9','10','11','12'];
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,6 @@ class AddNutritionDetails extends StatelessWidget {
     }
     HomeCubit homeCubit = HomeCubit.get(context);
 
-    TimeOfDay? timePicked;
 
     return Scaffold(
       body: BlocConsumer<HomeCubit, HomeStates>(
@@ -128,13 +128,29 @@ class AddNutritionDetails extends StatelessWidget {
                                 helpText: 'Enter meal time',
 
                               ).then((value) {
-                                timePicked = value;
+                                homeCubit.selectedTime(value!);
+                                homeCubit.timePicked = value;
                               });
                             },
                             icon: const Icon(
                               Icons.watch_later,
                               color: ColorsManager.darkGrey,
                             ))
+                      ],
+                    ),
+                    verticalSpace(3.h),
+                     if (homeCubit.timePicked != null)
+                    Row(
+                      children: [
+                        DefaultText(
+                            title: '${homeCubit.timePicked!.hour}:${homeCubit.timePicked!.minute}',
+                            style: Style.medium,
+                            fontWeight: FontWeight.w600),
+                        const Spacer(),
+                        DefaultText(
+                            title: hours.contains(homeCubit.timePicked?.hour.toString()) ? 'AM': 'PM',
+                            style: Style.medium,
+                            fontWeight: FontWeight.w600),
                       ],
                     ),
                     verticalSpace(3.h),
@@ -149,7 +165,7 @@ class AddNutritionDetails extends StatelessWidget {
                                   'Are you sure to update this nutrition detail',
                               pushButtonText: AppString.update,
                               pushButtonVoidCallback: () {
-                                if (timePicked != null) {
+                                if (homeCubit.timePicked != null) {
                                   homeCubit.addNutritionDetails(
                                       NutritionDetailsParams(
                                           nutritionDetailId:
@@ -158,7 +174,7 @@ class AddNutritionDetails extends StatelessWidget {
                                           update: true,
                                           meal: homeCubit.selectedMealValue,
                                           time:
-                                              '${timePicked!.hour}:${timePicked!.minute}',
+                                              '${homeCubit.timePicked!.hour}:${homeCubit.timePicked!.minute}',
                                           day: homeCubit.selectedDay,
                                           nutritionId:
                                               nutritionResult!.nutritionId!,
@@ -182,12 +198,12 @@ class AddNutritionDetails extends StatelessWidget {
                             ),
                           );
                         } else {
-                          if (timePicked != null) {
+                          if (homeCubit.timePicked != null) {
                             homeCubit.addNutritionDetails(NutritionDetailsParams(
                                 update: false,
                                 meal: homeCubit.selectedMealValue,
                                 time:
-                                    '${timePicked!.hour}:${timePicked!.minute}',
+                                    '${homeCubit.timePicked!.hour}:${homeCubit.timePicked!.minute}',
                                 day: homeCubit.selectedDay,
                                 nutritionId: nutritionResult!.nutritionId!,
                                 planId: planId!));

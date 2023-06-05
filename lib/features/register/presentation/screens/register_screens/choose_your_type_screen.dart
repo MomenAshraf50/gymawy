@@ -53,8 +53,8 @@ class ChooseYourTypeScreen extends StatelessWidget {
                           child: GestureDetector(
                               onTap: () => registerCubit
                                       .selectType(isCoach: false)
-                                      .then((value) {
-                                    registerCubit.changePage(0, context);
+                                      .then((value){
+                                registerCubit.changePage(0, context);
                                     navigateTo(context, const RegisterLayout());
                                   }),
                               child: buildCard(

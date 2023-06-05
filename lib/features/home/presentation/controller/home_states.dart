@@ -187,6 +187,8 @@ class DeleteExerciseErrorState extends HomeStates{
 
 class ChangeDropDownSelectedValueState extends HomeStates {}
 
+class ChangeTimeSelectedValueState extends HomeStates {}
+
 
 class AddPlanLoadingState extends HomeStates{}
 class AddPlanSuccessState extends HomeStates{

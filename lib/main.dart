@@ -104,7 +104,7 @@ class MyApp extends StatelessWidget {
           create: (context) => sl<LoginCubit>(),
         ),
         BlocProvider(
-          create: (context) => sl<RegisterCubit>(),
+          create: (context) => sl<RegisterCubit>()..readJson(context),
         ),
         BlocProvider(
           create: (context) => sl<HomeCubit>(),

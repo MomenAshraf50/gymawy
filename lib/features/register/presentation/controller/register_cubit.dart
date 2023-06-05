@@ -38,7 +38,9 @@ class RegisterCubit extends Cubit<RegisterStates>{
   TextEditingController userFirstNameController = TextEditingController();
   TextEditingController userLastNameController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
-  TextEditingController userAgeController = TextEditingController();
+  TextEditingController userAgeYearController = TextEditingController();
+  TextEditingController userAgeMonthController = TextEditingController();
+  TextEditingController userAgeDayController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -59,13 +61,13 @@ class RegisterCubit extends Cubit<RegisterStates>{
   }
  late List<Widget> pagesClint = [
      CreateAccountScreen(),
-     CompleteProfileScreen(),
+     //CompleteProfileScreen(),
   ];
 
   late List<Widget> pagesCoach = [
     CreateAccountScreen(),
-    CompleteProfileScreen(),
-    const SocialMediaScreen(),
+    //CompleteProfileScreen(),
+    //const SocialMediaScreen(),
   ];
 
   int selectedPage = 0;
@@ -280,72 +282,53 @@ class RegisterCubit extends Cubit<RegisterStates>{
   void registerClient({
     required String email,
     required String password,
-    required String bio,
-    required String city,
     required String confirmPassword,
-    required String country,
     required String firstName,
-    required String fullName,
-    required String gander,
-    required String governorate,
     required String lastName,
     required String phoneNumber,
     required File profilePicture,
     required String userName,
-    int? bodyFat,
-    int? currentWeight,
-    int? currentTall,
+    required String gander,
+    required String country,
+    required String city,
     int? fixedPrice,
     required String age,
     int? experience,
-    String? facebookLink,
-    String? instagramLink,
-    String? youTubeLink,
-    String? tikTokLink,
     context
   }) async {
     emit(RegisterLoadingState());
     final result = await _registerUseCase(
         isCoachRegister == false ?
         RegisterParams(
+      gander: gander,
       userName: userName,
       firstName: firstName,
       lastName: lastName,
-      fullName: fullName,
       email: email,
       profilePicture: profilePicture,
-      bio: bio,
       phoneNumber: phoneNumber,
-      gander: gander,
-      country: country,
-      governorate: governorate,
-      city: city,
       password: password,
       confirmPassword: confirmPassword,
       age: age,
+      city: city,
+      country: country,
     ) :
         RegisterParams(
           userName: userName,
           firstName: firstName,
           lastName: lastName,
-          fullName: fullName,
           email: email,
           profilePicture: profilePicture,
-          bio: bio,
           phoneNumber: phoneNumber,
           gander: gander,
-          country: country,
-          governorate: governorate,
-          city: city,
           password: password,
           confirmPassword: confirmPassword,
           fixedPrice: fixedPrice!,
           experience: experience!,
-          facebookLink: facebookLink!,
-          youTubeLink: youTubeLink!,
-          tikTokLink: tikTokLink!,
-          instagramLink: instagramLink!,
           age: age,
+          city: city,
+          country: country,
+
         )
     );
 
@@ -370,7 +353,9 @@ class RegisterCubit extends Cubit<RegisterStates>{
       confirmPasswordController.text = '';
       passwordController.text = '';
       phoneController.text = '';
-      userAgeController.text = '';
+      userAgeYearController.text = '';
+      userAgeMonthController.text = '';
+      userAgeDayController.text = '';
       fullNameController.text = '';
       userLastNameController.text = '';
       userFirstNameController.text = '';
@@ -468,5 +453,17 @@ class RegisterCubit extends Cubit<RegisterStates>{
     governmentRegister = '${placeMark.administrativeArea}';
     emit(GetLocationState());
   }
+
+  DateTime selectedDate = DateTime.now();
+
+  void changeDate(dynamic value)
+  {
+    selectedDate = value;
+    emit(ChangeDateState());
+
+  }
+
+
+
 
 }

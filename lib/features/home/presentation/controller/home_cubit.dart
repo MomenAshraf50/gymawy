@@ -819,6 +819,12 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(ChangeDropDownSelectedValueState());
   }
 
+  TimeOfDay? timePicked;
+  void selectedTime (TimeOfDay value) {
+    timePicked = value;
+    emit(ChangeTimeSelectedValueState());
+  }
+
   FilePickerResult? exerciseVideo;
   Widget? exercisePreVideo;
 

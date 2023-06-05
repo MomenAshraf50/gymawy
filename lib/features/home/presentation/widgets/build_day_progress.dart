@@ -4,7 +4,7 @@ import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default_text.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+// import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 Widget buildDayProgressItems(){
   return Padding(
