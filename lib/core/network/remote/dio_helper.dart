@@ -358,7 +358,7 @@ extension on DioHelper {
         throw ServerException(
           // error: e.response!.statusMessage!,
           // code: e.response!.statusCode!,
-          message: e.response!.data.toString().replaceAll('{', '').replaceAll('}', '').replaceAll('Response:', ''),
+          message: e.response!.data.toString().replaceAll('{', '').replaceAll('}', '').replaceAll('Response:', '').replaceAll('[', '').replaceAll(']', '').replaceAll(',', '\n'),
           // e.response!.data is Map && e.response!.data.toString().isNotEmpty
           //     ? e.response!.data['Response'] ?? e.response!.statusMessage
           //     : e.response!.data,
