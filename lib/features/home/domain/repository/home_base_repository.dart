@@ -167,7 +167,7 @@ abstract class HomeBaseRepository {
 
   Future<Either<Failure, BodyMeasurementsEntity>> bodyMeasurements(BodyMeasurementsParams params);
 
-  Future<Either<Failure, BodyMeasurementsEntity>> getBodyMeasurements(GetBodyMeasurementsParams params);
+  Future<Either<Failure, List<BodyMeasurementsEntity>>> getBodyMeasurements(GetBodyMeasurementsParams params);
 
   Future<Either<Failure, void>> deleteBodyMeasurements();
 

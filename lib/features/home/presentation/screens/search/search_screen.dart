@@ -262,6 +262,7 @@ class SearchScreen extends StatelessWidget {
                                         context,
                                         ClientDetailsScreen(
                                           clientId: homeCubit.results![index].userInformation.userId,
+                                          index: index,
                                         ));
                                   }
                                 },

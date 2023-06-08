@@ -6,23 +6,28 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default_button.dart';
 import 'package:gymawy/core/util/widgets/default_text.dart';
+import 'package:gymawy/core/util/widgets/loadingPage.dart';
+import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/add_exercise_screen.dart';
 import 'package:gymawy/features/home/presentation/screens/home/clients/add_meal_screen.dart';
 import '../../../../../../core/util/resources/assets.gen.dart';
+import '../../../../domain/entities/body_measurements_entity.dart';
+import '../../../../domain/entities/coach_subscriptions_entity.dart';
 import '../../../widgets/build_client_details_screen_items.dart';
 
 class ClientDetailsScreen extends StatelessWidget {
   ClientDetailsScreen({
     Key? key,
     required this.clientId,
+    required this.index,
+    this.result
 
   }) : super(key: key);
-
   int clientId;
-
-
+  int index;
+  List<CoachSubscriptionsEntity>? result;
   List<String> icons =
   [
     //Assets.images.svg.completed_tasks,
@@ -44,28 +49,44 @@ class ClientDetailsScreen extends StatelessWidget {
     AppString.currentWeight,
     AppString.bodyFat,
   ];
+  
+  
+
+
+  // List<String> values = [
+  //   '${result![index].clientInformation.}'
+  // ]
 
 
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = HomeCubit.get(context);
 
-    homeCubit.profile(
-        id: clientId,
-        isCoach: false
-    );
-    return BlocBuilder<HomeCubit, HomeStates>(
+    homeCubit.getBodyMeasurements(GetBodyMeasurementsParams(userName: result![index].clientInformation.userName));
+
+
+
+
+    return BlocConsumer<HomeCubit, HomeStates>(
+      listener: (context, state) {
+
+        if(state is GetBodyMeasurementsSuccessState)
+        {
+          List<BodyMeasurementsEntity>? results = state.bodyMeasurementsEntity;
+          List<String> titleResult =
+          [
+            results![index].goal,
+            '${results[index].tall}',
+            '${results[index].weight}',
+            '${results[index].bodyFat}',
+          ];
+
+          homeCubit.bodyMeasurementResults = titleResult;
+
+        }
+
+      },
       builder: (context, state) {
-        List<String> titleResult =
-        [
-          //'3',
-          //'Beginner',
-          homeCubit.profileResults!.goal!,
-          //'2',
-          "${homeCubit.profileResults!.currentTall!}",
-          "${homeCubit.profileResults!.currentWeight!}",
-          '${homeCubit.profileResults!.bodyFat}',
-        ];
         return Scaffold(
           body: SafeArea(
             child: Padding(
@@ -89,7 +110,7 @@ class ClientDetailsScreen extends StatelessWidget {
                                 radius: 50.rSp,
                                 backgroundImage: NetworkImage(
                                     //AppString.networkImage
-                                  homeCubit.profileResults!.userInformation.profilePicture
+                                  result![index].clientInformation.profilePicture
                                 ),
                               ),
                               horizontalSpace(5.w),
@@ -97,7 +118,7 @@ class ClientDetailsScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   DefaultText(
-                                    title: homeCubit.profileResults!.userInformation.userName,
+                                    title: result![index].clientInformation.userName,
                                     //AppString.userNameProfile,
                                     style: Style.medium,
                                     fontSize: 14.rSp,
@@ -119,7 +140,7 @@ class ClientDetailsScreen extends StatelessWidget {
                                       DefaultText(
                                         title:
                                         //AppString.address,
-                                        homeCubit.profileResults!.userInformation.governorate,
+                                        result![index].clientInformation.governorate,
                                         style: Style.extraSmall,
                                         fontSize: 12.rSp,
                                       ),
@@ -129,7 +150,7 @@ class ClientDetailsScreen extends StatelessWidget {
                                   DefaultText(
                                     title:
                                     //AppString.age,
-                                   '${homeCubit.profileResults!.userInformation.age}',
+                                   '${result![index].clientInformation.age}',
                                     style: Style.extraSmall,
                                     fontSize: 12.rSp,
                                   ),
@@ -138,17 +159,18 @@ class ClientDetailsScreen extends StatelessWidget {
                             ],
                           ),
                           verticalSpace(2.h),
+                          if( homeCubit.bodyMeasurementResults != null)
                           ListView.builder(
                             itemBuilder: (context, index) {
                               return buildClientDetailsScreenItems(
                                   icons: icons[index],
                                   title: title[index],
-                                  titleResult: titleResult[index]
+                                  titleResult: homeCubit.bodyMeasurementResults![index]
                               );
                             },
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: titleResult.length,
+                            itemCount: homeCubit.bodyMeasurementResults!.length,
                           ),
                           Card(
                             color: const Color.fromARGB(255, 252, 251, 251),

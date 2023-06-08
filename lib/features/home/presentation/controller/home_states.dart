@@ -408,7 +408,7 @@ class BodyMeasurementsErrorState extends HomeStates{
 
 class GetBodyMeasurementsLoadingState extends HomeStates{}
 class GetBodyMeasurementsSuccessState extends HomeStates{
-  BodyMeasurementsEntity bodyMeasurementsEntity;
+  List<BodyMeasurementsEntity> bodyMeasurementsEntity;
 
   GetBodyMeasurementsSuccessState(this.bodyMeasurementsEntity);
 }

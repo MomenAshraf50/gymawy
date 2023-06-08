@@ -80,6 +80,8 @@ class ClientsScreen extends StatelessWidget {
                                         context,
                                         ClientDetailsScreen(
                                           clientId: subscriptionRequestEntity[index].clientInformation.userId,
+                                          index: index,
+                                          result: subscriptionRequestEntity,
                                         ));
                                   },
                                   child: buildClientProgressItem(

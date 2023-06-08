@@ -71,7 +71,7 @@ Widget buildClientProgressItem(
             children: [
               Expanded(
                 child: DefaultButton(
-                  text: 'Decline',
+                  text: 'Reject',
                   onPressed: onPressedDecline,
                   color: ColorsManager.error,
                   height: 2.h,
@@ -81,7 +81,7 @@ Widget buildClientProgressItem(
               horizontalSpace(5.w),
               Expanded(
                 child: DefaultButton(
-                    text: 'Accept',
+                    text: 'Approve',
                     onPressed: onPressedAccept,
                     color: ColorsManager.green,
                     height: 2.h,
