@@ -165,8 +165,7 @@ abstract class HomeBaseDataSource {
 
   Future<BodyMeasurementsModel> bodyMeasurements(BodyMeasurementsParams params);
 
-  Future<BodyMeasurementsModel> getBodyMeasurements(
-      GetBodyMeasurementsParams params);
+  Future<List<BodyMeasurementsModel>> getBodyMeasurements(GetBodyMeasurementsParams params);
 
   Future<void> deleteBodyMeasurements();
 
@@ -920,14 +919,19 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
   }
 
   @override
-  Future<BodyMeasurementsModel> getBodyMeasurements(
+  Future<List<BodyMeasurementsModel>> getBodyMeasurements(
       GetBodyMeasurementsParams params) async {
     final Response f = await dioHelper.get(
-      url: '$bodyMeasurementsEndPoint${params.measurementsId}/',
+      url: '$bodyMeasurementsEndPoint?user__username=${params.userName}',
+      // query:
+      // {
+      //   'user__username': params.userName
+      // },
       token: token,
     );
 
-    return BodyMeasurementsModel.fromJson(f.data);
+    return List<BodyMeasurementsModel>.from(
+        (f.data['results'] as List).map((e) => BodyMeasurementsModel.fromJson(e)));
   }
 
   @override

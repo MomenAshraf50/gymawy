@@ -2,12 +2,13 @@ import 'package:equatable/equatable.dart';
 
 class BodyMeasurementsEntity extends Equatable {
   int measurementsId;
-  String name;
-  String userName;
+  // String name;
+  // String userName;
   double weight;
-  double tall;
-  double bodyFat;
-  String fullBodyPic;
+  int tall;
+  int bodyFat;
+  String frontBodyPic;
+  String backBodyPic;
   String rightSideBodyPic;
   String leftSideBodyPic;
   String goal;
@@ -15,12 +16,13 @@ class BodyMeasurementsEntity extends Equatable {
 
   BodyMeasurementsEntity({
     required this.measurementsId,
-    required this.name,
-    required this.userName,
+    // required this.name,
+    // required this.userName,
     required this.weight,
     required this.tall,
     required this.bodyFat,
-    required this.fullBodyPic,
+    required this.frontBodyPic,
+    required this.backBodyPic,
     required this.rightSideBodyPic,
     required this.leftSideBodyPic,
     required this.goal,
@@ -30,12 +32,13 @@ class BodyMeasurementsEntity extends Equatable {
   @override
   List<Object?> get props => [
     measurementsId,
-        name,
-        userName,
+        // name,
+        // userName,
         weight,
         tall,
         bodyFat,
-        fullBodyPic,
+        frontBodyPic,
+        backBodyPic,
         rightSideBodyPic,
         leftSideBodyPic,
         goal,

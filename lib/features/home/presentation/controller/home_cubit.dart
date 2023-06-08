@@ -1291,6 +1291,8 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  List<String>? bodyMeasurementResults;
+
   void getBodyMeasurements(GetBodyMeasurementsParams params) async {
     emit(GetBodyMeasurementsLoadingState());
     final result = await _getBodyMeasurementsUseCase(params);

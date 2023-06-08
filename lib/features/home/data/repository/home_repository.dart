@@ -80,7 +80,7 @@ typedef CallGetCoachSubscriptions = Future<List<CoachSubscriptionsEntity>> Funct
 typedef CallUpdateSubscriptionStatus = Future<CoachSubscriptionsEntity> Function();
 typedef CallNotificationsSubscriptions = Future<void> Function();
 typedef CallBodyMeasurements = Future<BodyMeasurementsEntity> Function();
-typedef CallGetBodyMeasurements = Future<BodyMeasurementsEntity> Function();
+typedef CallGetBodyMeasurements = Future<List<BodyMeasurementsEntity>> Function();
 typedef CallDeleteBodyMeasurements = Future<void> Function();
 typedef CallUserPlan = Future<UserPlanEntity> Function();
 typedef CallGetUserPlan = Future<List<UserPlanEntity>> Function();
@@ -797,7 +797,7 @@ class HomeRepository extends HomeBaseRepository {
   }
 
 
-  Future<Either<Failure, BodyMeasurementsEntity>> fetchGetBodyMeasurements(
+  Future<Either<Failure, List<BodyMeasurementsEntity>>> fetchGetBodyMeasurements(
       CallGetBodyMeasurements mainMethod,
       ) async {
     try {
@@ -811,7 +811,7 @@ class HomeRepository extends HomeBaseRepository {
   }
 
   @override
-  Future<Either<Failure, BodyMeasurementsEntity>> getBodyMeasurements(GetBodyMeasurementsParams params) async{
+  Future<Either<Failure, List<BodyMeasurementsEntity>>> getBodyMeasurements(GetBodyMeasurementsParams params) async{
     return await fetchGetBodyMeasurements((){
       return remoteDataSource.getBodyMeasurements(params);
     });

@@ -65,6 +65,7 @@ class PendingScreen extends StatelessWidget {
                                   context,
                                   ClientDetailsScreen(
                                     clientId: subscriptionRequestEntity[index].clientInformation.userId,
+                                    index: index,
                                   ));
                             },
                             child: buildClientProgressItem(
@@ -74,7 +75,7 @@ class PendingScreen extends StatelessWidget {
                               {
                                 homeCubit.subscriptionRequest(
                                     SubscriptionRequestParams(
-                                      status: 'Accepted',
+                                      status: 'Approved',
                                       isUpdate: true,
                                       subscriptionRequest: subscriptionRequestEntity[index].subscriptionRequestId,
                                     ));
@@ -83,7 +84,7 @@ class PendingScreen extends StatelessWidget {
                               {
                                 homeCubit.subscriptionRequest(
                                     SubscriptionRequestParams(
-                                      status: 'Declined',
+                                      status: 'Rejected',
                                       isUpdate: true,
                                       subscriptionRequest: subscriptionRequestEntity[index].subscriptionRequestId,
                                     ));
