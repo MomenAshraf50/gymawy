@@ -16,9 +16,7 @@ import 'package:gymawy/features/home/data/models/notifications_model.dart';
 import 'package:gymawy/features/home/data/models/profile_model.dart';
 import 'package:gymawy/features/home/data/models/search_model.dart';
 import 'package:gymawy/features/home/data/models/subscription_request_model.dart';
-import 'package:gymawy/features/home/data/models/update_coach_model.dart';
 import 'package:gymawy/features/home/data/models/user_plan_model.dart';
-import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/certification_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/delete_user_plan_usecase.dart';
@@ -51,6 +49,7 @@ import '../../domain/usecase/get_nutrition_details.dart';
 import '../../domain/usecase/get_plan_usecase.dart';
 import '../models/plan_model.dart';
 import '../models/add_nutrition_details_model.dart';
+import '../models/profile_coach_model.dart';
 
 abstract class HomeBaseDataSource {
   Future<ProfileModel> updateProfile({required UpdateProfileParams params});
@@ -68,6 +67,10 @@ abstract class HomeBaseDataSource {
   Future<ProfileModel> profile({
     required int id,
     bool? isCoach,
+  });
+
+  Future<ProfileTrainerModel> profileTrainer({
+    required int id,
   });
 
   Future<CertificateModel> certificate({
@@ -281,6 +284,16 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
               : '$registerCoachEndPoint$id/',
     );
     return ProfileModel.fromJson(f.data);
+  }
+
+  @override
+  Future<ProfileTrainerModel> profileTrainer({
+    required int id,
+  }) async {
+    final Response f = await dioHelper.get(
+      url: 'https://gymawyapp.pythonanywhere.com/trainers/users/$id/trainerProfile/'
+    );
+    return ProfileTrainerModel.fromJson(f.data);
   }
 
   @override

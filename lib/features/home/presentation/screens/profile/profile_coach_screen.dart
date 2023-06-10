@@ -31,6 +31,9 @@ class ProfileCoachScreen extends StatelessWidget {
             ownerName: '',
           ));
     }
+    if(isCoachLogin) {
+      homeCubit.profileTrainer(id: homeCubit.profileResults!.userInformation.userId);
+    }
 
     debugPrintFullText('sssssssssssssssssssss${homeCubit.certificateResult}');
 
@@ -52,6 +55,13 @@ class ProfileCoachScreen extends StatelessWidget {
               ownerName: '',
             ));
           }
+
+          if(state is ProfileTrainerSuccessState)
+          {
+            homeCubit.profileTrainerData = state.profileTrainerEntity;
+          }
+
+
         },
         builder: (context, state) {
           return Scaffold(
@@ -207,6 +217,7 @@ class ProfileCoachScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  if(homeCubit.profileTrainerData != null)
                   Padding(
                     padding: EdgeInsets.all(20.0.rSp),
                     child: Row(
@@ -215,7 +226,7 @@ class ProfileCoachScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               DefaultText(
-                                title: AppString.rating,
+                                title: '${homeCubit.profileTrainerData!.trainerInfo.rating }',
                                 style: Style.extraSmall,
                                 fontSize: 16.rSp,
                               ),
@@ -236,7 +247,7 @@ class ProfileCoachScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               DefaultText(
-                                title: AppString.followingNumber,
+                                title: '${homeCubit.profileTrainerData!.trainerClients}',
                                 style: Style.extraSmall,
                                 fontSize: 16.rSp,
                               ),

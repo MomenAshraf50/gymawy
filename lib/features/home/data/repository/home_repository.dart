@@ -41,6 +41,7 @@ import '../../domain/entities/add_exercise_plan_entity.dart';
 import '../../domain/entities/add_nutrition_details_entity.dart';
 import '../../domain/entities/add_nutrition_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
+import '../../domain/entities/trainer_profile_entity.dart';
 import '../../domain/usecase/add_nutrition_details_usecase.dart';
 import '../../domain/usecase/add_plan_usecase.dart';
 import '../../domain/usecase/delete_exercise_details_usecase.dart';
@@ -54,6 +55,7 @@ import '../../domain/usecase/get_plan_usecase.dart';
 typedef Call = Future<ProfileEntity> Function();
 typedef CallSearch = Future<List<SearchEntity>> Function();
 typedef CallProfile = Future<ProfileEntity> Function();
+typedef CallProfileTrainer = Future<ProfileTrainerEntity> Function();
 typedef CallCertification = Future<CertificateEntity> Function();
 typedef CallGetCertification = Future<List<CertificateEntity>> Function();
 typedef CallDeleteCertification = Future<void> Function();
@@ -181,6 +183,33 @@ class HomeRepository extends HomeBaseRepository {
       );
     });
   }
+
+
+  Future<Either<Failure, ProfileTrainerEntity>> fetchProfileTrainer(
+      CallProfileTrainer mainMethod,
+      ) async {
+    try {
+      final profileTrainerData = await mainMethod();
+      return Right(profileTrainerData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ProfileTrainerEntity>> profileTrainer({
+    required int id,
+  }) async {
+    return await fetchProfileTrainer(() {
+      return remoteDataSource.profileTrainer(
+        id: id,
+      );
+    });
+  }
+
+
 
   Future<Either<Failure, CertificateEntity>> fetchCertificate(
     CallCertification mainMethod,
