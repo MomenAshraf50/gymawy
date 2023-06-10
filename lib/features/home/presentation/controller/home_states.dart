@@ -11,6 +11,7 @@ import '../../domain/entities/add_nutrition_details_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/exercise_details_entity.dart';
 import '../../domain/entities/search_entity.dart';
+import '../../domain/entities/trainer_profile_entity.dart';
 
 abstract class HomeStates{
 
@@ -434,6 +435,17 @@ class UserPlanErrorState extends HomeStates{
   final String failure;
   UserPlanErrorState(this.failure);
 }
+
+class ProfileTrainerLoadingState extends HomeStates{}
+class ProfileTrainerSuccessState extends HomeStates{
+  ProfileTrainerEntity profileTrainerEntity;
+  ProfileTrainerSuccessState(this.profileTrainerEntity);
+}
+class ProfileTrainerErrorState extends HomeStates{
+  final String failure;
+  ProfileTrainerErrorState(this.failure);
+}
+
 
 class GetUserPlanLoadingState extends HomeStates{}
 class GetUserPlanSuccessState extends HomeStates{

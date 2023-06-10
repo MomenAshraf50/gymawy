@@ -48,6 +48,7 @@ import '../../features/home/domain/usecase/get_exercise_plan_details.dart';
 import '../../features/home/domain/usecase/get_nutrition_details.dart';
 import '../../features/home/domain/usecase/get_plan_usecase.dart';
 import '../../features/home/domain/usecase/get_exercise_usecase.dart';
+import '../../features/home/domain/usecase/profile_training_usecase.dart';
 import '../../features/home/domain/usecase/update_exercise_plan_usecase.dart';
 import '../../features/register/data/data_source/register_remote_data_source.dart';
 import '../../features/register/data/repository/register_repository.dart';
@@ -76,6 +77,7 @@ Future<void> init() async {
         updateProfile: sl(),
         searchUseCase: sl(),
         profileUseCase: sl(),
+        profileTrainerUseCase: sl(),
         certificateUseCase: sl(),
         getCertificateUseCase: sl(),
         deleteCertificateUseCase: sl(),
@@ -139,6 +141,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UpdateCoachSocialLinks(sl()));
   sl.registerLazySingleton(() => SearchUseCase(sl()));
   sl.registerLazySingleton(() => ProfileUseCase(sl()));
+  sl.registerLazySingleton(() => ProfileTrainerUseCase(sl()));
   sl.registerLazySingleton(() => CertificateUseCase(sl()));
   sl.registerLazySingleton(() => GetCertificateUseCase(sl()));
   sl.registerLazySingleton(() => DeleteCertificateUseCase(sl()));

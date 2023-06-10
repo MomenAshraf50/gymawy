@@ -8,7 +8,6 @@ import 'package:gymawy/features/home/domain/entities/exercise_details_entity.dar
 import 'package:gymawy/features/home/domain/entities/notifications_entity.dart';
 import 'package:gymawy/features/home/domain/entities/search_entity.dart';
 import 'package:gymawy/features/home/domain/entities/subscription_request_entity.dart';
-import 'package:gymawy/features/home/domain/entities/update_entity.dart';
 import 'package:gymawy/features/home/domain/entities/user_plan_entity.dart';
 import 'package:gymawy/features/home/domain/usecase/body_measurements_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/certification_usecase.dart';
@@ -29,7 +28,6 @@ import 'package:gymawy/features/home/domain/usecase/update_coach_social_links.da
 import 'package:gymawy/features/home/domain/usecase/update_profile_picture.dart';
 import 'package:gymawy/features/home/domain/usecase/update_profile_usecase.dart';
 import 'package:gymawy/features/home/domain/usecase/user_plan_usecase.dart';
-import 'package:gymawy/features/home/presentation/screens/home/nutrition/add_nutrition.dart';
 import '../../../../core/error/failures.dart';
 import '../entities/add_exercise_entity.dart';
 import '../entities/add_exercise_plan_entity.dart';
@@ -37,6 +35,7 @@ import '../entities/add_nutrition_details_entity.dart';
 import '../entities/add_nutrition_entity.dart';
 import '../entities/certificate_entity.dart';
 import '../entities/profile_entity.dart';
+import '../entities/trainer_profile_entity.dart';
 import '../usecase/add_nutrition_details_usecase.dart';
 import '../usecase/add_plan_usecase.dart';
 import '../usecase/delete_exercise_details_usecase.dart';
@@ -65,6 +64,10 @@ abstract class HomeBaseRepository {
   Future<Either<Failure, ProfileEntity>> profile({
     required int id,
     bool? isCoach,
+  });
+
+  Future<Either<Failure, ProfileTrainerEntity>> profileTrainer({
+    required int id,
   });
 
   Future<Either<Failure, CertificateEntity>> certificate({
@@ -176,8 +179,6 @@ abstract class HomeBaseRepository {
   Future<Either<Failure, List<UserPlanEntity>>> getUserPlan();
 
  Future<Either<Failure, void>> deleteUserPlan(DeleteUserPlanParams params);
-
-
 
 
 }

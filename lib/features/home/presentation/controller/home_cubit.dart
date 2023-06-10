@@ -49,6 +49,7 @@ import '../../domain/entities/add_nutrition_details_entity.dart';
 import '../../domain/entities/add_nutrition_entity.dart';
 import '../../domain/entities/certificate_entity.dart';
 import '../../domain/entities/search_entity.dart';
+import '../../domain/entities/trainer_profile_entity.dart';
 import '../../domain/usecase/add_nutrition_details_usecase.dart';
 import '../../domain/usecase/add_nutrition_usecase.dart';
 import '../../domain/usecase/add_plan_usecase.dart';
@@ -62,6 +63,7 @@ import '../../domain/usecase/get_nutrition_details.dart';
 import '../../domain/usecase/get_nutrition_usecase.dart';
 import '../../domain/usecase/get_plan_usecase.dart';
 import '../../domain/usecase/get_exercise_usecase.dart';
+import '../../domain/usecase/profile_training_usecase.dart';
 import '../../domain/usecase/profile_usecase.dart';
 import '../../domain/usecase/search_usecase.dart';
 import '../../domain/usecase/update_exercise_plan_usecase.dart';
@@ -79,6 +81,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final UpdateCoachSocialLinks _updateCoachSocialLinks;
   final SearchUseCase _searchUseCase;
   final ProfileUseCase _profileUseCase;
+  final ProfileTrainerUseCase _profileTrainerUseCase;
   final CertificateUseCase _certificateUseCase;
   final GetCertificateUseCase _getCertificateUseCase;
   final DeleteCertificateUseCase _deleteCertificateUseCase;
@@ -120,6 +123,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required UpdateCoachSocialLinks updateCoachSocialLinks,
     required SearchUseCase searchUseCase,
     required ProfileUseCase profileUseCase,
+    required ProfileTrainerUseCase profileTrainerUseCase,
     required CertificateUseCase certificateUseCase,
     required GetCertificateUseCase getCertificateUseCase,
     required DeleteCertificateUseCase deleteCertificateUseCase,
@@ -159,6 +163,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _updateCoachSocialLinks = updateCoachSocialLinks,
         _searchUseCase = searchUseCase,
         _profileUseCase = profileUseCase,
+        _profileTrainerUseCase = profileTrainerUseCase,
         _certificateUseCase = certificateUseCase,
         _getCertificateUseCase = getCertificateUseCase,
         _deleteCertificateUseCase = deleteCertificateUseCase,
@@ -562,6 +567,8 @@ class HomeCubit extends Cubit<HomeStates> {
       profileResults = data;
     });
   }
+
+
 
   FilePickerResult? certificationPdf;
   Widget? certificationImage;
@@ -1323,6 +1330,23 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(UserPlanErrorState(mapFailureToMessage(failure)));
     }, (data) {
       emit(UserPlanSuccessState(data));
+    });
+  }
+
+
+  ProfileTrainerEntity? profileTrainerData;
+  void profileTrainer({
+    required int id,
+}) async {
+    emit(ProfileTrainerLoadingState());
+    final result = await _profileTrainerUseCase(ProfileTrainerParams(
+        id: id
+    ));
+
+    result.fold((failure) {
+      emit(ProfileTrainerErrorState(mapFailureToMessage(failure)));
+    }, (data) {
+      emit(ProfileTrainerSuccessState(data));
     });
   }
 
