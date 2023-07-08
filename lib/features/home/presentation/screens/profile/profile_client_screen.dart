@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymawy/core/util/resources/appString.dart';
 import 'package:gymawy/core/util/resources/colors_manager.dart';
 import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
-import 'package:gymawy/core/util/widgets/default_button.dart';
 import 'package:gymawy/core/util/widgets/default_text.dart';
-import 'package:gymawy/features/home/presentation/screens/home/clients/add_exercise_screen.dart';
-import 'package:gymawy/features/home/presentation/screens/home/clients/add_meal_screen.dart';
 import '../../../../../../core/util/resources/assets.gen.dart';
 import '../../controller/home_cubit.dart';
 import '../../widgets/build_client_details_screen_items.dart';

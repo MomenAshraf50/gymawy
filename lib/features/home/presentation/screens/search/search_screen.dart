@@ -241,6 +241,19 @@ class SearchScreen extends StatelessWidget {
                                             :InkWell(
                                 onTap: () {
                                   if (clientsScreen == null) {
+                                    debugPrintFullText('id is                  ${homeCubit.results![index].userInformation.userId}');
+                                    debugPrintFullText('userName is                  ${homeCubit.results![index].userInformation.userName}');
+                                    debugPrintFullText('profilePicture is                  ${homeCubit.results![index].userInformation.profilePicture}');
+                                    debugPrintFullText('bio is                  ${homeCubit.results![index].userInformation.bio}');
+                                    debugPrintFullText('city is                  ${homeCubit.results![index].userInformation.city}');
+                                    debugPrintFullText('verification is                  ${homeCubit.results![index].verification}');
+                                    debugPrintFullText('facebookLink is                  ${homeCubit.results![index].facebookLink}');
+                                    debugPrintFullText('fixedPrice is                  ${homeCubit.results![index].fixedPrice}');
+                                    debugPrintFullText('instagramLink is                  ${homeCubit.results![index].instagramLink}');
+                                    debugPrintFullText('tiktokLink is                  ${homeCubit.results![index].tiktokLink}');
+                                    debugPrintFullText('youtubeLink is                  ${homeCubit.results![index].youtubeLink}');
+                                    debugPrintFullText('rating is                  ${homeCubit.results![index].rating}');
+                                    debugPrintFullText('experience is                  ${homeCubit.results![index].experience}');
                                     navigateTo(
                                         context,
                                         SearchResultScreen(
@@ -255,6 +268,8 @@ class SearchScreen extends StatelessWidget {
                                           instagramLink: homeCubit.results![index].instagramLink,
                                           tiktokLink: homeCubit.results![index].tiktokLink,
                                           youtubeLink: homeCubit.results![index].youtubeLink,
+                                          rating: homeCubit.results![index].rating,
+                                          experience: homeCubit.results![index].experience,
                                         ));
                                   }
                                   if (clientsScreen != null) {

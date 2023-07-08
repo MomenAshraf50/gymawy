@@ -6,12 +6,9 @@ import 'package:gymawy/core/util/resources/constants_manager.dart';
 import 'package:gymawy/core/util/resources/extensions_manager.dart';
 import 'package:gymawy/core/util/widgets/default_button.dart';
 import 'package:gymawy/core/util/widgets/default_text.dart';
-import 'package:gymawy/core/util/widgets/loadingPage.dart';
 import 'package:gymawy/features/home/domain/usecase/get_body_measurements_usecase.dart';
 import 'package:gymawy/features/home/presentation/controller/home_cubit.dart';
 import 'package:gymawy/features/home/presentation/controller/home_states.dart';
-import 'package:gymawy/features/home/presentation/screens/home/clients/add_exercise_screen.dart';
-import 'package:gymawy/features/home/presentation/screens/home/clients/add_meal_screen.dart';
 import '../../../../../../core/util/resources/assets.gen.dart';
 import '../../../../domain/entities/body_measurements_entity.dart';
 import '../../../../domain/entities/coach_subscriptions_entity.dart';
@@ -75,7 +72,7 @@ class ClientDetailsScreen extends StatelessWidget {
           List<BodyMeasurementsEntity>? results = state.bodyMeasurementsEntity;
           List<String> titleResult =
           [
-            results![index].goal,
+            results[index].goal,
             '${results[index].tall}',
             '${results[index].weight}',
             '${results[index].bodyFat}',
@@ -172,54 +169,56 @@ class ClientDetailsScreen extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: homeCubit.bodyMeasurementResults!.length,
                           ),
-                          Card(
-                            color: const Color.fromARGB(255, 252, 251, 251),
-                            elevation: 5,
-                            margin: EdgeInsets.all(10.rSp),
-                            child: Padding(
-                              padding: EdgeInsets.all(15.rSp),
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    Assets.images.svg.share,
-                                  ),
-                                  horizontalSpace(5.w),
-                                  DefaultText(
-                                    title: AppString.share,
-                                    style: Style.medium,
-                                    fontSize: 14.rSp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          verticalSpace(2.h),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: DefaultButton(
-                                  text: AppString.addMeal,
-                                  fontSize: 15.rSp,
-                                  onPressed: () {
-                                    navigateTo(
-                                        context, const AddClientMealScreen());
-                                  },
-                                ),
-                              ),
-                              horizontalSpace(2.w),
-                              Expanded(
-                                child: DefaultButton(
-                                  text: AppString.addExercise,
-                                  fontSize: 15.rSp,
-                                  onPressed: () {
-                                    navigateTo(context,
-                                        const AddClientExerciseScreen());
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Card(
+                          //   color: const Color.fromARGB(255, 252, 251, 251),
+                          //   elevation: 5,
+                          //   margin: EdgeInsets.all(10.rSp),
+                          //   child: Padding(
+                          //     padding: EdgeInsets.all(15.rSp),
+                          //     child: Row(
+                          //       children: [
+                          //         SvgPicture.asset(
+                          //           Assets.images.svg.share,
+                          //         ),
+                          //         horizontalSpace(5.w),
+                          //         DefaultText(
+                          //           title: AppString.share,
+                          //           style: Style.medium,
+                          //           fontSize: 14.rSp,
+                          //           fontWeight: FontWeight.w600,
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+
+
+                          // verticalSpace(2.h),
+                          // Row(
+                          //   children: [
+                          //     Expanded(
+                          //       child: DefaultButton(
+                          //         text: AppString.addMeal,
+                          //         fontSize: 15.rSp,
+                          //         onPressed: () {
+                          //           navigateTo(
+                          //               context, const AddClientMealScreen());
+                          //         },
+                          //       ),
+                          //     ),
+                          //     horizontalSpace(2.w),
+                          //     Expanded(
+                          //       child: DefaultButton(
+                          //         text: AppString.addExercise,
+                          //         fontSize: 15.rSp,
+                          //         onPressed: () {
+                          //           navigateTo(context,
+                          //               const AddClientExerciseScreen());
+                          //         },
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                         ],
                       ),
                     ),

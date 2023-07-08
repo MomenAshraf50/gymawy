@@ -13,9 +13,11 @@ class SearchEntity extends Equatable {
   double? fixedPrice;
   bool? verification;
   int? age;
+  int? experience;
   int? bodyFat;
   int? currentTall;
   double? currentWeight;
+  double? rating;
   String? goal;
 
   SearchEntity({
@@ -32,6 +34,8 @@ class SearchEntity extends Equatable {
     this.age,
     this.tiktokLink,
     this.youtubeLink,
+    this.rating,
+    this.experience
   });
 
   @override
@@ -49,5 +53,7 @@ class SearchEntity extends Equatable {
         age,
         tiktokLink,
         youtubeLink,
+        rating,
+        experience
       ];
 }

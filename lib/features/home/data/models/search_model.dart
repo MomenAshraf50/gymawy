@@ -18,10 +18,12 @@ class SearchModel extends SearchEntity {
     super.currentTall,
     super.bodyFat,
     super.verification,
+    super.experience,
+    super.rating
   });
 
   factory SearchModel.fromJson(Map<String, dynamic> json) {
-    return isCoachFilter == false || constClientVariable == null
+    return isCoachFilter == false
         ? SearchModel(
       userInformation: UserInformation.fromJson(json['user']),
             age: json['age'] ?? 0,
@@ -40,6 +42,8 @@ class SearchModel extends SearchEntity {
             youtubeLink: json['youtube_link'] ?? '',
             tiktokLink: json['tik_tok_link'] ?? '',
             verification: json['verification'] ?? false,
+            rating: json['rating'] ?? 0.0,
+            experience: json['experience'] ?? 0,
           );
   }
 }
