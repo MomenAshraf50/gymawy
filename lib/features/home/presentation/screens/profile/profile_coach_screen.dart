@@ -124,9 +124,7 @@ class ProfileCoachScreen extends StatelessWidget {
                                     children: [
                                       DefaultText(
                                         title:
-                                        '${isCoachLogin == false
-                                            ? AppString.client
-                                            : AppString.coach}, ${homeCubit.profileResults!
+                                        '${homeCubit.profileResults!
                                             .userInformation
                                             .firstName} ${homeCubit
                                             .profileResults!.userInformation
@@ -134,20 +132,13 @@ class ProfileCoachScreen extends StatelessWidget {
                                         //AppString.userNameProfile,
                                         style: Style.small,
                                       ),
-                                      // verticalSpace(1.h),
-                                      // DefaultText(
-                                      //   title: isCoachLogin == false
-                                      //       ? AppString.client
-                                      //       : AppString.coach,
-                                      //   style: Style.small,
-                                      // ),
-                                      verticalSpace(2.h),
+                                      verticalSpace(1.h),
                                       DefaultText(
-                                        title: homeCubit.profileResults!.userInformation.bio,
-                                        //AppString.userNameProfile,
+                                        title: isCoachLogin == false
+                                            ? AppString.client
+                                            : AppString.coach,
                                         style: Style.small,
                                       ),
-
                                     ],
                                   ),
                                 ),
@@ -199,6 +190,12 @@ class ProfileCoachScreen extends StatelessWidget {
                                     )
                                   ],
                                 ),
+                                verticalSpace(2.h),
+                                DefaultText(
+                                  title: homeCubit.profileResults!.userInformation.bio,
+                                  //AppString.userNameProfile,
+                                  style: Style.small,
+                                ),
                               ],
                             ),
                           ),
@@ -206,6 +203,12 @@ class ProfileCoachScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Container(
+                    color: ColorsManager.onSurfaceLight,
+                    height: 0.1.h,
+                  ),
+                  verticalSpace(2.h),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

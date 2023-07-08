@@ -39,7 +39,9 @@ class SearchResultScreen extends StatelessWidget {
       this.currentWeight,
       this.goal,
       this.bio,
-      this.age
+      this.age,
+      this.experience,
+      this.rating
       })
       : super(key: key);
   int? userId;
@@ -58,10 +60,11 @@ class SearchResultScreen extends StatelessWidget {
   int? currentTall;
   double? currentWeight;
   String? goal;
+  double? rating;
+  int? experience;
 
   @override
   Widget build(BuildContext context) {
-    debugPrintFullText('bio issssssssssssssssssssssssssssssss $bio');
     HomeCubit homeCubit = HomeCubit.get(context);
     homeCubit.getCertificates(GetCertificateParams(
       ownerId: userId!,
@@ -151,7 +154,13 @@ class SearchResultScreen extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             DefaultText(
-                                              title: '${verification == null? AppString.client :AppString.coach}, ${name!}',
+                                              title: name!,
+                                              style: Style.small,
+                                            ),
+                                            verticalSpace(1.h),
+
+                                            DefaultText(
+                                              title: homeCubit.coachRadioButton? AppString.coach: AppString.client,
                                               style: Style.small,
                                             ),
                                             // verticalSpace(1.h),
@@ -165,15 +174,17 @@ class SearchResultScreen extends StatelessWidget {
                                             //     title: AppString.coach,
                                             //     style: Style.small,
                                             //   ),
-                                            verticalSpace(1.h),
-                                            DefaultText(
-                                              title: bio!,
-                                              style: Style.small,
-                                            ),
+
 
                                           ],
                                         ),
                                       ),
+                                      verticalSpace(1.h),
+                                      DefaultText(
+                                        title: bio!,
+                                        style: Style.small,
+                                      ),
+
                                       verticalSpace(1.h),
                                       if (!isCoachLogin &&
                                           verification != null &&
@@ -261,43 +272,16 @@ class SearchResultScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               if (verification != null)
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            DefaultText(
-                                              title: AppString.rating,
-                                              style: Style.extraSmall,
-                                              fontSize: 16.rSp,
-                                            ),
-                                            DefaultText(
-                                              title: AppString.ratingLabel,
-                                              style: Style.extraSmall,
-                                              fontSize: 16.rSp,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 4.h,
-                                        width: 0.5.w,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  ),
-                                ),
                               Expanded(
                                 child: Column(
                                   children: [
                                     DefaultText(
-                                      title: AppString.followingNumber,
+                                      title: '$rating',
                                       style: Style.extraSmall,
                                       fontSize: 16.rSp,
                                     ),
                                     DefaultText(
-                                      title: AppString.following,
+                                      title: 'Rating',
                                       style: Style.extraSmall,
                                       fontSize: 16.rSp,
                                     ),
@@ -313,12 +297,12 @@ class SearchResultScreen extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     DefaultText(
-                                      title: AppString.followersNumber,
+                                      title: '$experience',
                                       style: Style.extraSmall,
                                       fontSize: 16.rSp,
                                     ),
                                     DefaultText(
-                                      title: AppString.followers,
+                                      title: AppString.experience,
                                       style: Style.extraSmall,
                                       fontSize: 16.rSp,
                                     ),

@@ -49,11 +49,11 @@ class TrainerInfo extends Equatable
       experience : json['experience'],
       price : json['price'],
       rating : json['rating'] ?? 0.0,
-      facebook_link : json['facebook_link'],
-      instagram_link : json['instagram_link'],
-      youtube_link : json['youtube_link'],
-      tik_tok_link : json['tik_tok_link'],
-      is_verified : json['is_verified'],
+      facebook_link : json['facebook_link']?? '',
+      instagram_link : json['instagram_link']??'',
+      youtube_link : json['youtube_link']??'',
+      tik_tok_link : json['tik_tok_link']??'',
+      is_verified : json['is_verified']??'',
     );
   }
 
